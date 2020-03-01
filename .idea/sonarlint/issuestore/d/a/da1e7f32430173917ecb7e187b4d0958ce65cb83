@@ -1,0 +1,13 @@
+
+rsquid:S2159+"VRemove this call to "equals"; comparisons between unrelated types always return false.(¥†º”üÿÿÿÿ
+ssquid:S2159É"VRemove this call to "equals"; comparisons between unrelated types always return false.(ë½¡ÿÿÿÿÿ
+vsquid:S2293¤"YReplace the type specification in this constructor call with the diamond operator ("<>").(™šÇøÿÿÿÿ
+ysquid:S4165)"bRemove this useless assignment; "menu" already holds the assigned value along all execution paths.(æëÓ
+Xsquid:S1126Y"AReplace this if-then-else statement by a single return statement.(şƒ›
+?squid:S1125."(Remove the literal "true" boolean value.(˜Â°¯
+Dsquid:S11252"(Remove the literal "true" boolean value.(è¾íûúÿÿÿÿ
+Dsquid:S1125?"(Remove the literal "true" boolean value.(Â·–Öûÿÿÿÿ
+`squid:S2230ñ"CMake this method "public" or remove the "@Transactional" annotation(È¯¬åùÿÿÿÿ
+Ssquid:S1854•";Remove this useless assignment to local variable "sortStr".( Ö°ü
+Usquid:S1155Y">Use isEmpty() to check whether the collection is empty or not.(şƒ›
+Vsquid:S1155²">Use isEmpty() to check whether the collection is empty or not.(Š˜—‚

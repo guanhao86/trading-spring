@@ -1,0 +1,36 @@
+
+Hsquid:S1135n"2Complete the task associated to this TODO comment.(³æª$
+osquid:CommentedOutCodeLineÄ"<This block of commented-out lines of code should be removed.(ÞÚÝóýÿÿÿÿ8ÓÓ£´è-
+hsquid:CommentedOutCodeLineƒ"<This block of commented-out lines of code should be removed.(µÊÆþýÿÿÿÿ
+_squid:UselessImportCheck";Remove this unused import 'com.google.common.collect.Maps'.(¯œÐ
+`squid:UselessImportCheck
+"7Remove this unused import 'com.spring.free.domain.Fee'.(Ý‡Óòÿÿÿÿÿ
+hsquid:UselessImportCheck"=Remove this unused import 'com.github.pagehelper.PageHelper'.(ð÷¨¹8èÒžö-
+Vsquid:S1135˜"2Complete the task associated to this TODO comment.(çöÒ±ÿÿÿÿÿ8èÒžö-
+wsquid:UselessImportCheck"LRemove this unused import 'com.sun.javafx.runtime.async.BackgroundExecutor'.(ØŠ…ò8‰š½“æ-
+rsquid:UselessImportCheck!"NRemove this unused import 'org.springframework.web.servlet.view.RedirectView'.(ñÎ²Ò
+Isquid:S1135O"2Complete the task associated to this TODO comment.(¨•ŒÅ
+ksquid:S1192®"GDefine a constant instead of duplicating this literal "result" 3 times.(„á¥¢þÿÿÿÿ8ÓÓ£´è-
+Vsquid:S1135þ"2Complete the task associated to this TODO comment.(ÓúÍšúÿÿÿÿ8ÓÓ£´è-
+nsquid:CommentedOutCodeLinee"<This block of commented-out lines of code should be removed.(µÊÆþýÿÿÿÿ8ÓÓ£´è-
+hsquid:CommentedOutCodeLineˆ"<This block of commented-out lines of code should be removed.(ÞÚÝóýÿÿÿÿ
+hsquid:CommentedOutCodeLineÑ"<This block of commented-out lines of code should be removed.(µÊÆþýÿÿÿÿ
+Qsquid:S1135º"2Complete the task associated to this TODO comment.(„­ÔÏ8ÓÓ£´è-
+hsquid:CommentedOutCodeLine•"<This block of commented-out lines of code should be removed.(ÞÚÝóýÿÿÿÿ
+Ssquid:S1191"5Use classes from the Java API instead of Sun classes.(ØŠ…ò8‰š½“æ-
+usquid:UselessImportCheck"ERemove this unused import 'com.spring.fee.constants.InvestConstants'.(Áí¶àüÿÿÿÿ8èÒžö-
+Qsquid:S1135‹"2Complete the task associated to this TODO comment.(ð¶³š8ÓÓ£´è-
+dsquid:S1192a"FDefine a constant instead of duplicating this literal "param" 4 times.(’ðÓÀ8ÓÓ£´è-
+osquid:CommentedOutCodeLineã"<This block of commented-out lines of code should be removed.(ÞÚÝóýÿÿÿÿ8ÓÓ£´è-
+Gsquid:S1148±"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8ÓÓ£´è-
+osquid:CommentedOutCodeLineö"<This block of commented-out lines of code should be removed.(ˆø•ãüÿÿÿÿ8ÓÓ£´è-
+Ssquid:UselessImportCheck("*Remove this unused import 'java.util.Map'.(¼è½Òþÿÿÿÿ
+Gsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8èÒžö-
+gsquid:CommentedOutCodeLineY"<This block of commented-out lines of code should be removed.(ÞÚÝóýÿÿÿÿ
+`squid:UselessImportCheck"<Remove this unused import 'com.alibaba.fastjson.JSONObject'.(äýµ
+osquid:CommentedOutCodeLine²"<This block of commented-out lines of code should be removed.(ÞÚÝóýÿÿÿÿ8ÓÓ£´è-
+Vsquid:S1135¨"2Complete the task associated to this TODO comment.(çöÒ±ÿÿÿÿÿ8èÒžö-
+ysquid:UselessImportCheck"PRemove this unused import 'org.springframework.web.bind.annotation.RequestBody'.(â­½Àýÿÿÿÿ
+jsquid:UselessImportCheck"ARemove this unused import 'com.spring.free.vo.StartInvestPlanVO'.(ÀŸŽüÿÿÿÿ
+Vsquid:S1135Ù"2Complete the task associated to this TODO comment.(Ž¿ÕØýÿÿÿÿ8ÓÓ£´è-
+wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(íœè³þÿÿÿÿ

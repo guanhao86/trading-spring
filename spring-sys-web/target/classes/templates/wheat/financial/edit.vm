@@ -1,0 +1,151 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+<link rel="stylesheet" href="/summernote/summernote.css">
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:financial:edit", "isBack": true, "href": "financial/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "financial/save")
+                <input type="hidden" name="id" value="$!{financial.id}">
+                <input type="hidden" name="img" value="$!{financial.img}">
+
+                    #formInput({"name": "产品名称"} {"name": "productName", "id": "productName","value":"$!{financial.productName}" ,"required": "required", "maxlength":"50","disable-space": ""})
+                    #formInput({"name": "年化收益"} {"name": "yearProfit", "id": "yearProfit","value":"$!{financial.yearProfit}" ,"required": "required", "perc":"true"})
+                    #formInput({"name": "月利息"} {"name": "monthProfit", "id": "monthProfit","value":"$!{financial.monthProfit}" ,"required": "required", "perc":"true"})
+                    #formInput({"name": "释放奖金日期"} {"name": "bonusDay", "id": "bonusDay","value":"$!{financial.bonusDay}" ,"required": "required", "number":"true","min":"1","max":"28"})
+                    #formDate({"name": "截至日期", "asterisk": false, "cl": "begin-time"} {"name":
+                        "dueTime", "id": "dueTime","dateVal": "true", "value":
+                        "$!DateTool.format('yyyy-MM-dd', $!{financial.dueTime})"})
+                    #formInput({"name": "总份额"} {"name": "allNumber", "id": "allNumber","value":"$!{financial.allNumber}" ,"required": "required", "number":"true","min":"1"})
+                    #formInput({"name": "每份金额"} {"name": "oncePrice", "id": "oncePrice","value":"$!{financial.oncePrice}" ,"required": "required", "number":"true"})
+
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">理财周期：</label>
+                    <div class="col-sm-2">
+                        #selectBS($!dict.getDictList("financialCycle"), ["cycle", "$!{financial.cycle}", "value", "label"], false, [false, "$!{financial.cycle}"])
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">上下架：</label>
+                    <div class="col-sm-2">
+                        #selectBS($!dict.getDictList("financialState"), ["state", "$!{financial.state}", "value", "label"], false, [false, "$!{financial.state}"])
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">收益图片<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-new thumbnail" >
+                                <img src="$!{financial.img}" alt="" id="goodsPic" name="image"  value="$!{financial.img}"
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+                            </div>
+                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                            <div id="btn_div_front">
+                        <span class="btn btn-default btn-file">
+                            <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择照片</span>
+                            <span class="fileupload-exists"><i class="fa fa-undo"></i> 重新选择</span>
+                            <input type="file" class="default" name="ghPic1" id="goodsPic"  />
+                        </span>
+                                <a href=" " class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i
+                                        class="fa fa-trash"></i> 删除</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">购买流程<font color="red">*</font>：</label>
+                    <div class="col-sm-8">
+                        <textarea rows="10" name="buyrule" class="summernote" id="summernote" contents="true" required>$!{financial.buyrule}</textarea>
+                    </div>
+                </div>
+                #end
+            #end
+        #end
+    #end
+    #@script()
+    <script>
+        ##日期控件初始化
+        var beginTime = $('.begin-time').datepicker().on('changeDate', function (ev) {
+            beginTime.hide();
+        }).data('datepicker');
+        var endTime = $('.end-time').datepicker().on('changeDate', function (ev) {
+            endTime.hide();
+        }).data('datepicker');
+    </script>
+    #end
+    #@script()
+        #scriptSrc("/summernote/summernote.js")
+        #scriptSrc("/summernote/lang/summernote-zh-CN.js")
+        #scriptSrc("/js/backstage/bootstrap-fileupload.min.js")
+    <script>
+
+        $(document).ready(function() {
+            $('.summernote').summernote({
+//                toolbar: [
+//                    ['style', ['bold', 'italic', 'underline']],
+//                    ['fontsize', ['fontsize']],
+//                    ['para', ['paragraph']],
+//                    ['height', ['height']]
+//                ],
+                height: 400,
+                tabsize: 2,
+                lang: 'zh-CN',
+                callbacks: {
+                    onImageUpload: function(files) {
+                        //上传图片到服务器，使用了formData对象，至于兼容性...据说对低版本IE不太友好
+                        var formData = new FormData();
+                        formData.append('file',files[0]);
+                        $.ajax({
+                            url : '$!{ctx}/news/upload',//后台文件上传接口
+                            type : 'POST',
+                            data : formData,
+                            processData : false,
+                            contentType : false,
+                            success : function(data) {
+//                            alert(data);
+                                $('#summernote').summernote('insertImage',data,'img');
+                            }
+                        });
+                    }
+                }
+
+            });
+
+
+        });
+
+    </script>
+
+
+
+
+
+        #@jsValidate("form_insert")
+        rules: {
+        coinName: {
+        remote: {
+        url: "$!{ctx}/coin/isCoinName", type: "post", dataType: "json",
+        data: {
+        coinName: function () {return $('#coin_name').val().trim();}
+        },
+        dataFilter: function (data) {//判断控制器返回的内容
+        return data;
+        }
+        }
+        }
+        },
+        messages: {
+        coinName: {
+        remote: function () {
+        return "币种名称已存在"
+        }
+        }
+        },
+        #end
+    #end
+#end

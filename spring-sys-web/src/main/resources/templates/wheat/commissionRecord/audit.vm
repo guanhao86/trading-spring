@@ -1,0 +1,65 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:content:edit", "isBack": true, "href": "commissionRecord/list?type=$!{commissionRecord.type}"})
+                #if(${commissionRecord.state}==0)
+                    #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+                #end
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "commissionRecord/audit")
+                <input type="hidden" name="id" value="$!{commissionRecord.id}">
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">状态：</label>
+                    <div class="col-sm-2">
+                    #if(${commissionRecord.state}==0)
+                         #selectBS($!dict.getDictList("auditStutas"), ["state", "$!{commissionRecord.state}", "value", "label"], false, [false, "$!{commissionRecord.state}"])
+                    #else
+                        #selectDisabledBS($!dict.getDictList("auditStutas"), ["state", "$!{commissionRecord.state}", "value", "label"], false, [false, "$!{commissionRecord.state}"])
+                    #end
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">类型：</label>
+                    <div class="col-sm-2">
+                        #selectDisabledBS($!dict.getDictList("dealType"), ["type", "$!{commissionRecord.type}", "value", "label"], false, [false, "$!{commissionRecord.type}"])
+                    </div>
+                </div>
+                #formInput({"name": "memId"} {"name": "memId", "value":"$!{commissionRecord.memId}","id": "mmeberId","required": "required","perc":"true","readonly":"readonly"})
+                #formInput({"name": "mmeberId"} {"name": "mmeberId", "value":"$!{commissionRecord.mmeberId}","id": "mmeberId","required": "required","perc":"true","readonly":"readonly"})
+                #formInput({"name": "委托金额"} {"name": "amount", "value":"$!{commissionRecord.amount}","id": "amount","required": "required","perc":"true","readonly":"readonly"})
+                #formInput({"name": "QC币"} {"name": "qcCoin", "value":"$!{commissionRecord.qcCoin}","id": "qcCoin","required": "required","perc":"true","readonly":"readonly"})
+                #formInput({"name": "手续费"} {"name": "fee", "value":"$!{commissionRecord.fee}","id": "fee","required": "required","perc":"true","readonly":"readonly"})
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">图片<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-new thumbnail" >
+                                <img src="$!{commissionRecord.image}" alt="" id="goodsPic" name="image"  value="$!{commissionRecord.image}"
+                                     style="max-width: 500px; max-height: 500px; line-height: 20px;"/>
+                            </div>
+                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                 style="max-width: 500px; max-height: 500px; line-height: 20px;"></div>
+                            <div id="btn_div_front">
+                        #*<span class="btn btn-default btn-file">
+                            <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择照片</span>
+                            <span class="fileupload-exists"><i class="fa fa-undo"></i> 重新选择</span>
+                            <input type="file" class="default" name="ghPic1" id="goodsPic"  />
+                        </span>
+                                <a href=" " class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i
+                                        class="fa fa-trash"></i> 删除</a>*#
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #scriptSrc("/js/backstage/bootstrap-fileupload.min.js")
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

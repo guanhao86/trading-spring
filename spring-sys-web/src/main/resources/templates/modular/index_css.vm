@@ -1,0 +1,28 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="keywords"
+      content="admin, dashboard, bootstrap, template, flat, modern, theme, responsive, fluid, retina, backend, html5, css, css3">
+<meta name="description" content="">
+<meta name="author" content="ThemeBucket">
+<link rel="shortcut icon" href="/img/icon.png" type="image/png">
+<link rel="icon" href="/img/icon.png" type="image/x-icon">
+<title>$!{systemName}</title>
+<link href="/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+<link href="/fonts/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+#*<link href="/css/system/animate.min.css" rel="stylesheet">*#
+<link href="/css/system/style.min.css?v=4.0.0" rel="stylesheet">
+<!-- Gritter -->
+<link href="/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+
+
+
+
+
+#set($ctx = $!StringTool.adminPath())
+#set($pageTabs = $!StringTool.pageTabsNumber())
+#set($userInfo = $!StringTool.getUser())
+#set($username = $!userInfo.username)
+
+#parse("modular/html_macro.vm")
+#parse("macro/label_macro.vm")

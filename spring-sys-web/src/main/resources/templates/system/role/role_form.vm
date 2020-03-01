@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #parse("modular/html_css.vm")
+
+    <link href="/js/backstage/treeTable/themes/vsStyle/treeTable.css" rel="stylesheet">
+    <link href="/js/backstage/jquery-ztree/3.5.12/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css"/>
+
+</head>
+
+<body class="sticky-header">
+<input type="hidden" value="$!{page}" id="page_hidden_iframe">
+
+<!--body wrapper start-->
+<div class="wrapper">
+    #parse("modular/prompt.vm")
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle}
+            <span class="tools pull-right">
+                <button class="btn btn-sm btn-primary tooltips" type="button" data-button="save"
+                        data-form-id="role_form">
+                    <i class="fa fa-save"></i> 保存
+                </button>
+                <button class="btn btn-sm btn-default tooltips" type="button" data-original-title="返回" data-button="back" data-href="$!{ctx}/role/roleList">
+                    <i class="fa fa-reply"></i> 返回
+                </button>
+            </span>
+        </header>
+        <div class="panel-body">
+            <form id="role_form" class="cmxform form-horizontal adminex-form" method="post" action="$!{ctx}/role/save">
+                <input type="hidden" name="id"value="$!{role.id}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">角色名称<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <input type="hidden" name="oldName" id="oldName" value="$!{role.name}">
+                        <input type="text" class="form-control" name="name" id="name" required value="$!{role.name}">
+                    </div>
+                </div>
+
+                <div class="form-group" style="display: none">
+                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">是否系统数据：</label>
+                    <div class="col-lg-3">
+                        #if("$!{buttonType}" == "edit")
+                            $!dict.getDictRadio("$!{role.sysData}", "yes_no", "sysData")
+                        #else
+                            $!dict.getDictRadio("1", "yes_no", "sysData")
+                        #end
+                    </div>
+                    <div class="col-lg-7">“是”代表此数据只有超级管理员能进行修改，“否”则表示拥有角色修改人员的权限都能进行修改</div>
+                </div>
+
+                <div class="form-group" style="display: none">
+                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">是否可用：</label>
+                    <div class="col-lg-3">
+                        #if("$!{buttonType}" == "edit")
+                            $!dict.getDictRadio("$!{role.useable}", "yes_no", "useable")
+                        #else
+                            $!dict.getDictRadio("1", "yes_no", "useable")
+                        #end
+                    </div>
+                    <div class="col-lg-7">“是”代表此数据可用，“否”则表示此数据不可用</div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">角色授权：</label>
+                    <div class="col-lg-3">
+                        <div id="menuTree" class="ztree" style="margin-top:3px;float:left;"></div>
+                        <input type="hidden" name="menuIds" id="menuIds" value="$!{role.menuIds}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">备注：</label>
+                    <div class="col-sm-3">
+                        <textarea class="form-control" rows="4" style="width: 100%" maxlength="200" name="remarks">$!{role.remarks}</textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </section>
+</div>
+<!--body wrapper end-->
+
+<!-- Placed js at the end of the document so the pages load faster -->
+    #parse("modular/html_js.vm")
+<script src="/js/backstage/treeTable/jquery.treeTable.js"></script>
+<script src="/js/backstage/jquery-ztree/3.5.12/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $("#role_form").validate({
+            rules: {
+                name: {
+                    remote: {
+                        url: "$!{ctx}/role/checkName",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            oldName: function () {
+                                return $('#oldName').val();　　　　//这个是取要验证的数据
+                            },
+                            name: function () {
+                                return  $('#name').val().trim();　　　　//这个是取要验证的数据
+                            }
+                        },
+                        dataFilter: function (data) {　　　　//判断控制器返回的内容
+                            if (data == "true") {
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
+                        }
+                    }
+                },
+            },
+            messages: {
+                name: {
+                    required: "请输入角色名称",
+                    remote: "角色名已存在"
+                }
+            },
+            errorPlacement: function(error, element) {
+
+                if (element.is(":checkbox")||element.is(":radio")){
+                    error.appendTo(element.parent().parent().parent());
+                } else {
+                    error.insertAfter(element.parent());
+                }
+            },
+            onfocus: true
+        });
+        $("#table_modal_office").treeTable({expandLevel: 2}).show();
+
+        var setting = {
+            check: {enable: true, nocheckInherit: true}, view: {selectedMulti: false},
+            data: {simpleData: {enable: true}}, callback: {
+                beforeClick: function (id, node) {
+                    tree.checkNode(node, !node.checked, true, true);
+                    treeCheckedNodes(tree, "menuIds");
+                    return false;
+                },
+                onCheck: function (event, treeId, treeNode) {
+                    treeCheckedNodes(tree, "menuIds");
+                }
+            }
+        };
+
+        // 用户-菜单
+        var zNodes = [
+            #foreach($l in $menuList)
+                {id: "$!{l.id}", pId: "$!{l.parentID}", name: "$!{l.name}", pIds: "$!{l.parentIds}"},
+            #end];
+
+        var tree = treeInit($("#menuTree"), setting, zNodes);
+        var ids2 = "$!{role.menuIds}".split(",");
+        for (var i = 0; i < ids2.length; i++) {
+            var node = tree.getNodeByParam("id", ids2[i]);
+            try {
+                tree.checkNode(node, true, false);
+            } catch (e) {
+            }
+        }
+
+    });
+    $(function () {
+        $('#office_modal_confirm').on('click', function () {
+            var radioName = $(this).attr('radio-name');
+            getRadioVale(this, radioName);
+        })
+    })
+
+</script>
+</body>
+</html>

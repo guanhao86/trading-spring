@@ -1,0 +1,15 @@
+<style>
+    #fullbg {background-color:Gray;left:0px;opacity:0.5;position:fixed !important;position:absolute;top:0px;z-index:3;filter:alpha(opacity=50); /* IE6 */-moz-opacity:0.5; /* Mozilla */-khtml-opacity:0.5; /* Safari */}
+    #dialog {display:none;min-height:20px;padding:12px;position:fixed !important; /* 浮动对话框 */position:absolute;top:50%;width:85%;z-index:5;color: #ffffff}
+</style>
+<div id="fullbg"></div>
+<div id="dialog">
+    <div style="width: 260px;height: 50px;margin: auto;padding: auto;background: #fff;">
+        <div style="width: 50px;height: 50px;float: left;margin-left: 10px">
+            <img src="/img/run.gif" width="50px" height="50px">
+        </div>
+        <div style="width: 200px;height: 50px;float: left;line-height: 50px;text-align: center;color: #000;" id="dialog-text">
+            正在努力奔跑中...
+        </div>
+    </div>
+</div>

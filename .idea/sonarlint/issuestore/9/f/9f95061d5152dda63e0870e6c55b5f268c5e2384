@@ -1,0 +1,10 @@
+
+Wsquid:UselessImportCheck".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ
+|squid:S11927"`Define a constant instead of duplicating this literal "æœåŠ¡ç«¯å¤„ç†è¯·æ±‚æˆåŠŸã€‚" 10 times.(î—¤µúÿÿÿÿ
+psquid:UselessImportCheck"LRemove this unused import 'com.spring.free.util.exception.ServiceException'.(Éå‚ã
+gsquid:CommentedOutCodeLine@"<This block of commented-out lines of code should be removed.(Çµ¹Œıÿÿÿÿ
+usquid:UselessImportCheck"LRemove this unused import 'org.springframework.web.multipart.MultipartFile'.(ôŸœÿÿÿÿÿ
+\squid:UselessImportCheck"3Remove this unused import 'net.sf.json.JSONObject'.(©ã¨şÿÿÿÿ
+msquid:UselessImportCheck"DRemove this unused import 'com.spring.free.util.constraints.Global'.(Şõ£óùÿÿÿÿ
+qsquid:UselessImportCheck"MRemove this unused import 'com.spring.free.util.exception.ExceptionCodeEnum'.(ôƒ†™
+gsquid:CommentedOutCodeLine`"<This block of commented-out lines of code should be removed.(Çµ¹Œıÿÿÿÿ

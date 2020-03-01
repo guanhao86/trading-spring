@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.free.mapper.CommissionRecordMapper">
+    <sql id="tbCommissionRecordColumns">
+        a.id AS "id",
+        a.mem_id AS "memId",
+        a.mmeber_id AS "mmeberId",
+        a.amount AS "amount",
+        a.qc_coin AS "qcCoin",
+        a.fee AS "fee",
+        a.type AS "type",
+        a.image AS "image",
+        a.state AS "state",
+
+        a.expand_1 AS "expand1",
+        a.expand_2 AS "expand2",
+        a.expand_3 AS "expand3",
+        a.expand_4 AS "expand4",
+        a.expand_5 AS "expand5",
+        a.create_time AS "createTime",
+        a.modify_time AS "modifyTime",
+        a.version AS "version",
+        a.del_flag AS "delFlag"
+
+    </sql>
+
+    <sql id="table_name">`t_wheat_commission_record`</sql>
+
+    <select id="get" resultType="com.spring.free.domain.CommissionRecord">
+        SELECT
+        <include refid="tbCommissionRecordColumns" />
+        FROM <include refid="table_name" /> a
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="com.spring.free.domain.CommissionRecord">
+        SELECT
+        <include refid="tbCommissionRecordColumns" />
+        FROM <include refid="table_name" /> a
+        WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+
+        <if test="type != null  and type != ''">
+            AND a.type = #{type}
+        </if>
+        <if test="state != null  and state.toString() != ''">
+            AND a.state = #{state}
+        </if>
+        <if test="memId != null  and memId.toString() != ''">
+            AND a.mem_id = #{memId}
+        </if>
+        <if test="mmeberId != null  and mmeberId!= ''">
+            AND a.mmeber_id = #{mmeberId}
+        </if>
+        ORDER BY a.create_time DESC
+    </select>
+    <insert id="insertBs"  parameterType="com.spring.free.domain.CommissionRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="table_name" />(
+        mem_id, mmeber_id,amount,qc_coin,fee,type,image,state,expand_1,expand_2,expand_3,expand_4,expand_5,create_time, modify_time, del_flag, version
+        ) VALUES (
+        #{memId}, #{mmeberId},#{amount},#{qcCoin},#{fee},#{type},#{image},#{state},#{expand1},#{expand2},#{expand3},#{expand4},#{expand5}, now(), now(), 0, #{version}
+        )
+    </insert>
+
+    <update id="updateBs">
+        UPDATE <include refid="table_name" /> SET
+        modify_time = now(),
+        mem_id = #{memId},
+        mmeber_id = #{mmeberId},
+        amount = #{amount},
+        qc_coin = #{qcCoin},
+        fee = #{fee},
+        type = #{type},
+        image = #{image},
+        state = #{state}
+        WHERE id = #{id}
+    </update>
+
+    <update id="deleteBs">
+        UPDATE <include refid="table_name" /> SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+</mapper>

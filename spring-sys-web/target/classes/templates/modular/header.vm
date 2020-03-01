@@ -1,0 +1,82 @@
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " style="background: #293846;" href="#"><i class="fa fa-bars"></i> </a>
+            <div class="page-heading" style="float: left">
+                <ul class="breadcrumb" id="sop_name">
+
+                </ul>
+                <div class="state-info">
+                </div>
+            </div>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+##            #if(${session.getAttribute("userInfo")})
+            #if($!{username})
+                #*<li>
+                    <a class="count-info" href="$!{ctx}/setting/list" target="iframe_system">
+                        <i class="fa fa-cog"></i>
+                    </a>
+                </li>*#
+                #*<li>
+                    <a class="J_menuItem count-info" href="javascript:void(0)" target="iframe_system" key-code="">
+                        <i class="fa fa-calendar-o"></i>日程 <span class="label label-warning" id="label_schedule"></span>
+                    </a>
+                </li>*#
+                #foreach($l in $!dict.getDictList("EnumSystemType"))
+                    #if("$!{username}" == "admin" && "$!systemType" != "$l.value")
+                        <li><a href="javascript:doPost('/', {'systemType': $l.value})" key-code=""><i class="fa fa-windows"></i> $!{l.label}</a></li>
+                    #else
+                        #if("$l.value" != "3" && "$!systemType" != "$l.value" && $!userInfo.userType.indexOf($l.value) != -1)
+                            <li><a href="javascript:doPost('/', {'systemType': $l.value})" key-code=""><i class="fa fa-windows"></i> $!{l.label}</a></li>
+                        #end
+                    #end
+                #end
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user"></i>$!{userInfo.name}
+##                        $!{session.getAttribute("userInfo").username}
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li><a class="J_menuItem" href="$!{ctx}/user/info" target="iframe_system" key-code=""><i class="fa fa-user"></i> 个人资料</a></li>
+                        <li class="divider"></li>
+                        <li><a class="J_menuItem" href="$!{ctx}/user/infoEdit" target="iframe_system" key-code=""><i class="fa fa-cog"></i> 个人设置</a></li>
+                        <li class="divider"></li>
+                        #*<li><a class="J_menuItem" href="$!{ctx}/setting/list" target="iframe_system" key-code=""><i class="fa fa-cogs"></i> 系统设置</a></li>
+                        <li class="divider"></li>*#
+                        <li><a href="/logout"><i class="fa fa-sign-out"></i> 安全退出</a></li>
+                        <li class="divider"></li>
+                    </ul>
+                </li>
+                #*<li class="dropdown hidden-xs">
+                    <a class="right-sidebar-toggle" aria-expanded="false" href="/logout">
+                        <i class="fa fa-sign-out"></i> 退出
+                    </a>
+                </li>*#
+            #end
+
+        </ul>
+    </nav>
+</div>
+
+<script>
+    function doPost(to, p) {  // to:提交动作（action）,p:参数
+        var myForm = document.createElement("form");
+        myForm.method = "post";
+        myForm.action = to;
+        for (var i in p){
+            var myInput = document.createElement("input");
+            myInput.setAttribute("name", i);  // 为input对象设置name
+            myInput.setAttribute("value", p[i]);  // 为input对象设置value
+            myForm.appendChild(myInput);
+        }
+        document.body.appendChild(myForm);
+        myForm.submit();
+        document.body.removeChild(myForm);  // 提交后移除创建的form
+    }
+    $(function () {
+        if ($("#system_type_drop li").length == 0){
+            $("#system_type_drop_frame").hide();
+        }
+
+    })
+</script>

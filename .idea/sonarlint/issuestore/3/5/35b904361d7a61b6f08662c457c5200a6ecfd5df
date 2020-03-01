@@ -1,0 +1,27 @@
+
+†squid:S1192`"jDefine a constant instead of duplicating this literal "å›¾ç‰‡è¿‡å¤§ï¼Œè¯·ä¸Šä¼ å°äº5Mçš„å›¾ç‰‡" 8 times.(ªÏ½ûşÿÿÿÿ
+isquid:S3776U"RRefactor this method to reduce its Cognitive Complexity from 38 to the 15 allowed.(Ûîµó
+P
+squid:S106"9Replace this use of System.out or System.err by a logger.(£
+Dsquid:S1481="(Remove this unused "map" local variable.(¼ú ïøÿÿÿÿ
+P
+squid:S106“"9Replace this use of System.out or System.err by a logger.(Ø‘ôÀ
+@squid:S1148±"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+O
+squid:S106w"9Replace this use of System.out or System.err by a logger.(Ø‘ôÀ
+bsquid:CommentedOutCodeLineX"<This block of commented-out lines of code should be removed.(¼½çÓ
+Ssquid:S1854J"7Remove this useless assignment to local variable "map".(¼ú ïøÿÿÿÿ
+O
+squid:S106o"9Replace this use of System.out or System.err by a logger.(—ì£‚
+P
+squid:S106"9Replace this use of System.out or System.err by a logger.(—ì£‚
+N
+squid:S106g"9Replace this use of System.out or System.err by a logger.(é”õ+
+asquid:S1192_"JDefine a constant instead of duplicating this literal "fileSize:" 8 times.(£
+O
+squid:S106‡"9Replace this use of System.out or System.err by a logger.(é”õ+
+Ssquid:S1854="7Remove this useless assignment to local variable "map".(¼ú ïøÿÿÿÿ
+Dsquid:S1481J"(Remove this unused "map" local variable.(¼ú ïøÿÿÿÿ
+O
+squid:S106_"9Replace this use of System.out or System.err by a logger.(£
+hsquid:S1192œ"KDefine a constant instead of duplicating this literal "/news/list" 3 times.(·’Áıÿÿÿÿ

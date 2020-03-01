@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.fee.dao.mapper.TInvestPlanBonusMapperDZ">
+  <resultMap  id="groupList" type="com.spring.fee.model.TInvestPlanBonusDZ">
+    <result column="type" property="type"/>
+    <result column="amount"  property="amount"/>
+    <result column="MEMBER_ID"  property="memberId"/>
+    <result column="phone"  property="phone"/>
+  </resultMap>
+
+  <select id="statisticGroupByMemberId" parameterType="java.lang.String" resultMap="groupList">
+    SELECT
+        a.member_id member_id,
+        max(m.phone) phone,
+        sum( amount )/1000 amount
+    FROM
+        t_invest_plan_bonus a,
+        t_wheat_member m
+        Where a.member_id = m.member_id
+    GROUP BY
+        member_id
+    ORDER BY
+        amount DESC
+  </select>
+
+  <!-- 统计收益 -->
+  <select id="statisticMemberSum" parameterType="com.spring.fee.model.TInvestPlanBonusDZ" resultMap="groupList">
+    select
+      type,
+      sum(amount) as amount
+    from t_invest_plan_bonus
+    where 1 = 1
+    <if test="memberIdList != null" >
+      and member_id in
+      <foreach collection="memberIdList" item="id" index="index"
+               open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+    <if test="paymentday != null" >
+      and paymentday = #{paymentday,jdbcType=VARCHAR}
+    </if>
+    group by TYPE
+  </select>
+
+</mapper>

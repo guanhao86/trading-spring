@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #parse("modular/html_css.vm")
+
+    <link href="/js/backstage/treeTable/themes/vsStyle/treeTable.css" rel="stylesheet">
+    <style>
+        fieldset{padding:.35em .625em .75em;margin:0 2px;border:1px solid silver;border-radius:8px}
+
+        legend{padding:.5em;border:0;width:auto;margin-bottom:10px;font-size: 14px;color: #aaaaaa
+        }
+    </style>
+</head>
+
+<body class="sticky-header">
+<input type="hidden" value="$!{page}" id="page_hidden_iframe">
+
+<!--body wrapper start-->
+<div class="wrapper">
+    #parse("modular/prompt.vm")
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle}
+            <span class="tools pull-right">
+##                #if($shiro.hasPermission("$!{perm.save}"))
+                    <button class="btn btn-sm btn-primary tooltips" type="button" data-button="save"
+                            data-form-id="user_form">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+##                #end
+                <button class="btn btn-sm btn-default tooltips" type="button" data-original-title="返回"
+                        data-button="back" data-href="$!{ctx}/user/userList">
+                    <i class="fa fa-reply"></i> 返回
+                </button>
+            </span>
+        </header>
+        <div class="panel-body">
+            <form id="user_form" class="cmxform form-horizontal adminex-form" method="post" action="$!{ctx}/user/save">
+                <input name="id" value="$!{user.id}" type="hidden">
+                <input name="buttonType" value="$!{buttonType}" type="hidden">
+                <fieldset>
+                    <legend>用户登录信息</legend>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">用户名<font color="red">*</font>：</label>
+                        <div class="col-sm-3">
+                            <input type="hidden" name="oldLoginName" id="old_login_name" value="$!{user.username}">
+                            #if("$!{buttonType}" == "edit")
+                                <input type="text" class="form-control" name="username" id="login_name" value="$!{user.username}" readonly="readonly">
+                            #else
+                                <input type="text" class="form-control" name="username" id="login_name" value="$!{user.username}" english="true" error-msg="用户名只能是英文字母"
+                                       maxlength="20" required>
+                            #end
+                        </div>
+                    </div>
+                    #if("$!{buttonType}" != "edit")
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">密码<font color="red">*</font>：</label>
+                            <div class="col-sm-3">
+                                <input type="password" class="form-control" name="password" id="password" required value="$!{user.password}" passwordReg="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">确认密码<font color="red">*</font>：</label>
+                            <div class="col-sm-3">
+                                <input type="password" class="form-control" name="confirmNewPassword" id="confirmNewPassword" required value="">
+                            </div>
+                        </div>
+                    #end
+                </fieldset>
+                <fieldset>
+                    <legend>用户基础信息</legend>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">工号<font color="red">*</font>：</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" name="no" id="no" readonly="readonly" value="$!{user.no}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">姓名<font color="red">*</font>：</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" name="name" id="name" value="$!{user.name}"
+                                   maxlength="100" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">邮箱：</label>
+                        <div class="col-sm-3">
+                            <input type="hidden" value="$!{user.email}" id="old_email">
+                            <input type="text" class="form-control" name="email" id="email" email="true" value="$!{user.email}" maxlength="150">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">电话：</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" name="phone" id="phone" phone="true" value="$!{user.phone}" maxlength="30">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">手机：</label>
+                        <div class="col-sm-3">
+                            <input type="hidden" value="$!{user.mobile}" id="old_mobile">
+                            <input type="text" class="form-control" name="mobile" id="mobile" mobile="true" value="$!{user.mobile}" maxlength="30" >
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>访问权限信息</legend>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">是否允许登录<font color="red">*</font>：</label>
+                        <div class="col-lg-3">
+                            #if("$!{buttonType}" == "edit")
+                            $!dict.getDictRadio("$!{user.loginFlag}", "yes_no", "loginFlag")
+                        #else
+                                $!dict.getDictRadio("1", "yes_no", "loginFlag")
+                            #end
+                        </div>
+                        <div class="col-lg-7 color-595959">
+                            “是”代表此账号允许登陆，“否”则表示此账号不允许登陆
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">系统权限<font color="red">*</font>：</label>
+                        <div class="col-sm-3">
+                            <select data-placeholder="请选择..." class="chosen-select" style="width:100%;" tabindex="2" name="userType" multiple="multiple" selectNone="true">
+                                #foreach($l in $!dict.getDictList("EnumSystemType"))
+                                    #if("$l.value" != "3")
+                                        #if("$!user.userType" != "" && $!user.userType.indexOf("$l.value") != -1)
+                                            <option value="$!{l.value}" selected>$!{l.label}</option>
+                                        #else
+                                            <option value="$!{l.value}">$!{l.label}</option>
+                                        #end
+
+                                    #end
+                                #end
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">用户角色<font color="red">*</font>：</label>
+                        <div class="col-sm-8">
+                            #foreach($r in $roleList)
+                                #if("$!{r.checked}" == "checked")
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="roleIdList" checked="checked" value="$!{r.id}" style="vertical-align: middle;"> $!{r.name}
+                                    </label>
+                                #else
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="roleIdList" value="$!{r.id}" style="vertical-align: middle;"> $!{r.name}
+                                    </label>
+                                #end
+
+                            #end
+                        </div>
+                        <div class="col-lg-7" id="user_role_id"></div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>用户备注信息</legend>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">备注：</label>
+                        <div class="col-lg-3">
+                            <textarea rows="4" name="remarks" maxlength="100" style="width: 100%">$!{user.remarks}</textarea>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+    </section>
+</div>
+<!--body wrapper end-->
+
+<!-- Placed js at the end of the document so the pages load faster -->
+    #parse("modular/html_js.vm")
+
+<script>
+    $(document).ready(function () {
+        if ($('#username').attr('readonly') != "readonly"){
+            $('#username').val("");
+            $('#password').val("");
+        }
+
+        $("#user_form").validate({
+            rules: {
+                username: {
+                    remote: {
+                        url: "$!{ctx}/user/checkRepeat", type: "post", dataType: "json",
+                        data: {
+                            oldName: function () {return $('#old_login_name').val();},
+                            name: function () {return  $('#login_name').val();},
+                            type: function () {return "username";}
+                        },
+                        dataFilter: function (data) {//判断控制器返回的内容
+                            if (data == "true") {return true;
+                            } else {return false;}
+                        }
+                    }
+                },
+                email: {
+                    remote: {
+                        url: "$!{ctx}/user/checkRepeat", type: "post", dataType: "json",
+                        data: {
+                            oldName: function () {return $('#old_email').val();},
+                            name: function () {return  $('#email').val();},
+                            type: function () {return "email";}
+                        },
+                        dataFilter: function (data) {//判断控制器返回的内容
+                            if (data == "true") {return true;
+                            } else {return false;}
+                        }
+
+                    }
+                },
+                mobile: {
+                    remote: {
+                        url: "$!{ctx}/user/checkRepeat", type: "post", dataType: "json",
+                        data: {
+                            oldName: function () {return $('#old_mobile').val();},
+                            name: function () {return  $('#mobile').val();},
+                            type: function () {return "mobile";}
+                        },
+                        dataFilter: function (data) {//判断控制器返回的内容
+                            if (data == "true") {return true;
+                            } else {return false;}
+                        }
+
+                    }
+                },
+                roleIdList: {required: true},
+                password: {
+                    required: true,
+                    rangelength: [3,20]
+                },
+                confirmNewPassword: {
+                    equalTo: "#password",
+                    rangelength:[3,20]
+                }
+            },
+            messages: {
+                no: "请输入工号",
+                name: "请输入姓名",
+                username: {
+                    required: "请输入用户名",
+                    remote: "用户登录名已存在"
+                },
+                email: {
+                    remote: "邮箱已存在"
+                },
+                mobile: {
+                    remote: "手机号码已存在"
+                },
+                password: {
+                    required: "请输入密码",
+                    rangelength: $.validator.format("密码长度必须为：{0}-{1}之间")
+                },
+                confirmNewPassword: {
+                    required: "请输入确认密码",
+                    rangelength: $.validator.format("密码长度必须为：{0}-{1}之间"),
+                    equalTo: "两次密码必须一致"
+                },
+                roleIdList: {
+                    required: "请选择用户角色"
+                },
+            },
+            errorPlacement: function(error, element) {
+
+                if (element.is(":checkbox")||element.is(":radio")){
+                    error.appendTo(element.parent().parent().parent());
+                } else {
+                    error.insertAfter(element.parent());
+                }
+            },
+            onfocus: true
+
+        });
+
+    });
+
+</script>
+</body>
+</html>

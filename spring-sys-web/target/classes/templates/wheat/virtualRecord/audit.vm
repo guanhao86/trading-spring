@@ -1,0 +1,79 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:virtualRecord:edit", "isBack": true, "href": "virtualRecord/list?type=$!{virtualRecord.type}"})
+                #if(${virtualRecord.state}==0)
+                    #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+                #end
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "virtualRecord/audit")
+                <input type="hidden" name="id" value="$!{virtualRecord.id}">
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">状态：</label>
+                    <div class="col-sm-2">
+                    #if(${virtualRecord.state}==0)
+                         #selectBS($!dict.getDictList("auditStutas"), ["state", "$!{virtualRecord.state}", "value", "label"], false, [false, "$!{virtualRecord.state}"])
+                    #else
+                        #selectDisabledBS($!dict.getDictList("auditStutas"), ["state", "$!{virtualRecord.state}", "value", "label"], false, [false, "$!{virtualRecord.state}"])
+                    #end
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">类型：</label>
+                    <div class="col-sm-2">
+                        #selectDisabledBS($!dict.getDictList("dealType"), ["type", "$!{virtualRecord.type}", "value", "label"], false, [false, "$!{virtualRecord.type}"])
+                    </div>
+                </div>
+                #*#formInput({"name": "memId"} {"name": "memId", "value":"$!{virtualRecord.memId}","id": "mmeberId","required": "required","perc":"true","readonly":"readonly"})*#
+                #formInput({"name": "mmeberId"} {"name": "mmeberId", "value":"$!{virtualRecord.mmeberId}","id": "mmeberId","required": "required","perc":"true","readonly":"readonly"})
+                    #if(${virtualRecord.type}==1)
+                        #formInput({"name": "虚拟币"} {"name": "virtualCoin", "value":"$!{virtualRecord.virtualCoin}","id": "amount","required": "required","perc":"true","readonly":"readonly"})
+                        <div class="form-group" >
+                            <label class="col-sm-2 control-label">虚拟币类型：</label>
+                            <div class="col-sm-2">
+                                #selectDisabledBS($!dict.getDictList("virtualType"), ["coinType", "$!{virtualRecord.coinType}", "value", "label"], false, [false, "$!{virtualRecord.coinType}"])
+                            </div>
+                        </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">充值类型：</label>
+                        <div class="col-sm-2">
+                            #selectDisabledBS($!dict.getDictList("cztype"), ["expand1", "$!{virtualRecord.expand1}", "value", "label"], false, [false, "$!{virtualRecord.expand1}"])
+                        </div>
+                    </div>
+                    #end
+                #formInput({"name": "QC币"} {"name": "qcCoin", "value":"$!{virtualRecord.qcCoin}","id": "qcCoin","readonly":"readonly"})
+                #formInput({"name": "手续费"} {"name": "doubleFee", "value":"$!{virtualRecord.doubleFee}","id": "doubleFee","readonly":"readonly"})
+                    #if(${virtualRecord.type}==2)
+                        #formInput({"name": "应付"} {"name": "due", "value":"$!{virtualRecord.due}","id": "due","required": "required","readonly":"readonly"})
+                        #formInput({"name": "提币地址"} {"name": "expand2", "value":"$!{virtualRecord.expand2}","id": "expand2","required": "required"})
+                    #end
+                    #if(${virtualRecord.image}&&${virtualRecord.image}!="")
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">图片<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-new thumbnail" >
+                                <img src="$!{virtualRecord.image}" alt="" id="goodsPic" name="image"  value="$!{virtualRecord.image}"
+                                     style="max-width: 500px; max-height: 500px; line-height: 20px;"/>
+                            </div>
+                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                 style="max-width: 500px; max-height: 500px; line-height: 20px;"></div>
+                            <div id="btn_div_front">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                        #end
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #scriptSrc("/js/backstage/bootstrap-fileupload.min.js")
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

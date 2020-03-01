@@ -1,0 +1,26 @@
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="lcon_modal" class="modal fade">
+    <div class="modal-dialog" style="width: 680px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">图标选择</h4>
+            </div>
+            <div class="modal-body" style="height: 500px;overflow-y: auto">
+                <div class="row fontawesome-icon-list" style="text-align: left;margin-top: 10px" dialog-selected="setting_menu_dialog_opt">
+                    <div aria-hidden="true" data-dismiss="modal" class="fa-hover col-md-4 col-sm-5" lcon-val="无" input-id="lcon_name" dialog-opt="setting_lcon_opt_a">
+                        <a href="#">无</a>
+                    </div>
+                    #foreach($ql in $icon)
+                        <div aria-hidden="true" data-dismiss="modal" class="fa-hover col-md-4 col-sm-5" lcon-val="$!{ql.code}" input-id="lcon_name" dialog-opt="setting_lcon_opt_a">
+                            <a href="javascript:void(0);" ><i class="fa $!{ql.code}"></i> $!{ql.code}</a>
+                        </div>
+                    #end
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                <button data-dismiss="" class="btn btn-primary" type="button" id="menu_modal_confirm">确认</button>
+            </div>
+        </div>
+    </div>
+</div>

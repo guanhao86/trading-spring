@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #parse("modular/html_css.vm")
+
+    <link href="/js/backstage/treeTable/themes/vsStyle/treeTable.css" rel="stylesheet">
+
+</head>
+
+<body class="sticky-header">
+<input type="hidden" value="$!{page}" id="page_hidden_iframe">
+
+<!--body wrapper start-->
+<div class="wrapper">
+    #parse("modular/prompt.vm")
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle}
+            <span class="tools pull-right">
+                <button class="btn btn-sm btn-primary tooltips" type="button" data-button="save" data-form-id="user_form">
+                    <i class="fa fa-save"></i> 保存
+                </button>
+            </span>
+        </header>
+        <div class="panel-body">
+            <form id="user_form" class="cmxform form-horizontal adminex-form" method="post" action="$!{ctx}/user/userInfoSave">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">工号<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="no" id="no" readonly="readonly" value="$!{user.no}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">姓名<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="name" id="name" value="$!{user.name}"
+                               maxlength="100" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">用户名<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="username" id="login_name" value="$!{user.username}" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">邮箱：</label>
+                    <div class="col-sm-3">
+                        <input type="hidden" value="$!{user.email}" id="old_email">
+                        <input type="text" class="form-control" name="email" id="email" email="true" value="$!{user.email}" maxlength="150">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">电话：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="phone" id="phone" phone="true" value="$!{user.phone}" maxlength="30">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">手机：</label>
+                    <div class="col-sm-3">
+                        <input type="hidden" value="$!{user.mobile}" id="old_mobile">
+                        <input type="text" class="form-control" name="mobile" id="mobile" mobile="true" value="$!{user.mobile}" maxlength="30" >
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">备注：</label>
+                    <div class="col-lg-3">
+                        <textarea rows="4" name="remarks" style="width: 100%">$!{user.remarks}</textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </section>
+
+    <section class="panel">
+        <header class="panel-heading">
+            修改密码
+            <span class="tools pull-right">
+                <button class="btn btn-sm btn-primary tooltips" type="button" data-button="save" data-form-id="user_form_pwd">
+                    <i class="fa fa-save"></i> 保存
+                </button>
+            </span>
+        </header>
+        <div class="panel-body">
+            <form id="user_form_pwd" class="cmxform form-horizontal adminex-form" method="post" action="$!{ctx}/user/userUpdPwd">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">用户名<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="username" id="login_name" value="$!{user.username}" readonly="readonly">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">旧密码<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <input type="password" class="form-control" name="oldPassword" id="old_password" required value="">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">新密码<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <input type="password" class="form-control" name="password" id="password" required value="" passwordReg="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">确认密码<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <input type="password" class="form-control" name="confirmNewPassword" id="confirmNewPassword" required value="">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </section>
+</div>
+<!--body wrapper end-->
+
+<!-- Placed js at the end of the document so the pages load faster -->
+    #parse("modular/html_js.vm")
+
+<script src="/js/backstage/treeTable/jquery.treeTable.js"></script>
+
+<script>
+    $(document).ready(function () {
+        if ($('#username').attr('readonly') != "readonly"){
+            $('#username').val("");
+            $('#password').val("");
+        }
+
+        $("#user_form").validate({
+            rules: {
+                email: {
+                    remote: {
+                        url: "$!{ctx}/user/checkRepeat", type: "post", dataType: "json",
+                        data: {
+                            oldName: function () {return $('#old_email').val();},
+                            name: function () {return  $('#email').val();},
+                            type: function () {return "email";}
+                        },
+                        dataFilter: function (data) {//判断控制器返回的内容
+                            if (data == "true") {return true;
+                            } else {return false;}
+                        }
+
+                    }
+                },
+                mobile: {
+                    remote: {
+                        url: "$!{ctx}/user/checkRepeat", type: "post", dataType: "json",
+                        data: {
+                            oldName: function () {return $('#old_mobile').val();},
+                            name: function () {return  $('#mobile').val();},
+                            type: function () {return "mobile";}
+                        },
+                        dataFilter: function (data) {//判断控制器返回的内容
+                            if (data == "true") {return true;
+                            } else {return false;}
+                        }
+
+                    }
+                }
+            },
+            messages: {
+                email: {
+                    remote: "邮箱已存在"
+                },
+                mobile: {
+                    remote: "手机号码已存在"
+                }
+            },
+            errorPlacement: function(error, element) {
+
+                if (element.is(":checkbox")||element.is(":radio")){
+                    error.appendTo(element.parent().parent().parent());
+                } else {
+                    error.insertAfter(element.parent());
+                }
+            },
+            onfocus: true
+
+        });
+
+
+        $("#user_form_pwd").validate({
+            rules: {
+                oldPassword: {
+                    remote: {
+                        url: "$!{ctx}/user/checkRepeat", type: "post", dataType: "json",
+                        data: {
+                            oldName: function () {return $('#login_name').val();},
+                            name: function () {return  $('#old_password').val();},
+                            type: function () {return "password";}
+                        },
+                        dataFilter: function (data) {//判断控制器返回的内容
+                            if (data == "true") {return true;
+                            } else {return false;}
+                        }
+                    }
+                },
+                password: {
+                    required: true,
+                    rangelength: [3,20]
+                },
+                confirmNewPassword: {
+                    equalTo: "#password",
+                    rangelength:[3,20]
+                }
+            },
+            messages: {
+                oldPassword:{
+                    required: "请输入旧密码",
+                    remote: "请正确输入旧密码"
+                },
+                password: {
+                    required: "请输入新密码",
+                    rangelength: $.validator.format("密码长度必须为：{0}-{1}之间")
+                },
+                confirmNewPassword: {
+                    required: "请输入确认密码",
+                    rangelength: $.validator.format("密码长度必须为：{0}-{1}之间"),
+                    equalTo: "两次密码必须一致"
+                },
+            },
+            errorPlacement: function(error, element) {
+
+                if (element.is(":checkbox")||element.is(":radio")){
+                    error.appendTo(element.parent().parent().parent());
+                } else {
+                    error.insertAfter(element.parent());
+                }
+            },
+            onfocus: true
+
+        });
+    });
+
+
+</script>
+</body>
+</html>

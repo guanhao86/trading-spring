@@ -1,0 +1,26 @@
+
+isquid:S1192Ÿ"LDefine a constant instead of duplicating this literal "planAmount" 10 times.(Ïàíâüÿÿÿÿ
+esquid:S1192§"MDefine a constant instead of duplicating this literal "totalAmount" 10 times.(Ÿ‘ÊÜ
+bsquid:S1192Û"JDefine a constant instead of duplicating this literal "planDays" 10 times.(â³úÀ
+xsquid:S1488‡"`Immediately return this expression instead of assigning it to the temporary variable "criteria".(¶Õ¯ì
+[squid:S1155¦">Use isEmpty() to check whether the collection is empty or not.(í´Õûüÿÿÿÿ
+dsquid:S00112³"FDefine and throw a dedicated exception instead of using a generic one.(ÔÁñÍøÿÿÿÿ
+csquid:S1192ã"KDefine a constant instead of duplicating this literal "totalDays" 10 times.(ÇÔŒÿ
+dsquid:S1192ë"LDefine a constant instead of duplicating this literal "statusTime" 10 times.(ù¼Ó®
+`squid:S1192Ó"HDefine a constant instead of duplicating this literal "planId" 12 times.(¼ÖËÌ
+isquid:S1192£"LDefine a constant instead of duplicating this literal "createTime" 10 times.(·í“°øÿÿÿÿ
+bsquid:S1192ß"JDefine a constant instead of duplicating this literal "planName" 12 times.(Ü¸Şğ
+gsquid:S1192™"JDefine a constant instead of duplicating this literal "memberId" 12 times.(Ş±ØÕÿÿÿÿÿ
+dsquid:S00112º"FDefine and throw a dedicated exception instead of using a generic one.(õÜ—ºşÿÿÿÿ
+Tsquid:S1155z">Use isEmpty() to check whether the collection is empty or not.(Á½¼s
+asquid:S1192"IDefine a constant instead of duplicating this literal "orderId" 12 times.(ÄæíÃ
+osquid:S2293'"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÏßÉe
+qsquid:S2293¢"YReplace the type specification in this constructor call with the diamond operator ("<>").(óÎ³Ù
+esquid:S1192¥"HDefine a constant instead of duplicating this literal "status" 12 times.(Æ‹óÁùÿÿÿÿ
+isquid:S1192—"LDefine a constant instead of duplicating this literal "appendFlay" 12 times.(ùí Õşÿÿÿÿ
+^squid:S00112Á"FDefine and throw a dedicated exception instead of using a generic one.(ìá¤
+
+osquid:S1192¥	"KDefine a constant instead of duplicating this literal "startTime" 10 times.(±ö€™úÿÿÿÿ8»Œï˜á-
+osquid:S1192ß"PDefine a constant instead of duplicating this literal "settleYyyymmdd" 12 times.(£Ÿ¬ç8»Œï˜á-
+ssquid:S1192İ"ODefine a constant instead of duplicating this literal "startYyyymmdd" 12 times.(Ûäóºşÿÿÿÿ8»Œï˜á-
+msquid:S1192á	"IDefine a constant instead of duplicating this literal "endTime" 10 times.(¸Œüüşÿÿÿÿ8»Œï˜á-

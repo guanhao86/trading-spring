@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--<mapper namespace="com.zt1953.soa.mapper.log.OperationMapper">-->
+<mapper namespace="com.spring.free.mapper.IconMapper">
+
+	<!--<cache flushInterval="600000" size="1024" readOnly="true" />-->
+
+	<resultMap type="com.spring.free.domain.IconInfo" id="iconMap">
+		<id property="id" column="id" />
+		<result property="iconName" column="icon_name" />
+		<result property="code" column="code" />
+	</resultMap>
+
+	<!-- 表名 -->
+	<sql id="table_name">
+		`t_sys_icon_info`
+	</sql>
+
+	<!-- 表中所有列 -->
+	<sql id="Base_Column_List">
+		id, icon_name, code
+	</sql>
+
+	<!-- 查询菜单信息 -->
+	<select id="selectIcon" resultMap="iconMap" parameterType="com.spring.free.domain.IconInfo">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		<include refid="table_name" />
+	</select>
+</mapper>

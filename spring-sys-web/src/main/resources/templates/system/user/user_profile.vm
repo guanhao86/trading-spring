@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #parse("modular/html_css.vm")
+
+    <link href="/js/backstage/treeTable/themes/vsStyle/treeTable.css" rel="stylesheet">
+
+</head>
+
+<body class="sticky-header">
+<input type="hidden" value="$!{page}" id="page_hidden_iframe">
+
+<!--body wrapper start-->
+<div class="wrapper">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <ul class="p-info">
+                                <li>
+                                    <div class="title">用户名</div>
+                                    <div class="desk">$!{user.username}</div>
+                                </li>
+                                <li>
+                                    <div class="title">工号</div>
+                                    <div class="desk">$!{user.no}</div>
+                                </li>
+                                <li>
+                                    <div class="title">姓名</div>
+                                    <div class="desk">$!{user.name}</div>
+                                </li>
+                                <li>
+                                    <div class="title">邮箱</div>
+                                    <div class="desk">$!{user.email}</div>
+                                </li>
+                                <li>
+                                    <div class="title">电话</div>
+                                    <div class="desk">$!{user.phone}</div>
+                                </li>
+                                <li>
+                                    <div class="title">手机</div>
+                                    <div class="desk">$!{user.mobile}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="panel">
+                        <div class="panel-body p-states green-box">
+                            <div class="summary pull-left">
+                                <h4>角色信息</h4>
+                                <h3>$!{userRole}</h3>
+                            </div>
+                            <div id="pro-refund" class="chart-bar"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-8">
+
+        </div>
+    </div>
+</div>
+<!--body wrapper end-->
+
+<!-- Placed js at the end of the document so the pages load faster -->
+    #parse("modular/html_js.vm")
+
+<script>
+
+</script>
+</body>
+</html>

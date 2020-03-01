@@ -1,0 +1,70 @@
+
+<div style="float: right">
+    <form method="post" action="" id="pagingForm" class="one_pageForm pagingForm">
+        <nav>
+            <ul class="pagination">
+                #if($!page.total != 0)
+                    #if($!page.prePage != 0)
+                        <li><a href="javascript:void(0);" onclick="toPage($!page.prePage)">&laquo;</a></li>
+                        #if($!page.firstPage != 1)
+                            <li><a href="javascript:void(0);" onclick="toPage(1)">1</a></li>
+                            #if($!page.firstPage-1 != 1)
+                                <li class="disabled"><a href="javascript:void(0);">...</a></li>
+                            #end
+                        #end
+                    #else
+                        <li class="disabled"><a href="javascript:void(0);">&laquo;</a></li>
+                    #end
+                    #foreach($p in [$page.firstPage..$page.lastPage])
+                        #if($!page.pageNum == $p)
+                            <li class="active"><a href="javascript:void(0);">$!{page.pageNum}</a></li>
+                        #else
+                            <li><a href="javascript:void(0);" onclick="toPage($!{p})">$!{p}</a></li>
+                        #end
+                    #end
+                    #if($!page.nextPage != 0)
+                        #if($!page.lastPage != $!page.pages)
+                            #if($!page.lastPage+1 != $!page.pages)
+                                <li class="disabled"><a href="javascript:void(0);">...</a></li>
+                            #end
+                            <li><a href="javascript:void(0);" onclick="toPage($!{page.pages})">$!{page.pages}</a></li>
+                        #end
+                        <li><a href="javascript:void(0);" onclick="toPage($!{page.nextPage})">&raquo;</a></li>
+                    #else
+                        <li class="disabled"><a href="javascript:void(0);">&raquo;</a></li>
+                    #end
+                #end
+                <li class="disabled"><a href="javascript:void(0);">共计$!{page.total}条数据</a></li>
+            </ul>
+        </nav>
+
+        <!--用于提交的主要参数-->
+        <!--当前页-->
+        <input style="display: none" id="currentPage"  name="page" value="$!{page.pageNum}" class="pageNumberI currentPage"/>
+        <!--每页几条数据-->
+        <input style="display: none" id="pageSize" onchange="changePageSize()" name="pageSize" value="$!{page.pageSize}" class="pageNumberI pageSize"/>
+        <!--KEY-->
+        <input style="display: none" id="key"  class="key" name="key" />
+        <!--keyWord-->
+        <input style="display: none" id="keyWord" class="keyWord" name="keyWord" />
+        <input type="hidden" id="keyWordSort" name="" value="$!{sort}" />
+        <input type="hidden" id="paramMsg" name="paramMsg" value="$!request.getParameter('msg')" />
+        <!--传参-->
+        <div id="toPageParametersDiv" class="toPageParametersDiv">
+
+        </div>
+    </form>
+    <input type="hidden" id="pageBeanNum_pageBean"/>
+</div>
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script>
+    $(function () {
+        var pageNum = $('#currentPage').val();
+        var pageSize = $('#pageSize').val();
+        var num = 1;
+        $('.page_no_class').each(function () {
+            $(this).text((pageNum - 1) * pageSize + num);
+            num++;
+        })
+    })
+</script>

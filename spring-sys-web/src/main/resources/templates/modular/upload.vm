@@ -1,0 +1,25 @@
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="upload_modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">导入EXCEL文件</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form_upload" class="cmxform form-horizontal adminex-form"  method="post" enctype="multipart/form-data" action="" >
+                    <div class="form-group">
+                        <input type="file" name="file" class="default">
+                    </div>
+                    导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"
+                    <a id="download_template" href="">下载模板</a>
+                    <input type="reset" style="display: none;" id="reset_form" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                <button class="btn btn-primary" type="button" modal-id="company_modal" id="upload_modal_confirm">确认
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

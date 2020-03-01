@@ -1,0 +1,5 @@
+
+Gsquid:UselessImportCheck"Remove this duplicated import.(óÆæ¥þÿÿÿÿ
+nsquid:S00117D"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢®ðýýÿÿÿÿ
+Isquid:S1481F"-Remove this unused "criteria" local variable.(Ë·£Áùÿÿÿÿ
+Xsquid:S1854F"<Remove this useless assignment to local variable "criteria".(Ë·£Áùÿÿÿÿ

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #parse("modular/html_css.vm")
+</head>
+
+<body class="sticky-header">
+<input type="hidden" value="$!{page}" id="page_hidden_iframe">
+
+<!--body wrapper start-->
+<div class="wrapper">
+    #parse("modular/prompt.vm")
+
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle} 搜索
+            <span class="tools pull-right">
+                <button class="btn btn-sm btn-primary tooltips" type="button" data-button="search" data-form-id="search">
+                    <i class="fa fa-search"></i> 查询
+                </button>
+                <button class="btn btn-sm btn-default tooltips" empty="true" reset-id="search_reset" type="button">
+                    <i class="fa fa-trash-o"></i> 清空
+                </button>
+            </span>
+        </header>
+        <div class="panel-body">
+            <form class="form-horizontal adminex-form" method="post" action="$!{ctx}/dict/dictList" id="search">
+                <input type="reset" class="hidden" id="search_reset" />
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">类型：</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="type" id="type" value="$!{dictInfo.type}" class="form-control toPageParameters">
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </section>
+
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle} 列表
+            <span class="tools pull-right">
+                #if($shiro.hasPermission("system:dict:edit"))
+                    <button id="button_post_insert" class="btn btn-sm btn-primary tooltips" type="button"
+                            data-button="insert-pre" data-href="$!{ctx}/dict/form">
+                        <i class="fa fa-plus"></i> 新增
+                    </button>
+                #end
+
+            </span>
+        </header>
+        <div class="panel-body">
+            <table id="tree_table" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>键值</th>
+                    <th>标签</th>
+                    <th>类型</th>
+                    <th>描述</th>
+                    <th>排序</th>
+                    #if($shiro.hasPermission("system:dict:edit"))<th>操作</th>#end
+                </tr>
+                </thead>
+                <tbody>
+                    #foreach($l in $page.list)
+                    <tr>
+                        <td >$!{l.value}</td>
+                        <td>$!{l.label}</td>
+                        <td>$!{l.type}</td>
+                        <td>$!{l.description}</td>
+                        <td>$!{l.sort}</td>
+                        <td>
+                            #if($shiro.hasPermission("system:dict:edit"))
+                                <a href="$!{ctx}/dict/form?id=$!{l.id}&buttonType=edit" class="fa fa-pencil-square-o" title="编辑"> 编辑</a>
+                                &nbsp;
+                                <a href="$!{ctx}/dict/delete?id=$!{l.id}" class="fa fa-trash-o" title="删除" delete="true"> 删除</a>
+                                &nbsp;
+                                <a href="$!{ctx}/dict/form?id=$!{l.id}&buttonType=addVal" class="fa fa-plus" title="添加键值"> 添加键值</a>
+                            #end
+
+                        </td>
+                    </tr>
+                    #end
+                </tbody>
+            </table>
+            #parse("modular/page.vm")
+        </div>
+
+    </section>
+</div>
+<!--body wrapper end-->
+
+<!-- Placed js at the end of the document so the pages load faster -->
+    #parse("modular/html_js.vm")
+
+<script>
+
+</script>
+</body>
+</html>

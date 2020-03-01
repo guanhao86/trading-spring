@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #parse("modular/html_css.vm")
+</head>
+
+<body class="sticky-header">
+<input type="hidden" value="$!{page}" id="page_hidden_iframe">
+<!--body wrapper start-->
+<div class="wrapper">
+    #parse("modular/prompt.vm")
+
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle} 搜索
+            <span class="tools pull-right">
+                <button class="btn btn-sm btn-primary tooltips" type="button" data-button="search"
+                        data-form-id="search">
+                    <i class="fa fa-search"></i> 查询
+                </button>
+                <button class="btn btn-sm btn-default tooltips" empty="true" reset-id="search_reset" type="button">
+                    <i class="fa fa-trash-o"></i> 清空
+                </button>
+            </span>
+        </header>
+        <div class="panel-body">
+            <form class="form-horizontal adminex-form" method="post" action="$!{ctx}/user/online" id="search">
+                <input type="reset" class="hidden" id="search_reset"/>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">用户名：</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="username" id="username" value="$!{user.username}" class="form-control toPageParameters">
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle} 列表
+        </header>
+        <div class="panel-body">
+            <table id="tree_table" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>姓名</th>
+                    <th>在线状态</th>
+                    <th>最近登录IP</th>
+                    <th>最近登录时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                    #foreach($l in $list)
+                    <tr>
+                        <td>$!{l.username}</td>
+                        <td>$!{l.name}</td>
+                        #if($!{l.loginSts} == 0) <td>离线</td> #else <td style="color: blue">在线</td> #end
+
+                        <td>$!{l.loginIp}</td>
+                        <td>$!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.loginDate})</td>
+                    </tr>
+                    #end
+
+                </tbody>
+            </table>
+##            #parse("modular/page.vm")
+        </div>
+
+    </section>
+##    </div>
+
+</div>
+<!--body wrapper end-->
+##    #parse("modular/upload.vm")
+<!-- Placed js at the end of the document so the pages load faster -->
+    #parse("modular/html_js.vm")
+
+<script>
+
+</script>
+</body>
+</html>

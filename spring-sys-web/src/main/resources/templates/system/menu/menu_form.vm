@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #parse("modular/html_css.vm")
+
+    <link href="/js/backstage/treeTable/themes/vsStyle/treeTable.css" rel="stylesheet">
+
+</head>
+
+<body class="sticky-header">
+<input type="hidden" value="$!{page}" id="page_hidden_iframe">
+
+<!--body wrapper start-->
+<div class="wrapper">
+##    #parse("/publicModular/progress.vm")
+    #parse("modular/prompt.vm")
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle}
+            <span class="tools pull-right">
+                <button class="btn btn-sm btn-primary tooltips" type="button" data-button="save" data-form-id="menu_form">
+                    <i class="fa fa-save"></i> 保存
+                </button>
+
+                <button class="btn btn-sm btn-default tooltips" type="button" data-original-title="返回" data-button="back" data-href="$!{ctx}/menu/menuList">
+                    <i class="fa fa-reply"></i> 返回
+                </button>
+            </span>
+        </header>
+        <div class="panel-body">
+            <form id="menu_form" class="cmxform form-horizontal adminex-form" method="post" action="$!{ctx}/menu/save">
+                <input name="buttonType" value="$!{buttonType}" type="hidden">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">上级菜单：</label>
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            #if("$!{buttonType}" == "edit")
+                                <input id="parent_id_grade" name="parentIdGrade" class="required" value="$!{menu.parentID}_$!{menu.parent.grade}" type="hidden">
+                                <input id="menu_id" name="id" class="required" value="$!{menu.id}" type="hidden">
+                                <input type="text" class="form-control" id="super_menu_name" placeholder="" value="$!{menu.parent.name}" contenteditable="true" readonly="readonly">
+                            #elseif("$!{buttonType}" == "addSub")
+                                <input id="parent_id_grade" name="parentIdGrade" class="required" value="$!{menu.parent.id}_$!{menu.parent.grade}" type="hidden">
+                                <input type="text" class="form-control" id="super_menu_name" placeholder="" value="$!{menu.parent.name}" contenteditable="true" readonly="readonly">
+                            #else
+                                <input id="parent_id_grade" name="parentIdGrade" class="required" value="1_0" type="hidden">
+                                <input type="text" class="form-control" id="super_menu_name" placeholder="" value="功能菜单" contenteditable="true" readonly="readonly">
+                            #end
+                            <span class="input-group-addon">
+                                <a href="#menu_modal" data-toggle="modal"><i class="fa fa-search"></i></a>
+                            </span>
+                            #parse("system/menu/menu_modal.vm")
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">菜单名称<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="name" id="name" required value="$!{menu.name}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">菜单链接：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="href" value="$!{menu.href}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">菜单图标：</label>
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <a href="#lcon_modal" data-toggle="modal" id="setting_lcon_opt_a"></a>
+                            </span>
+                            <input type="text" class="form-control" id="lcon_name" name="icon" value="$!{menu.icon}" placeholder="" contenteditable="true" >
+                            <span class="input-group-addon">
+                                <a href="#lcon_modal" data-toggle="modal" id=""><i class="fa fa-search"></i></a>
+                            </span>
+                            #parse("system/menu/icon_modal.vm")
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">排序：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="sort" id="sort_value" value="$!{menu.sort}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">可见：</label>
+                    <div class="col-lg-3">
+                        #if("$!{buttonType}" == "edit")
+                            $!dict.getDictRadio("$!{menu.isShow}", "show_hide", "isShow")
+                        #else
+                            $!dict.getDictRadio("1", "show_hide", "isShow")
+                        #end
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">权限标识：</label>
+                    <div class="col-lg-3">
+                        <input type="hidden" class="form-control" name="oldPermission" id="old_permission" value="$!{menu.permission}">
+                        <input type="text" class="form-control" name="permission" id="permission" value="$!{menu.permission}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">系统类型<font color="red">*</font>：</label>
+                    <div class="col-lg-3">
+                        $!dict.getDictSelect("$!{menu.systemType}", "EnumSystemType", "systemType")
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">快捷访问：</label>
+                    <div class="col-lg-3">
+                        <select data-placeholder="请选择" class="chosen-select" style="width:100%;" tabindex="2" name="target">
+                            <option value="false" >请选择</option>
+                            #foreach($keyCode in $!StringTool.getKeyCode().entrySet())
+                                #if($!{menu.target} == $keyCode.key)
+                                    <option value="$!keyCode.key" selected="selected">$!{keyCode.value}</option>
+                                #else
+                                    <option value="$!keyCode.key" >$!{keyCode.value}</option>
+                                #end
+
+                            #end
+
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">备注：</label>
+                    <div class="col-sm-3">
+                        <textarea class="form-control" rows="3" maxlength="100" style="width: 100%;" name="remarks">$!{menu.remarks}</textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </section>
+</div>
+<!--body wrapper end-->
+
+<!-- Placed js at the end of the document so the pages load faster -->
+    #parse("modular/html_js.vm")
+
+<script src="/js/backstage/treeTable/jquery.treeTable.js"></script>
+
+
+<script>
+    $(document).ready(function() {
+        $("#menu_form").validate({
+
+            messages: {
+                name: "请输入菜单名称",
+                permission: "权限标识不能重复"
+            },
+            errorPlacement: function(error, element) {
+
+                if (element.is(":checkbox")||element.is(":radio")){
+                    error.appendTo(element.parent().parent().parent());
+                } else {
+                    error.insertAfter(element.parent());
+                }
+            },
+            onfocus: true
+
+        });
+        $("#tree_table_modal").treeTable({expandLevel : 1}).show();
+    });
+    $(function () {
+        /*$('#menu_modal_tbody_tr').on('click', 'tr', function () {
+            alert(1);
+            $(this).children('td').children('input[type="radio"]').attr('checked','true');
+        })*/
+        var icon = $("#lcon_name").val();
+        if (icon != ""){
+            $('#setting_lcon_opt_a').html('<i class="fa ' + icon + '"></i>');
+        }
+
+        $("#lcon_name").on("keyup", function () {
+            $('#setting_lcon_opt_a').html('<i class="fa ' + $(this).val() + '"></i>');
+        })
+
+        $('#menu_modal_confirm').on('click', function () {
+            var radioObj = $('input:radio[name="menu"]:checked');
+            var menuID = radioObj.val();
+            var menuName = radioObj.attr("name-value");
+            var sysType = radioObj.attr("sys-type");
+            if (menuID == null) {
+                alert("没有选中项");
+                return false;
+            } else {
+                $(this).attr("data-dismiss", "modal");
+                $("select[name=systemType] option").each(function () {
+                    if ($(this).val() == sysType){
+                        $(this).attr("selected", "selected");
+                    }
+                })
+                chosenInfo.updateChose("systemType");
+                $('#parent_id_grade').val(menuID);
+                $('#super_menu_name').val(menuName);
+                $.ajax({
+                    type: "post",
+                    url: "$!{ctx}/menu/getSort",
+                    data:{"sort" : menuID},
+                    dataType: 'json',
+                    success: function (json) {
+                        $("#sort_value").val(json.sort);
+                    }
+                });
+            }
+        })
+    })
+</script>
+</body>
+</html>

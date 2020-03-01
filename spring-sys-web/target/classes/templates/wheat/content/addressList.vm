@@ -1,0 +1,89 @@
+#@html()
+    #@wrapper()
+
+        #@panel()
+            #@panelHeader({"title":"地址管理", "perm": "", "isBack": false, "href": ""})
+            #end
+            #@panelBody()
+                #@table()
+                    #tableTHead(["地址类型", "地址链接"],"", true)
+                    #@tableBody($page.list)
+                        #tableTd("$!{l.addType}", {"type": "dict", "format": "addType"})
+                        #tableTd("$!{l.jumpUrl}")
+                        #@tableTd()
+                            #@a("编辑" {"href": "$!{ctx}/content/edit?id=$!{l.id}", "class": "fa fa-trash-o"})#end
+                        #end
+                    #end
+                #end
+
+                #parse("modular/page.vm")
+            #end
+        #end
+    #end
+    #@script()
+    <script>
+        $(function () {
+            $("#review_id").on('click', function () {
+                var arr = "";
+                $("[pId='all']:checked").each(function () {
+                    if (arr == ""){
+                        arr = $(this).val();
+                    } else {
+                        arr += "," + $(this).val();
+                    }
+                })
+                alert(arr)
+                window.location.href = "$!{ctx}/member/delete?id=" + arr;
+            })
+
+        })
+
+        $(function () {
+            var startTime = $('.strat-time').datepicker().on('changeDate', function(ev) {
+                startTime.hide();
+            }).data('datepicker');
+            var endTime = $('.end-time').datepicker().on('changeDate', function(ev) {
+                endTime.hide();
+            }).data('datepicker');
+
+            $('button[empty="true"]').on('click', function () {
+                $("input[name='startTime']").eq(0).val($('#s_t_h').val());
+                $("input[name='endTime']").eq(0).val($('#e_t_h').val());
+            })
+        })
+
+        $.validator.setDefaults({
+            submitHandler: function(form) {
+                if($('#start_time').val()!=""&&$('#end_time').val()!=""){
+                    if (!(new Date($('#start_time').val()).compare(new Date($('#end_time').val()), DATE_CONS.DATE_COMPARE_SMALL_EQUAL))){
+                        $("#goods_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
+                        shade.hideBg("dialog");
+                        return;
+                    }
+                }
+                form.submit();
+            }
+        });
+        $(document).ready(function () {
+            debugger;
+            $("#search").validate({
+                errorPlacement: function(error, element) {
+                    debugger;
+                    if (element.is(":checkbox")||element.is(":radio")||element.is(".date-time")){
+                        debugger;
+                        error.appendTo(element.parent().parent().parent());
+                    } else {
+                        debugger;
+                        error.insertAfter(element.parent());
+                    }
+                },
+                onfocus: true
+            });
+        })
+    </script>
+        #jsCalculate()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

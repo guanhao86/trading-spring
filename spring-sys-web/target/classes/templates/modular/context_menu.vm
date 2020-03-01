@@ -1,0 +1,7 @@
+<div class="contextMenu" id="myMenu1">
+    <ul>
+        <li id="copy"><i class="fa fa-copy"></i> &nbsp;&nbsp; 复制</li>
+        <li id="cut"><i class="fa fa-cut"></i> &nbsp;&nbsp; 剪切</li>
+        <li id="paste"><i class="fa fa-paste"></i> &nbsp;&nbsp; 粘贴</li>
+    </ul>
+</div>

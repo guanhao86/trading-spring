@@ -1,0 +1,11 @@
+
+squid:UselessImportCheck
+"QRemove this unused import 'org.springframework.web.bind.annotation.PathVariable'.(¹ûñÅşÿÿÿÿ8Í§ÊÇä-
+squid:UselessImportCheck"QRemove this unused import 'org.springframework.web.bind.annotation.ResponseBody'.(•¶¶êøÿÿÿÿ8Í§ÊÇä-
+~squid:UselessImportCheck"SRemove this unused import 'org.springframework.web.bind.annotation.RequestMapping'.(ö»¿ë8Í§ÊÇä-
+ysquid:UselessImportCheck"IRemove this unused import 'com.spring.free.common.domain.AccessResponse'.(í¤×üıÿÿÿÿ8Í§ÊÇä-
+fsquid:UselessImportCheck";Remove this unused import 'com.spring.free.util.DateUtils'.(éÔèñ8Í§ÊÇä-
+hsquid:UselessImportCheck"=Remove this unused import 'com.github.pagehelper.PageHelper'.(ğ÷¨¹8Æ«Î°â-
+jsquid:CommentedOutCodeLine¦"<This block of commented-out lines of code should be removed.(òº‚8ü²ğÓê-
+[squid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8Æ«Î°â-
+gsquid:UselessImportCheck"<Remove this unused import 'com.alibaba.fastjson.JSONObject'.(äıµ8Í§ÊÇä-

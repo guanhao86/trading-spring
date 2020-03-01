@@ -1,0 +1,20 @@
+{
+  "groups": [{
+    "name": "mybatis",
+    "type": "com.spring.free.common.MybatisConfigurationProperties",
+    "sourceType": "com.spring.free.common.MybatisConfigurationProperties"
+  }],
+  "properties": [
+    {
+      "name": "mybatis.mapper-locations",
+      "type": "java.lang.String",
+      "sourceType": "com.spring.free.common.MybatisConfigurationProperties"
+    },
+    {
+      "name": "mybatis.type-aliases-package",
+      "type": "java.lang.String",
+      "sourceType": "com.spring.free.common.MybatisConfigurationProperties"
+    }
+  ],
+  "hints": []
+}

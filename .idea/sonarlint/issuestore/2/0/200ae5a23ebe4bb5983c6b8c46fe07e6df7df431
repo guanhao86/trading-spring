@@ -1,0 +1,14 @@
+
+hsquid:CommentedOutCodeLine‡"<This block of commented-out lines of code should be removed.(ÞÚÝóýÿÿÿÿ
+Tsquid:S1854£"7Remove this useless assignment to local variable "map".(¼ú ïøÿÿÿÿ
+Vsquid:S1135ð"2Complete the task associated to this TODO comment.(éÇÄ¶üÿÿÿÿ8”¶¤žæ-
+ssquid:UselessImportCheck"HRemove this unused import 'org.springframework.context.annotation.Bean'.(‚î‰Þ8æé¼žæ-
+Qsquid:S1135‡"2Complete the task associated to this TODO comment.(øÖª§8”¶¤žæ-
+Osquid:S1135›"2Complete the task associated to this TODO comment.(éÇÄ¶üÿÿÿÿ
+Esquid:S1481£"(Remove this unused "map" local variable.(¼ú ïøÿÿÿÿ
+^squid:S1192C"GDefine a constant instead of duplicating this literal "result" 4 times.(‘ªçñ
+Isquid:S1135}"2Complete the task associated to this TODO comment.(÷ÀáØ
+hsquid:CommentedOutCodeLine¤"<This block of commented-out lines of code should be removed.(³¸ì¤úÿÿÿÿ
+Jsquid:S1135°"2Complete the task associated to this TODO comment.(øÖª§
+Qsquid:S1135Ä"2Complete the task associated to this TODO comment.(ñ·ó•8”¶¤žæ-
+wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(íœè³þÿÿÿÿ

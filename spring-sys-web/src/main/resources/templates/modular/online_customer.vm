@@ -1,0 +1,91 @@
+<div class="small-chat-box fadeInRight animated">
+
+    <div class="heading" draggable="true">
+        <small class="chat-date pull-right">
+            $!StringTool.getCurrTime("yyyy.MM.dd")
+        </small> 聊天中
+    </div>
+
+    <div class="content" id="message_body">
+
+    </div>
+    <div class="form-chat">
+        <div class="input-group input-group-sm">
+            <input type="text" class="form-control" id="message_context"> <span class="input-group-btn"> <button
+                class="btn btn-primary" type="button" id="button_send">发送
+                </button> </span>
+        </div>
+    </div>
+
+</div>
+$!{onlineNumber}
+#if($!{onlineNumber} != 0)
+<div id="small-chat">
+    <span class="badge badge-warning pull-right" id="badge_span"></span>
+    <a class="open-small-chat" onclick="openSmall(this)">
+        <i class="fa fa-comments" id="fa_small"></i>
+    </a>
+</div>
+#end
+<script src="/js/jquery-1.10.2.min.js"></script><!-- Jquery -->
+<script src="/js/system/bs.tool.js"></script>
+<script src="/js/stockjs.min.js"></script>
+<script src="/js/stomp.js"></script>
+<script>
+    var socket = new SockJS('/endpointSang');
+    var stompClient2 = Stomp.over(socket);
+    stompClient2.connect({}, function (frame) {
+        console.log('Connected:' + frame);
+        stompClient2.subscribe('/topic/online/message', function (response) {
+            setOnlineMsg(JSON.parse(response.body))
+        })
+    });
+    function openSmall(obj) {
+        if (!$("#fa_small").hasClass("fa-remove")){
+            $("#badge_span").html("");
+        }
+        var html = $("#message_body").html();
+        var div = document.getElementById('message_body');
+        $("#message_body").html(html);
+        div.scrollTop = div.scrollHeight;
+        $(".slimScrollBar").css("top", div.scrollTop);
+    }
+    function setOnlineMsg(json) {
+        console.log(json);
+        var html = '';
+        if ("$!{username}" != json.sendName){
+            html = '<div class="left">';
+            html += '<div class="author-name">' + json.sendName;
+            html += ' <small class="chat-date"> ' + new Date().format("hh:mm");
+            html += '</small></div><div class="chat-message">';
+            html += json.message;
+            html += '</div></div>';
+            if ($("#fa_small").hasClass("fa-comments")){
+                var badgeNum = $("#badge_span").html();
+                if (badgeNum != ""){
+                    $("#badge_span").html(parseInt(badgeNum) + 1);
+                } else {
+                    $("#badge_span").html(1);
+                }
+            }
+        } else {
+            html = '<div class="right">';
+            html += '<div class="author-name">' + json.sendName;
+            html += ' <small class="chat-date"> ' + new Date().format("hh:mm");
+            html += '</small></div><div class="chat-message">';
+            html += json.message;
+            html += '</div></div>';
+        }
+
+        var div = document.getElementById('message_body');
+        $("#message_body").append(html);
+        div.scrollTop = div.scrollHeight;
+        $('#message_context').val("");
+    }
+    $(function () {
+        $("#button_send").on('click', function () {
+            var message = $('#message_context').val();
+            stompClient2.send("/messageOnline", {}, JSON.stringify({'sendName': "$!{username}", 'message': message}));
+        })
+    })
+</script>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #parse("modular/html_css.vm")
+
+    <link href="/js/backstage/treeTable/themes/vsStyle/treeTable.css" rel="stylesheet">
+
+</head>
+
+<body class="sticky-header">
+<input type="hidden" value="$!{page}" id="page_hidden_iframe">
+
+<!--body wrapper start-->
+<div class="wrapper">
+    #parse("modular/prompt.vm")
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle} 列表
+            <span class="tools pull-right">
+                #if($shiro.hasPermission("system:menu:edit"))
+                    <button id="button_post_insert" class="btn btn-sm btn-primary tooltips" type="button"
+                            data-button="insert-pre" data-href="$!{ctx}/menu/form">
+                        <i class="fa fa-plus"></i> 新增
+                    </button>
+                #end
+            </span>
+        </header>
+        <div class="panel-body">
+            <table id="tree_table" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>菜单名称</th>
+                    <th>菜单链接</th>
+                    <th>可见</th>
+                    <th>权限标识</th>
+                    <th>归属系统</th>
+                    <th>排序</th>
+                    #if($shiro.hasPermission("system:menu:edit"))<th>操作</th>#end
+                </tr>
+                </thead>
+                <tbody>
+                #foreach($l in $list)
+                    #set($i = $!l.grade * 10)
+                    #if($!i == 10)
+                    <tr style="color: #00aa88;background: #eff0f4" id="$!{l.id}">
+                    #else
+                    <tr style="color: #1d88cf" id="$!{l.id}" pId="$!{l.parentID}">
+                    #end
+                        <td><i class="fa $!{l.icon}" style="width: 15px; height: 15px"></i> $!{l.name}</td>
+                        <td title="$!{l.href}">
+                            $!StringTool.overLength($!{l.href}, 30)
+                        </td>
+                        <td>$!dict.getDictLabel("$!{l.isShow}", 'show_hide', '无')</td>
+                        <td>$!{l.permission}</td>
+                    <td>$!dict.getDictLabel("$!{l.systemType}", 'EnumSystemType', '')</td>
+                        <td>$!{l.sort}</td>
+                        <td>
+                            #if($shiro.hasPermission("system:menu:edit"))
+                                <a href="$!{ctx}/menu/form?id=$!{l.id}&buttonType=edit" class="fa fa-pencil-square-o" title="编辑"> 编辑</a>
+                                &nbsp;
+                                <a href="$!{ctx}/menu/delete?id=$!{l.id}" class="fa fa-trash-o" title="删除" delete="true"> 删除</a>
+                                &nbsp;
+                                <a href="$!{ctx}/menu/form?id=$!{l.id}&buttonType=addSub" class="fa fa-plus" title="添加下级菜单"> 添加下级菜单</a>
+                            #end
+                        </td>
+                    </tr>
+                #end
+
+                </tbody>
+            </table>
+##            #parse("/publicModular/pagination.vm")
+        </div>
+
+    </section>
+</div>
+<!--body wrapper end-->
+
+<!-- Placed js at the end of the document so the pages load faster -->
+    #parse("modular/html_js.vm")
+
+<script src="/js/backstage/treeTable/jquery.treeTable.js"></script>
+
+
+<script>
+    $(document).ready(function() {
+        $("#tree_table").treeTable({expandLevel : 1}).show();
+    });
+</script>
+</body>
+</html>

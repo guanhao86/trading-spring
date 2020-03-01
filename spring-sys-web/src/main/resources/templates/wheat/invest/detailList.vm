@@ -1,0 +1,127 @@
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"会员管理 搜索", "perm": "", "isBack": false, "href": ""})
+                #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
+                #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
+            #end
+            #@panelBody()
+                #@form("search" false "post" "invest/plan/detaillist")
+                    #@divColSmNum(3)
+                        #formInput({"name": "会员编号", "length": "4,8", "asterisk": false} {"name": "memberId", "id": "memberId",
+                            "value": "$!{param.memberId}"})
+                    #end
+                #end
+            #end
+        #end
+        #@panel()
+            #@panelBody()
+                #@table()
+                    #tableTHead(["序号", "会员ID", "类型", "是否完结", "开始时间", "结束时间", "计划天数", "实际天数", "计划金额", "已返天数", "已返本金", "已返利息", "主仓返还利息百分比", "是否复投"],"", false)
+                    #@tableBody($page.list)
+                        #set($planAmount1 = $l.planAmount / 1000)
+                        #set($returnAmount1 = $l.retrunAmount / 1000)
+                        #set($returnInterest1 = $l.retrunInterest / 1000)
+                        #set($interestReturnPer1 = $l.interestReturnPer)
+                        #set($startTime = $!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{l.startTime}))
+                        #set($endTime = $!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{l.endTime}))
+                        #tableTd("$!{l.id}")
+                        #tableTd("$!{l.memberId}")
+                        #if($l.type ==  1)
+                            #tableTd("主仓")
+                        #elseif($l.type ==  2)
+                            #tableTd("副仓")
+                        #end
+                        #if($l.status ==  2)
+                            #tableTd("完结")
+                        #else
+                            #tableTd("执行中")
+                        #end
+                        #tableTd("$!{startTime}")
+                        #tableTd("$!{endTime}")
+                        #tableTd("$!{l.planDays}")
+                        #tableTd("$!{l.totalDays}")
+                        #tableTd("$!{planAmount1}")
+                        #tableTd("$!{l.returnDays}")
+                        #tableTd("$!{returnAmount1}")
+                        #tableTd("$!{returnInterest1}")
+                        #tableTd("$!{interestReturnPer1}%")
+                        #if($l.appendFlay ==  1)
+                            #tableTd("复投")
+                        #else
+                            #tableTd("")
+                        #end
+
+                    #end
+                #end
+                #parse("modular/page.vm")
+            #end
+        #end
+    #end
+    #@script()
+    <script>
+        $(function () {
+            $("#review_id").on('click', function () {
+                var arr = "";
+                $("[pId='all']:checked").each(function () {
+                    if (arr == ""){
+                        arr = $(this).val();
+                    } else {
+                        arr += "," + $(this).val();
+                    }
+                })
+                alert(arr)
+                window.location.href = "$!{ctx}/member/delete?id=" + arr;
+            })
+
+        })
+
+        $(function () {
+            var startTime = $('.strat-time').datepicker().on('changeDate', function(ev) {
+                startTime.hide();
+            }).data('datepicker');
+            var endTime = $('.end-time').datepicker().on('changeDate', function(ev) {
+                endTime.hide();
+            }).data('datepicker');
+
+            $('button[empty="true"]').on('click', function () {
+                $("input[name='startTime']").eq(0).val($('#s_t_h').val());
+                $("input[name='endTime']").eq(0).val($('#e_t_h').val());
+            })
+        })
+
+        /*$.validator.setDefaults({
+            submitHandler: function(form) {
+                if($('#start_time').val()!=""&&$('#end_time').val()!=""){
+                    if (!(new Date($('#start_time').val()).compare(new Date($('#end_time').val()), DATE_CONS.DATE_COMPARE_SMALL_EQUAL))){
+                        $("#goods_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
+                        shade.hideBg("dialog");
+                        return;
+                    }
+                }
+                form.submit();
+            }
+        });*/
+        $(document).ready(function () {
+            debugger;
+            $("#search").validate({
+                errorPlacement: function(error, element) {
+                    debugger;
+                    if (element.is(":checkbox")||element.is(":radio")||element.is(".date-time")){
+                        debugger;
+                        error.appendTo(element.parent().parent().parent());
+                    } else {
+                        debugger;
+                        error.insertAfter(element.parent());
+                    }
+                },
+                onfocus: true
+            });
+        })
+    </script>
+        #jsCalculate()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

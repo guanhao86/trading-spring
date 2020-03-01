@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.free.mapper.MemberExtendMapper">
+    <sql id="tbMemberColumns">
+        a.id AS "id",
+        a.member_id AS "memberId",
+        b.address AS "address"
+
+
+    </sql>
+
+    <sql id="table_name">`t_wheat_member member`</sql>
+
+
+
+    <select id="findList" resultType="com.spring.free.domain.MemberExtend">
+        SELECT
+        <include refid="tbMemberColumns" />
+        FROM t_wheat_member a ,table_wallet_db b
+        WHERE a.del_flag = 0 AND a.member_id = b.userID
+
+        <if test="memberId != null  and memberId != ''">
+            AND a.member_id = #{memberId}
+        </if>
+        ORDER BY id asc ,a.create_time DESC
+    </select>
+</mapper>

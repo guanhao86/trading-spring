@@ -1,0 +1,78 @@
+<!-- Placed js at the end of the document so the pages load faster -->
+##<script src="/js/jquery-1.10.2.min.js"></script><!-- Jquery -->
+<script src="/js/bootstrap.min.js"></script><!-- bootstrap -->
+<script src="/js/system/modernizr.min.js"></script><!-- modernizr 兼容浏览器CSS3和HTML5兼任性 -->
+##<script src="/js/backstage/jquery.nicescroll.js"></script>
+<script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script><!-- jquery.nicescroll 滚动条插件 -->
+<script src="/js/jquery.validate.min.js"></script><!-- Jquery.validate 表单验证 -->
+<script src="/js/plugins/chosen/chosen.jquery.js"></script>
+<!--pickers plugins-->
+<script src="/js/bootstrap/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+##<script src="/js/bootstrap/bootstrap-datepicker/js/bootstrap-datepicker.zh-CN.js"></script>
+<script src="/js/bootstrap/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="/js/bootstrap/bootstrap-daterangepicker/moment.min.js"></script>
+<script src="/js/bootstrap/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="/js/bootstrap/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/js/system/bs.regular.js"></script>
+<script src="/js/system/bs.backspace.js"></script>
+##<script src="/js/system/bs.scripts.js"></script>
+<script src="/js/system/bs.address.js"></script>
+<script src="/js/system/bs.page.js"></script>
+<script src="/js/chosen-init.js"></script>
+<script src="/js/system/bs.context.menu.js"></script><!-- Jquery -->
+##<script src="/js/pickers-init.js"></script>
+<script>
+
+    $("body").contextMenu('smallMenu', {
+        onContextMenu: function (e) {
+            /*$.gritter.add({
+                title: "右键菜单已被禁用",
+//                text: '请前往<a href="#" class="text-warning">收件箱</a>查看今日任务',
+                time: 3000
+            })*/
+            // var obj = e.target;//鼠标点击的目标
+            /*然后对鼠标点击的目标进行一些特定的操作*/
+            return false;//返回true则显示小菜单，返回false则不显示小菜单
+        }
+    })
+    /*$('body').contextMenu('myMenu1', {
+        bindings: {
+            'copy': function (t) {
+                $(document.body).on('mouseup', function () {
+                    var selectedText = getSelectedText();
+                    console.log(selectedText);
+                })
+
+//                alert('Trigger was ' + t.id + '\nAction was Open');
+            },
+            'cut': function (t) {
+                alert('Trigger was ' + t.id + '\nAction was Email');
+            },
+            'paste': function (t) {
+                console.log( t.parse() )
+//                alert('Trigger was ' + t.id + '\nAction was Save');
+            }
+        }
+    });*/
+
+   /* function getSelectedText() {    //this function code is borrowed from: http://www.codetoad.com/javascript_get_selected_text.asp
+
+        var txt = "";
+        if (window.getSelection) {
+            txt = window.getSelection();
+        } else if (window.document.getSelection) {
+            txt = window.document.getSelection();
+        } else if (window.document.selection) {
+            txt = window.document.selection.createRange().text;
+        }
+        return txt;
+    }*/
+/*
+    $('#target').mouseup(function () {
+        var selectedText = getSelectedText();
+        $('#output').text(selectedText);
+        //alert(selectedText);
+    });*/
+</script>

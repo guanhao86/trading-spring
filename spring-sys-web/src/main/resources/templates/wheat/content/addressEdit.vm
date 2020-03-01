@@ -1,0 +1,47 @@
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:content:edit", "isBack": true, "href": "content/list?type=3"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "content/addressSave?type=3")
+                <input type="hidden" name="id" value="$!{content.id}">
+
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">是否禁用：</label>
+                    <div class="col-sm-2">
+                        #selectBS($!dict.getDictList("addType"), ["addType", "$!{content.addType}", "value", "label"], false, [false, "$!{content.addType}"])
+                    </div>
+                </div>
+
+                    #formInput({"name": "地址连接"} {"name": "jumpUrl", "value":"$!{content.jumpUrl}" ,"id": "jumpUrl","nochinese": "true","url": "true","required": "required"})
+                #end
+            #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+            rules: {
+                coinName: {
+                    remote: {
+                        url: "$!{ctx}/coin/isCoinName", type: "post", dataType: "json",
+                        data: {
+                        coinName: function () {return $('#coin_name').val().trim();}
+                        },
+                        dataFilter: function (data) {//判断控制器返回的内容
+                            return data;
+                        }
+                    }
+                }
+            },
+            messages: {
+                coinName: {
+                    remote: function () {
+                        return "币种名称已存在"
+                    }
+                }
+            },
+        #end
+    #end
+#end

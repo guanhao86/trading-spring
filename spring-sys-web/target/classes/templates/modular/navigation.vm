@@ -1,0 +1,72 @@
+<!--左侧导航开始-->
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="nav-close"><i class="fa fa-times-circle"></i>
+    </div>
+    <div class="sidebar-collapse" style="overflow-x: auto">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header"><div class="logo-element">$!{systemName}</div></li>
+            <li><a class="J_menuItem" menu-name="首页" href="/indexInfo" data-index="0" key-code=""><i class="fa fa-home" style="width: 15px;height: 15px"></i> <span class="nav-label">首页</span></a></li>
+            #foreach($menu in $menuList)
+                <li>
+                    #if("$!{menu.href}" == "")
+                        <a title="$!{menu.name}" menu-name="$!{menu.name}" href="#"><i class="fa $!{menu.icon}" style="width: 15px;height: 15px"></i> <span class="nav-label">$!StringTool.overLength("$!{menu.name}", 9) </span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            #foreach($menu2 in $menu.children)
+                                #if($!menu2.parentID == $!menu.id)
+                                    #if("$!{menu2.href}" == "")
+                                        <li>
+                                            <a title="$!{menu2.name}" menu-name="$!{menu.name}_$!{menu2.name}" href="#" target="iframe_system"> $!StringTool.overLength("$!{menu2.name}", 9) <span class="fa arrow"></span></a>
+                                            <ul class="nav nav-third-level">
+                                                #foreach($menu3 in $menu2.children)
+                                                    #if($!menu3.parentID == $!menu2.id)
+                                                        <li><a class="J_menuItem" title="$!{menu3.name}" menu-name="$!{menu.name}_$!{menu2.name}_$!{menu3.name}" key-code="$!{menu3.target}" href="$!{ctx}/$!{menu3.href}" target="iframe_system"> $!StringTool.overLength("$!{menu3.name}", 9)</a></li>
+                                                    #end
+                                                #end
+                                            </ul>
+                                        </li>
+                                    #else
+                                        <li><a class="J_menuItem" title="$!{menu2.name}" menu-name="$!{menu.name}_$!{menu2.name}" key-code="$!{menu2.target}" href="$!{ctx}/$!{menu2.href}" target="iframe_system"> $!StringTool.overLength("$!{menu2.name}", 9)</a></li>
+                                    #end
+                                #end
+                            #end
+                        </ul>
+                    #else
+                        <a class="J_menuItem" title="$!{menu.name}" menu-name="$!{menu.name}" key-code="$!{menu.target}" href="$!{ctx}/$!{menu.href}"><i class="fa $!{menu.icon}"></i><span class="nav-label"> $!StringTool.overLength("$!{menu.name}", 9)</span></a>
+                    #end
+
+                </li>
+            #end
+        </ul>
+    </div>
+</nav>
+<!--左侧导航结束-->
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script src="/js/system/bs.scripts.js"></script>
+<script>
+    $(function () {
+        $("#sop_name").html('<li class="active"><a href="javascript:void(0);">首页</a></li>');
+        $('#side-menu ul li a').on('click', function () {
+            var href = $(this).attr("href");
+            var name = $(this).html();
+            if (href != "#"){
+                var menuName = $(this).attr("menu-name");
+                var sop = menuName.split("_");
+                var html = '';
+                for(var i = 0; i < sop.length; i++){
+                    html += '<li class="active"><a href="javascript:void(0);">' + sop[i] + '</a></li>';
+                }
+                $("#sop_name").html(html);
+                shade.showBg('dialog', '正在努力奔跑中...请稍后');
+                $(".J_menuTab").each(function () {
+                    var tabHref = $(this).attr("data-id");
+                    if (href == tabHref){
+                        shade.hideBg("dialog");
+                    }
+                })
+            }
+        })
+    })
+    function keyboardP(title) {
+        $(".J_menuItem[title='" + title + "']").click();
+    }
+</script>

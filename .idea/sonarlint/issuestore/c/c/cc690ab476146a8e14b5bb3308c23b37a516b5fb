@@ -1,0 +1,31 @@
+
+9squid:S1643"Use a StringBuilder instead.(¦ÑÎ¥úÿÿÿÿ
+qsquid:S3008"URename this field "DICT_INFOS" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨ûõŸúÿÿÿÿ
+9squid:S1643«"Use a StringBuilder instead.(†è¡¥üÿÿÿÿ
+9squid:S1643 "Use a StringBuilder instead.(Ç¤şûûÿÿÿÿ
+hsquid:CommentedOutCodeLine´"<This block of commented-out lines of code should be removed.(ªıºÆúÿÿÿÿ
+9squid:S2386"Make this member "protected".(¨ûõŸúÿÿÿÿ
+9squid:S1643"Use a StringBuilder instead.(†è¡¥üÿÿÿÿ
+9squid:S1643·"Use a StringBuilder instead.(ÑÜÌùÿÿÿÿ
+nsquid:S1192·"QDefine a constant instead of duplicating this literal "<option value=\"" 4 times.(ÑÜÌùÿÿÿÿ
+‰"squid:ClassVariableVisibilityCheck"VMake DICT_INFOS a static final constant or non-public and provide accessors if needed.(¨ûõŸúÿÿÿÿ
+9squid:S1643"Use a StringBuilder instead.(ü§í‰øÿÿÿÿ
+Œsquid:S1192 "oDefine a constant instead of duplicating this literal "&nbsp;&nbsp;<label class=\"checkbox-inline\" >" 3 times.(Ç¤şûûÿÿÿÿ
+9squid:S1643¡"Use a StringBuilder instead.(²°çÃÿÿÿÿÿ
+9squid:S1643¥"Use a StringBuilder instead.(àóøÉÿÿÿÿÿ
+9squid:S1643Å"Use a StringBuilder instead.(ÑÜÌùÿÿÿÿ
+9squid:S1643”"Use a StringBuilder instead.(†è¡¥üÿÿÿÿ
+9squid:S1643¢"Use a StringBuilder instead.(†è¡¥üÿÿÿÿ
+Tsquid:S2589"7Remove this expression which always evaluates to "true"(˜Õè¥şÿÿÿÿ
+9squid:S1643¦"Use a StringBuilder instead.(†è¡¥üÿÿÿÿ
+9squid:S1643©"Use a StringBuilder instead.(Ç¤şûûÿÿÿÿ
+~squid:S1192¡"aDefine a constant instead of duplicating this literal "<input type=\"checkbox\" name=\"" 3 times.(²°çÃÿÿÿÿÿ
+gsquid:S1192·"JDefine a constant instead of duplicating this literal "</option>" 4 times.(ÑÜÌùÿÿÿÿ
+9squid:S1643’"Use a StringBuilder instead.(¦ÑÎ¥úÿÿÿÿ
+9squid:S1643“"Use a StringBuilder instead.(Æ——¿üÿÿÿÿ
+Lsquid:S1444"0Make this "public static DICT_INFOS" field final(¨ûõŸúÿÿÿÿ
+fsquid:S1192"IDefine a constant instead of duplicating this literal "</label>" 5 times.(†è¡¥üÿÿÿÿ
+9squid:S1643¹"Use a StringBuilder instead.(ÔÀ‘ùÿÿÿÿ
+9squid:S1643Ç"Use a StringBuilder instead.(ÔÀ‘ùÿÿÿÿ
+9squid:S1643ª"Use a StringBuilder instead.(àóøÉÿÿÿÿÿ
+9squid:S1643¤"Use a StringBuilder instead.(Ç¤şûûÿÿÿÿ

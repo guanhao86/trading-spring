@@ -1,0 +1,103 @@
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"奖金配置管理 搜索", "perm": "", "isBack": false, "href": ""})
+                #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
+                #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
+            #end
+            #@panelBody()
+                #@form("search" false "post" "invest/planConfig/bonusConfiglist")
+
+
+                #end
+            #end
+        #end
+        #@panel()
+            #@panelBody()
+                #@table()
+                    #tableTHead(["序号", "计划名称", "会员级别", "正在执行或等待执行计划数量", "业绩奖金百分比", "平级超越奖金百分比", "备注"],"", false)
+                    #@tableBody($page)
+                        #set($interestReturnPer1 = $l.interestReturnPer)
+                        #set($sameLevelInterestPer1 = $l.sameLevelInterestPer)
+                        #tableTd("$!{l.id}")
+                        #tableTd("$!{l.planName}")
+                        #tableTd("$!{l.memberLevelDesc}")
+                        #tableTd("$!{l.runningCount}")
+                        #tableTd("$!{interestReturnPer1}%")
+                        #tableTd("$!{sameLevelInterestPer1}%")
+                        #tableTd("$!{l.remark}")
+                        #@tableTd()
+                            #@a("编辑" {"href": "$!{ctx}/invest/planConfig/bonusConfigEdit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                        #end
+                    #end
+                #end
+            #end
+        #end
+    #end
+    #@script()
+    <script>
+        $(function () {
+            $("#review_id").on('click', function () {
+                var arr = "";
+                $("[pId='all']:checked").each(function () {
+                    if (arr == ""){
+                        arr = $(this).val();
+                    } else {
+                        arr += "," + $(this).val();
+                    }
+                })
+                alert(arr)
+                window.location.href = "$!{ctx}/member/delete?id=" + arr;
+            })
+
+        })
+
+        $(function () {
+            var startTime = $('.strat-time').datepicker().on('changeDate', function(ev) {
+                startTime.hide();
+            }).data('datepicker');
+            var endTime = $('.end-time').datepicker().on('changeDate', function(ev) {
+                endTime.hide();
+            }).data('datepicker');
+
+            $('button[empty="true"]').on('click', function () {
+                $("input[name='startTime']").eq(0).val($('#s_t_h').val());
+                $("input[name='endTime']").eq(0).val($('#e_t_h').val());
+            })
+        })
+
+        /*$.validator.setDefaults({
+            submitHandler: function(form) {
+                if($('#start_time').val()!=""&&$('#end_time').val()!=""){
+                    if (!(new Date($('#start_time').val()).compare(new Date($('#end_time').val()), DATE_CONS.DATE_COMPARE_SMALL_EQUAL))){
+                        $("#goods_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
+                        shade.hideBg("dialog");
+                        return;
+                    }
+                }
+                form.submit();
+            }
+        });*/
+        $(document).ready(function () {
+            debugger;
+            $("#search").validate({
+                errorPlacement: function(error, element) {
+                    debugger;
+                    if (element.is(":checkbox")||element.is(":radio")||element.is(".date-time")){
+                        debugger;
+                        error.appendTo(element.parent().parent().parent());
+                    } else {
+                        debugger;
+                        error.insertAfter(element.parent());
+                    }
+                },
+                onfocus: true
+            });
+        })
+    </script>
+        #jsCalculate()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

@@ -1,0 +1,16 @@
+
+Zsquid:S1854œ";Remove this useless assignment to local variable "jsonObj".(È•µˆ8ù³Û•æ-
+Rsquid:S1854B";Remove this useless assignment to local variable "jsonObj".(È•µˆ
+wsquid:S11922"`Define a constant instead of duplicating this literal "æœåŠ¡ç«¯å¤„ç†è¯·æ±‚æˆåŠŸã€‚" 22 times.(Ò˜¶ø
+Rsquid:S1854/";Remove this useless assignment to local variable "jsonObj".(È•µˆ
+osquid:CommentedOutCodeLine°"<This block of commented-out lines of code should be removed.(…‰–Ğÿÿÿÿÿ8Æ§®ßè-
+jsquid:CommentedOutCodeLineÈ"<This block of commented-out lines of code should be removed.(ôÎê8•Š½Ää-
+osquid:CommentedOutCodeLineÆ"<This block of commented-out lines of code should be removed.(Å½ÅÈúÿÿÿÿ8•Š½Ää-
+Ssquid:S1854Á";Remove this useless assignment to local variable "jsonObj".(È•µˆ
+osquid:CommentedOutCodeLineÍ"<This block of commented-out lines of code should be removed.(Ò™¡àúÿÿÿÿ8•Š½Ää-
+Ysquid:S18548";Remove this useless assignment to local variable "jsonObj".(È•µˆ8Æ§®ßè-
+Ssquid:S1854§";Remove this useless assignment to local variable "jsonObj".(È•µˆ
+Zsquid:S1854†";Remove this useless assignment to local variable "jsonObj".(È•µˆ8•Š½Ää-
+Zsquid:S1854‘";Remove this useless assignment to local variable "jsonObj".(È•µˆ8•Š½Ää-
+Ysquid:S1854L";Remove this useless assignment to local variable "jsonObj".(È•µˆ8•Š½Ää-
+Ksquid:S1481Á",Remove this unused "jsonObj" local variable.(È•µˆ8ù³Û•æ-

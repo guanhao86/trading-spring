@@ -1,0 +1,137 @@
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"虚拟币充值 搜索", "perm": "", "isBack": false, "href": ""})
+                #btn({"btnName":"充值", "icon":"fa-plus", "style":"primary",  "attr":{"data-button": "insert-pre",
+                    "data-href": "$!{ctx}/virtualRecord/add?type=1"}})
+                #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
+                #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
+            #end
+            #@panelBody()
+                #@form("search" false "post" "virtualRecord/list?type=$!{virtualRecord.type}")
+                    <input type="hidden" name="type" value="$!{virtualRecord.type}">
+                 #*   #@divColSmNum(3)
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">状态：</label>
+                        <div class="col-sm-5">
+                            #selectBS($!dict.getDictList("auditStutas"), ["state", "$!{virtualRecord.state}", "value", "label"], false, [true, ""])
+                        </div>
+                    </div>
+                    #end*#
+                    #@divColSmNum(3)
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">充值类型：</label>
+                        <div class="col-sm-5">
+                            #selectBS($!dict.getDictList("cztype"), ["expand1", "$!{virtualRecord.expand1}", "value", "label"], false, [true, ""])
+                        </div>
+                    </div>
+                    #end
+                    #@divColSmNum(3)
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">充值币种：</label>
+                        <div class="col-sm-5">
+                            #selectBS($!dict.getDictList("virtualType"), ["coinType", "$!{virtualRecord.coinType}", "value", "label"], false, [true, ""])
+                        </div>
+                    </div>
+                    #end
+                    #@divColSmNum(3)
+                        #formInput({"name": "会员ID", "length": "4,8", "asterisk": false} {"name": "mmeberId", "id": "mmeberId",
+                            "value": "$!{virtualRecord.mmeberId}"})
+                    #end
+                #end
+            #end
+        #end
+        #@panel()
+            #@panelBody()
+                #@table()
+                    #tableTHead([ "会员ID", "充值时间","充值币种","充值类型", "充值QC数量", "当时市场价"],"", false)
+                    #@tableBody($page.list)
+
+                        #tableTd("$!{l.mmeberId}")
+                        #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.createTime}))
+                        #tableTd("$!{l.coinType}", {"type": "dict", "format": "virtualType"})
+                        #tableTd("$!{l.expand1}", {"type": "dict", "format": "cztype"})
+                        #tableTd("$!{l.qcCoin}")
+                        #tableTd("$!{l.marketPrice}")
+
+                        #@tableTd()
+                            #if(${l.state}==0)
+                                #@a("审核" {"href": "$!{ctx}/virtualRecord/edit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #else
+                                #@a("查看" {"href": "$!{ctx}/virtualRecord/edit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #end
+                        #end
+                    #end
+                #end
+
+                #parse("modular/page.vm")
+            #end
+        #end
+    #end
+    #@script()
+    <script>
+        $(function () {
+            $("#review_id").on('click', function () {
+                var arr = "";
+                $("[pId='all']:checked").each(function () {
+                    if (arr == ""){
+                        arr = $(this).val();
+                    } else {
+                        arr += "," + $(this).val();
+                    }
+                })
+                alert(arr)
+                window.location.href = "$!{ctx}/member/delete?id=" + arr;
+            })
+
+        })
+
+        $(function () {
+            var startTime = $('.strat-time').datepicker().on('changeDate', function(ev) {
+                startTime.hide();
+            }).data('datepicker');
+            var endTime = $('.end-time').datepicker().on('changeDate', function(ev) {
+                endTime.hide();
+            }).data('datepicker');
+
+            $('button[empty="true"]').on('click', function () {
+                $("input[name='startTime']").eq(0).val($('#s_t_h').val());
+                $("input[name='endTime']").eq(0).val($('#e_t_h').val());
+            })
+        })
+
+        /*$.validator.setDefaults({
+            submitHandler: function(form) {
+                if($('#start_time').val()!=""&&$('#end_time').val()!=""){
+                    if (!(new Date($('#start_time').val()).compare(new Date($('#end_time').val()), DATE_CONS.DATE_COMPARE_SMALL_EQUAL))){
+                        $("#goods_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
+                        shade.hideBg("dialog");
+                        return;
+                    }
+                }
+                form.submit();
+            }
+        });*/
+        $(document).ready(function () {
+            debugger;
+            $("#search").validate({
+                errorPlacement: function(error, element) {
+                    debugger;
+                    if (element.is(":checkbox")||element.is(":radio")||element.is(".date-time")){
+                        debugger;
+                        error.appendTo(element.parent().parent().parent());
+                    } else {
+                        debugger;
+                        error.insertAfter(element.parent());
+                    }
+                },
+                onfocus: true
+            });
+        })
+    </script>
+        #jsCalculate()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

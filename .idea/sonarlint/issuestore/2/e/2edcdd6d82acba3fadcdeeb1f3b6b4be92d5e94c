@@ -1,0 +1,4 @@
+
+Isquid:S1481<"-Remove this unused "criteria" local variable.(òò’§ıÿÿÿÿ
+Xsquid:S1854<"<Remove this useless assignment to local variable "criteria".(òò’§ıÿÿÿÿ
+isquid:S00117:"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İ†‡¬

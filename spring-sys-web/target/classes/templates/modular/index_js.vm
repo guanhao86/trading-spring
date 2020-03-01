@@ -1,0 +1,28 @@
+<script src="/js/jquery-1.10.2.min.js?v=2.1.4"></script><!-- JQuery 1.10.2 -->
+<script src="/js/bootstrap.min.js?v=3.3.5"></script><!-- Bootstrap -->
+
+<script src="/js/system/modernizr.min.js?v=3.3.5"></script><!-- modernizr 兼容浏览器CSS3和HTML5兼任性 -->
+
+<script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script><!-- JQuery.metisMenu 导航菜单 -->
+<script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script><!-- JQuery.slimscroll 滚动条 -->
+<script src="/js/plugins/layer/layer.min.js"></script><!-- Layer 弹出层插件 -->
+<script src="/js/plugins/gritter/jquery.gritter.min.js"></script>
+<script src="/js/system/bs.context.menu.js"></script><!-- Jquery -->
+<script src="/js/system/bs.backspace.js"></script><!-- Jquery -->
+<script src="/js/hplus.min.js?v=4.0.0"></script><!-- Hplus 导航菜单实现 -->
+<script type="text/javascript" src="/js/contabs.min.js"></script>
+<script src="/js/plugins/pace/pace.min.js"></script>
+<script>
+    $("body").contextMenu('smallMenu',{
+        onContextMenu:function(e){
+            /*$.gritter.add({
+                title: "右键菜单已被禁用",
+//                text: '请前往<a href="#" class="text-warning">收件箱</a>查看今日任务',
+                time: 3000
+            })*/
+            // var obj = e.target;//鼠标点击的目标
+            /*然后对鼠标点击的目标进行一些特定的操作*/
+            return false;//返回true则显示小菜单，返回false则不显示小菜单
+        }
+    })
+</script>

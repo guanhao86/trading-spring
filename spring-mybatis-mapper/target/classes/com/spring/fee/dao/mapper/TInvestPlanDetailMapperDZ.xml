@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.fee.dao.mapper.TInvestPlanDetailMapperDZ">
+  <resultMap id="BaseResultMap" type="com.spring.fee.model.TInvestPlanDetailDZ">
+    <result column="member_id" property="memberId"/>
+    <result column="plan_id" property="planId"/>
+    <result column="level" property="level"/>
+    <result column="count"  property="count"/>
+  </resultMap>
+  <select id="getMainRunningCount" parameterType="com.spring.fee.model.TInvestPlanDetailDZ" resultMap="BaseResultMap">
+    SELECT
+    A.member_id member_id,
+    A.LEVEL level,
+    B.plan_id plan_id,
+    B.count count
+    FROM t_wheat_member A,
+    ( SELECT  member_id,  plan_id, count(1) count FROM t_invest_plan_detail
+        WHERE  STATUS = 1 AND TYPE=1 AND end_time > now()
+        GROUP BY  member_id, plan_id
+    ) B
+    WHERE A.member_id = B.member_id
+  </select>
+  <select id="getMainRunningCount2" parameterType="com.spring.fee.model.TInvestPlanDetailDZ" resultMap="BaseResultMap">
+    SELECT  member_id, count(1) count FROM t_invest_plan_detail
+        WHERE  STATUS = 1 AND TYPE=1 AND end_time > now()
+        GROUP BY  member_id
+  </select>
+  <resultMap id="BaseResultMap1" type="com.spring.fee.model.TInvestPlanDetailDZ">
+    <result column="amount" property="amount"/>
+  </resultMap>
+  <select id="statisticPlanAmount" parameterType="com.spring.fee.model.TInvestPlanDetailDZ" resultMap="BaseResultMap1">
+    SELECT SUM(plan_amount) amount
+    FROM t_invest_plan_detail
+    where 1=1
+    and append_flay = '0'
+    and member_id in
+    <foreach collection="memberList" item="id" index="index"
+             open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+    <if test="createTimeStart != null">
+      and create_Time >= #{createTimeStart,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createTimeEnd != null">
+      and #{createTimeEnd,jdbcType=TIMESTAMP} > create_Time
+    </if>
+  </select>
+  <resultMap id="BaseResultMap2" type="com.spring.fee.model.TInvestPlanDetailDZ">
+    <result column="plan_id" property="planId"/>
+    <result column="count" property="count"/>
+  </resultMap>
+  <select id="getMainRunningPlanCount" parameterType="com.spring.fee.model.TInvestPlanDetailDZ" resultMap="BaseResultMap2">
+    SELECT plan_id, count(1) count
+    FROM t_invest_plan_detail
+     where member_id = #{memberId,jdbcType=VARCHAR}
+      and type = '1' and status = 1
+    group by plan_id
+  </select>
+</mapper>

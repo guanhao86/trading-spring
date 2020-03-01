@@ -1,0 +1,846 @@
+#**
+ * 自定义标签 模版
+ *#
+#macro(formBind $label)
+    #set($option = {"colLabel": 2, "colDiv": 3, "type": "text", "asterisk": true, "isAll": false, "isChecked": true, "format": "yyyy-MM-dd", "isDownload": false})
+    #if("$!label.get('length')" != "")
+        #set($lengths = $!label.get('length').split(','))
+
+
+        #set($option.colLabel = $lengths[0])
+        #set($option.colDiv = $lengths[1])
+    #end
+    #if("$!label.get('type')" != "")
+        #set($option.type = $!label.get('type'))
+    #end
+    #if("$!label.get('asterisk')" != "")
+        #set($option.asterisk = $!label.get('asterisk'))
+    #end
+    #if("$!label.get('isAll')" != "")
+        #set($option.isAll = $!label.get('isAll'))
+    #end
+    #if("$!label.get('isChecked')" != "")
+        #set($option.isChecked = $!label.get('isChecked'))
+    #end
+    #if("$!label.get('format')" != "")
+        #set($option.format = $!label.get('format'))
+    #end
+    #if("$!label.get('isDownload')" != "")
+        #set($option.isDownload = $!label.get('isDownload'))
+    #end
+#end
+#**
+ * @explain form表单标签
+ * @param formID      入参方式  ：字符串
+ *                    说明      ：form表单ID属性的值
+ * @param isEnctype   入参方式  ：true|false
+ *                    说明      ：true 表示表单可以提交文件；false表示表单不可以提交文件；即上传文件
+ * @param method      入参方式  ：字符串 post|get
+ *                    说明      ：form表单method属性的值
+ * @param action      入参方式  ：字符串
+ *                    说明      ：form表单action属性的值，不需要传入默认前缀路径值即$!{ctx}参数，格式为：goods/save
+ *#
+#macro(form $formID $isEnctype $method $action)
+<form id="$!formID" #if($isEnctype) enctype="multipart/form-data" #end
+      class="cmxform form-horizontal adminex-form" method="$!method"
+      action="$!{ctx}/$!action" >$bodyContent <input type="reset" style="display: none;" id="reset_form" /></form>
+#end
+
+#**
+ * @explain form表单input标签 含有text 和 password 和 number 和 hidden 等类型
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", type:"text|password|number|hidden,默认text"}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(formInput $label $attr)
+    #formBind($label)
+<div class="form-group">
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        <input type="$!option.type" class="form-control toPageParameters" #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end />
+    </div>
+</div>
+#end
+
+#**
+ * @explain form表单input标签 含有text 和 password 和 number 和 hidden 等类型
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", type:"text|password|number|hidden,默认text"}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(labelInput $label $attr)
+    #formBind($label)
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        <input type="$!option.type" class="form-control toPageParameters" #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end />
+    </div>
+#end
+
+#**
+ * @explain form表单select标签 带搜索的下拉框需要自行引用相关js和css文件 通常情况在html头部分已经引用 不引用则为默认html样式
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", isAll:"true|false,默认false", default: "默认选中的值，默认空", dictType:"字典数据类型", list:[{集合数据}], listCat: "{key:"", value:""}"}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(formSelect $label $attr)
+    #formBind($label)
+<div class="form-group">
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        <select data-placeholder="全部" class="chosen-select toPageParameters" #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end >
+        #if ($!option.isAll)
+            <option value="$!isAllOpt[1]">全部</option>
+        #end
+        #if("$!label.dictType" != "")
+            #set($dictList = $!dict.getDictList("$!label.dictType"))
+            #foreach($l in $!dictList)
+                #if("$!label.default" == "$!l.value")
+                    <option value="$!l.value" selected="selected">$!l.label</option>
+                #else
+                    <option value="$!l.value">$!l.label</option>
+                #end
+            #end
+        #elseif("$!label.list" != "")
+            #foreach($l in $!label.list)
+                #if($!label.default == $!l.get($listCat.key))
+                    <option value="$!l.get($listCat.key)" selected="selected">$!l.get($listCat.value)</option>
+                #else
+                    <option value="$!l.get($listCat.key)">$!l.get($listCat.value)</option>
+                #end
+            #end
+        #end
+        </select>
+    </div>
+</div>
+#end
+
+#**
+ * @explain form表单select标签 带搜索的下拉框需要自行引用相关js和css文件 通常情况在html头部分已经引用 不引用则为默认html样式
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", isAll:"true|false,默认false", default: "默认选中的值，默认空", dictType:"字典数据类型", list:[{集合数据}], listCat: "{key:"", value:""}"}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(labelSelect $label $attr)
+    #formBind($label)
+
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        <select data-placeholder="全部" class="chosen-select toPageParameters" #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end >
+        #if ($!option.isAll)
+            <option value="$!isAllOpt[1]">全部</option>
+        #end
+        #if($!label.dictList)
+            #set($dictList = $!dict.getDictList("$!label.dictType"))
+            #foreach($l in $!dictList)
+                #if("$!label.default" == "$!l.value")
+                    <option value="$!l.value" selected="selected">$!l.label</option>
+                #else
+                    <option value="$!l.value">$!l.label</option>
+                #end
+            #end
+        #elseif($!label.list)
+            #foreach($l in $!label.list)
+                #if($!label.default == $!l.get($listCat.key))
+                    <option value="$!l.get($listCat.key)" selected="selected">$!l.get($listCat.value)</option>
+                #else
+                    <option value="$!l.get($listCat.key)">$!l.get($listCat.value)</option>
+                #end
+            #end
+        #end
+        </select>
+    </div>
+#end
+
+#**
+ * @explain form表单radio标签
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", isChecked:"true|false,默认true", default: "默认选中的值，默认空", dictType:"字典数据类型", list:[{集合数据}]}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(formRadio $label $attr)
+    #formBind($label)
+<div class="form-group">
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        #if($!label.dictList)
+            #set($dictList = $!dict.getDictList("$!label.dictType"))
+            #foreach($l in $!dictList)
+                <label class="radio-inline" >
+                <input type="radio"  style='vertical-align:middle'
+                    #if($!label.default == $!l.value) checked="checked" #end
+                    #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end
+                    value="$!l.value"> $!l.label
+                </label>
+
+            #end
+        #elseif($!label.list)
+            #foreach($l in $!label.list)
+                <label class="radio-inline" >
+                <input type="radio"  style='vertical-align:middle'
+                    #if($!label.default == $!l.get("key")) checked="checked" #end
+                    #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end
+                    value="$!l.get("key")"> $!l.get("value")
+                </label>
+            #end
+        #end
+    </div>
+</div>
+#end
+
+#**
+ * @explain form表单radio标签
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", isChecked:"true|false,默认true", default: "默认选中的值，默认空", dictType:"字典数据类型", list:[{集合数据}]}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(labelRadio $label $attr)
+    #formBind($label)
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        #if($!label.dictList)
+            #set($dictList = $!dict.getDictList("$!label.dictType"))
+            #foreach($l in $!dictList)
+                <label class="radio-inline" >
+                <input type="radio"  style='vertical-align:middle'
+                    #if($!label.default == $!l.value) checked="checked" #end
+                    #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end
+                    value="$!l.value"> $!l.label
+                </label>
+
+            #end
+        #elseif($!label.list)
+            #foreach($l in $!label.list)
+                <label class="radio-inline" >
+                <input type="radio"  style='vertical-align:middle'
+                    #if($!label.default == $!l.get("key")) checked="checked" #end
+                    #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end
+                    value="$!l.get("key")"> $!l.get("value")
+                </label>
+            #end
+        #end
+    </div>
+#end
+
+#**
+ * @explain form表单checkbox标签
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", isChecked:"true|false,默认true", default: "默认选中的值，默认空", dictType:"字典数据类型", list:[{集合数据}]}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(formCheckBox $label $attr)
+    #formBind($label)
+<div class="form-group">
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        #if($!label.dictList)
+            #set($dictList = $!dict.getDictList("$!label.dictType"))
+            #foreach($l in $!dictList)
+                <label class="checkbox-inline" >
+                <input type="checkbox"  style='vertical-align:middle'
+                    #if("$!label.default" == "$!l.value") checked="checked" #end
+                    #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end
+                    value="$!l.value"> $!l.label
+                </label>
+
+            #end
+        #elseif($!label.list)
+            #foreach($l in $!label.list)
+                <label class="checkbox-inline" >
+                <input type="checkbox"  style='vertical-align:middle'
+                    #if($!label.default == $!l.get("key")) checked="checked" #end
+                    #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end
+                    value="$!l.get("key")"> $!l.get("value")
+                </label>
+            #end
+        #end
+    </div>
+</div>
+#end
+
+#**
+ * @explain form表单checkbox标签
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", isChecked:"true|false,默认true", default: "默认选中的值，默认空", dictType:"字典数据类型", list:[{集合数据}]}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(labelCheckBox $label $attr)
+    #formBind($label)
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        #if($!label.dictList)
+            #set($dictList = $!dict.getDictList("$!label.dictType"))
+            #foreach($l in $!dictList)
+                <label class="checkbox-inline" >
+                <input type="checkbox"  style='vertical-align:middle'
+                    #if("$!label.default" == "$!l.value") checked="checked" #end
+                    #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end
+                    value="$!l.value"> $!l.label
+                </label>
+
+            #end
+        #elseif($!label.list)
+            #foreach($l in $!label.list)
+                <label class="checkbox-inline" >
+                <input type="checkbox"  style='vertical-align:middle'
+                    #if($!label.default == $!l.get("key")) checked="checked" #end
+                    #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end
+                    value="$!l.get("key")"> $!l.get("value")
+                </label>
+            #end
+        #end
+    </div>
+#end
+
+#**
+ * @explain form表单date标签 需要自行引用js和css文件 通常情况在html头部分已经引用
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", format:"日期格式，默认yyyy-MM-dd", cl:"class样式 空格分隔"}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(formDate $label $attr)
+    #formBind($label)
+<div class="form-group">
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        <div data-date-format="yyyy-mm-dd" data-date="$!StringTool.getCurrTime("$!option.format")" class="input-group input-append date dpMonths $!label.cl">
+            <input type="text" readonly="" date="date" size="16" class="form-control toPageParameters add-on" #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end >
+            <span class="input-group-addon add-on">
+                <a href="javascript:void(0);" class="fa fa-calendar"></a>
+            </span>
+        </div>
+    </div>
+</div>
+#end
+
+#**
+ * @explain form表单date标签 需要自行引用js和css文件 通常情况在html头部分已经引用
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", format:"日期格式，默认yyyy-MM-dd"}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(labelDate $label $attr)
+    #formBind($label)
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        <div data-date-format="yyyy-mm-dd" data-date="$!StringTool.getCurrTime("$!option.format")" class="input-group input-append date dpMonths">
+            <input type="text" readonly="" date="date" size="16" class="form-control toPageParameters add-on" #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end >
+            <span class="input-group-addon add-on">
+                <a href="javascript:void(0);" class="fa fa-calendar"></a>
+            </span>
+        </div>
+    </div>
+#end
+
+#**
+ * @explain form表单InputByBtn标签 需要自行添加查询按钮相关事件
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", btnId:"查询按钮ID", btnName:"按钮名称"}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(formInputByBtn $label $attr)
+    #formBind($label)
+<div class="form-group">
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        <div class="input-group">
+            <input type="text" class="form-control toPageParameters" #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end />
+            <span class="input-group-addon"><a href="javascript:void(0);" id="$!label.btnId">$!label.btnName</a></span>
+        </div>
+    </div>
+</div>
+#end
+
+#**
+ * @explain form表单InputByBtn标签 需要自行添加查询按钮相关事件
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", btnId:"查询按钮ID", btnName:"按钮名称"}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(labelInputByBtn $label $attr)
+    #formBind($label)
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        <div class="input-group">
+            <input type="text" class="form-control" #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end />
+            <span class="input-group-addon"><a href="javascript:void(0);" id="$!label.btnId">$!label.btnName</a></span>
+        </div>
+    </div>
+#end
+
+#**
+ * @explain form表单label标签
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true"}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ *#
+#macro(formLabel $label)
+    #formBind($label)
+<div class="form-group">
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        $bodyContent
+    </div>
+</div>
+#end
+
+#**
+ * @explain form表单label标签
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true"}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ *#
+#macro(labelContent $label)
+    #formBind($label)
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        $bodyContent
+    </div>
+#end
+
+#**
+ * @explain form表单modal标签 弹出框选择
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", modalId:"弹出层ID", text: "文字", icon:"图标", parse:"弹出层页面路径"}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param inputAttr   入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(formModal $label $attr)
+    #formBind($label)
+<div class="form-group">
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        <div class="input-group">
+            <input type="text" class="form-control" #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end >
+            <span class="input-group-addon">
+                #if($!label.icon)
+                    <a href="#$!label.modalId" data-toggle="modal" id="" class="fa $!label.icon"></a>
+                #elseif($!label.tex)
+                    <a href="#$!label.modalId" data-toggle="modal" id="">$!label.text</a>
+                #end
+            </span>
+            #parse("$!label.parse")
+        </div>
+    </div>
+</div>
+#end
+
+#**
+ * @explain form表单modal标签 弹出框选择
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", modalId:"弹出层ID", text: "文字", icon:"图标", parse:"弹出层页面路径"}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param inputAttr   入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(labelModal $label $attr)
+    #formBind($label)
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        <div class="input-group">
+            <input type="text" class="form-control" #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end >
+            <span class="input-group-addon">
+                #if($!label.icon)
+                    <a href="#$!label.modalId" data-toggle="modal" id="" class="fa $!label.icon"></a>
+                #elseif($!label.tex)
+                    <a href="#$!label.modalId" data-toggle="modal" id="">$!label.text</a>
+                #end
+            </span>
+            #parse("$!label.parse")
+        </div>
+    </div>
+#end
+
+#**
+ * @explain formGroup标签
+ *#
+#macro(formGroup)
+<div class="form-group">$bodyContent</div>
+#end
+
+#**
+ * @explain btnGroup标签 按钮组
+ * @param label       入参方式  ：[{btnName:"按钮名称", icon:"按钮图标", style:"primary|default", perm:"权限", attr:{key: value, key2: value2, ..}}, ..]
+ *#
+#macro(btnGroup $label)
+    #foreach($l in $label)
+        #if($!l.perm)
+            #if($shiro.hasPermission("$!l.perm"))
+                #btn($l)
+            #end
+        #else
+            #btn($l)
+        #end
+    #end
+
+#end
+
+#**
+ * @explain btn标签 按钮组
+ * @param param       入参方式  ：{btnName:"按钮名称", icon:"按钮图标", style:"primary|default", perm:"权限", attr:{key: value, key2: value2, ..}}
+ *#
+#macro(btn $param)
+<button class="btn btn-sm btn-$!param.style tooltips" type="button" #foreach($item in $!param.attr.entrySet()) $!item.key = "$!item.value" #end >
+    #if($!param.icon)<i class="fa $!param.icon"></i>#end
+    $!param.btnName
+</button>
+#end
+
+#**
+ * @explain form表单textarea标签 需要自行引用js和css文件 初始化文本域信息， 不引用则为默认html样式
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", default:"默认值，即文本域中的信息"}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(formTextarea $label $attr)
+    #formBind($label)
+<div class="form-group">
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        <textarea class="form-control summernote" #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end>$!{label.default}</textarea>
+    </div>
+</div>
+#end
+
+#**
+ * @explain form表单file标签
+ * @param label       入参方式  ：{name:"标签名称", length: "标签长度,默认2,3", asterisk:"true|false,默认true", isDownload:"", href: ""}
+ *                    说明      ：lenght必须是12的倍数，并且比12小，即能被12整除
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(formFile $label $attr)
+    #formBind($label)
+<div class="form-group">
+    <label class="col-sm-$!option.colLabel control-label">$!label.get('name')
+        #if($!option.asterisk)<font color="red">*</font>#end：
+    </label>
+    <div class="col-sm-$!option.colDiv">
+        <div class="input-group">
+            <input type="file" class="form-control default" #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end />
+            #if($!option.isDownload)
+                <span class="input-group-addon" style="border-left: 1px solid #ccc">
+                <a id="download_template" href="$!{ctx}/$!label.href">下载模板</a>
+            </span>
+            #end
+        </div>
+
+    </div>
+</div>
+#end
+
+#**
+ * @explain panel标签
+ *#
+#macro(panel)
+<section class="panel">$bodyContent</section>
+#end
+#**
+ * @explain panel-heading标签
+ * @param label       入参方式  ：{title:"标题", perm: "权限标识", isBack:"true|false,默认true", href: "返回路径"}
+ *#
+#macro(panelHeader $label)
+<header class="panel-heading">
+    $!label.title
+    <span class="tools pull-right">
+        #if("$!label.perm" != "")
+            #if($shiro.hasPermission("$!label.perm"))
+                $bodyContent
+            #end
+        #else
+            $bodyContent
+        #end
+        #if($!label.isBack)
+            <button class="btn btn-sm btn-default tooltips" type="button" data-original-title="返回" data-button="back" data-href="$!{ctx}/$!label.href">
+                <i class="fa fa-reply"></i> 返回
+            </button>
+        #end
+    </span>
+</header>
+#end
+
+#**
+ * @explain panel-body标签
+ *#
+#macro(panelBody)
+<div class="panel-body">$bodyContent</div>
+#end
+
+#**
+ * @explain div标签
+ * @param num       入参方式  ：数字 1-12
+ *#
+#macro(divColSmNum $num)
+<div class="col-sm-$num">$bodyContent</div>
+#end
+
+#**
+ * @explain html标签
+ *#
+#macro(html)
+<!DOCTYPE html><html lang="en"><head>#parse("modular/html_css.vm")</head><body>$bodyContent</body></html>
+#end
+
+#**
+ * @explain wrapper标签
+ *#
+#macro(wrapper)
+<div class="wrapper">#parse("modular/prompt.vm")$bodyContent</div>
+#end
+
+#**
+ * @explain form表单file标签
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(table $attr)
+<table class="table table-hover" #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end >$bodyContent</table>
+#end
+
+#**
+ * @explain tableHead标签
+ * @param array       入参方式  ：列表标题名称 数组 ["字段1","字段2",..]
+ * @param auth        入参方式  ：操作权限判断类型
+ * @param isHandle    入参方式  ：是否显示{操作}项 true|false
+ *#
+#macro(tableHead $array $auth $isHandle)
+<thead>
+<tr>
+    #foreach($arr in $!array)
+        <th>$!arr</th>
+    #end
+    #if($!isHandle == true)
+        #if("$!auth" != "")
+            #if($!auth.indexOf(",") != -1)
+                #set($boo = false)
+                #set($auths = $!auth.split(","))
+                #foreach($a in $auths)
+                    #set($boo = $shiro.hasPermission($!a))
+                    #if($boo)
+                        <th>操作</th>
+                        #break
+                    #end
+                #end
+            #else
+                #if($shiro.hasPermission($!auth))<th>操作</th>#end
+            #end
+
+        #else
+            <th>操作</th>
+        #end
+    #end
+</tr>
+</thead>
+#end
+
+#**
+ * @explain form表单file标签
+ * @param list        入参方式  ：从数据库查询的数据集合
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *                    说明      ：key标签属性，value标签属性值
+ *#
+#macro(tableBody $list $attr)
+<tbody #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end >
+    #foreach($l in $list)
+    <tr>$bodyContent</tr>
+    #end
+</tbody>
+#end
+
+#**
+ * @explain tableTr标签
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *#
+#macro(tableTr $attr)
+    <tr #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end >$bodyContent</tr>
+#end
+
+#**
+ * @explain tableTh标签
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *#
+#macro(tableTh $attr)
+<th #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end >$bodyContent</th>
+#end
+
+#**
+ * @explain tableTd标签
+ * @param attrName    入参方式  ：
+ * @param dataType    入参方式  ：{type:"date|dict|price|bigPrice|percent", format: "字符串,对应类型的格式或类型"}
+ *                    说明      ：数据类型，日期|date，字典|dict，
+ * @param attr        入参方式  ：{key: value, key2: value2, ..}
+ *#
+#macro(tableTd $attrName $data $attr)
+    #if($!attrName)
+    <td #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end >
+        #if("$!data.type" == "date")
+            $!DateTool.format("$!data.format", $!attrName)
+        #elseif("$!data.type" == "dict")
+            $!dict.getDictLabel("$!attrName", "$!data.format", "")
+        #elseif("$!data.type" == "price")
+            $!NumberTool.format("#$!data.format",$!MathTool.div($!attrName,"100"))
+        #elseif("$!data.type" == "thousand")
+            $!NumberTool.format("#$!data.format",$!MathTool.div($!attrName,"1000"))
+        #elseif("$!data.type" == "bigPrice")
+            $!StringTool.format("$!MathTool.div($!attrName,'100')")
+        #elseif("$!data.type" == "percent")
+            $!NumberTool.format("#$!data.format",$!MathTool.mul($!attrName,"100")) %
+        #elseif("$!data.type" == "label")
+            $bodyContent
+        #else
+            $!attrName
+        #end
+    </td>
+    #else
+    <td #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end >$bodyContent</td>
+    #end
+#end
+
+#**
+ * @explain panel-heading标签
+ * @param label       入参方式  ：{title:"标题", perm: "权限标识", isBack:"true|false,默认true", href: "返回路径"}
+ *#
+#macro(a $name $attr)
+<a #foreach($item in $!attr.entrySet()) $!item.key = "$!item.value" #end > $!name</a>
+    $bodyContent
+&nbsp;
+#end
+
+#**
+ * @explain script标签
+ *#
+#macro(script)
+    #parse("modular/html_js.vm")$bodyContent
+#end
+
+#macro(scriptSrc $src)
+<script src="$src"></script>
+#end
+#**
+ * @explain jsValidate标签 form表单验证
+ * @param formID         入参方式  ：字符串form的ID值
+ * @param errorPlacement 入参方式  ：字符串errorPlacement
+ *#
+#macro(jsValidate $formID $errorPlacement)
+<script>
+    $(document).ready(function() {
+        $('#reset_form').trigger("click");
+        $("#$formID").validate({
+            $bodyContent
+            errorPlacement: function(error, element) {
+                if (element.is(":checkbox") || element.is(":radio") $!errorPlacement){
+                    error.appendTo(element.parent().parent().parent());
+                } else {
+                    error.insertAfter(element.parent());
+                }
+            },
+            onfocus: true
+        });
+    });
+</script>
+#end
+
+#macro(jsValidateTime $formID $errorPlacement)
+<script>
+    $(document).ready(function() {
+        $('#reset_form').trigger("click");
+        $("#$formID").validate({
+            $bodyContent
+            errorPlacement: function(error, element) {
+                if (element.is(":checkbox") || element.is(":radio") ||element.is(".date-time")$!errorPlacement){
+                    error.appendTo(element.parent().parent().parent());
+                } else {
+                    error.insertAfter(element.parent());
+                }
+            },
+            onfocus: true
+        });
+    });
+</script>
+#end
+
+#**
+ * @explain jsValidator标签 form验证通过后，提交
+ *#
+#macro(jsValidator)
+<script>
+    $.validator.setDefaults({
+        submitHandler: function(form) {
+            $bodyContent
+            shade.showBg("dialog", "正在努力奔跑中...请稍后");
+            form.submit();
+        }
+    });
+</script>
+#end
+
+#**
+ * @explain jsCalculate标签 根据calType进行计算 乘以或除以100操作 需要在输入框中添加属性 calType 属性，值为div|mul
+ *#
+#macro(jsCalculate)
+<script>
+    var calculate = {
+        div100: function () {
+            $("[calType=div]").each(function () {
+                var divVal = $(this).val();
+                if (divVal == ""){
+                    divVal = 0;
+                }
+                $(this).val("%_" + divVal);
+            })
+        },
+        mul100: function () {
+            $("[calType=mul]").each(function () {
+                var mulVal = $(this).val();
+                if (mulVal == ""){
+                    mulVal = 0;
+                }
+                $(this).val("￥" + mulVal);
+            })
+        }
+    }
+</script>
+#end

@@ -1,0 +1,8 @@
+<input type="hidden" page-id="nextPage"  name="page" value="$!{page.nextPage}" />
+<input type="hidden" page-id="pageSize" name="pageSize" value="$!{page.pageSize}"/>
+<input type="hidden" page-id="lastPage" name="lastPage" value="$!{page.lastPage}"/>
+#if($!{page.lastPage} != 0)
+<button class="btn btn-sm btn-default" style="width: 100%;margin-bottom: 10px" loading-id="loading_more">加载更多消息</button>
+#else
+<button class="btn btn-sm btn-default" style="width: 100%;margin-bottom: 10px" loading-id="loading_more" disabled>没有更多了</button>
+#end

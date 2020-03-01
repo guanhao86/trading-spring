@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.fee.dao.mapper.TInvestPlanMainLogMapperDZ">
+  <resultMap id="BaseResultMap" type="com.spring.fee.model.TInvestPlanMainLogDZ">
+    <result column="member_id" property="memberId"/>
+    <result column="plan_main_id" property="planMainId"/>
+    <result column="plan_name" property="planName"/>
+    <result column="status" property="status"/>
+    <result column="remark" property="remark"/>
+    <result column="create_time" property="createTime"/>
+  </resultMap>
+  <select id="selectList" parameterType="com.spring.fee.model.TInvestPlanMainLogDZ" resultMap="BaseResultMap">
+    SELECT
+      a.plan_main_id,
+      b.member_id,
+      b.plan_name,
+      a.status,
+      a.remark,
+      a.create_time
+    FROM
+        t_invest_plan_main_log a,
+        t_invest_plan_main b
+    WHERE
+        a.plan_main_id = b.id
+        and a.settle_record_id = #{settleRecordId,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

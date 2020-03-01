@@ -1,0 +1,20 @@
+
+osquid:CommentedOutCodeLineÔ"<This block of commented-out lines of code should be removed.(­öŠÀúÿÿÿÿ8§©’¡ö-
+osquid:CommentedOutCodeLineÎ"<This block of commented-out lines of code should be removed.(í¾À¹úÿÿÿÿ8§©’¡ö-
+‡squid:S1192ø"hDefine a constant instead of duplicating this literal "ï¼Œä½™é¢ä¸è¶³ï¼Œå½“å‰ä¸å…è®¸ç”³è¯·" 4 times.(›‡§Å8™éÄä-
+qsquid:S3776‡"RRefactor this method to reduce its Cognitive Complexity from 49 to the 15 allowed.(Ê”à8™éÄä-
+vsquid:S00117»"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÂÉú÷üÿÿÿÿ8™éÄä-
+osquid:CommentedOutCodeLine¨"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8™éÄä-
+jsquid:CommentedOutCodeLine¢"<This block of commented-out lines of code should be removed.(˜µ•¿8™éÄä-
+usquid:S2159í"VRemove this call to "equals"; comparisons between unrelated types always return false.(Îƒá¤8™éÄä-
+Msquid:S1066u"/Merge this if statement with the enclosing one.(Î¦Â™8™éÄä-
+’squid:S1192Ì"tDefine a constant instead of duplicating this literal "æœªæŸ¥è¯¢åˆ°å½“å‰æ­£åœ¨æ‰§è¡Œçš„è®¡åˆ’ï¼Œè®¡åˆ’ID[" 3 times.(ß°8™éÄä-
+jsquid:CommentedOutCodeLine¤"<This block of commented-out lines of code should be removed.(€”àž8™éÄä-
+qsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 34 to the 15 allowed.(”ëãÙ8™éÄä-
+xsquid:S1192ø"YDefine a constant instead of duplicating this literal "æŽ’é˜Ÿéœ€è¦é‡‘é¢ä¸ºï¼š" 4 times.(›‡§Å8™éÄä-
+xsquid:S1192ø"YDefine a constant instead of duplicating this literal "ï¼Œè´¦æˆ·å¯ç”¨ä½™é¢ï¼š" 4 times.(›‡§Å8™éÄä-
+˜squid:S1192Ö"tDefine a constant instead of duplicating this literal "å‰¯ä»“çŠ¶æ€ä¸æ­£ç¡®ï¼Œä¸å…è®¸ç»­ä»“ï¼Œè®¡åˆ’ID[" 3 times.(ÆñŸþÿÿÿÿ8™éÄä-
+hsquid:S2583á"DChange this condition so that it does not always evaluate to "false"(ÆµÆ¾ûÿÿÿÿ8™éÄä-
+vsquid:S00117º"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÂÉú÷üÿÿÿÿ8™éÄä-
+vsquid:S00117£"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÂÉú÷üÿÿÿÿ8™éÄä-
+«squid:S1192Ï"†Define a constant instead of duplicating this literal "ç»­ä»“å½“å‰è®¡åˆ’çŠ¶æ€ä¸æ˜¯æ‰§è¡Œä¸­ï¼Œä¸å…è®¸ç»­ä»“ï¼Œè®¡åˆ’ID[" 3 times.(¿à¹Þüÿÿÿÿ8™éÄä-

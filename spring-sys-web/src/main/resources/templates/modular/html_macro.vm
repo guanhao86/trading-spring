@@ -1,0 +1,139 @@
+#*
+    @param $list 数据列表
+    @param $attrs 属性 数组[name/id属性值, 默认选中值, value属性值, 显示值]
+    @param $vali 是否参与验证
+    @param $isAllOpt 是否显示{全部}选项 数组[boolean, string]
+*#
+#macro(selectBS $list $attrs $vali $isAllOpt)
+<select data-placeholder="全部" class="chosen-select toPageParameters" style="width:100%;" tabindex="2" name="$!attrs[0]"
+        #if ($!vali == true)
+            selectNone="true"
+        #end
+        id="$!attrs[0]"
+>
+    #if ($!isAllOpt[0] == true)
+        <option value="$!isAllOpt[1]">全部</option>
+    #end
+    #foreach($l in $!list)
+        #if("$!attrs[1]" == "$!StringTool.macroTest($l).get($!attrs[2])")
+            <option value="$!StringTool.macroTest($l).get($!attrs[2])" selected="selected">$!StringTool.macroTest($l).get($!attrs[3])</option>
+        #else
+            <option value="$!StringTool.macroTest($l).get($!attrs[2])">$!StringTool.macroTest($l).get($!attrs[3])</option>
+        #end
+    #end
+</select>
+#end
+
+#*
+    @param $jsonArray 列表数据json数组格式 [{key:"", value:""}]
+    @param $name name属性值
+    @param $default 默认显示值
+    @param $isAllArray 是否显示全部和option value属性值 数组["true", "all"]
+    @param $isVali 是否参与验证 true 参与，false 不参与
+*#
+#macro(selectArray $jsonArray $name $default $isAllArray $isVali)
+<select data-placeholder="全部" class="chosen-select toPageParameters" style="width:100%;" tabindex="2" name="$!name"
+    #if ($!isVali == true) selectNone="true" #end id="$!name">
+    #if ($!isAllArray[0] == true)
+        <option value="$!isAllArray[1]">全部</option>
+    #end
+    #foreach($l in $!jsonArray)
+        #if($!default == $!l.get("key"))
+            <option value="$!l.get("key")" selected="selected">$!l.get("value")</option>
+        #else
+            <option value="$!l.get("key")">$!l.get("value")</option>
+        #end
+    #end
+</select>
+#end
+#*
+    @param $jsonArray 列表标题名称 数组 {"key": "key值", "value": "value值"}
+    @param $name 标签name属性值
+    @param $default 默认显示值
+*#
+#macro(radioBS $jsonArray $name $default)
+    #foreach($arr in $jsonArray)
+        #if($arr.get("key") == $default)
+        &nbsp;&nbsp;
+        <label class="radio-inline" >
+            <input type="radio" name="$name" value="$arr.get("key")" checked="checked"> $arr.get("value")
+        </label>
+        #else
+        &nbsp;&nbsp;
+        <label class="radio-inline" >
+            <input type="radio" name="$name" value="$arr.get("key")"> $arr.get("value")
+        </label>
+        #end
+
+
+    #end
+#end
+
+#*
+    @param $array 列表标题名称 数组
+    @param $auth 操作权限判断类型
+    @param $isHandle 是否显示{操作}项
+*#
+#macro(tableTHead $array $auth $isHandle)
+<thead>
+<tr>
+    #foreach($arr in $!array)
+        <th>$!arr</th>
+    #end
+    #if($!isHandle == true)
+        #if("$!auth" != "")
+            #if($shiro.hasPermission($!auth))<th>操作</th>#end
+        #else
+            <th>操作</th>
+        #end
+    #end
+</tr>
+</thead>
+#end
+
+#*
+    @param $array 列表标题名称 数组 {"attrValue": "显示值", "attrType": {"type": "属性类型[enum,date,string,price,priceBig,ratio]", "format": "显示格式", "default": "默认值"}
+*#
+#macro(tableTBody $array)
+    #set($attrType = ["enum", "date", "string", "price", "priceBig", "ratio"])
+    #foreach($arr in $array)
+        #set($typeObj = $!arr.get("attrType"))
+        #if($typeObj.get("type") == $attrType[0])
+        <td>$!dict.getDictLabel("$!arr.get('attrValue')", "$typeObj.get('format')", "$typeObj.get('default')")</td>
+        #elseif($typeObj.get("type") == $attrType[1])
+        <td>$!DateTool.format("$typeObj.get('format')", $!arr.get('attrValue'))</td>
+        #elseif($typeObj.get("type") == $attrType[2])
+        <td>$!arr.get('attrValue')</td>
+        #elseif($typeObj.get("type") == $attrType[3])
+        <td>$NumberTool.format("$typeObj.get('format')",$!MathTool.div($!arr.get('attrValue'),"100"))</td>
+        #elseif($typeObj.get("type") == $attrType[4])
+            $!StringTool.format("$!MathTool.div($!arr.get('attrValue'),'100')")
+        #elseif($typeObj.get("type") == $attrType[5])
+        <td>$NumberTool.format("$typeObj.get('format')",$!MathTool.mul($!arr.get('attrValue'),"100")) %</td>
+        #else
+        <td>$!arr.get('attrValue')</td>
+        #end
+    #end
+#end
+
+
+#macro(selectDisabledBS $list $attrs $vali $isAllOpt)
+<select data-placeholder="全部" class="chosen-select toPageParameters" style="width:100%;" tabindex="2" name="$!attrs[0]" disabled="disabled"
+    #if ($!vali == true)
+        selectNone="true"
+    #end
+        id="$!attrs[0]"
+>
+    #if ($!isAllOpt[0] == true)
+        <option value="$!isAllOpt[1]">全部</option>
+    #end
+    #foreach($l in $!list)
+        #if("$!attrs[1]" == "$!StringTool.macroTest($l).get($!attrs[2])")
+            <option value="$!StringTool.macroTest($l).get($!attrs[2])" selected="selected">$!StringTool.macroTest($l).get($!attrs[3])</option>
+        #else
+            <option value="$!StringTool.macroTest($l).get($!attrs[2])">$!StringTool.macroTest($l).get($!attrs[3])</option>
+        #end
+    #end
+</select>
+#end
+##======================================================================================================================

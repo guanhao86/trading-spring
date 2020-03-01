@@ -1,0 +1,327 @@
+ <!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>风险评测答题页面</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">    <!--css-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>      <!--jq-->
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>  <!--angular-->
+    <style>
+        .biaot{
+            text-align: center;
+            background-color: #519af2;
+            color: #ffffff;
+        }
+        .jvzhong{
+            text-align: center;
+        }
+        .xuanxiang{width: 90%;background: #f7f7f7cf;margin: 8px auto;text-align: left;border-radius: 10px;padding: 10px 20px;position: relative;}
+        .title{width: 90%;margin: 8px auto;text-align: left;border-radius: 10px;padding: 10px 20px;}
+        .img{margin-top:5px;width: 25px; ;} .btn{width: 100%;background:#519af2;border-radius: 10px;color: white;}
+        .tubiao{position: absolute;left:-0px;}
+        .fenshu{margin-top: 80px;min-height: 319px;background-color: white;border: 1px solid #bebebe;border-radius: 28px;}
+        .imgindex{
+            width: 50px;
+            height: 55px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -130px; /* 高度的一半 */
+            margin-left: -25px; /* 宽度的一半 */
+        }
+        .div1{
+            width:270px;
+            height:150px;
+            margin:0 auto;
+            position:absolute;
+            left:50%;
+            top:50%;
+            margin:-75px 0 0 -135px;
+        }
+        .div2{
+            background-color: #519af2;
+            text-align:center;
+            position:fixed;
+            left:0px;
+            bottom:0px;
+            width:100%;
+            height:50px;
+        }
+        .aindex{
+            color:#ffecf9;
+            font-size:40px;
+            text-decoration:none;
+        }
+        .h2index{
+            text-align: center;
+        }
+        .pindex{
+            text-align: center;
+        }
+    </style>
+</head>
+<body ng-controller="question">
+<!------------------------------------------------------答题开始页----------------------------------------------------------------->
+<div ng-if="ins1">
+    <div>
+        <img class="imgindex" src="./risk/img/anduan.png" />
+    </div>
+    <div class="div1">
+        <h2 class="h2index">新用户安全自测</h2>
+        <p class="pindex">
+            为避免新用户由于不了解去中心化钱包运作
+            机制，导致不必要的丢币与盗币时间。在使
+            用imToken部分功能时，需要通过安全自测便
+            可使用</p>
+    </div>
+    <div class="imgShow">
+        <div class="div2">
+            <button class="btn aindex" ng-click="kaiShiDaTu()">开始答题</button>
+            <!--<a href="javascript:;" onclick="yun()">开始答题</a>-->
+        </div>
+    </div>
+</div>
+<!------------------------------------------------------答题页----------------------------------------------------------------->
+<div ng-if="ins2">
+    <div class="biaot">
+        <div style="font-size: 20px;padding:10px">安全自测 资产有保障</div>
+        <span>imToken新用户常见问题</span><br />
+        <span>&nbsp;</span>
+    </div>
+    <div class="jvzhong" ng-repeat="(item1,item) in allList">
+        <div>
+            <img class="img" src="./risk/img/tubiao{{item1}}.png" />
+        </div>
+        <div class="ti" >
+            <p class="title">{{item.Topic}}</p>
+            <div>
+                <p class="xuanxiang" ng-click="dianji(item.TopicId,item.answer.OptionCode1)">A:{{item.answer.A}}</p>
+                <p class="xuanxiang" ng-click="dianji(item.TopicId,item.answer.OptionCode2)">B:{{item.answer.B}}</p>
+                <p class="xuanxiang" ng-click="dianji(item.TopicId,item.answer.OptionCode3)">C:{{item.answer.C}}</p>
+                <p class="xuanxiang" ng-click="dianji(item.TopicId,item.answer.OptionCode4)">D:{{item.answer.D}}</p>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 30px auto;" class="title">
+        <button class="btn" ng-click="goSubmit()">提交</button>
+    </div>
+</div>
+<!---------------------------------------------------------错误页----------------------------------------------------------------------------->
+<div ng-if="ins3">
+    <div class="biaot">
+        <div style="font-size: 20px;padding:10px"><img style="width: 50px;" src="./risk/img/kulian.png"></div>
+        <span>可惜,答错了</span><br />
+        <span>&nbsp;</span>
+    </div>
+    <div class="jvzhong" ng-repeat="(item1,item) in allList">
+        <div>
+            <img class="img" src="./risk/img/tubiao{{item1}}.png" />
+        </div>
+        <div class="ti" >
+            <p class="title">{{item.Topic}}</p>
+            <div>
+                <p class="xuanxiang" ng-click="dianji(item.TopicId,item.answer.A)"><span class="tubiao" ng-show="item.erro1" style="color: red;">X</span><span class="tubiao" ng-show="item.Xuan1" style="color: green;">√</span>A:{{item.answer.A}}</p>
+                <p class="xuanxiang" ng-click="dianji(item.TopicId,item.answer.B)"><span class="tubiao" ng-show="item.erro2" style="color: red;">X</span><span class="tubiao" ng-show="item.Xuan2" style="color: green;">√</span>B:{{item.answer.B}}</p>
+                <p class="xuanxiang" ng-click="dianji(item.TopicId,item.answer.C)"><span class="tubiao" ng-show="item.erro3" style="color: red;">X</span><span class="tubiao" ng-show="item.Xuan3" style="color: green;">√</span>C:{{item.answer.C}}</p>
+                <p class="xuanxiang" ng-click="dianji(item.TopicId,item.answer.D)"><span class="tubiao" ng-show="item.erro4" style="color: red;">X</span><span class="tubiao" ng-show="item.Xuan4" style="color: green;">√</span>D:{{item.answer.D}}</p>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 30px auto;" class="title">
+        <!--返回需要添加返回页面URL-->
+        <a href="javascript:;" onclick="yun()"><button class="btn" style="width: 49%;">返回</button></a>
+        <button class="btn" style="width: 49%;" ng-click="goOnce()">再来一次</button>
+    </div>
+</div>
+<!----------------------------------------------结束页---------------------------------------------------------------->
+<div ng-if="ins4" class=".container-fluid "  style="background: url(risk/img/beijing1.png) no-repeat;min-height: 300px; background-position: top center; ">
+    <div class="row">
+        <div class="col-xs-offset-1 col-xs-10 fenshu" >
+            <div class="text-center">
+                <img src="./risk/img/100fen.png" width="40%" alt="" />
+            </div>
+            <div class="text-center">
+                <h3>安全小能手</h3>
+            </div>
+            <div class="text-center">
+                <br />
+                <br />
+            </div>
+            <div class="text-center">
+                <span style="">学习更多钱包知识<br/>盗币、丢币远离你</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-offset-1 col-xs-10" style="margin-top: 150px;">
+        <a href="javascript:;" onclick="yune()"><button class="btn" style="width: 100%;background: #1296db;color: white;" >开始使用 imToke</button></a>
+    </div>
+</div>
+</body>
+<script>
+    var app = angular.module("myApp", []);
+    /****************在这配置服务器地址******************/
+    var httpUrl = 'http://192.168.10.134:8080';
+
+    app.controller("question",function($scope, $http){
+
+        var arr = []
+        var aar1 = {}
+        var aar2 = {}
+        $scope.ins1=true;
+        $scope.ins2=false;
+        $scope.ins3=false;
+        $scope.ins4=false;
+//         return
+        if(sessionStorage.xianshi == 1){
+            $scope.ins1=false;
+            $scope.ins2=true;
+            $scope.ins3=false;
+            $scope.ins4=false;
+            sessionStorage.xianshi =2
+        }else{
+
+        }
+        $scope.kaiShiDaTu = function(){
+            $scope.ins1=false;
+            $scope.ins2=true;
+            $scope.ins3=false;
+            $scope.ins4=false;
+        }
+        $scope.dianji=function(a,b){
+            arr1 = {TopicId:a,Answer:b}
+            if(arr.length){
+                for(var i=0;i<arr.length;i++){
+                    if(arr[i].TopicId ==arr1.TopicId){
+                        arr2 = {TopicId:a,Answer:b}
+                        arr.splice(i,1,arr2)
+                    }
+                    else{
+                        arr.push(arr1)
+                    }
+                }
+            }else{
+                arr.push(arr1)
+            }
+            for(var j=0;j<arr.length;j++){
+                for(var z=j+1;z<arr.length;z++){
+                    if(arr[j].TopicId==arr[z].TopicId){
+                        arr.splice(j,1);
+                        z--;
+                    }
+                }
+            }
+            console.log(arr)
+            hh()
+        }
+        /********************选项背景颜色*******************/
+        var hh =function(){
+            $('.xuanxiang').click(function(){
+                $(this).css({background:'#519af2',color:'white'})
+                $(this).siblings().css({background:'rgb(249,249,249)',color:'black'})
+            })
+        }
+        /**__________________________________________________________________________________________________*/
+        $scope.a=1
+        $http({
+            method: 'GET',
+            url: httpUrl+'/api/risk/list'
+        }).then(function successCallback(response) {
+            console.log(response)
+            $scope.allList = response.data.data
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+        //提交问题接口
+        $scope.goSubmit = function(){
+            console.log(JSON.stringify(arr))
+            if(arr.length!=3){
+                alert('还有题没有答完')
+                return
+            }
+            $http({
+                method: 'POST',
+                url: httpUrl+'/api/risk/result',
+                data:JSON.stringify(arr)
+            }).then(function successCallback(response) {
+                console.log(response)
+                $scope.allList1=[]
+                $scope.allList11 = response.data.result
+                console.log($scope.allList11)
+                for(var a1 = 0;a1<$scope.allList.length;a1++){
+                    for(var a2 = 0;a2<arr.length;a2++){
+                        if($scope.allList[a1].TopicId == $scope.allList11[a2].MTI){
+                            $scope.allList1.push($scope.allList11[a2])
+                        }
+                    }
+                }
+                $scope.allListU = response.data.erro
+                $scope.allList2=[]
+                for(var qa1 = 0;qa1<$scope.allList.length;qa1++){
+                    for(var qa2 = 0;qa2<arr.length;qa2++){
+                        if($scope.allList[qa1].TopicId == $scope.allListU[qa2].RTI){
+                            $scope.allList2.push($scope.allListU[qa2])
+                        }
+                    }
+                    if(!$scope.allList2[qa1]){
+                        var shuzu = {}
+                        $scope.allList2.push(shuzu)
+                    }
+                }
+                sessionStorage.quesiton = response.data.result
+                for(var i = 0;i<$scope.allList1.length;i++){
+                    for(var j=1;j<5;j++){
+                        var aa = 'OptionCode'+j
+                        if($scope.allList[i].answer[aa] == $scope.allList1[i].MA){
+                            var bb = 'Xuan'+j
+                            $scope.allList[i][bb] = true
+                            console.log(j)
+                        }
+                    }
+                }
+                for(var w = 0;w<$scope.allList.length;w++){
+                    if($scope.allList[w].TopicId == $scope.allList2[w].RTI){
+                        for(var u=1;u<5;u++){
+                            var yy = 'OptionCode'+u
+                            if($scope.allList[w].answer[yy] == $scope.allList2[w].RA){
+                                console.log(u);
+                                var zz = 'erro'+u;
+                                $scope.allList[w][zz] = true;
+                            }
+                        }
+                    }
+                }
+                if(response.data.con == 3){
+                    /*添加100分页面地址*/
+                    $scope.ins1=false;
+                    $scope.ins2=false;
+                    $scope.ins3=false;
+                    $scope.ins4=true;
+                }else {
+                    $scope.ins1=false;
+                    $scope.ins2=false;
+                    $scope.ins3=true;
+                    $scope.ins4=false;
+                }
+                console.log($scope.allList)
+                $scope.ins2 = false;
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        }
+        $scope.goOnce = function(){
+            sessionStorage.xianshi=1;
+//            localStorage.clear()
+            window.location.reload();
+        }
+    })
+    function yun(){
+        window.decoObject.startGridViewHttp();
+    }
+    function yune(){
+        window.decoObject.startGridViewHttp();
+    }
+</script>
+</html>

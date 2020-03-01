@@ -1,0 +1,33 @@
+<div style="width: 100%" id="goods_prompt"></div>
+#if("$!{msg}" != "")
+    #if("$!{sts}" == "success")
+    <div class="alert alert-success alert-block fade in" alert-id="msg">
+        <button type="button" class="close close-sm" data-dismiss="alert">
+            <i class="fa fa-times"></i>
+        </button>
+        <p>$!{msg}</p>
+    </div>
+    #end
+    #if("$!{sts}" == "fail")
+    <div class="alert alert-danger alert-block fade in" alert-id="msg">
+        <button type="button" class="close close-sm" data-dismiss="alert">
+            <i class="fa fa-times"></i>
+        </button>
+        <p>$!{msg}</p>
+    </div>
+    #end
+#end
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script>
+    $(function () {
+//        hideMsg(2000);
+    })
+
+    /**
+     * 数秒隐藏
+     * @param s 毫秒值
+     */
+    var hideMsg = function (s) {
+        $("div[alert-id='msg']").delay(s).fadeOut();
+    }
+</script>

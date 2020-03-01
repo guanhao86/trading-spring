@@ -1,0 +1,63 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:edit", "isBack": true, "href": "member/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "member/audit")
+                    <input type="hidden" name="id" value="$!{member.id}">
+                    #formInput({"name": "ID"} {"name": "memberId", "value":"$!{member.memberId}","id": "memberId","required": "required","readonly":"readonly"})
+                    #formInput({"name": "姓名"} {"name": "realName", "value":"$!{member.realName}","id": "name","required": "required","readonly":"readonly"})
+                    #formInput({"name": "电话"} {"name": "phone", "value":"$!{member.phone}","id": "phone","required": "required","readonly":"readonly"})
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">实名认证：</label>
+                        <div class="col-sm-2">
+                            #selectBS($!dict.getDictList("autStatus"), ["isAut", "$!{member.isAut}", "value", "label"], false, [false, "$!{member.isAut}"])
+                        </div>
+                    </div>
+                    #formInput({"name": "真实姓名"} {"name": "idCard", "value":"$!{member.idCard}","id": "idCard","required": "required","readonly":"readonly"})
+                    #formInput({"name": "身份证号"} {"name": "realName", "value":"$!{member.realName}","id": "realName","required": "required","readonly":"readonly"})
+                    #formInput({"name": "开户行"} {"name": "bankName", "value":"$!{member.bankName}","id": "bankName","required": "required","readonly":"readonly"})
+                    #formInput({"name": "银行卡号"} {"name": "bankCard", "value":"$!{member.bankCard}","id": "bankCard","required": "required","readonly":"readonly"})
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">身份证正面：</label>
+                    <div class="col-sm-3">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-new thumbnail" >
+                                <img src="$!{member.imgFront}" alt="" id="goodsPic" name="image"  value="$!{member.imgFront}"
+                                     style="max-width: 500px; max-height: 500px; line-height: 20px;"/>
+                            </div>
+                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                 style="max-width: 500px; max-height: 500px; line-height: 20px;"></div>
+                            <div id="btn_div_front">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">身份证背面：</label>
+                    <div class="col-sm-3">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-new thumbnail" >
+                                <img src="$!{member.imgBack}" alt="" id="goodsPic1" name="image"  value="$!{member.imgBack}"
+                                     style="max-width: 500px; max-height: 500px; line-height: 20px;"/>
+                            </div>
+                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                 style="max-width: 500px; max-height: 500px; line-height: 20px;"></div>
+                            <div id="btn_div_front">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

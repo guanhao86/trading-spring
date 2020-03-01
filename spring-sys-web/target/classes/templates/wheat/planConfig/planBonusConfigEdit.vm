@@ -1,0 +1,28 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:invest:edit", "isBack": true, "href": "invest/planConfig/configlist"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "invest/planConfig/bonusConfigSave")
+                <input type="hidden" name="id" value="$!{config.id}">
+
+                <div class="form-group" >
+                    #formInput({"name": "计划名称"} {"name": "planName", "value":"$!{config.planName}","id": "planName","required": "required","readonly":"readonly"})
+                    #formInput({"name": "会员级别"} {"name": "memberLevelDesc", "value":"$!{config.memberLevelDesc}","id": "memberLevelDesc","required": "required","readonly":"readonly"})
+                    #formInput({"name": "业绩奖金百分比"} {"name": "interestReturnPer", "value":"$!{config.interestReturnPer}","id": "interestReturnPer","required": "required"})
+                    #formInput({"name": "平级超越奖金百分比"} {"name": "sameLevelInterestPer", "value":"$!{config.sameLevelInterestPer}","id": "sameLevelInterestPer","required": "required"})
+                    #formInput({"name": "正在执行或等待执行计划数量"} {"name": "runningCount", "value":"$!{config.runningCount}","id": "runningCount","required": "required"})
+                    #formInput({"name": "备注"} {"name": "remark", "value":"$!{config.remark}","id": "remark","required": "required"})
+                </div>
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

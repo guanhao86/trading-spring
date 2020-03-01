@@ -1,0 +1,8 @@
+
+]squid:S3516”"9Refactor this method to not always return the same value.(Õ«ŠÑùÿÿÿÿ8ĞÍÍ’æ-
+vsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 29 to the 15 allowed.(ÕµÖ„ÿÿÿÿÿ8ğÁÏüê-
+vsquid:S3776”"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(Õ«ŠÑùÿÿÿÿ8ĞÍÍ’æ-
+ƒsquid:UselessImportCheck"SRemove this unused import 'org.springframework.beans.factory.BeanClassLoaderAware'.(äÑœÑüÿÿÿÿ8ĞÍÍ’æ-
+nsquid:S1854Ñ"JRemove this useless assignment to local variable "investPlanBonusTmpList".(œĞ½úÿÿÿÿ8ĞÍÍ’æ-
+Xsquid:S3516"9Refactor this method to not always return the same value.(š‚Ä«8ÙÛ¤â-
+Gsquid:S1148ò"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ĞÍÍ’æ-

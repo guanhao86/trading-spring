@@ -1,0 +1,5 @@
+
+Wsquid:S1854"8Remove this useless assignment to local variable "date".(œõÆÚ8ş©ıÄä-
+isquid:UselessImportCheck">Remove this unused import 'javax.crypto.spec.IvParameterSpec'.(­“§8ş©ıÄä-
+ysquid:S1488¶"ZImmediately return this expression instead of assigning it to the temporary variable "id".(‚àÚ§8˜¿ÏÆä-
+squid:S4165"bRemove this useless assignment; "date" already holds the assigned value along all execution paths.(œõÆÚ8ş©ıÄä-

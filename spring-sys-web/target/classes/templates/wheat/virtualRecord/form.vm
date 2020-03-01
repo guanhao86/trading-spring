@@ -1,0 +1,55 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:virtualRecord:edit", "isBack": true, "href": "virtualRecord/list?type=$!{virtualRecord.type}"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "virtualRecord/save")
+                <input type="hidden" name="state" value="1">
+                <input type="hidden" name="type" value="1">
+                <input type="hidden" name="expand1" value="2">
+                #*#formInput({"name": "memId"} {"name": "memId", "value":"$!{virtualRecord.memId}","id": "mmeberId","required": "required","perc":"true","readonly":"readonly"})*#
+                #formInput({"name": "mmeberId"} {"name": "mmeberId", "value":"$!{virtualRecord.mmeberId}","id": "mmeberId","required": "required","perc":"true"})
+                #formInput({"name": "虚拟币", "asterisk": false} {"name": "virtualCoin", "value":"$!{virtualRecord.virtualCoin}","id": "virtualCoin","perc":"true"})
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">虚拟币类型：</label>
+                    <div class="col-sm-2">
+                        #selectBS($!dict.getDictList("virtualType"), ["coinType", "$!{virtualRecord.coinType}", "value", "label"], false, [true, "$!{virtualRecord.coinType}"])
+                    </div>
+                </div>
+                #formInput({"name": "QC币"} {"name": "qcCoin", "value":"$!{virtualRecord.qcCoin}","id": "qcCoin","required": "required","perc":"true"})
+                #formInput({"name": "手续费", "asterisk": false} {"name": "fee", "value":"$!{virtualRecord.fee}","id": "fee","perc":"true"})
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">图片：</label>
+                    <div class="col-sm-3">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-new thumbnail">
+                                <img src="/img/add-file.png" alt="" id="goodsPic"
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+                            </div>
+                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                            <div id="btn_div_front">
+                        <span class="btn btn-default btn-file">
+                            <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择照片</span>
+                            <span class="fileupload-exists"><i class="fa fa-undo"></i> 重新选择</span>
+                            <input type="file" class="default" name="ghPic1" id="goodsPic" />
+                        </span>
+                                <a href=" " class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i
+                                        class="fa fa-trash"></i> 删除</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #scriptSrc("/js/backstage/bootstrap-fileupload.min.js")
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

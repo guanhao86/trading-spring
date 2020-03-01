@@ -1,0 +1,77 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:content:edit", "isBack": true, "href": "content/list?type=1"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "content/save?type=1")
+                <input type="hidden" name="id" value="$!{content.id}">
+
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">广告类型：</label>
+                    <div class="col-sm-2">
+                        #selectBS($!dict.getDictList("advertType"), ["advertType", "$!{content.advertType}", "value", "label"], false, [false, "$!{content.advertType}"])
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">图片<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-new thumbnail" >
+                                <img src="$!{content.image}" alt="" id="goodsPic" name="image"  value="$!{content.image}"
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+                            </div>
+                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                            <div id="btn_div_front">
+                        <span class="btn btn-default btn-file">
+                            <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择照片</span>
+                            <span class="fileupload-exists"><i class="fa fa-undo"></i> 重新选择</span>
+                            <input type="file" class="default" name="ghPic1" id="goodsPic"  />
+                        </span>
+                                <a href=" " class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i
+                                        class="fa fa-trash"></i> 删除</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">是否禁用：</label>
+                    <div class="col-sm-2">
+                        #selectBS($!dict.getDictList("isUse"), ["isUse", "$!{content.isUse}", "value", "label"], false, [false, "$!{content.isUse}"])
+                    </div>
+                </div>
+                #end
+            #end
+        #end
+    #end
+    #@script()
+        #scriptSrc("/js/backstage/bootstrap-fileupload.min.js")
+        #@jsValidate("form_insert")
+            rules: {
+                coinName: {
+                    remote: {
+                        url: "$!{ctx}/coin/isCoinName", type: "post", dataType: "json",
+                        data: {
+                        coinName: function () {return $('#coin_name').val().trim();}
+                        },
+                        dataFilter: function (data) {//判断控制器返回的内容
+                            return data;
+                        }
+                    }
+                }
+            },
+            messages: {
+                coinName: {
+                    remote: function () {
+                        return "币种名称已存在"
+                    }
+                }
+            },
+        #end
+    #end
+#end

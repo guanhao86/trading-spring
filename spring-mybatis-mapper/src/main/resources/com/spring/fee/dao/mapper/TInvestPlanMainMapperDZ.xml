@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.fee.dao.mapper.TInvestPlanMainMapperDZ">
+  <resultMap id="BaseResultMap" type="com.spring.fee.model.TInvestPlanMainStatistic">
+    <result column="member_id" property="memberId"/>
+    <result column="all_count" property="allCount"/>
+    <result column="append_count" property="appendCount"/>
+    <result column="running_count" property="runningCount"/>
+    <result column="phone" property="phone"/>
+  </resultMap>
+  <select id="statisticPlanCount" parameterType="com.spring.fee.model.TInvestPlanMainStatistic" resultMap="BaseResultMap">
+    SELECT count(1) all_count, SUM(be_append_flay) append_count
+    FROM t_invest_plan_main
+    where 1=1
+    and member_id in
+    <foreach collection="memberList" item="id" index="index"
+             open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
+
+  <select id="statisticPlanCountGroupByMemeber" parameterType="com.spring.fee.model.TInvestPlanMainStatistic" resultMap="BaseResultMap">
+    SELECT
+      A.member_id member_id,
+      count( A.plan_ID ) all_count,
+      count( C.plan_ID ) running_count,
+			m.phone
+    FROM
+        t_invest_plan_main A
+        LEFT JOIN ( SELECT * FROM t_invest_plan_main B WHERE B.STATUS = '1' ) C ON A.id = C.id
+				LEFT JOIN t_wheat_member m on A.member_id= m.member_id
+    GROUP BY
+        A.member_Id
+    ORDER BY
+        all_count DESC
+  </select>
+
+</mapper>

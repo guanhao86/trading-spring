@@ -1,0 +1,20 @@
+
+Gsquid:S1148Ò"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ïñ•æ-
+qsquid:S3776Ï"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(äíÔÊ8Ô¿³è-
+bsquid:S1155õ">Use isEmpty() to check whether the collection is empty or not.(ïıú§øÿÿÿÿ8Ô¿³è-
+osquid:CommentedOutCodeLineí"<This block of commented-out lines of code should be removed.(Ïâ±·øÿÿÿÿ8ïñ•æ-
+;squid:S1643ş"Use a StringBuilder instead.(Öì Ì8¹¿è§â-
+Tsquid:S1143ì"5Remove this return statement from this finally block.(…¤¤8¾§”³è-
+}squid:S2293Ñ"YReplace the type specification in this constructor call with the diamond operator ("<>").(ŞÂñÅúÿÿÿÿ8¹¿è§â-
+Qsquid:S2201€"-The return value of "substring" must be used.(äß¥üÿÿÿÿ8¹¿è§â-
+qsquid:S3776†"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(‹°­¤8¹¿è§â-
+Wsquid:S1197"8Move the array designator from the variable to the type.(¢ºõ£8¾§”³è-
+Gsquid:S1604½"(Make this anonymous inner class a lambda(ÈĞŒ¸8¾§”³è-
+_squid:UselessImportCheck"5Remove this unused import 'net.bytebuddy.asm.Advice'.(Úë¼8ïñ•æ-
+\squid:S1197Ç"8Move the array designator from the variable to the type.(©ĞÒ®şÿÿÿÿ8¾§”³è-
+xsquid:S2229ë"Y"upLevelV2Exe's" @Transactional requirement is incompatible with the one for this method.(˜ŸëÖ8¾§”³è-
+vsquid:S3776ò"RRefactor this method to reduce its Cognitive Complexity from 51 to the 15 allowed.(Êğ­üÿÿÿÿ8¾§”³è-
+Gsquid:S1148Ë"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ïñ•æ-
+xsquid:S2229É"Y"upLevelV2Exe's" @Transactional requirement is incompatible with the one for this method.(˜ŸëÖ8ïñ•æ-
+qsquid:S3776û"RRefactor this method to reduce its Cognitive Complexity from 30 to the 15 allowed.(«³ßÂ8¾§”³è-
+Gsquid:S1148ç"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8¾§”³è-

@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.spring.free.mapper.MenuMapper" >
+
+	<resultMap type="com.spring.free.domain.MenuInfo" id="menuMap">
+		<id property="id" column="id" />
+		<result property="parentID" column="parent_id" />
+		<result property="parentIds" column="parent_ids" />
+		<result property="name" column="name" />
+		<result property="href" column="href" />
+		<result property="grade" column="grade" />
+		<result property="target" column="target" />
+		<result property="icon" column="icon" />
+		<result property="sort" column="sort" />
+		<result property="isShow" column="is_show" />
+		<result property="permission" column="permission" />
+
+		<result property="remarks" column="remarks" />
+		<result property="createTime" column="create_time" />
+		<result property="modifyTime" column="modify_time" />
+		<result property="delFlag" column="del_flag" />
+		<result property="systemType" column="system_type" />
+
+		<result property="userId" column="ur.user_id" />
+
+		<!--<association property="parent" column="parent_id"  select="selectMenuById" />-->
+		<collection property="children" select="selectMenuChildren"  ofType="com.spring.free.domain.MenuInfo"
+					column="{id=id,userId=user_id}" javaType="java.util.ArrayList"></collection>
+	</resultMap>
+
+	<!-- 表名 -->
+	<sql id="table_name">
+		`t_sys_menu_info`
+	</sql>
+
+	<!-- 表中所有列 -->
+	<sql id="Base_Column_List">
+		a.id, a.parent_id, a.parent_ids, a.name, a.sort, a.href, a.target, a.icon, a.is_show, a.permission,
+		a.create_time, a.modify_time, a.remarks, a.del_flag, a.grade, a.system_type
+	</sql>
+
+	<sql id="menuJoins">
+		LEFT JOIN <include refid="table_name" /> p ON p.id = a.parent_id
+	</sql>
+
+	<select id="get" resultMap="menuAdminMap">
+		SELECT
+		<include refid="Base_Column_List"/>
+		FROM <include refid="table_name" /> a
+		<include refid="menuJoins"/>
+		WHERE
+		1 =1
+
+		<if test="id != null">
+
+			and a.id = #{id}
+
+		</if>
+
+
+		<if test="href != null and href != '' " >
+			and a.href = #{href}
+		</if>
+
+	</select>
+
+	<select id="getUrl" resultType="com.spring.free.domain.MenuInfo">
+		SELECT
+		<include refid="Base_Column_List"/>
+		FROM <include refid="table_name" /> a
+		<include refid="menuJoins"/>
+		WHERE a.href = #{href}
+	</select>
+
+	<select id="findAllList" resultType="com.spring.free.domain.MenuInfo">
+		SELECT
+		<include refid="Base_Column_List"/>
+		FROM <include refid="table_name" /> a
+		<include refid="menuJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		ORDER BY a.sort
+	</select>
+
+	<select id="findSortMenu" resultType="java.lang.String">
+		SELECT
+		a.sort
+		FROM <include refid="table_name" /> a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		<if test="grade != null">
+			and grade = #{grade}
+		</if>
+		<if test="parentID != null">
+			and parent_id = #{parentID}
+		</if>
+
+		ORDER BY a.sort desc limit 1
+	</select>
+
+	<select id="findByParentIdsLike" resultType="com.spring.free.domain.MenuInfo">
+		SELECT
+		a.id,
+		a.parent_id AS "parentID",
+		a.parent_ids AS "parentIds"
+		FROM <include refid="table_name" /> a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.parent_ids LIKE #{parentIds}
+		ORDER BY a.sort
+	</select>
+
+	<select id="findByUserId" resultType="com.spring.free.domain.MenuInfo">
+		SELECT DISTINCT
+		<include refid="Base_Column_List"/>
+		FROM <include refid="table_name" /> a
+		LEFT JOIN <include refid="table_name" /> p ON p.id = a.parent_id
+		JOIN t_sys_role_menu rm ON rm.menu_id = a.id
+		JOIN t_sys_role_info r ON r.id = rm.role_id AND r.useable='1'
+		JOIN t_sys_user_role ur ON ur.role_id = r.id
+		JOIN t_sys_user_info u ON u.id = ur.user_id AND u.id = #{userId}
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND r.del_flag = #{DEL_FLAG_NORMAL} AND u.del_flag = #{DEL_FLAG_NORMAL}
+		ORDER BY a.sort
+	</select>
+	<select id="findByFirmId" resultType="com.spring.free.domain.MenuInfo" parameterType="java.lang.String">
+		SELECT DISTINCT
+		<include refid="Base_Column_List"/>
+		FROM <include refid="table_name" /> a
+		LEFT JOIN <include refid="table_name" /> p ON p.id = a.parent_id
+		JOIN t_sys_role_menu rm ON rm.menu_id = a.id
+		JOIN t_sys_role_info r ON r.id = rm.role_id AND r.useable='1' and r.id=#{id}
+		WHERE a.del_flag = '0' AND r.del_flag = '0'
+		ORDER BY a.sort
+	</select>
+
+	<select id="selectMenuById" resultMap="menuMap" parameterType="java.lang.Long">
+		select menu.*, ur.user_id from <include refid="table_name" /> menu
+		left join t_sys_role_menu rm on menu.id = rm.menu_id
+		left join t_sys_user_role ur on rm.role_id = ur.role_id
+		WHERE menu.id=#{parentID} AND menu.del_flag= 0
+	</select>
+
+	<select id="selectMenuChildren" resultMap="menuMap" parameterType="java.util.HashMap">
+		select distinct menu.*, ur.user_id from <include refid="table_name" /> menu
+		join t_sys_role_menu rm on menu.id = rm.menu_id
+		join t_sys_role_info r on rm.role_id = r.id and r.del_flag = 0 and r.useable='1'
+		join t_sys_user_role ur on rm.role_id = ur.role_id
+		where menu.parent_id=#{id} and menu.del_flag= 0
+		<if test="userId != null and userId != ''">
+			and ur.user_id = #{userId}
+		</if>
+		order by menu.sort
+		/*and (ur.user_id is not null)*/
+	</select>
+
+	<select id="selectMenuByGrade" resultMap="menuMap" parameterType="java.util.Map">
+		select distinct menu.*, ur.user_id from <include refid="table_name" /> menu
+		join t_sys_role_menu rm on menu.id = rm.menu_id
+		join t_sys_role_info r on rm.role_id = r.id and r.del_flag = 0 and r.useable='1'
+		join t_sys_user_role ur on rm.role_id = ur.role_id
+		where menu.grade = #{grade} and menu.del_flag = 0
+		<if test="parentID != null and parentID != ''">
+			and menu.parent_id = #{parentID}
+		</if>
+		<if test="userId != null and userId != ''">
+			and ur.user_id = #{userId}
+		</if>
+		<if test="systemType != null">
+			and menu.system_type = #{systemType}
+		</if>
+		order by menu.sort
+	</select>
+
+
+	<insert id="insertBs">
+		INSERT INTO <include refid="table_name" /> (
+		parent_id, parent_ids, name, href, target, icon, sort, is_show, permission, create_time,
+		modify_time, remarks, del_flag, grade, version, system_type)
+		VALUES (
+		#{parentID}, #{parentIds}, #{name}, #{href}, #{target}, #{icon}, #{sort}, #{isShow}, #{permission},
+		now(), now(), #{remarks}, 0, #{grade}, #{version}, #{systemType} )
+	</insert>
+
+	<update id="updateBs">
+		UPDATE <include refid="table_name" /> SET
+		parent_id = #{parentID},
+		parent_ids = #{parentIds},
+		name = #{name},
+		href = #{href},
+		target = #{target},
+		icon = #{icon},
+		sort = #{sort},
+		is_show = #{isShow},
+		permission = #{permission},
+		modify_time = now(),
+		system_type = #{systemType},
+		remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updateParentIds">
+		UPDATE <include refid="table_name" /> SET
+		parent_id = #{parentID},
+		parent_ids = #{parentIds}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updateSort">
+		UPDATE <include refid="table_name" /> SET
+		sort = #{sort}
+		WHERE id = #{id}
+	</update>
+
+	<update id="deleteBs">
+		UPDATE <include refid="table_name" /> SET
+		del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+<!-- ==ADMIN用户查询菜单信息======================================================================================== -->
+	<resultMap type="com.spring.free.domain.MenuInfo" id="menuAdminMap">
+		<id property="id" column="id" />
+		<result property="parentID" column="parent_id" />
+		<result property="parentIds" column="parent_ids" />
+		<result property="name" column="name" />
+		<result property="href" column="href" />
+		<result property="grade" column="grade" />
+		<result property="target" column="target" />
+		<result property="icon" column="icon" />
+		<result property="sort" column="sort" />
+		<result property="isShow" column="is_show" />
+		<result property="permission" column="permission" />
+
+		<result property="remarks" column="remarks" />
+		<result property="createTime" column="create_time" />
+		<result property="modifyTime" column="modify_time" />
+		<result property="delFlag" column="del_flag" />
+		<result property="systemType" column="system_type" />
+		<association property="parent" column="parent_id"  select="selectMenuAdminById" />
+		<collection property="children" select="selectMenuAdminChildren"  ofType="com.spring.free.domain.MenuInfo"
+					column="id" javaType="java.util.ArrayList"></collection>
+	</resultMap>
+
+	<select id="selectMenuAdminById" resultMap="menuAdminMap" parameterType="java.lang.Long">
+		select menu.* from <include refid="table_name" /> menu
+		WHERE menu.id=#{parentID} AND menu.del_flag= 0
+	</select>
+
+	<select id="selectMenuAdminChildren" resultMap="menuAdminMap" parameterType="java.lang.Long">
+		select menu.* from <include refid="table_name" /> menu
+		where menu.parent_id=#{id} and menu.del_flag= 0 order by menu.sort
+	</select>
+
+	<select id="selectMenuAdminByGrade" resultMap="menuAdminMap" parameterType="java.util.Map">
+		select menu.* from <include refid="table_name" /> menu
+		where menu.grade = #{grade} and menu.del_flag = 0
+		<if test="parentID != null and parentID != ''">
+			and menu.parent_id = #{parentID}
+		</if>
+		<if test="systemType != null">
+			and menu.system_type = #{systemType}
+		</if>
+
+		order by menu.sort
+	</select>
+
+	<!-- 根据权限获取菜单信息，用来验证权限标识是否存在 -->
+	<select id="getMenuByPermission" resultMap="menuAdminMap" parameterType="com.spring.free.domain.MenuInfo">
+		SELECT <include refid="Base_Column_List"/> FROM <include refid="table_name" /> a WHERE a.permission = #{permission}
+	</select>
+
+</mapper>

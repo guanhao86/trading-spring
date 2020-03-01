@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #parse("modular/html_css.vm")
+
+</head>
+
+<body class="sticky-header">
+<input type="hidden" value="$!{page}" id="page_hidden_iframe">
+
+<!--body wrapper start-->
+<div class="wrapper">
+    #parse("modular/prompt.vm")
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle}
+            <span class="tools pull-right">
+
+                <button class="btn btn-sm btn-primary tooltips" type="button" data-button="save" data-form-id="dict_form">
+                    <i class="fa fa-save"></i> 保存
+                </button>
+
+                <button class="btn btn-sm btn-default tooltips" type="button" data-original-title="返回" data-button="back" data-href="$!{ctx}/dict/dictList">
+                    <i class="fa fa-reply"></i> 返回
+                </button>
+            </span>
+        </header>
+        <div class="panel-body">
+            <form id="dict_form" class="cmxform form-horizontal adminex-form" method="post" action="$!{ctx}/dict/save">
+                <input name="buttonType" value="$!{buttonType}" type="hidden">
+                <input type="hidden" name="id" value="$!{dictInfo.id}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">键值<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="value" value="$!{dictInfo.value}" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">标签<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="label" value="$!{dictInfo.label}" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">类型<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="type" value="$!{dictInfo.type}" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">描述：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="description" value="$!{dictInfo.description}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">排序：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="sort" value="$!{dictInfo.sort}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">备注：</label>
+                    <div class="col-sm-3">
+                        <textarea class="form-control" style="width: 100%;" rows="4" name="remarks">$!{dictInfo.remarks}</textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </section>
+</div>
+<!--body wrapper end-->
+
+<!-- Placed js at the end of the document so the pages load faster -->
+    #parse("modular/html_js.vm")
+
+<script>
+
+    $(document).ready(function() {
+        $("#dict_form").validate({
+            messages: {
+                value: "请输入键值",
+                label: "请输入标签",
+                type: "请输入类型"
+            },
+            errorPlacement: function(error, element) {
+
+                if (element.is(":checkbox")||element.is(":radio")){
+                    error.appendTo(element.parent().parent().parent());
+                } else {
+                    error.insertAfter(element.parent());
+                }
+            },
+            onfocus: true
+
+        });
+    });
+</script>
+</body>
+</html>

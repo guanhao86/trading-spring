@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.free.mapper.NoticeMapper">
+    <sql id="tbNoticeColumns">
+        a.id AS "id",
+        a.title AS "title",
+        a.body AS "body",
+        a.type AS "type",
+        a.notice_type AS "noticeType",
+        a.image AS "image",
+
+
+         a.expand_1 AS "expand1",
+        a.expand_2 AS "expand2",
+        a.expand_3 AS "expand3",
+        a.expand_4 AS "expand4",
+        a.expand_5 AS "expand5",
+
+
+        a.create_time AS "createTime",
+        a.modify_time AS "modifyTime",
+        a.version AS "version",
+        a.del_flag AS "delFlag"
+
+    </sql>
+
+    <sql id="table_name">`t_wheat_notice`</sql>
+
+    <select id="get" resultType="com.spring.free.domain.Notice">
+        SELECT
+        <include refid="tbNoticeColumns" />
+        FROM <include refid="table_name" /> a
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="com.spring.free.domain.Notice">
+        SELECT
+        <include refid="tbNoticeColumns" />
+        FROM <include refid="table_name" /> a
+        WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+        <if test="type != null ">
+            AND a.type = #{type}
+        </if>
+
+        <if test="noticeType != null ">
+            AND a.notice_type = #{noticeType}
+        </if>
+        <if test="expand1 != null  and expand1 != ''">
+            AND a.expand_1 = #{expand1}
+        </if>
+<!--        <if test="isUse != null ">-->
+<!--            AND a.is_use = #{isUse}-->
+<!--        </if>-->
+        <!--<if test="userId != null and userId != ''">-->
+        <!--AND a.user_id = #{userId}-->
+        <!--</if>-->
+        ORDER BY a.create_time DESC
+    </select>
+    <insert id="insertBs">
+        INSERT INTO <include refid="table_name" />(
+        title, body,type,notice_type,image,expand_1,create_time, modify_time, del_flag, version
+        ) VALUES (
+        #{title}, #{body},#{type},#{noticeType},#{image},#{expand1}, now(), now(), 0, #{version}
+        )
+    </insert>
+
+    <update id="updateBs">
+        UPDATE <include refid="table_name" /> SET
+        title = #{title},
+        body = #{body},
+        image = #{image},
+        notice_type = #{noticeType},
+        expand_1 = #{expand1},
+
+        modify_time = now()
+        WHERE id = #{id}
+    </update>
+
+    <update id="deleteBs">
+        UPDATE <include refid="table_name" /> SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+</mapper>

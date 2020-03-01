@@ -1,0 +1,108 @@
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"粮仓配置管理 搜索", "perm": "", "isBack": false, "href": ""})
+                #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
+                #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
+            #end
+            #@panelBody()
+                #@form("search" false "post" "invest/planConfig/configlist")
+
+
+                #end
+            #end
+        #end
+        #@panel()
+            #@panelBody()
+                #@table()
+                    #tableTHead(["序号", "计划名称", "计划金额", "计划天数", "主仓计划金额", "主仓计划天数", "副仓计划金额", "副仓计划天数", "最大购买数量", "主仓返还利息百分比"],"", false)
+                    #@tableBody($page)
+                        #set($planAmount1 = $l.planAmount / 1000)
+                        #set($amainAmount1 = $l.mainAmount / 1000)
+                        #set($secondAmount1 = $l.secondAmount / 1000)
+                        #set($interestReturnPer1 = $l.interestReturnPer)
+                        #tableTd("$!{l.planId}")
+                        #tableTd("$!{l.planName}")
+                        #tableTd("$!{planAmount1}")
+                        #tableTd("$!{l.planDays}")
+                        #tableTd("$!{amainAmount1}")
+                        #tableTd("$!{l.mainDays}")
+                        #tableTd("$!{secondAmount1}")
+                        #tableTd("$!{l.secondDays}")
+                        #tableTd("$!{l.maxCount}")
+                        #tableTd("$!{interestReturnPer1}%")
+                        #@tableTd()
+                            #@a("编辑" {"href": "$!{ctx}/invest/planConfig/edit?planId=$!{l.planId}", "class": "fa fa-pencil-square-o"})#end
+                        #end
+                    #end
+                #end
+            #end
+        #end
+    #end
+    #@script()
+    <script>
+        $(function () {
+            $("#review_id").on('click', function () {
+                var arr = "";
+                $("[pId='all']:checked").each(function () {
+                    if (arr == ""){
+                        arr = $(this).val();
+                    } else {
+                        arr += "," + $(this).val();
+                    }
+                })
+                alert(arr)
+                window.location.href = "$!{ctx}/member/delete?id=" + arr;
+            })
+
+        })
+
+        $(function () {
+            var startTime = $('.strat-time').datepicker().on('changeDate', function(ev) {
+                startTime.hide();
+            }).data('datepicker');
+            var endTime = $('.end-time').datepicker().on('changeDate', function(ev) {
+                endTime.hide();
+            }).data('datepicker');
+
+            $('button[empty="true"]').on('click', function () {
+                $("input[name='startTime']").eq(0).val($('#s_t_h').val());
+                $("input[name='endTime']").eq(0).val($('#e_t_h').val());
+            })
+        })
+
+        /*$.validator.setDefaults({
+            submitHandler: function(form) {
+                if($('#start_time').val()!=""&&$('#end_time').val()!=""){
+                    if (!(new Date($('#start_time').val()).compare(new Date($('#end_time').val()), DATE_CONS.DATE_COMPARE_SMALL_EQUAL))){
+                        $("#goods_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
+                        shade.hideBg("dialog");
+                        return;
+                    }
+                }
+                form.submit();
+            }
+        });*/
+        $(document).ready(function () {
+            debugger;
+            $("#search").validate({
+                errorPlacement: function(error, element) {
+                    debugger;
+                    if (element.is(":checkbox")||element.is(":radio")||element.is(".date-time")){
+                        debugger;
+                        error.appendTo(element.parent().parent().parent());
+                    } else {
+                        debugger;
+                        error.insertAfter(element.parent());
+                    }
+                },
+                onfocus: true
+            });
+        })
+    </script>
+        #jsCalculate()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

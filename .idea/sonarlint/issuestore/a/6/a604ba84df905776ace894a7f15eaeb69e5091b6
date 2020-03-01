@@ -1,0 +1,19 @@
+
+isquid:S1192ß"LDefine a constant instead of duplicating this literal "conditionX" 10 times.(‰Çœ”ûÿÿÿÿ
+^squid:S00112Á"FDefine and throw a dedicated exception instead of using a generic one.(ìá¤
+
+qsquid:S2293¢"YReplace the type specification in this constructor call with the diamond operator ("<>").(óÎ³Ù
+asquid:S1192Ñ"IDefine a constant instead of duplicating this literal "levelId" 10 times.(ÄÄ‡‚
+csquid:S1192"KDefine a constant instead of duplicating this literal "levelName" 12 times.(ÓÆì³
+Tsquid:S1155z">Use isEmpty() to check whether the collection is empty or not.(Á½¼s
+isquid:S1192›"LDefine a constant instead of duplicating this literal "conditionY" 10 times.(ÂğÚáúÿÿÿÿ
+msquid:S1192Ï"PDefine a constant instead of duplicating this literal "sharingPersent" 10 times.(ü°‚Îúÿÿÿÿ
+dsquid:S00112³"FDefine and throw a dedicated exception instead of using a generic one.(ÔÁñÍøÿÿÿÿ
+osquid:S2293'"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÏßÉe
+[squid:S1155¦">Use isEmpty() to check whether the collection is empty or not.(í´Õûüÿÿÿÿ
+psquid:S1192“"SDefine a constant instead of duplicating this literal "commissionPersent" 10 times.(Ö÷«õıÿÿÿÿ
+lsquid:S1192×"TDefine a constant instead of duplicating this literal "performancePersent" 10 times.(ëÊ‚
+xsquid:S1488‡"`Immediately return this expression instead of assigning it to the temporary variable "criteria".(¶Õ¯ì
+dsquid:S00112º"FDefine and throw a dedicated exception instead of using a generic one.(õÜ—ºşÿÿÿÿ
+lsquid:S1192™"MDefine a constant instead of duplicating this literal "upCondition" 12 times.(ŸıÎŠ8Ñ«²â-
+lsquid:S1192Ó"HDefine a constant instead of duplicating this literal "upType" 12 times.(®ø´‡ûÿÿÿÿ8Ñ«²â-

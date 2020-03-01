@@ -1,0 +1,33 @@
+<div class="col-lg-6" style="padding: 0;margin: 0;">
+    <select data-placeholder="请选择..." class="chosen-select" style="width:100%;" provinceClick="true" addr="province">
+        <option value='请选择' id='-1' preId='1'>请选择</option>
+    </select>
+    #*<div class="iconic-input right">
+        <i class="fa fa-chevron-down"></i>
+        <select class="form-control" name="" provinceClick="true" addr="province">
+            <option value='请选择' id='-1' preId='1'>请选择</option>
+        </select>
+    </div>*#
+</div>
+<div class="col-lg-6" style="padding: 0;margin: 0;">
+    <select data-placeholder="请选择..." class="chosen-select" style="width:100%;" cityClick="true" addr="city">
+        <option value="0">请选择</option>
+    </select>
+    #*<div class="iconic-input right">
+        <i class="fa fa-chevron-down"></i>
+        <select class="form-control" name="" cityClick="true" addr="city">
+            <option value="0">请选择</option>
+        </select>
+    </div>*#
+</div>
+<div class="col-lg-4" style="padding: 0;margin: 0;display: none">
+    <select data-placeholder="请选择..." class="chosen-select" style="width:100%;" sectionClick="true" addr="section">
+        <option value="0">请选择</option>
+    </select>
+    #*<div class="iconic-input right">
+        <i class="fa fa-chevron-down"></i>
+        <select class="form-control" name="" sectionClick="true" addr="section">
+            <option value="0">请选择</option>
+        </select>
+    </div>*#
+</div>

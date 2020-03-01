@@ -1,0 +1,15 @@
+
+bsquid:CommentedOutCodeLineW"<This block of commented-out lines of code should be removed.(¼½çÓ
+Ssquid:S1854C"7Remove this useless assignment to local variable "map".(¼ú ïøÿÿÿÿ
+Tsquid:S1854K"8Remove this useless assignment to local variable "type".(Öƒ±˜þÿÿÿÿ
+isquid:UselessImportCheck"@Remove this unused import 'com.spring.free.websocket.WebSocket'.(ÿÕ¡¡þÿÿÿÿ
+zsquid:UselessImportCheck"QRemove this unused import 'org.springframework.web.bind.annotation.ResponseBody'.(•¶¶êøÿÿÿÿ
+Asquid:S00108^")Either remove or fill this block of code.(å¥ž‡
+qsquid:UselessImportCheck"MRemove this unused import 'com.spring.free.util.exception.ExceptionCodeEnum'.(ôƒ†™
+isquid:UselessImportCheck"@Remove this unused import 'org.apache.commons.lang.StringUtils'.(Ö¥¬øÿÿÿÿ
+Dsquid:S1481C"(Remove this unused "map" local variable.(¼ú ïøÿÿÿÿ
+psquid:UselessImportCheck"LRemove this unused import 'com.spring.free.util.exception.ServiceException'.(Éå‚ã
+Esquid:S1481K")Remove this unused "type" local variable.(Öƒ±˜þÿÿÿÿ
+_squid:UselessImportCheck";Remove this unused import 'javax.servlet.http.HttpSession'.(í¨ô
+gsquid:UselessImportCheck"CRemove this unused import 'javax.servlet.http.HttpServletResponse'.(Á¨ïë
+usquid:UselessImportCheck"LRemove this unused import 'org.springframework.web.multipart.MultipartFile'.(ôŸœžÿÿÿÿÿ

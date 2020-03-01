@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.free.mapper.FeeMapper">
+    <sql id="tbFeeColumns">
+        a.id AS "id",
+        a.type AS "type",
+        a.fee AS "fee",
+
+        a.expand_1 AS "expand1",
+        a.expand_2 AS "expand2",
+        a.expand_3 AS "expand3",
+        a.expand_4 AS "expand4",
+        a.expand_5 AS "expand5",
+        a.create_time AS "createTime",
+        a.modify_time AS "modifyTime",
+        a.version AS "version",
+        a.del_flag AS "delFlag"
+
+    </sql>
+
+    <sql id="table_name">`t_wheat_fee`</sql>
+
+    <select id="get" resultType="com.spring.free.domain.Fee">
+        SELECT
+        <include refid="tbFeeColumns" />
+        FROM <include refid="table_name" /> a
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="com.spring.free.domain.Fee">
+        SELECT
+        <include refid="tbFeeColumns" />
+        FROM <include refid="table_name" /> a
+        WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+
+        <if test="type != null  and type != ''">
+        AND a.type = #{type}
+        </if>
+        ORDER BY id asc ,a.create_time DESC
+    </select>
+    <insert id="insertBs"  parameterType="com.spring.free.domain.Fee" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="table_name" />(
+        fee, type,expand_1,expand_2,expand_3,expand_4,expand_5,create_time, modify_time, del_flag, version
+        ) VALUES (
+        #{fee}, #{type},#{expand1},#{expand2},#{expand3},#{expand4},#{expand5}, now(), now(), 0, #{version}
+        )
+    </insert>
+
+    <update id="updateBs">
+        UPDATE <include refid="table_name" /> SET
+        modify_time = now(),
+        fee = #{fee},
+        type = #{type}
+        WHERE id = #{id}
+    </update>
+
+    <update id="deleteBs">
+        UPDATE <include refid="table_name" /> SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+</mapper>

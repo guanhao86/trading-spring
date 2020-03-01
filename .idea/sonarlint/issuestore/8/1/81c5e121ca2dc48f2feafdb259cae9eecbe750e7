@@ -1,0 +1,19 @@
+
+dsquid:S00112²"FDefine and throw a dedicated exception instead of using a generic one.(ÔÁñÍøÿÿÿÿ
+Tsquid:S1155y">Use isEmpty() to check whether the collection is empty or not.(Á½¼s
+[squid:S1155¥">Use isEmpty() to check whether the collection is empty or not.(í´Õûüÿÿÿÿ
+jsquid:S1192ş"RDefine a constant instead of duplicating this literal "granaryIngFreeze" 10 times.(øóÔÖ
+_squid:S1192Ò"GDefine a constant instead of duplicating this literal "total" 10 times.(Û±¨ï
+qsquid:S2293¡"YReplace the type specification in this constructor call with the diamond operator ("<>").(óÎ³Ù
+esquid:S1192Ê"HDefine a constant instead of duplicating this literal "freeze" 10 times.(™Ÿóîÿÿÿÿÿ
+gsquid:S1192Œ"JDefine a constant instead of duplicating this literal "memberId" 12 times.(Ş±ØÕÿÿÿÿÿ
+dsquid:S00112¹"FDefine and throw a dedicated exception instead of using a generic one.(õÜ—ºşÿÿÿÿ
+lsquid:S1192Â"ODefine a constant instead of duplicating this literal "granaryFreeze" 10 times.(êÃ¯»úÿÿÿÿ
+rsquid:S1192º"UDefine a constant instead of duplicating this literal "granaryIngMaxFreeze" 10 times.(¯ıÖÖúÿÿÿÿ
+^squid:S00112À"FDefine and throw a dedicated exception instead of using a generic one.(ìá¤
+
+`squid:S1192ö"HDefine a constant instead of duplicating this literal "remark" 12 times.(íêÑ
+bsquid:S1192"KDefine a constant instead of duplicating this literal "available" 10 times.(È¢ÒU
+xsquid:S1488†"`Immediately return this expression instead of assigning it to the temporary variable "criteria".(¶Õ¯ì
+osquid:S2293&"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÏßÉe
+jsquid:S1192†"MDefine a constant instead of duplicating this literal "moneyFreeze" 10 times.(Û¢¬¹ÿÿÿÿÿ

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #parse("modular/html_css.vm")
+
+</head>
+
+<body class="sticky-header">
+<input type="hidden" value="$!{page}" id="page_hidden_iframe">
+
+<!--body wrapper start-->
+<div class="wrapper">
+    #parse("modular/prompt.vm")
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle} 搜索
+            <span class="tools pull-right">
+                <button class="btn btn-sm btn-primary tooltips" type="button" data-button="search"
+                        data-form-id="search">
+                    <i class="fa fa-search"></i> 查询
+                </button>
+                <button class="btn btn-sm btn-default tooltips" empty="true" reset-id="search_reset" type="button">
+                    <i class="fa fa-trash-o"></i> 清空
+                </button>
+            </span>
+        </header>
+        <div class="panel-body">
+            <form class="form-horizontal adminex-form" method="post" action="$!{ctx}/role/roleList" id="search">
+                <input type="reset" class="hidden" id="search_reset"/>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">角色名称：</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="name" id="name" value="$!{roleInfo.name}"
+                                   class="form-control toPageParameters">
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </section>
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle} 列表
+            <span class="tools pull-right">
+                #if($shiro.hasPermission("system:role:edit"))
+                    <button id="button_post_insert" class="btn btn-sm btn-primary tooltips" type="button"
+                            data-button="insert-pre" data-href="$!{ctx}/role/form">
+                        <i class="fa fa-plus"></i> 新增
+                    </button>
+                #end
+
+            </span>
+        </header>
+        <div class="panel-body">
+            <table id="tree_table" class="table table-hover">
+                <thead>
+                <tr>
+                    <th style="width: 40%">角色名称</th>
+                    #if($shiro.hasPermission("system:role:edit"))<th style="width: 20%">操作</th>#end
+
+                </tr>
+                </thead>
+                <tbody>
+                    #foreach($l in $page.list)
+                    <tr>
+                        <td>$!{l.name}</td>
+                        <td>
+                            #if($shiro.hasPermission("system:role:edit"))
+                                <a href="$!{ctx}/role/dist?id=$!{l.id}" class="fa fa-clipboard" title="分配"> 分配</a>
+                                &nbsp;
+                                <a href="$!{ctx}/role/form?id=$!{l.id}&buttonType=edit" class="fa fa-pencil-square-o" title="编辑"> 编辑</a>
+                                &nbsp;
+                                <a href="$!{ctx}/role/delete?id=$!{l.id}" class="fa fa-trash-o" delete="true" title="删除"> 删除</a>
+                            #end
+
+                        </td>
+                    </tr>
+                    #end
+
+                </tbody>
+            </table>
+            #parse("modular/page.vm")
+        </div>
+
+    </section>
+</div>
+<!--body wrapper end-->
+
+    #parse("modular/html_js.vm")
+
+<script>
+    $(document).ready(function () {
+
+    });
+</script>
+
+</body>
+</html>

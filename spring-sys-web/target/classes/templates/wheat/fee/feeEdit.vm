@@ -1,0 +1,27 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:fee:edit", "isBack": true, "href": "fee/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "fee/save")
+                <input type="hidden" name="id" value="$!{fee.id}">
+
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">手续费类型：</label>
+                    <div class="col-sm-2">
+                        #selectDisabledBS($!dict.getDictList("feeType"), ["type", "$!{fee.type}", "value", "label"], false, [false, "$!{fee.type}"])
+                    </div>
+                </div>
+                 #formInput({"name": "手续费"} {"name": "fee", "value":"$!{fee.fee}","id": "fee","required": "required","perc":"true"})
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

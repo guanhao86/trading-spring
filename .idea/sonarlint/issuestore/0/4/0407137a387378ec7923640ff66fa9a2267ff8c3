@@ -1,0 +1,13 @@
+
+wsquid:UselessImportCheck"GRemove this unused import 'com.spring.fee.service.ITWheatMemberBusiSV'.(Ììç’úÿÿÿÿ8äÍÍ’æ-
+vsquid:S1192'"_Define a constant instead of duplicating this literal "æœåŠ¡ç«¯å¤„ç†è¯·æ±‚æˆåŠŸã€‚" 7 times.(Ò˜¶ø
+Qsquid:S1191"5Use classes from the Java API instead of Sun classes.(Ó¨Ôÿÿÿÿÿ
+gsquid:CommentedOutCodeLineR"<This block of commented-out lines of code should be removed.(‡²‡§üÿÿÿÿ
+Dsquid:S1481O"-Remove this unused "dataPrix" local variable.(Í­Ğ‹
+Qsquid:S1141d"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Isquid:S1135?"2Complete the task associated to this TODO comment.(ˆ“ÒÕ
+^squid:S00112k"FDefine and throw a dedicated exception instead of using a generic one.(´Í›„
+nsquid:UselessImportCheck">Remove this unused import 'com.spring.fee.model.TWheatMember'.(×ú°ùúÿÿÿÿ8äÍÍ’æ-
+csquid:S1192S"GDefine a constant instead of duplicating this literal "result" 4 times.(Ö‚•™ıÿÿÿÿ
+[
+squid:S106L"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿ8äÍÍ’æ-

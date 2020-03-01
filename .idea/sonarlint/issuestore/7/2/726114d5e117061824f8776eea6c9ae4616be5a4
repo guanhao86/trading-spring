@@ -1,0 +1,4 @@
+
+xsquid:S3305"\Inject this field value directly into "sqlSessionFactoryBean", the only method that uses it.(šÇ±…úÿÿÿÿ
+csquid:S00112:"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+?squid:S11489"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ

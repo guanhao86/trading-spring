@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="spring-common" />
+        <module name="spring-domain" />
+        <module name="spring-mybatis-mapper" />
+        <module name="spring-sys-web" />
+        <module name="spring-system" />
+        <module name="spring-utils" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

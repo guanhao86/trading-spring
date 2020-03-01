@@ -1,0 +1,136 @@
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"理财订单管理 搜索", "perm": "", "isBack": false, "href": ""})
+                #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
+                #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
+            #end
+            #@panelBody()
+                #@form("search" false "post" "financialStream/list")
+                    #@divColSmNum(3)
+                        #formInput({"name": "订单编号", "length": "4,8", "asterisk": false} {"name": "orderNo", "id": "orderNo",
+                            "value": "$!{stream.orderNo}"})
+                    #end
+                    #@divColSmNum(3)
+                        #formInput({"name": "理财产品ID", "length": "4,8", "asterisk": false} {"name": "financialId", "id": "financialId",
+                            "value": "$!{stream.financialId}"})
+                    #end
+
+                    #@divColSmNum(3)
+                        #formInput({"name": "理财产品名称", "length": "4,8", "asterisk": false} {"name": "productName", "id": "productName",
+                            "value": "$!{stream.productName}"})
+                    #end
+                    #@divColSmNum(3)
+                        #formInput({"name": "购买人ID", "length": "4,8", "asterisk": false} {"name": "memberId", "id": "memberId",
+                            "value": "$!{stream.memberId}"})
+                    #end
+                    #@divColSmNum(3)
+                        #formInput({"name": "购买人电话", "length": "4,8", "asterisk": false} {"name": "phone", "id": "phone",
+                            "value": "$!{stream.phone}"})
+                    #end
+                    #@divColSmNum(3)
+                        #formDate({"name": "流水开始日期", "length": "4,8", "asterisk": false, "cl": "begin-time"} {"name":
+                            "beginTime", "id": "beginTime","dateVal": "true", "value":
+                            "$!DateTool.format('yyyy-MM-dd', $!{stream.beginTime})"})
+                    #end
+                    #@divColSmNum(3)
+                        #formDate({"name": "流水结束日期", "length": "4,8", "asterisk": false, "cl": "end-time"} {"name":
+                            "endTime", "id": "endTime","dateVal": "true", "value":
+                            "$!DateTool.format('yyyy-MM-dd', $!{stream.endTime})"})
+                    #end
+                #end
+            #end
+        #end
+        #@panel()
+            #@panelBody()
+                #@table()
+                    #tableTHead(["流水ID","流水时间","订单编号", "产品ID","产品名称", "理财周期", "年化利率","月利息", "购买人编号", "购买人电话号码", "购买数量", "购买时间", "今日佣金"],"", false)
+                    #@tableBody($page.list)
+                        #tableTd("$!{l.id}")
+                        #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.createTime}))
+                        #tableTd("$!{l.orderNo}")
+                        #tableTd("$!{l.financialId}")
+                        #tableTd("$!{l.productName}")
+                        #tableTd("$!{l.cycle}", {"type": "dict", "format": "financialCycle"})
+                        #tableTd("$!{l.yearProfit}%")
+                        #tableTd("$!{l.monthProfit}%")
+                        #tableTd("$!{l.memberId}")
+                        #tableTd("$!{l.phone}")
+                        #tableTd("$!{l.buyNumber}")
+                        #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.buyTime}))
+                        #tableTd("$!{l.interest}", {"type": "thousand", "format": "0.000"})
+                    #end
+                #end
+
+                #parse("modular/page.vm")
+            #end
+        #end
+    #end
+    #@script()
+    <script>
+
+        $(function () {
+            $("#review_id").on('click', function () {
+                var arr = "";
+                $("[pId='all']:checked").each(function () {
+                    if (arr == ""){
+                        arr = $(this).val();
+                    } else {
+                        arr += "," + $(this).val();
+                    }
+                })
+                alert(arr)
+                window.location.href = "$!{ctx}/member/delete?id=" + arr;
+            })
+
+        })
+
+        $(function () {
+            var startTime = $('.begin-time').datepicker().on('changeDate', function(ev) {
+                startTime.hide();
+            }).data('datepicker');
+            var endTime = $('.end-time').datepicker().on('changeDate', function(ev) {
+                endTime.hide();
+            }).data('datepicker');
+
+            $('button[empty="true"]').on('click', function () {
+                $("input[name='startTime']").eq(0).val($('#s_t_h').val());
+                $("input[name='endTime']").eq(0).val($('#e_t_h').val());
+            })
+        })
+
+        /*$.validator.setDefaults({
+            submitHandler: function(form) {
+                if($('#start_time').val()!=""&&$('#end_time').val()!=""){
+                    if (!(new Date($('#start_time').val()).compare(new Date($('#end_time').val()), DATE_CONS.DATE_COMPARE_SMALL_EQUAL))){
+                        $("#goods_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
+                        shade.hideBg("dialog");
+                        return;
+                    }
+                }
+                form.submit();
+            }
+        });*/
+        $(document).ready(function () {
+            debugger;
+            $("#search").validate({
+                errorPlacement: function(error, element) {
+                    debugger;
+                    if (element.is(":checkbox")||element.is(":radio")||element.is(".date-time")){
+                        debugger;
+                        error.appendTo(element.parent().parent().parent());
+                    } else {
+                        debugger;
+                        error.insertAfter(element.parent());
+                    }
+                },
+                onfocus: true
+            });
+        })
+    </script>
+        #jsCalculate()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

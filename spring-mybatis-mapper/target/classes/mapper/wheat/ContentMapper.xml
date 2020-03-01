@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.free.mapper.ContentMapper">
+    <sql id="tbContentColumns">
+        a.id AS "id",
+        a.type AS "type",
+        a.advert_type AS "advertType",
+        a.plat_name AS "platName",
+        a.add_type AS "addType",
+        a.image AS "image",
+        a.url_type AS "urlType",
+        a.jump_url AS "jumpUrl",
+        a.is_use AS "isUse",
+
+
+
+        a.create_time AS "createTime",
+        a.modify_time AS "modifyTime",
+        a.version AS "version",
+        a.del_flag AS "delFlag"
+
+    </sql>
+
+    <sql id="table_name">`t_nat_content`</sql>
+
+    <select id="get" resultType="com.spring.free.domain.Content">
+        SELECT
+        <include refid="tbContentColumns" />
+        FROM <include refid="table_name" /> a
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="com.spring.free.domain.Content">
+        SELECT
+        <include refid="tbContentColumns" />
+        FROM <include refid="table_name" /> a
+        WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+        <if test="type != null ">
+        AND a.type = #{type}
+        </if>
+        <if test="isUse != null ">
+            AND a.is_use = #{isUse}
+        </if>
+        <!--<if test="userId != null and userId != ''">-->
+        <!--AND a.user_id = #{userId}-->
+        <!--</if>-->
+        ORDER BY a.create_time DESC
+    </select>
+    <insert id="insertBs">
+        INSERT INTO <include refid="table_name" />(
+        type, advert_type,plat_name,add_type,image,url_type,jump_url,is_use,create_time, modify_time, del_flag, version
+        ) VALUES (
+        #{type}, #{advertType},#{platName},#{addType},#{image},#{urlType},#{jumpUrl},#{isUse}, now(), now(), 0, #{version}
+        )
+    </insert>
+
+    <update id="updateBs">
+        UPDATE <include refid="table_name" /> SET
+        advert_type = #{advertType},
+        image = #{image},
+        url_type = #{urlType},
+        jump_url = #{jumpUrl},
+        is_use = #{isUse},
+        plat_name = #{platName},
+        add_type = #{addType},
+        modify_time = now()
+        WHERE id = #{id}
+    </update>
+
+    <update id="deleteBs">
+        UPDATE <include refid="table_name" /> SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+</mapper>

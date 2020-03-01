@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.free.mapper.RoleMapper">
+    
+    <resultMap id="roleResult" type="com.spring.free.domain.RoleInfo">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="enname" column="enname" />
+		<result property="roleType" column="roleType" />
+		<result property="dataScope" column="dataScope" />
+		<result property="remarks" column="remarks" />
+		<result property="useable" column="useable" />
+		<result property="sysData" column="is_sys" />
+		<result property="officeId" column="office_id" />
+		<result property="officeName" column="officeName" />
+		<collection property="menuList" ofType="com.spring.free.domain.MenuInfo">
+			<id property="id" column="menuList.id" />
+		</collection>
+		<!--<collection property="officeList" ofType="Office">
+			<id property="id" column="officeList.id" />
+		</collection>-->
+	</resultMap>
+	<!-- 表名 -->
+	<sql id="table_name">`t_sys_role_info`</sql>
+
+    <sql id="roleColumns">
+    	a.id, a.name, a.enname,
+    	a.role_type AS roleType,
+		a.data_scope AS dataScope,
+		a.remarks,
+		a.create_time AS "createTime",
+		a.modify_time AS "modifyTime",
+		a.del_flag AS "delFlag",
+    	a.useable AS useable,
+    	a.is_sys AS sysData
+    </sql>
+    
+	<select id="get" resultMap="roleResult">
+		SELECT
+			a.id, a.name, a.enname, a.role_type, a.data_scope, a.remarks, a.create_time, a.modify_time,
+			a.del_flag, a.useable, a.is_sys, rm.menu_id AS "menuList.id"
+		FROM <include refid="table_name" /> a
+		LEFT JOIN t_sys_role_menu rm ON rm.role_id = a.id
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="getByName" resultType="com.spring.free.domain.RoleInfo">
+		SELECT
+			<include refid="roleColumns"/>
+		FROM <include refid="table_name" /> a
+		WHERE a.name = #{name} AND a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+
+	<select id="getByEnname" resultType="com.spring.free.domain.RoleInfo">
+		SELECT
+			<include refid="roleColumns"/>
+		FROM <include refid="table_name" /> a
+		WHERE a.enname = #{enname} AND a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+
+	<select id="findList" resultMap="roleResult">
+		SELECT <!-- DISTINCT -->
+			<include refid="roleColumns"/>
+		FROM <include refid="table_name" /> a
+		LEFT JOIN t_sys_user_role ur ON ur.role_id = a.id
+		LEFT JOIN t_sys_user_info u ON u.id = ur.user_id
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.useable=1
+		<if test="user != null and user.id != null and user.id != ''">
+			AND u.id = #{user.id}
+		</if>
+		<if test="user != null and user.username != null and user.username != ''">
+			AND u.username = #{user.username}
+		</if>
+		<if test="user != null and user.role != null and user.role.id != ''">
+			AND a.id = #{user.role.id}
+		</if>
+		<if test="name != null and name != ''">
+			AND a.name like CONCAT('%', #{name}, '%')
+		</if>
+		ORDER BY a.name
+	</select>
+	
+	<select id="findAllList" resultType="com.spring.free.domain.RoleInfo">
+		SELECT
+			<include refid="roleColumns"/>
+		FROM <include refid="table_name" /> a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		<if test="name != null and name != ''">
+			AND a.name like CONCAT('%', #{name}, '%')
+		</if>
+		ORDER BY a.name
+	</select>
+
+	<select id="getUserRoleInfo" resultType="com.spring.free.domain.RoleInfo" parameterType="Long">
+		SELECT * FROM t_sys_user_role ur LEFT JOIN <include refid="table_name" /> r ON ur.ROLE_ID = r.ID
+		WHERE ur.USER_ID = #{userId}
+	</select>
+
+	<select id="getUserRoleName" resultType="String" >
+		SELECT GROUP_CONCAT(ri.NAME) AS name
+		FROM t_sys_role_info ri LEFT JOIN t_sys_user_role ur ON ur.ROLE_ID = ri.ID WHERE ur.USER_ID = #{userId};
+	</select>
+
+
+	<insert id="insertBs" parameterType="com.spring.free.domain.RoleInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO <include refid="table_name" /> (
+			name, enname, role_type, data_scope, create_time, modify_time, remarks, del_flag, is_sys, useable, version
+		) VALUES (
+			#{name}, #{enname}, #{roleType}, #{dataScope}, now(), now(), #{remarks}, 0, #{sysData}, #{useable}, #{version}
+		)
+	</insert>
+	
+	<update id="updateBs">
+		UPDATE <include refid="table_name" /> SET
+			name = #{name}, 
+			enname = #{enname}, 
+			role_type = #{roleType},
+			data_scope = #{dataScope},
+			modify_time = now(),
+			remarks = #{remarks},
+			is_sys = #{sysData},
+			useable = #{useable},
+			version = #{version}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteRoleMenu">
+		DELETE FROM t_sys_role_menu WHERE role_id = #{id}
+	</delete>
+
+	<insert id="insertRoleMenu">
+		INSERT INTO t_sys_role_menu (role_id, menu_id)
+		<foreach collection="menuList" item="menu" separator=" union all ">
+			SELECT #{id}, #{menu.id} FROM dual
+		</foreach>
+	</insert>
+
+	<!--<delete id="deleteRoleOffice">
+		DELETE FROM sys_role_office WHERE role_id = #{id}
+	</delete>-->
+
+	<!--<insert id="insertRoleOffice">
+		INSERT INTO sys_role_office(role_id, office_id)
+		<foreach collection="officeList" item="office" separator=" union all ">
+			SELECT #{id}, #{office.id}
+			<if test="dbName == 'oracle'">
+			FROM dual
+			</if>
+			<if test="dbName == 'db2'">
+			from SYSIBM.SYSDUMMY1
+			</if>
+		</foreach>
+	</insert>-->
+
+	<update id="deleteBs">
+		UPDATE <include refid="table_name" /> SET
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+	<!-- 插入用户和角色关联表数据 -->
+	<insert id="assignUserToRole">
+		INSERT INTO t_sys_user_role (user_id, role_id)
+		<foreach collection="userList" item="user" separator=" union all ">
+			SELECT #{user.id}, #{id} FROM dual
+		</foreach>
+	</insert>
+
+
+</mapper>

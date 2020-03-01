@@ -1,0 +1,94 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+<link rel="stylesheet" href="/summernote/summernote.css">
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:customer:edit", "isBack": true, "href": "customer/list?type=3"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "customer/save")
+                    #formInput({"name": "标题"} {"name": "title", "id": "title","value":"$!{notice.title}" ,"required": "required", "maxlength":"50","disable-space": ""})
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">内容<font color="red">*</font>：</label>
+                    <div class="col-sm-8">
+                        <textarea rows="10" name="body" class="summernote" id="summernote" contents="true" required>$!{notice.body}</textarea>
+                    </div>
+                </div>
+                #end
+            #end
+        #end
+    #end
+    #@script()
+        #scriptSrc("/summernote/summernote.js")
+        #scriptSrc("/summernote/lang/summernote-zh-CN.js")
+        #scriptSrc("/js/backstage/bootstrap-fileupload.min.js")
+    <script>
+
+        $(document).ready(function() {
+            $('.summernote').summernote({
+//                toolbar: [
+//                    ['style', ['bold', 'italic', 'underline']],
+//                    ['fontsize', ['fontsize']],
+//                    ['para', ['paragraph']],
+//                    ['height', ['height']]
+//                ],
+                height: 400,
+                tabsize: 2,
+                lang: 'zh-CN',
+                callbacks: {
+                    onImageUpload: function(files) {
+                        //上传图片到服务器，使用了formData对象，至于兼容性...据说对低版本IE不太友好
+                        var formData = new FormData();
+                        formData.append('file',files[0]);
+                        $.ajax({
+                            url : '$!{ctx}/notice/upload',//后台文件上传接口
+                            type : 'POST',
+                            data : formData,
+                            processData : false,
+                            contentType : false,
+                            success : function(data) {
+//                            alert(data);
+                                $('#summernote').summernote('insertImage',data,'img');
+                            }
+                        });
+                    }
+                }
+
+            });
+
+
+        });
+
+    </script>
+
+
+
+
+
+        #@jsValidate("form_insert")
+        rules: {
+        coinName: {
+        remote: {
+        url: "$!{ctx}/coin/isCoinName", type: "post", dataType: "json",
+        data: {
+        coinName: function () {return $('#coin_name').val().trim();}
+        },
+        dataFilter: function (data) {//判断控制器返回的内容
+        return data;
+        }
+        }
+        }
+        },
+        messages: {
+        coinName: {
+        remote: function () {
+        return "币种名称已存在"
+        }
+        }
+        },
+        #end
+    #end
+#end

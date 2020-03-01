@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>行情页面</title>
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">    <!--css-->
+		<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>      <!--jq-->
+		<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>  <!--angular-->
+		<style>
+			.jvzhong{
+				position: absolute;
+				top: 20%;
+				left: 30%;
+				height: 30%;
+				margin: -15% 0 0 -25%;
+			}
+			.shouzi{
+				font-family: Roboto,HelveticaNeue,Arial,sans-serif;
+				font-weight: normal !important;
+				font-size: 20px !important;
+			}
+			.danjia{
+				font-size: 34px !important;
+				font-weight: normal !important;
+			}
+			.xuankuang{
+				        font-family: Roboto,HelveticaNeue,Arial,sans-serif;
+					    font-weight: normal !important;
+					    font-size: 16px !important;
+					    font-size: 18px !important;
+						color: #70757A !important;
+					    height: 53px;
+					    padding: 8px 2px 3px 0px;
+					    width: 47%;
+					    overflow: hidden;
+					    text-align: left;
+					    line-height: 35px;
+			}
+			.ioiryc{
+				width: 8px;
+			}
+		</style>
+	</head>
+	<body ng-controller="hangq">
+		<div class="waikuang">
+			<div class="neikuang">
+				<div class="waibiank jvzhong" id="biak">
+				<div class="shouzi">
+					1 <span>{{X}}</span>等于
+				</div>
+				<br />
+				<div class="danjia">
+					<span id="P">{{price}}</span>&nbsp;&nbsp;&nbsp;<span>{{Z}}</span>
+				</div>
+				<div style="color: #757575;font-size: 16px;">{{dateNew}}</div>
+				<div>
+					<table>
+						<tbody>
+							<tr>
+								<td class="xuankuang">
+									<input type="number" id="T" ng-model='T' >
+								</td>
+								<td class="ioiryc"></td>
+							</tr>
+							<tr>
+								<td class="xuankuang">
+									<!--虚拟货币-->
+									<select id="xSel" ng-init="currencyName = currency[0].key" ng-model="currencyName" ng-options="x.key as x.value for x in currency" style="width: 150px;height: 40px;"  ng-click="Xhuobi()"></select>
+								</td>
+							</tr>
+							<br />
+							<tr>
+								<td class="xuankuang">
+									<input type="number" id="R" ng-model='R'>
+								</td>
+								<td class="ioiryc"></td>
+							</tr>
+							<tr>
+								<td class="xuankuang">
+									<!--现实货币-->
+									<select id="zSel" ng-init="currentName = current[0].key"  ng-model="currentName" ng-options="x.key as x.value for x in current" style="width: 150px;height: 40px;" ng-click="Zhuobi()"></select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			</div>
+			<div class="neikuang">
+				<!--<img style="width: 465px;height: 340px;" src="img/hangqing.png"/>-->
+			</div>
+		</div>
+	</body>
+	<script>
+		var app = angular.module("myApp", []);
+		/****************在这配置服务器地址******************/
+//		var httpUrl ='http://192.168.10.103:8998'
+        var httpUrl = 'http://'+location.host;
+			app.controller("hangq",function($scope, $http){
+			    $scope.current = [
+			    {key:'CNY',value:'人民币'},
+			    {key:'USD',value:'美元'}
+			    ];
+			    $scope.currency = [
+			    {key:'BTC',value:'Bitcoin'},
+			    {key:'ETH',value:'Ethereum'}
+			    ];
+				$http({
+						method: 'GET',
+						url: httpUrl+'/api/market/marketlist'
+					}).then(function successCallback(response) {
+							console.log(response)
+							$scope.allList = response.data.restmarketNew
+							//监听币种价钱    price    currencyName  currentName
+						$scope.$watch('currencyName+currentName',function(o,n){
+							var aa=$scope.currencyName+'/'+$scope.currentName
+							for(var i=0;i<$scope.allList.length;i++){
+								if($scope.allList[i].coinType==aa){
+									$scope.price = $scope.allList[i].lasts
+									$scope.result =$scope.price;
+									$scope.T=1
+									$scope.$watch('T',function(o,n){
+										$scope.R=$scope.T*($scope.result*10000)/10000
+									})
+									 var date = new Date($scope.allList[i].createTime);
+									 Y = date.getFullYear() + '年';
+									 M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '月';
+									 D = date.getDate() + '日 ';
+									 h = date.getHours() + ':';
+									 m = date.getMinutes() + ':';
+									 s = date.getSeconds();
+									 $scope.dateNew=Y+M+D+h+m+s;
+								}
+							}
+						})
+					}, function errorCallback(response) {
+							console.log(response)
+					});
+					$scope.X='Bitcoin';
+					$scope.Z='人民币';
+					$scope.Xhuobi = function(){
+						var  obj=document.getElementById("xSel");
+				        for (i=0;i<obj.length;i++) {//下拉框的长度就是它的选项数.
+					        if (obj[i].selected== true ) {
+					           	var text=obj[i].text;//获取当前选择项的文本.
+				            	$scope.X=text;
+							}
+						}
+					}
+					$scope.Zhuobi = function(){
+						var  obj=document.getElementById("zSel");
+				        for (i=0;i<obj.length;i++) {//下拉框的长度就是它的选项数.
+					        if (obj[i].selected== true ) {
+					            var text=obj[i].text;//获取当前选择项的文本.
+					            $scope.Z=text;
+							}
+						}
+					}
+			})
+	</script>
+</html>

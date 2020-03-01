@@ -1,0 +1,33 @@
+
+Nsquid:S1135E"2Complete the task associated to this TODO comment.(ÕÌ®şÿÿÿÿ
+Ysquid:S1126÷"AReplace this if-then-else statement by a single return statement.(¯“í½
+dsquid:CallToDeprecatedMethod•"/Remove this use of "getDate"; it is deprecated.(…©ôŞşÿÿÿÿ8Ïşú ö-
+;squid:S1148€"#Use a logger to log this exception.(òçøì
+Ysquid:S1126‰"AReplace this if-then-else statement by a single return statement.(ğŠš³
+esquid:S1871¥"MThis branch's code block is the same as the block for the branch on line 416.(Åª…ı
+Usquid:S2589×"8Remove this expression which always evaluates to "false"(…®‘–üÿÿÿÿ
+dsquid:CallToDeprecatedMethod•"/Remove this use of "getDate"; it is deprecated.(…©ôŞşÿÿÿÿ8Ïşú ö-
+_squid:S00112Ò"FDefine and throw a dedicated exception instead of using a generic one.(¨×‹Ê
+esquid:S2259Ô"HA "NullPointerException" could be thrown; "strToDate()" can return null.(ô£¥øÿÿÿÿ
+?squid:S1148F"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+U
+squid:S106ë"9Replace this use of System.out or System.err by a logger.(ÌÍşÿÿÿÿ
+`squid:CallToDeprecatedMethod”"0Remove this use of "getMonth"; it is deprecated.(¸¢˜8‘ßø ö-
+@squid:S1148„"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+vsquid:S1488"YImmediately return this expression instead of assigning it to the temporary variable "s".(«Ããúÿÿÿÿ
+`squid:CallToDeprecatedMethod”"0Remove this use of "getMonth"; it is deprecated.(¸¢˜8‘ßø ö-
+_squid:S2184ñ"BCast one of the operands of this division operation to a "double".(¹£¥¦ıÿÿÿÿ
+.squid:S2176"Rename this class.( ÖÂ¶şÿÿÿÿ
+dsquid:CallToDeprecatedMethod“"/Remove this use of "getYear"; it is deprecated.(æ§Ì¾ùÿÿÿÿ8æ“ò ö-
+`squid:CallToDeprecatedMethod”"0Remove this use of "getMonth"; it is deprecated.(¸¢˜8‘ßø ö-
+jsquid:S1871«"MThis branch's code block is the same as the block for the branch on line 416.(ï‹÷øøÿÿÿÿ
+ksquid:S1192"TDefine a constant instead of duplicating this literal "yyyy-MM-dd HH:mm:ss" 3 times.(§Îâ–
+dsquid:CallToDeprecatedMethod•"/Remove this use of "getDate"; it is deprecated.(…©ôŞşÿÿÿÿ8Ïşú ö-
+Ysquid:S1126û"AReplace this if-then-else statement by a single return statement.(×Ö‚­
+Tsquid:S2589Ã"7Remove this expression which always evaluates to "true"(„ƒÜ¥ıÿÿÿÿ
+Lsquid:S1066¬"/Merge this if statement with the enclosing one.(çÔÂ’üÿÿÿÿ
+csquid:S1192"LUse already-defined constant 'FORMAT' instead of duplicating its value here.(§Îâ–
+P
+squid:S106è"9Replace this use of System.out or System.err by a logger.(íµ©Ô
+;squid:S1148ñ"#Use a logger to log this exception.(òçøì
+;squid:S1148"#Use a logger to log this exception.(òçøì

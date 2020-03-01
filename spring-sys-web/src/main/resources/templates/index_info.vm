@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+##    <link href="/css/system/style.min.css" rel="stylesheet">
+    #parse("modular/html_css.vm")
+##    <link href="/css/system/animate.min.css" rel="stylesheet">
+</head>
+
+<body style="overflow:hidden;">
+<div class="wrapper">
+    <div class="alert alert-info fade in" style="text-align: center">
+        欢迎<strong> $!{userInfo.name}</strong> 登录管理中心
+    </div>
+</div>
+##<canvas id="canvas"></canvas>
+#*<div id="conversationDiv">
+    <button id="connect" onclick="connect();">连接</button>
+    <button id="disconnect" disabled="disabled" onclick="disconnect();">断开连接</button><br>
+    <label>输入你的名字</label><input type="text" id="name"/>
+    <button id="sendName" onclick="sendName();">发送</button>
+    <p id="response"></p>
+</div>*#
+#*<script type="text/javascript" src="/js/love/digit.js"></script>
+<script type="text/javascript" src="/js/love/app.js"></script>*#
+
+#*<script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>*#
+#*<script src="/js/stockjs.min.js"></script>
+<script src="/js/stomp.js"></script>*#
+<script type="text/javascript">
+    /*$(document).ready(function() {
+        $('.dpMonths').datepicker();
+
+    });*/
+//    var stompClient = null;
+/*    function setConnected(connected) {
+        alert(connected);
+        document.getElementById("connect").disabled = connected;
+        document.getElementById("disconnect").disabled = !connected;
+//        document.getElementById("conversationDiv").style.visibility = connected ? 'visible' : 'hidden';
+//        $("#connect").disabled = connected;
+//        $("#disconnect").disabled = !connected;
+        $("#response").html();
+    }*/
+    /*function connect() {
+        var socket = new SockJS('/endpointSang');
+        stompClient = Stomp.over(socket);
+        console.info(stompClient);
+        stompClient.connect({}, function (frame) {
+            setConnected(true);
+            console.log('Connected:' + frame);
+            stompClient.subscribe('/topic/message/query', function (response) {
+                showResponse(JSON.parse(response.body).responseMessage);
+                stompClient.send("/welcome", {}, {});
+            })
+        });
+    }
+    function disconnect() {
+        if (stompClient != null) {
+            stompClient.disconnect();
+        }
+        setConnected(false);
+        console.log('Disconnected');
+    }
+    function sendName() {
+        var name = $('#name').val();
+        console.log('name:' + name);
+        stompClient.send("/welcome", {}, JSON.stringify({'name': name}));
+    }
+    function showResponse(message) {
+        $("#response").html(message);
+    }*/
+</script>
+<!--body wrapper start-->
+##<div class="wrapper" >
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    #*#foreach($goods in $goodsList)
+        <div id="main_$goods.goodsNo" style="height:400px"></div><br/>
+    #end*#
+
+##</div>
+<!--body wrapper end-->
+    #parse("modular/html_js.vm")
+
+##<script src="/js/content.min.js"></script>
+##<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<script>
+##/*
+##    // 路径配置
+##    require.config({
+##        paths: {
+##            echarts: 'http://echarts.baidu.com/build/dist'
+##        }
+##    });
+##
+##    #foreach($goods in $goodsList)
+##    // 使用
+##    require(
+##            [
+##                'echarts',
+##                'echarts/chart/k' // 使用柱状图就加载bar模块，按需加载
+##            ],
+##            function (ec) {
+##                // 基于准备好的dom，初始化echarts图表
+##                var myChart = ec.init(document.getElementById('main_$goods.goodsNo'));
+##                var option = {
+##                    title : {
+##                        text: '$!goods.goodsName'
+##                    },
+##                    tooltip : {
+##                        trigger: 'axis',
+##                        formatter: function (params) {
+##                            var res = params[0].seriesName + ' ' + params[0].name;
+##                            res += '<br/>  开盘 : ' + params[0].value[0] + '  最高 : ' + params[0].value[3];
+##                            res += '<br/>  收盘 : ' + params[0].value[1] + '  最低 : ' + params[0].value[2];
+##                            return res;
+##                        }
+##                    },
+##                    legend: {
+##                        data:["$!goods.goodsName"]
+##                    },
+##                    toolbox: {
+##                        show : true,
+##                        feature : {
+##                            /!*mark : {show: true},
+##                            dataZoom : {show: true},
+##                            dataView : {show: true, readOnly: false},
+##                            magicType: {show: true, type: ['line', 'bar']},
+##                            restore : {show: true},*!/
+##                            saveAsImage : {show: true}
+##                        }
+##                    },
+##                    dataZoom : {
+##                        show : true,
+##                        realtime: true,
+##                        start : 0,
+##                        end : 100
+##                    },
+##                    xAxis : [
+##                        {
+##                            type : 'category',
+##                            boundaryGap : true,
+##                            axisTick: {onGap:false},
+##                            splitLine: {show:false},
+##                            data : [
+##                                #foreach($price in $goods.closePriceList)
+##                                    "$!DateTool.format("yyyy-MM-dd", $!price.createTime)",
+##                                #end
+##                            ]
+##                        }
+##                    ],
+##                    yAxis : [
+##                        {
+##                            type : 'value',
+##                            scale:true,
+##                            boundaryGap: [0.01, 0.01]
+##                        }
+##                    ],
+##                    series : [
+##                        {
+##                            name: "$!goods.goodsName",
+##                            type:'k',
+##                            data: [
+##                                #foreach($price in $goods.closePriceList)
+##                                    [
+##                                    $!NumberTool.format("#0.00",$!MathTool.div($!price.openPrice,"100")),
+##                                    $!NumberTool.format("#0.00",$!MathTool.div($!price.closePrice,"100")),
+##                                    $!NumberTool.format("#0.00",$!MathTool.div($!price.minPrice,"100")),
+##                                    $!NumberTool.format("#0.00",$!MathTool.div($!price.maxPrice,"100"))
+##                                    ],
+##                                #end
+##                            ]
+##                        }
+##                    ]
+##                };
+##                // 为echarts对象加载数据
+##                myChart.setOption(option);
+##            }
+##    );
+##    #end*/
+</script>
+</body>
+</html>

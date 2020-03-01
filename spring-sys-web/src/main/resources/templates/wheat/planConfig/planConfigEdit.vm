@@ -1,0 +1,35 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:invest:edit", "isBack": true, "href": "invest/planConfig/configlist"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "invest/planConfig/save")
+                <input type="hidden" name="id" value="$!{config.planId}">
+
+                <div class="form-group" >
+                    #set($planAmount1 = $config.planAmount / 1000)
+                    #set($amainAmount1 = $config.mainAmount / 1000)
+                    #set($secondAmount1 = $config.secondAmount / 1000)
+                    #formInput({"name": "编码"} {"name": "planId", "value":"$!{config.planId}","id": "planId","required": "required","readonly":"readonly"})
+                    #formInput({"name": "名称"} {"name": "planName", "value":"$!{config.planName}","id": "planName","required": "required"})
+                    #formInput({"name": "计划金额"} {"name": "planAmount", "value":"$!{planAmount1}","id": "planAmount","required": "required"})
+                    #formInput({"name": "计划天数"} {"name": "planDays", "value":"$!{config.planDays}","id": "planDays","required": "required"})
+                    #formInput({"name": "主仓金额"} {"name": "mainAmount", "value":"$!{amainAmount1}","id": "mainAmount","required": "required"})
+                    #formInput({"name": "主仓天数"} {"name": "mainDays", "value":"$!{config.mainDays}","id": "mainDays","required": "required"})
+                    #formInput({"name": "副仓金额"} {"name": "secondAmount", "value":"$!{secondAmount1}","id": "secondAmount","required": "required"})
+                    #formInput({"name": "副仓天数"} {"name": "secondDays", "value":"$!{config.secondDays}","id": "secondDays","required": "required"})
+                    #formInput({"name": "最高购买数量"} {"name": "maxCount", "value":"$!{config.maxCount}","id": "maxCount","required": "required"})
+                    #formInput({"name": "返还利息％"} {"name": "interestReturnPer", "value":"$!{config.interestReturnPer}","id": "interestReturnPer","required": "required"})
+                </div>
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

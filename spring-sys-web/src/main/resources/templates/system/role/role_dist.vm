@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #parse("modular/html_css.vm")
+</head>
+
+<body class="sticky-header">
+<input type="hidden" value="$!{page}" id="page_hidden_iframe">
+
+<!--body wrapper start-->
+<div class="wrapper">
+    #parse("modular/prompt.vm")
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle} 详情
+            <span class="tools pull-right">
+                <button class="btn btn-sm btn-default tooltips" type="button" data-original-title="返回"
+                        data-button="back" data-href="$!{ctx}/role/roleList">
+                    <i class="fa fa-reply"></i> 返回
+                </button>
+            </span>
+        </header>
+        <div class="panel-body">
+            <div class="col-sm-4" style="height: 40px;line-height: 40px;"><b>角色名称：</b> $!{role.name}</div>
+            #*<div class="col-sm-4" style="height: 40px;line-height: 40px;"><b>是否系统数据：</b> $dict.getDictLabel("$!{role.sysData}", 'yes_no', '无')</div>
+            <div class="col-sm-4" style="height: 40px;line-height: 40px;"><b>是否可用：</b> $dict.getDictLabel("$!{role.useable}", 'yes_no', '无')</div>*#
+            <div class="col-sm-8" style="height: 40px;line-height: 40px;"><b>备注：</b> $!{role.remarks}</div>
+        </div>
+
+    </section>
+    <section class="panel">
+        <header class="panel-heading">
+            $!{funTitle}
+            <span class="tools pull-right">
+                <button id="button_role_dist" class="btn btn-sm btn-primary tooltips" type="button" modal="show"
+                        modal-id="dist_modal">
+                    <i class="fa fa-plus"></i> 分配角色
+                </button>
+            </span>
+        </header>
+        #parse("system/role/dist_modal.vm")
+        <div class="panel-body">
+            <table id="tree_table" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>姓名</th>
+                    <th>电话</th>
+                    <th>手机</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                    #foreach($l in $list)
+                    <tr>
+                        <td>$!{l.username}</td>
+                        <td>$!{l.name}</td>
+                        <td>$!{l.phone}</td>
+                        <td>$!{l.mobile}</td>
+                        <td>
+                            <a href="$!{ctx}/role/userRoleOut?userId=$!{l.id}&roleId=$!{role.id}" class="fa fa-trash-o"
+                               title="移除" remove="true"> 移除</a>
+                        </td>
+                    </tr>
+                    #end
+
+                </tbody>
+            </table>
+        ##            #parse("/publicModular/pagination.vm")
+        </div>
+
+    </section>
+</div>
+<!--body wrapper end-->
+<form id="dist_form" method="post"
+      action="$!{ctx}/role/saveDist">
+    <input type="hidden" name="roleId" id="role_id" value="$!{role.id}">
+    <input type="hidden" name="userIds" id="user_ids">
+</form>
+    #parse("modular/html_js.vm")
+<script>
+    $(function () {
+        $('#dist_modal_confirm').on('click', function () {
+            var ids = "";
+            $('#tbody_tr tr').each(function () {
+                var aId = $(this).children('td').children('a').attr('id');
+                if (ids === ""){
+                    ids = aId;
+                } else {
+                    ids += "," + aId;
+                }
+            })
+            if (ids != ""){
+                $('#user_ids').val(ids);
+                $('#dist_form').submit();
+            } else {
+                var html = '<div class="alert alert-danger alert-block fade in" alert-id="msg">';
+                html += '<button type="button" class="close close-sm" data-dismiss="alert"><i class="fa fa-times"></i></button>'
+                html += '<p>请选择成员</p>'
+                html += '</div>'
+                $('#dist_prompt').html(html);
+            }
+
+        })
+    })
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+
+_squid:S1192±"GDefine a constant instead of duplicating this literal "isAut" 12 times.(›¢µÊ
+esquid:S1192ƒ"HDefine a constant instead of duplicating this literal "idCard" 12 times.(²«†úÿÿÿÿ
+lsquid:S1192‹"ODefine a constant instead of duplicating this literal "granaryFreeze" 10 times.(êÃ¯»úÿÿÿÿ
+dsquid:S1192Ó"GDefine a constant instead of duplicating this literal "phone" 12 times.(ºÔñŠÿÿÿÿÿ
+asquid:S1192Ã"IDefine a constant instead of duplicating this literal "expand3" 12 times.(Î¢ú³
+fsquid:S1192‰"IDefine a constant instead of duplicating this literal "expand4" 12 times.(¿ˆ½îùÿÿÿÿ
+asquid:S1192Ï"IDefine a constant instead of duplicating this literal "expand5" 12 times.(¥’€´
+bsquid:S1192™"JDefine a constant instead of duplicating this literal "password" 12 times.(­â›Î
+gsquid:S1192É"JDefine a constant instead of duplicating this literal "imgFront" 12 times.(‹¾ÉÓúÿÿÿÿ
+asquid:S1192·"IDefine a constant instead of duplicating this literal "expand1" 12 times.(¤ëÀË
+esquid:S1192“
+"HDefine a constant instead of duplicating this literal "freeze" 10 times.(™Ÿóîÿÿÿÿÿ
+fsquid:S1192ı"IDefine a constant instead of duplicating this literal "expand2" 12 times.(˜¯×ªøÿÿÿÿ
+gsquid:S1192½"JDefine a constant instead of duplicating this literal "bankCard" 12 times.(ëèù«ıÿÿÿÿ
+bsquid:S1192Õ"JDefine a constant instead of duplicating this literal "realName" 12 times.(Ö­ú€
+fsquid:S1192"IDefine a constant instead of duplicating this literal "imgBack" 12 times.(£Âœ§üÿÿÿÿ
+gsquid:S1192"JDefine a constant instead of duplicating this literal "memberId" 12 times.(Ş±ØÕÿÿÿÿÿ
+bsquid:S1192×	"KDefine a constant instead of duplicating this literal "available" 10 times.(È¢ÒU
+bsquid:S1192÷"JDefine a constant instead of duplicating this literal "bankName" 12 times.(º„õ
+isquid:S1192Ç"LDefine a constant instead of duplicating this literal "createTime" 10 times.(·í“°øÿÿÿÿ
+fsquid:S1192û"IDefine a constant instead of duplicating this literal "version" 10 times.(İ»µ„øÿÿÿÿ
+jsquid:S1192Ï
+"MDefine a constant instead of duplicating this literal "moneyFreeze" 10 times.(Û¢¬¹ÿÿÿÿÿ
+_squid:S1192›	"GDefine a constant instead of duplicating this literal "total" 10 times.(Û±¨ï
+isquid:S1192ƒ"LDefine a constant instead of duplicating this literal "modifyTime" 10 times.(ºÏ÷«ÿÿÿÿÿ
+`squid:S1192¿"IDefine a constant instead of duplicating this literal "delFlag" 10 times.(Ûİ¹}
+jsquid:S1192ë"MDefine a constant instead of duplicating this literal "referenceId" 12 times.(øßıÒøÿÿÿÿ
+_squid:S1192¥"GDefine a constant instead of duplicating this literal "level" 12 times.(îîöÜ
+osquid:S2293'"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÏßÉe
+qsquid:S2293¢"YReplace the type specification in this constructor call with the diamond operator ("<>").(óÎ³Ù
+xsquid:S1488‡"`Immediately return this expression instead of assigning it to the temporary variable "criteria".(¶Õ¯ì
+dsquid:S00112³"FDefine and throw a dedicated exception instead of using a generic one.(ÔÁñÍøÿÿÿÿ
+dsquid:S00112º"FDefine and throw a dedicated exception instead of using a generic one.(õÜ—ºşÿÿÿÿ
+^squid:S00112Á"FDefine and throw a dedicated exception instead of using a generic one.(ìá¤
+
+Tsquid:S1155z">Use isEmpty() to check whether the collection is empty or not.(Á½¼s
+[squid:S1155¦">Use isEmpty() to check whether the collection is empty or not.(í´Õûüÿÿÿÿ

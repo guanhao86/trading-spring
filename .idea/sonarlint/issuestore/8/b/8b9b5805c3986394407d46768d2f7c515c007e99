@@ -1,0 +1,19 @@
+
+isquid:S1192]"MDefine a constant instead of duplicating this literal "/member/list" 6 times.(ö¤ØÏÿÿÿÿÿ
+Dsquid:S1481O"(Remove this unused "map" local variable.(¼ú ïøÿÿÿÿ
+Dsquid:S1481k"(Remove this unused "map" local variable.(¼ú ïøÿÿÿÿ
+Ssquid:S1854O"7Remove this useless assignment to local variable "map".(¼ú ïøÿÿÿÿ
+Xsquid:S1854="<Remove this useless assignment to local variable "postType".(‰³¤ªÿÿÿÿÿ
+Ssquid:S1854k"7Remove this useless assignment to local variable "map".(¼ú ïøÿÿÿÿ
+qsquid:UselessImportCheck"MRemove this unused import 'com.spring.free.util.exception.ExceptionCodeEnum'.(ôƒ†™
+^squid:S1192D"GDefine a constant instead of duplicating this literal "member" 4 times.(„ÐÐñ
+psquid:UselessImportCheck"LRemove this unused import 'com.spring.free.util.exception.ServiceException'.(Éå‚ã
+bsquid:CommentedOutCodeLineS"<This block of commented-out lines of code should be removed.(ˆõ
+dsquid:S1192d"HDefine a constant instead of duplicating this literal "success" 3 times.(Â©ÄÛûÿÿÿÿ
+Tsquid:S1854€"7Remove this useless assignment to local variable "map".(¼ú ïøÿÿÿÿ
+Isquid:S1481="-Remove this unused "postType" local variable.(‰³¤ªÿÿÿÿÿ
+`squid:UselessImportCheck"<Remove this unused import 'com.alibaba.fastjson.JSONObject'.(äýµ
+Esquid:S1481€"(Remove this unused "map" local variable.(¼ú ïøÿÿÿÿ
+Nsquid:S11353"2Complete the task associated to this TODO comment.(å úÛýÿÿÿÿ
+Isquid:S1135#"2Complete the task associated to this TODO comment.(ÚëÚô
+usquid:UselessImportCheck"LRemove this unused import 'com.spring.free.common.service.AsyncRestService'.(â®ÇÒûÿÿÿÿ

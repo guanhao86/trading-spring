@@ -1,0 +1,56 @@
+#*
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"标题", "perm": "admin:goodsInfo:edit", "isBack": true, "href": "goodsInfo/list"})
+                #btn({"btnName":"按钮-保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+                #btnGroup([{"btnName":"按钮-001", "icon":"fa-save", "style":"primary", "perm":"perm", "attr":{"data-button": "save", "data-form-id": "form_insert"}},
+                    {"btnName":"按钮-002", "icon":"fa-refresh", "style":"default",  "attr":{"data-button": "skip", "data-href": "$!{ctx}/ration/list"}},
+                    {"btnName":"按钮-003", "icon":"fa-plus", "style":"primary",  "attr":{"data-button": "insert-pre", "data-href": "$!{ctx}/ration/addPre"}}])
+            #end
+            #@panelBody()
+                $!{test}
+                *#
+#*##*
+@form("form_insert" false "post" "save")
+                    #formRadio({"name": "单项选择框01", "default": "1", "dictType": "noticesStauts"} {"name": "name11", "id": "id01"})
+                    #formRadio({"name": "单项选择框02", "default": "10", "list": [{"key": 10, "value": 10}, {"key": 15, "value": 15}, {"key": 20, "value": 20}, {"key": 25, "value": 25}, {"key": 30, "value": 30}]} {"name": "name12", "id": "id01"})
+                    #formCheckBox({"name": "多项选择框01", "default": "1", "dictType": "noticesStauts"} {"name": "name13", "id": "id01"})
+                    #formCheckBox({"name": "多项选择框02", "default": "10", "list": [{"key": 10, "value": 10}, {"key": 15, "value": 15}, {"key": 20, "value": 20}, {"key": 25, "value": 25}, {"key": 30, "value": 30}]} {"name": "name14", "id": "id01"})
+                    #formDate({"name": "日期选择框"} {"name": "name01", "id": "id01", "dateVal": "true", "required": "required", "value": "$!DateTool.format('yyyy-MM-dd', '2018-03-20')"})
+                    #formModal({"name": "弹出选择框", "modalId": "lcon_modal", "icon": "fa-search", "parse": "system/menu/icon_modal.vm"} {"name": "name02", "id": "id02", "required": "required"})
+                    #formTextarea({"name": "文本域"} {"name": "name03", "id": "id03", "required": "required"})
+                    #formFile({"name": "文件上传", "asterisk": false, "isDownload": true, "href": "ration/import/template"} {"name": "file" , "required": "required", "style": "padding: 0px 1px;width: 100%"})
+                #end*##*
+
+                #@table()
+                    #tableTHead(["流水号", "商品编号", "商品名称", "配购价格", "操作日期"], "admin:ration:edit", true)
+                    #@tableBody($page.list)
+                        #tableTd($!{l.serialNumber})
+                        #tableTd($!{l.goodsNo})
+                        #tableTd($!{l.goodsName})
+                        #tableTd("$!{l.price}" {"type": "price", "format": "0.00"})
+                        #tableTd($!{l.handleDate} {"type": "date", "format": "yyyy-MM-dd"})
+                        #@tableTd()
+                            #@a("查看" {"href": "#ration_trader_modal_$!{l.id}", "data-toggle": "modal", "title": "查看详情"})
+                                #parse("admin/rationHandle/ration_tran_trader_modal.vm")
+                            #end
+                        #end
+                    #end
+                #end
+            #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+            messages: {
+                name01: {
+                    required: function () {
+                        return "哈哈"
+                    }
+                }
+            },
+        #end
+    #end
+#end*#
+$!{text}

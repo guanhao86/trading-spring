@@ -1,0 +1,1731 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="dc39a785-39fb-4fac-aed0-4bf70e174edf" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/generatorConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/generatorConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-sys-web/profile-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/spring-sys-web/profile-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-utils/src/main/java/com/spring/free/util/OSSClientUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring-utils/src/main/java/com/spring/free/util/OSSClientUtil.java" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/spring-utils/target/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path="$PROJECT_DIR$/spring-domain/target/" />
+    <ignored path="$PROJECT_DIR$/spring-mybatis-mapper/target/" />
+    <ignored path="$PROJECT_DIR$/spring-sys-web/target/" />
+    <ignored path="$PROJECT_DIR$/spring-system/target/" />
+    <ignored path="$PROJECT_DIR$/spring-common/target/" />
+    <ignored path=".idea/" />
+    <ignored mask="*.class" />
+    <ignored mask="*.iml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-84438014">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="25" />
+          <entry key="project.open.time.102" value="1" />
+          <entry key="project.open.time.11" value="1" />
+          <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.14" value="2" />
+          <entry key="project.open.time.142" value="1" />
+          <entry key="project.open.time.16" value="1" />
+          <entry key="project.open.time.19" value="1" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.22" value="1" />
+          <entry key="project.open.time.23" value="1" />
+          <entry key="project.open.time.24" value="4" />
+          <entry key="project.open.time.25" value="3" />
+          <entry key="project.open.time.26" value="3" />
+          <entry key="project.open.time.27" value="1" />
+          <entry key="project.open.time.29" value="1" />
+          <entry key="project.open.time.3" value="3" />
+          <entry key="project.open.time.30" value="5" />
+          <entry key="project.open.time.31" value="1" />
+          <entry key="project.open.time.32" value="1" />
+          <entry key="project.open.time.33" value="1" />
+          <entry key="project.open.time.34" value="1" />
+          <entry key="project.open.time.36" value="2" />
+          <entry key="project.open.time.38" value="1" />
+          <entry key="project.open.time.4" value="4" />
+          <entry key="project.open.time.44" value="2" />
+          <entry key="project.open.time.46" value="1" />
+          <entry key="project.open.time.49" value="1" />
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.50" value="1" />
+          <entry key="project.open.time.53" value="1" />
+          <entry key="project.open.time.58" value="1" />
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.open.time.69" value="1" />
+          <entry key="project.open.time.70" value="1" />
+          <entry key="project.open.time.76" value="1" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.open.time.88" value="1" />
+          <entry key="project.open.time.9" value="2" />
+          <entry key="project.open.time.92" value="1" />
+          <entry key="project.open.time.98" value="1" />
+          <entry key="project.opened" value="61" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="class" value="6" />
+          <entry key="java" value="357" />
+          <entry key="properties" value="14" />
+          <entry key="vm" value="12" />
+          <entry key="xml" value="46" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CLASS" value="6" />
+          <entry key="JAVA" value="357" />
+          <entry key="Properties" value="14" />
+          <entry key="VTL" value="12" />
+          <entry key="XML" value="46" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="java" value="26351" />
+          <entry key="properties" value="24" />
+          <entry key="txt" value="349" />
+          <entry key="vm" value="575" />
+          <entry key="xml" value="397" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="26351" />
+          <entry key="PLAIN_TEXT" value="349" />
+          <entry key="Properties" value="24" />
+          <entry key="SQL" value="1" />
+          <entry key="VTL" value="575" />
+          <entry key="XML" value="396" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/SysWebApplication.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spring-sys-web/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1717">
+              <caret line="101" column="16" selection-start-line="101" selection-start-column="16" selection-end-line="101" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/generatorConfig.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="96">
+              <caret line="71" column="59" lean-forward="true" selection-start-line="71" selection-start-column="59" selection-end-line="71" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/config/instruction.properties">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spring-sys-web/profile-dev.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="7" column="37" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spring-system/src/main/java/com/spring/free/system/UserService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="133" selection-start-line="133" selection-end-line="133" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spring-domain/src/main/java/com/spring/free/service/VirtualRecordService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1343">
+              <caret line="104" selection-start-line="104" selection-end-line="104" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spring-sys-web/profile-prod.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1105">
+              <caret line="65" column="37" selection-start-line="65" selection-start-column="29" selection-end-line="65" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spring-utils/src/main/java/com/spring/free/util/OSSClientUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="87" selection-start-line="14" selection-start-column="87" selection-end-line="14" selection-end-column="87" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>存在多个计划</find>
+      <find>修改【粮仓计划实例主表】</find>
+      <find>page</find>
+      <find>spring-boot-devtools</find>
+      <find>compare</find>
+      <find>getAllChildCountByLevel</find>
+      <find>getMemberInfo</find>
+      <find>getChildTree</find>
+      <find>search</find>
+      <find>reset_form</find>
+      <find>review_id</find>
+      <find>#btn</find>
+      <find>btn</find>
+      <find>dict</find>
+      <find>dictInfo</find>
+      <find>statisticPlanCount</find>
+      <find>selectGroupByMemberId</find>
+      <find>createQueueV2AndRun</find>
+      <find>&quot;list&quot;</find>
+      <find>getBonusList</find>
+      <find>spring.redis.host</find>
+      <find>redis</find>
+      <find>AccessKeyId</find>
+      <find>dev</find>
+      <find>prod</find>
+      <find>active</find>
+      <find>image.upload.Endpoint</find>
+      <find>hongkong</find>
+      <find>&lt;table tableName=&quot;table_</find>
+      <find>table_trans_to_gs_history</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>TInvestMemberUpConfig</replace>
+      <replace>TInvestPlanBonus</replace>
+      <replace>TInvestPlanBonusTmp</replace>
+      <replace>TInvestPlanConfig</replace>
+      <replace>TInvestPlanDetail</replace>
+      <replace>TInvestPlanRunDetail</replace>
+      <replace>TInvestSettleRecord</replace>
+      <replace>Detail</replace>
+      <replace>TInvestPlanMain</replace>
+      <replace>TWheatAccount</replace>
+      <replace>粮仓计划执行明细</replace>
+      <replace>会员信息</replace>
+      <replace>tWheatMember</replace>
+      <replace>iWheatMemberMapper</replace>
+      <replace>investMemberUpConfigMapper</replace>
+      <replace>iInvestSettleRecord</replace>
+      <replace>TInvestMemberConfig</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="modificationStamps">
+      <map>
+        <entry key="D:/workspace/cms" value="6132788305870" />
+        <entry key="D:/workspace/cms-web" value="1533198122818" />
+      </map>
+    </option>
+    <option name="projectSyncType">
+      <map>
+        <entry key="D:/workspace-test/ic-comctenant-develop" value="PREVIEW" />
+        <entry key="D:/workspace-test1/ic-comctenant-develop" value="PREVIEW" />
+        <entry key="D:/workspace/cas" value="PREVIEW" />
+        <entry key="D:/workspace/centra-ums-server" value="PREVIEW" />
+        <entry key="D:/workspace/centra-ums-web" value="PREVIEW" />
+        <entry key="D:/workspace/common" value="PREVIEW" />
+        <entry key="D:/workspace/cust-web" value="PREVIEW" />
+        <entry key="D:/workspace/datatrans-svc" value="PREVIEW" />
+        <entry key="D:/workspace/ic-comctenant-develop" value="PREVIEW" />
+        <entry key="D:/workspace/ic-comctenant-web-develop" value="PREVIEW" />
+        <entry key="D:/workspace/ic-pay-server" value="PREVIEW" />
+        <entry key="D:/workspace/ic-pay-web" value="PREVIEW" />
+        <entry key="D:/workspace/ic-score" value="PREVIEW" />
+        <entry key="D:/workspace/ic-score-web" value="PREVIEW" />
+        <entry key="D:/workspace/ic-sso-mgmt" value="PREVIEW" />
+        <entry key="D:/workspace/inc_collection" value="PREVIEW" />
+        <entry key="D:/workspace/mall-web" value="PREVIEW" />
+        <entry key="D:/workspace/order" value="PREVIEW" />
+        <entry key="D:/workspace/product-web-BJ" value="PREVIEW" />
+        <entry key="D:/workspace/product_bj" value="PREVIEW" />
+        <entry key="D:/workspace/runner-customer" value="PREVIEW" />
+        <entry key="D:/workspace/runner-customer-bak" value="PREVIEW" />
+        <entry key="D:/workspace/simple-mgmt" value="PREVIEW" />
+        <entry key="D:/workspace/spring-cloud-eureka" value="PREVIEW" />
+        <entry key="D:/workspace/store-mgmt" value="PREVIEW" />
+        <entry key="D:/workspace/sys-mgmt" value="PREVIEW" />
+        <entry key="D:/workspace/unicard-frontend-web" value="PREVIEW" />
+        <entry key="D:/workspace/unicard-sso-mgmt" value="PREVIEW" />
+        <entry key="D:/workspace/unicard-sso-mgmt1" value="PREVIEW" />
+        <entry key="D:/workspace/unicard-web" value="PREVIEW" />
+        <entry key="D:/workspace/unicard-x-sso-server-web" value="PREVIEW" />
+        <entry key="D:/workspace/x-sso-server-web" value="PREVIEW" />
+        <entry key="D:/workspace/x-workflow" value="PREVIEW" />
+        <entry key="E:/工作/01 需求/20180604 内容中心/交付文档/cms-web" value="PREVIEW" />
+        <entry key="E:/工作/01 需求/20180604 内容中心/交付文档/项目/cms/cms" value="PREVIEW" />
+      </map>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/ITWheatAccountDetailBusiSV.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TWheatAccountDetailBusiSVImpl.java" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/vo/PageVO.java" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/vo/AcctDetailReqVO.java" />
+        <option value="$PROJECT_DIR$/spring-sys-web/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/test/TestController.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/ITInvestMemberUpConfigBusiSV.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestMemberUpConfigBusiSVImpl.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TInvestQueueDZ.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/ITInvestQueueBusiSV.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/ITInvestPlanDetailBusiSV.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TInvestPlanBonusTmpDZ.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TInvestPlanMainDZ.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestPlanMainLogSVImpl.java" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/resources/templates/wheat/invest/detailList4Settle.vm" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/wheat/MemberController.java" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/vo/TreeVO.java" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/resources/templates/wheat/member/tree.vm" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/resources/templates/wheat/planConfig/planConfigList.vm" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/vo/TInvestMemberMoneyConfigVO.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/ITInvestPlanConfigBusiSV.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestPlanConfigBusiSVImpl.java" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/resources/templates/wheat/planConfig/planBonusConfigList.vm" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/ITInvestMemberMoneyConfigBusiSV.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestMemberMoneyConfigBusiSVImpl.java" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/resources/templates/wheat/planConfig/planBonusConfigEdit.vm" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/InvestPlan/InvestPlanConfigController.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestPlanDetailBusiSVImpl.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/dao/mapper/TInvestPlanMainMapperDZ.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/dao/mapper/TInvestPlanBonusMapperDZ.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/ITInvestPlanBonusBusiSV.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestPlanBonusBusiSVImpl.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/com/spring/fee/dao/mapper/TInvestPlanBonusMapperDZ.xml" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TInvestPlanBonusDZ.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/com/spring/fee/dao/mapper/TInvestPlanMainMapperDZ.xml" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TInvestPlanMainStatistic.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TWheatMemberGroupDZ.java" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/api/RestInvestPlanController.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestQueueBusiSVImpl.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestPlanMainBusiSVImpl.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/ITInvestPlanMainBusiSV.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TWheatMemberBusiSVImpl.java" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/ITWheatMemberBusiSV.java" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/api/RestMemberController.java" />
+        <option value="$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/InvestPlan/InvestController.java" />
+        <option value="$PROJECT_DIR$/spring-utils/src/main/java/com/spring/free/util/DateUtils.java" />
+        <option value="$PROJECT_DIR$/spring-sys-web/profile-prod.properties" />
+        <option value="$PROJECT_DIR$/spring-utils/src/main/java/com/spring/free/util/OSSClientUtil.java" />
+        <option value="$PROJECT_DIR$/spring-sys-web/profile-dev.properties" />
+        <option value="$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/generatorConfig.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+    <option name="enabledProfiles">
+      <list>
+        <option value="dev" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Profiles" type="6783ec58:MavenProjectsStructure$ProfilesNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="spring-sys-web" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="spring-sys-web" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Dependencies" type="f4be9f2a:MavenProjectsStructure$DependenciesNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-15" />
+    <option name="y" value="-15" />
+    <option name="width" value="1945" />
+    <option name="height" value="1045" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <autoscrollFromSource ProjectPane="true" />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-domain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-domain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-domain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-domain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-domain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="free" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-domain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="free" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-mybatis-mapper" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-mybatis-mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-mybatis-mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-mybatis-mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-mybatis-mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="spring" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-mybatis-mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="spring" type="462c0819:PsiDirectoryNode" />
+              <item name="fee" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-mybatis-mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="spring" type="462c0819:PsiDirectoryNode" />
+              <item name="fee" type="462c0819:PsiDirectoryNode" />
+              <item name="mapper" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-mybatis-mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="spring" type="462c0819:PsiDirectoryNode" />
+              <item name="fee" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-mybatis-mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-mybatis-mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="mapper" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-sys-web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-sys-web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-sys-web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-sys-web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-sys-web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="free" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-sys-web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="free" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-sys-web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-sys-web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-system" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-system" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-system" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-system" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-system" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="free" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-system" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="free" type="462c0819:PsiDirectoryNode" />
+              <item name="system" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-utils" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-utils" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-utils" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-utils" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="free" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trading-spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trading-spring" type="462c0819:PsiDirectoryNode" />
+              <item name="spring-utils" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="free" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelOrder2" value="2" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RequestMappingsPanelWidth2" value="75" />
+    <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/workspace_hp/trading-spring/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestQueueBusiSVImpl.java" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="D:/workspace/cms" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.spring.fee.model" />
+      <recent name="com.spring.free.controller.api" />
+      <recent name="com.spring.fee.service.impl" />
+      <recent name="com.spring.fee.service" />
+      <recent name="com.spring.free.controller.invest" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workspace_hp\trading-spring\spring-sys-web\src\main\resources\templates\wheat\planConfig" />
+      <recent name="D:\workspace_hp\trading-spring\spring-sys-web\src\main\resources\templates\wheat\member" />
+      <recent name="D:\workspace_hp\trading-spring\spring-mybatis-mapper\src\main\resources\com\spring\fee\dao\mapper" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.SysWebApplication">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="generator" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="mybatis-generator:generate" />
+                <option value="-e" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/spring-mybatis-mapper" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="SysWebApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="spring-sys-web" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.spring.free.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.spring.free.SysWebApplication" />
+      <option name="ACTIVE_PROFILES" value="dev" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Maven.generator" />
+      <item itemvalue="Spring Boot.SysWebApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.SysWebApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dc39a785-39fb-4fac-aed0-4bf70e174edf" name="Default Changelist" comment="" />
+      <created>1571133889885</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1571133889885</updated>
+      <workItem from="1571133900355" duration="605000" />
+      <workItem from="1571145470281" duration="205000" />
+      <workItem from="1571190553405" duration="1058000" />
+      <workItem from="1571274476115" duration="620000" />
+      <workItem from="1571316760177" duration="1433000" />
+      <workItem from="1571360499533" duration="12661000" />
+      <workItem from="1571405894448" duration="2962000" />
+      <workItem from="1571448084286" duration="29988000" />
+      <workItem from="1571535570214" duration="20217000" />
+      <workItem from="1571621431100" duration="579000" />
+      <workItem from="1571665274898" duration="8018000" />
+      <workItem from="1571707477522" duration="341000" />
+      <workItem from="1571743396084" duration="3849000" />
+      <workItem from="1571792739615" duration="9834000" />
+      <workItem from="1571832259980" duration="10824000" />
+      <workItem from="1571879716505" duration="97000" />
+      <workItem from="1571915733498" duration="6706000" />
+      <workItem from="1571965947495" duration="15629000" />
+      <workItem from="1572010966236" duration="7354000" />
+      <workItem from="1572068659974" duration="18816000" />
+      <workItem from="1572156099006" duration="8292000" />
+      <workItem from="1572226022643" duration="3325000" />
+      <workItem from="1572268959236" duration="9691000" />
+      <workItem from="1572310795801" duration="4694000" />
+      <workItem from="1572333864403" duration="580000" />
+      <workItem from="1572355853640" duration="7954000" />
+      <workItem from="1572398018142" duration="877000" />
+      <workItem from="1572412273134" duration="4608000" />
+      <workItem from="1572439874113" duration="3551000" />
+      <workItem from="1572484715520" duration="10280000" />
+      <workItem from="1572570864757" duration="10056000" />
+      <workItem from="1572664380977" duration="582000" />
+      <workItem from="1572846735536" duration="358000" />
+      <workItem from="1572934511536" duration="638000" />
+      <workItem from="1573002990329" duration="593000" />
+      <workItem from="1573089278309" duration="2365000" />
+      <workItem from="1573116064675" duration="2638000" />
+      <workItem from="1573175344852" duration="5737000" />
+      <workItem from="1573220421474" duration="1457000" />
+      <workItem from="1573434690738" duration="9515000" />
+      <workItem from="1573520828707" duration="2365000" />
+      <workItem from="1573607641421" duration="11566000" />
+      <workItem from="1573626638727" duration="6757000" />
+      <workItem from="1573694286638" duration="8863000" />
+      <workItem from="1573780140455" duration="3352000" />
+      <workItem from="1574212674423" duration="7214000" />
+      <workItem from="1574305305363" duration="1974000" />
+      <workItem from="1574742608039" duration="336000" />
+      <workItem from="1574743413261" duration="1453000" />
+      <workItem from="1574818231008" duration="572000" />
+      <workItem from="1574836135804" duration="1232000" />
+      <workItem from="1574903694491" duration="413000" />
+      <workItem from="1576719403127" duration="1824000" />
+      <workItem from="1577099437498" duration="1275000" />
+      <workItem from="1577150051448" duration="639000" />
+      <workItem from="1577255536529" duration="889000" />
+      <workItem from="1577322422452" duration="581000" />
+      <workItem from="1577927803067" duration="2994000" />
+      <workItem from="1582942423847" duration="3241000" />
+      <workItem from="1582962198823" duration="2970000" />
+      <workItem from="1583026527317" duration="3324000" />
+    </task>
+    <task id="LOCAL-00001" summary="mybatis generator">
+      <created>1571385611962</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1571385611962</updated>
+    </task>
+    <task id="LOCAL-00002" summary="创建粮仓，队列，续仓逻辑开发&#10;账户，账户明细服务开发">
+      <created>1571665627341</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1571665627341</updated>
+    </task>
+    <task id="LOCAL-00003" summary="日结逻辑settle开发">
+      <created>1571673708008</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1571673708008</updated>
+    </task>
+    <task id="LOCAL-00004" summary="1、会员升级实现&#10;2、最高执行中粮仓冻结金额计算">
+      <created>1571846332001</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1571846332001</updated>
+    </task>
+    <task id="LOCAL-00005" summary="v2版本 购买粮仓计划，续仓 开发   修改原排队逻辑为立即购买。">
+      <created>1572278624614</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1572278624614</updated>
+    </task>
+    <task id="LOCAL-00006" summary="修改结算">
+      <created>1572315296695</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1572315296695</updated>
+    </task>
+    <task id="LOCAL-00007" summary="自动复投、结算">
+      <created>1572883727796</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1572883727796</updated>
+    </task>
+    <task id="LOCAL-00008" summary="粮仓接口">
+      <created>1572440247187</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1572440247187</updated>
+    </task>
+    <task id="LOCAL-00009" summary="封接口">
+      <created>1572571019382</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1572571019382</updated>
+    </task>
+    <task id="LOCAL-00010" summary="升级算法">
+      <created>1572600476067</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1572600476067</updated>
+    </task>
+    <task id="LOCAL-00011" summary="粮仓收益明细">
+      <created>1573095078447</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1573095078447</updated>
+    </task>
+    <task id="LOCAL-00012" summary="增加是否允许复投">
+      <created>1573125783955</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1573125783955</updated>
+    </task>
+    <task id="LOCAL-00013" summary="bug">
+      <created>1573130308835</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1573130308835</updated>
+    </task>
+    <task id="LOCAL-00014" summary="计算奖金">
+      <created>1573193412620</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1573193412621</updated>
+    </task>
+    <task id="LOCAL-00015" summary="修改错误描述">
+      <created>1573221342050</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1573221342050</updated>
+    </task>
+    <task id="LOCAL-00016" summary="增加平级顶死奖金计算">
+      <created>1573447335617</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1573447335617</updated>
+    </task>
+    <task id="LOCAL-00017" summary="结算返回错误列表">
+      <created>1573620149281</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1573620149281</updated>
+    </task>
+    <task id="LOCAL-00018" summary="会员树">
+      <created>1573620272467</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1573620272467</updated>
+    </task>
+    <task id="LOCAL-00019" summary="会员树">
+      <created>1573628693294</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1573628693294</updated>
+    </task>
+    <task id="LOCAL-00020" summary="奖金计算配置页面">
+      <created>1573635400192</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1573635400192</updated>
+    </task>
+    <task id="LOCAL-00021" summary="空判断">
+      <created>1573695727478</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1573695727478</updated>
+    </task>
+    <task id="LOCAL-00022" summary="榜单">
+      <created>1573703060101</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1573703060101</updated>
+    </task>
+    <task id="LOCAL-00023" summary="购买粮仓进行会员升级">
+      <created>1573782697091</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1573782697091</updated>
+    </task>
+    <task id="LOCAL-00024" summary="结算记录日志部分修改为 new事务方式">
+      <created>1574216150276</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1574216150276</updated>
+    </task>
+    <task id="LOCAL-00025" summary="粮仓购买修改为 new事务方式">
+      <created>1574234980311</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1574234980311</updated>
+    </task>
+    <task id="LOCAL-00026" summary="团队人数">
+      <created>1574306713768</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1574306713768</updated>
+    </task>
+    <task id="LOCAL-00027" summary="取年月日问题">
+      <created>1577933140186</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1577933140186</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="303216000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21715818" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info id="Web" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.50367105" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.38472834" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="SonarLint" order="10" />
+      <window_info anchor="bottom" id="Problems" order="11" />
+      <window_info anchor="bottom" id="Java Enterprise" order="12" />
+      <window_info anchor="bottom" id="Database Changes" order="13" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="14" weight="0.30396476" />
+      <window_info anchor="bottom" id="Messages" order="15" weight="0.32892805" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="BPMNPalette" order="4" />
+      <window_info anchor="right" id="Maven Projects" order="5" weight="0.1508043" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Bean Validation" order="8" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21715818" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info id="Web" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.50367105" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.38472834" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="SonarLint" order="10" />
+      <window_info anchor="bottom" id="Problems" order="11" />
+      <window_info anchor="bottom" id="Java Enterprise" order="12" />
+      <window_info anchor="bottom" id="Database Changes" order="13" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="14" weight="0.30396476" />
+      <window_info anchor="bottom" id="Messages" order="15" weight="0.32892805" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="BPMNPalette" order="4" />
+      <window_info anchor="right" id="Maven Projects" order="5" weight="0.1508043" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Bean Validation" order="8" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="创建粮仓，队列，续仓逻辑开发&#10;账户，账户明细服务开发" />
+    <MESSAGE value="日结逻辑settle开发" />
+    <MESSAGE value="1、会员升级实现&#10;2、最高执行中粮仓冻结金额计算" />
+    <MESSAGE value="v2版本 购买粮仓计划，续仓 开发   修改原排队逻辑为立即购买。" />
+    <MESSAGE value="修改结算" />
+    <MESSAGE value="自动复投、结算" />
+    <MESSAGE value="粮仓接口" />
+    <MESSAGE value="封接口" />
+    <MESSAGE value="升级算法" />
+    <MESSAGE value="粮仓收益明细" />
+    <MESSAGE value="增加是否允许复投" />
+    <MESSAGE value="bug" />
+    <MESSAGE value="计算奖金" />
+    <MESSAGE value="修改错误描述" />
+    <MESSAGE value="增加平级顶死奖金计算" />
+    <MESSAGE value="结算返回错误列表" />
+    <MESSAGE value="会员树" />
+    <MESSAGE value="奖金计算配置页面" />
+    <MESSAGE value="空判断" />
+    <MESSAGE value="榜单" />
+    <MESSAGE value="购买粮仓进行会员升级" />
+    <MESSAGE value="结算记录日志部分修改为 new事务方式" />
+    <MESSAGE value="粮仓购买修改为 new事务方式" />
+    <MESSAGE value="团队人数" />
+    <MESSAGE value="取年月日问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="取年月日问题" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/spring-utils/src/main/java/com/spring/free/base/BaseManager.java</url>
+          <line>33</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/test/TestController.java</url>
+          <line>51</line>
+          <properties />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestPlanMainBusiSVImpl.java</url>
+          <line>986</line>
+          <properties />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/test/TestController.java</url>
+          <line>82</line>
+          <properties />
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/test/TestController.java</url>
+          <line>83</line>
+          <properties />
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/api/RestMemberController.java</url>
+          <line>335</line>
+          <properties />
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/InvestPlan/InvestPlanConfigController.java</url>
+          <line>206</line>
+          <properties />
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/InvestPlan/InvestPlanConfigController.java</url>
+          <line>226</line>
+          <properties />
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/api/RestInvestPlanController.java</url>
+          <line>376</line>
+          <properties />
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/api/RestInvestPlanController.java</url>
+          <line>397</line>
+          <properties />
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestPlanMainBusiSVImpl.java</url>
+          <line>476</line>
+          <properties />
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/spring-sys-web/src/main/resources/templates/wheat/planConfig/planBonusConfigEdit.vm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="83" selection-start-line="8" selection-start-column="83" selection-end-line="8" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestMemberConfigBusiSVImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="89" column="15" selection-start-line="89" selection-start-column="15" selection-end-line="89" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestPlanDetailBusiSVImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="224" column="61" lean-forward="true" selection-start-line="224" selection-start-column="61" selection-end-line="224" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/com/spring/fee/dao/mapper/TWheatMemberMapperDZ.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="43" lean-forward="true" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/dao/mapper/TInvestPlanMainMapperDZ.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="4" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="13" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TInvestPlanBonus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-136">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/dao/mapper/TInvestPlanBonusMapperDZ.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="12" column="53" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/ITInvestPlanBonusBusiSV.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="68" column="53" selection-start-line="68" selection-start-column="29" selection-end-line="68" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/com/spring/fee/dao/mapper/TInvestPlanMainMapperDZ.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="69" selection-start-line="3" selection-start-column="69" selection-end-line="3" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TInvestPlanMainStatistic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="26" column="7" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TInvestPlanBonusDZ.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/com/spring/fee/dao/mapper/TInvestPlanBonusMapperDZ.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="65" selection-start-line="3" selection-start-column="65" selection-end-line="3" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.3.5.RELEASE/spring-web-4.3.5.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="137" column="56" selection-start-line="137" selection-start-column="56" selection-end-line="137" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/ITInvestPlanMainBusiSV.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1938">
+          <caret line="120" column="4" selection-start-line="120" selection-start-column="4" selection-end-line="120" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TWheatMemberGroupDZ.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/vo/MemberReqVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/api/RestMemberController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2669">
+          <caret line="182" selection-start-line="182" selection-end-line="182" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/vo/PageVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TWheatMemberBusiSVImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11373">
+          <caret line="702" column="43" selection-start-line="702" selection-start-column="34" selection-end-line="702" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TInvestQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="20" column="33" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/com/spring/fee/dao/mapper/TInvestPlanMainLogMapperDZ.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/com/spring/fee/dao/mapper/TInvestPlanDetailMapperDZ.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="82" selection-start-line="25" selection-start-column="82" selection-end-line="25" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TInvestPlanDetailDZ.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/api/RestInvestPlanController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1462">
+          <caret line="109" column="122" selection-start-line="109" selection-start-column="16" selection-end-line="109" selection-end-column="122" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/InvestPlan/InvestController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1921">
+          <caret line="150" column="87" selection-start-line="150" selection-start-column="87" selection-end-line="150" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestPlanBonusBusiSVImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1700">
+          <caret line="122" selection-start-line="122" selection-end-line="122" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestQueueBusiSVImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7004">
+          <caret line="438" column="26" selection-start-line="438" selection-start-column="26" selection-end-line="438" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/impl/TInvestPlanMainBusiSVImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7701">
+          <caret line="478" selection-start-line="478" selection-end-line="478" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/service/ITWheatMemberBusiSV.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2414">
+          <caret line="155" selection-start-line="155" selection-end-line="155" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TWheatMemberDZ.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/dao/mapper/TWheatMemberMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1581">
+          <caret line="96" column="27" selection-start-line="96" selection-start-column="23" selection-end-line="96" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/com/spring/fee/dao/mapper/TWheatMemberMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11254">
+          <caret line="662" column="13" selection-start-line="662" selection-start-column="13" selection-end-line="662" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-utils/src/main/java/com/spring/free/util/DateUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8585">
+          <caret line="535" column="5" selection-start-line="535" selection-start-column="5" selection-end-line="535" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/controller/IndexController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="74" selection-start-line="74" selection-end-line="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-utils/src/main/java/com/spring/free/util/PageResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="19" column="7" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-sys-web/src/main/resources/config/ehcache-shiro.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-sys-web/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1717">
+          <caret line="101" column="28" selection-start-line="101" selection-start-column="28" selection-end-line="101" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-sys-web/src/main/java/com/spring/free/SysWebApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-sys-web/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1717">
+          <caret line="101" column="16" selection-start-line="101" selection-start-column="16" selection-end-line="101" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/config/instruction.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-domain/src/main/java/com/spring/free/service/VirtualRecordService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1343">
+          <caret line="104" selection-start-line="104" selection-end-line="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-sys-web/profile-prod.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1105">
+          <caret line="65" column="37" selection-start-line="65" selection-start-column="29" selection-end-line="65" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-utils/src/main/java/com/spring/free/util/OSSClientUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="87" selection-start-line="14" selection-start-column="87" selection-end-line="14" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-system/src/main/java/com/spring/free/system/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="133" selection-start-line="133" selection-end-line="133" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/config/mybatis.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-sys-web/profile-dev.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="7" column="37" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TableGoods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/com/spring/fee/dao/mapper/TableGoodsMapper.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/model/TableGoodsExample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/java/com/spring/fee/dao/mapper/TableGoodsMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-mybatis-mapper/src/main/resources/generatorConfig.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="71" column="59" lean-forward="true" selection-start-line="71" selection-start-column="59" selection-end-line="71" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>spring-common</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: antlr:antlr:2.7.2</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

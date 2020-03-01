@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.free.mapper.NewsMapper">
+    <sql id="tbNewsColumns">
+        a.id AS "id",
+        a.title AS "title",
+        a.body AS "body",
+        a.type AS "type",
+        a.big_image AS "bigImage",
+        a.image1 AS "image1",
+        a.image2 AS "image2",
+        a.image3 AS "image3",
+        a.read_num AS "readNum",
+        a.good_num AS "goodNum",
+
+
+         a.expand_1 AS "expand1",
+        a.expand_2 AS "expand2",
+        a.expand_3 AS "expand3",
+        a.expand_4 AS "expand4",
+        a.expand_5 AS "expand5",
+
+
+        a.create_time AS "createTime",
+        a.modify_time AS "modifyTime",
+        a.version AS "version",
+        a.del_flag AS "delFlag"
+
+    </sql>
+
+    <sql id="table_name">`t_wheat_news`</sql>
+
+    <select id="get" resultType="com.spring.free.domain.News">
+        SELECT
+        <include refid="tbNewsColumns" />
+        FROM <include refid="table_name" /> a
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="com.spring.free.domain.News">
+        SELECT
+        <include refid="tbNewsColumns" />
+        FROM <include refid="table_name" /> a
+        WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+        <if test="type != null ">
+            AND a.type = #{type}
+        </if>
+        <!--        <if test="isUse != null ">-->
+        <!--            AND a.is_use = #{isUse}-->
+        <!--        </if>-->
+        <!--<if test="userId != null and userId != ''">-->
+        <!--AND a.user_id = #{userId}-->
+        <!--</if>-->
+        ORDER BY a.create_time DESC
+    </select>
+    <insert id="insertBs">
+        INSERT INTO <include refid="table_name" />(
+        title, body,type,big_image,image1,image2,image3,expand_1,create_time, modify_time, del_flag, version
+        ) VALUES (
+        #{title}, #{body},#{type},#{bigImage},#{image1},#{image2},#{image3},#{expand1}, now(), now(), 0, #{version}
+        )
+    </insert>
+
+    <update id="updateBs">
+        UPDATE <include refid="table_name" /> SET
+        title = #{title},
+        body = #{body},
+        big_image = #{bigImage},
+        image1 = #{image1},
+        image2 = #{image2},
+        image3 = #{image3},
+        expand_1 = #{expand1},
+
+        modify_time = now()
+        WHERE id = #{id}
+    </update>
+
+    <update id="deleteBs">
+        UPDATE <include refid="table_name" /> SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+</mapper>

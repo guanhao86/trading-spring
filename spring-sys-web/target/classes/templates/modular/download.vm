@@ -1,0 +1,55 @@
+<span class="tools pull-right">
+    <button class="btn btn-sm btn-primary tooltips" type="button" modal="show" modal-id="download_modal">
+        <i class="fa fa-sign-out"></i> 导出数据
+    </button>
+</span>
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="download_modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">导出EXCEL文件</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form_download" class="cmxform form-horizontal adminex-form" method="post" enctype="multipart/form-data" action="" >
+                    #*<label class="radio-inline" >
+                        <input type="radio" name="export" id="export_all" checked="checked" style="vertical-align:middle" value="export_all"> 导出全部
+                        <span style="color:blue">(最大只能导出
+                            #if("$!{exportAmount}" != "")$!{exportAmount} #else 0 #end
+                            条数据)</span>
+                    </label><br>
+                    <label class="radio-inline" >
+                        <input type="radio" name="export" id="export_curr" style="vertical-align:middle" value="export_curr"> 导出当前页
+                    </label><br>
+                    <label class="radio-inline" >
+                        <input type="radio" name="export" id="export_check" style="vertical-align:middle" value="export_check"> 导出选中
+                        <span style="color:blue">(只支持当前页选中导出)</span>
+                    </label><br>*#
+                    <label class="radio-inline" >
+                        <input type="radio" name="export" id="export_range" checked="checked" style="vertical-align:middle" value="export_range"> 导出范围
+                        &nbsp;&nbsp;
+                        <input type="number" name="startPage"  style="width: 60px;height: 22px" value="$!{page.pageNum}">
+                        &nbsp;&nbsp;至&nbsp;&nbsp;
+                        <input type="number" name="endPage"  style="width: 60px;height: 22px" value="$!{page.pages}">
+                        &nbsp;&nbsp;
+                        <span style="color:blue">(最大只能导出 #if("$!{exportAmount}" != "")$!{exportAmount} #else 0 #end 条数据)</span>
+                    </label><br>
+                    #*<label class="radio-inline" >
+                        <input type="radio" name="export" id="export_search" style="vertical-align:middle" value="export_search"> 导出筛选
+                        <span style="color:blue">(最大只能导出
+                            #if("$!{exportAmount}" != "")$!{exportAmount} #else 0 #end
+                            条数据)</span>
+                    </label><br>*#
+                    <div style="width: 100%;display: none;float: left;padding-top: 10px" id="search_context"></div>
+                    <input type="hidden" name="options" id="options">
+                    <div style="clear: both"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                <button class="btn btn-primary" type="button" modal-id="company_modal" id="download_modal_confirm">确认
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

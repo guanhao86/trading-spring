@@ -1,0 +1,10 @@
+
+O
+squid:S106C"9Replace this use of System.out or System.err by a logger.(Û¥þù
+esquid:S1192¡"FDefine a constant instead of duplicating this literal "phone" 3 times.(Ù¤îû8Ü¿Ž³è-
+msquid:S1192Ÿ"IDefine a constant instead of duplicating this literal "memberId" 3 times.(ºƒ¹”ÿÿÿÿÿ8Ü¿Ž³è-
+osquid:CommentedOutCodeLineÎ"<This block of commented-out lines of code should be removed.(ëª¤åþÿÿÿÿ8Ü¿Ž³è-
+^squid:UselessImportCheck".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8ßŒ”³è-
+|squid:S1192E"`Define a constant instead of duplicating this literal "æœåŠ¡ç«¯å¤„ç†è¯·æ±‚æˆåŠŸã€‚" 12 times.(ëÏ¨’øÿÿÿÿ
+_squid:UselessImportCheck
+"5Remove this unused import 'net.bytebuddy.asm.Advice'.(Úë¼8­Š½Ää-

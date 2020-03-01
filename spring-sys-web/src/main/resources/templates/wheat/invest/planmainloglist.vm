@@ -1,0 +1,97 @@
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"结算明细", "perm": "", "isBack": false, "href": ""})
+            #end
+        #end
+        #@panel()
+            #@panelBody()
+                #@table()
+                    #tableTHead(["序号", "会员编号", "粮仓名称", "结算时间", "状态", "备注"],"", false)
+                    #@tableBody($page)
+                        #set($settleTime = $!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{l.createTime}))
+                        #tableTd("$!{l.planMainId}")
+                        #tableTd("$!{l.memberId}")
+                        #tableTd("$!{l.planName}")
+                        #tableTd("$!{settleTime}")
+                        #if($l.status ==  1)
+                            #tableTd("成功")
+                        #elseif($l.status ==  2)
+                            #tableTd("失败")
+                        #end
+                        #tableTd("$!{l.remark}")
+
+                    #end
+
+                #end
+
+            #end
+        #end
+    #end
+    #@script()
+    <script>
+        $(function () {
+            $("#review_id").on('click', function () {
+                var arr = "";
+                $("[pId='all']:checked").each(function () {
+                    if (arr == ""){
+                        arr = $(this).val();
+                    } else {
+                        arr += "," + $(this).val();
+                    }
+                })
+                alert(arr)
+                window.location.href = "$!{ctx}/member/delete?id=" + arr;
+            })
+
+        })
+
+        $(function () {
+            var startTime = $('.start-time').datepicker().on('changeDate', function(ev) {
+                startTime.hide();
+            }).data('datepicker');
+            var endTime = $('.end-time').datepicker().on('changeDate', function(ev) {
+                endTime.hide();
+            }).data('datepicker');
+
+            $('button[empty="true"]').on('click', function () {
+                $("input[name='start']").eq(0).val($('#s_t_h').val());
+                $("input[name='end']").eq(0).val($('#e_t_h').val());
+            })
+        })
+
+        /*$.validator.setDefaults({
+            submitHandler: function(form) {
+                if($('#start_time').val()!=""&&$('#end_time').val()!=""){
+                    if (!(new Date($('#start_time').val()).compare(new Date($('#end_time').val()), DATE_CONS.DATE_COMPARE_SMALL_EQUAL))){
+                        $("#goods_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
+                        shade.hideBg("dialog");
+                        return;
+                    }
+                }
+                form.submit();
+            }
+        });*/
+        $(document).ready(function () {
+            debugger;
+            $("#search").validate({
+                errorPlacement: function(error, element) {
+                    debugger;
+                    if (element.is(":checkbox")||element.is(":radio")||element.is(".date-time")){
+                        debugger;
+                        error.appendTo(element.parent().parent().parent());
+                    } else {
+                        debugger;
+                        error.insertAfter(element.parent());
+                    }
+                },
+                onfocus: true
+            });
+        })
+    </script>
+        #jsCalculate()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

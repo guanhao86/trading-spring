@@ -1,0 +1,30 @@
+
+Rsquid:S1066~"/Merge this if statement with the enclosing one.(ùÊ†ÿÿÿÿÿ8Š½Ää-
+isquid:CommentedOutCodeLineT"<This block of commented-out lines of code should be removed.(µì œ8ã¶éÑá-
+jsquid:CommentedOutCodeLineĞ"<This block of commented-out lines of code should be removed.(ó†»¹8ËÈ’¡ö-
+osquid:CommentedOutCodeLineü"<This block of commented-out lines of code should be removed.(ï¹ÿìúÿÿÿÿ8ËÈ’¡ö-
+jsquid:CommentedOutCodeLineÙ"<This block of commented-out lines of code should be removed.(ôÅˆ¸8ËÈ’¡ö-
+tsquid:UselessImportCheck"PRemove this unused import 'org.springframework.expression.spel.ast.NullLiteral'.(…ß˜Ú
+osquid:CommentedOutCodeLineÃ"<This block of commented-out lines of code should be removed.(ËÏ¨Âşÿÿÿÿ8ËÈ’¡ö-
+Lsquid:S1604ï"(Make this anonymous inner class a lambda(©Øıëşÿÿÿÿ8ËÈ’¡ö-
+dsquid:S2147×"ECombine this catch with the one at line 715, which has the same body.(”ı¾8ËÈ’¡ö-
+isquid:UselessImportCheck">Remove this unused import 'javax.crypto.spec.IvParameterSpec'.(­“§8Ä›çÿà-
+osquid:CommentedOutCodeLineß"<This block of commented-out lines of code should be removed.(Ïùó›ıÿÿÿÿ8ËÈ’¡ö-
+Lsquid:S1172à"-Remove this unused method parameter "planId".(ÊµÇß8÷Äÿ”á-
+osquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ô×²Ãüÿÿÿÿ8ËÈ’¡ö-
+Psquid:S1481‡"1Remove this unused "continueFlag" local variable.(¤ÑÊã8ËÈ’¡ö-
+Gsquid:S1148Ø"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ËÈ’¡ö-
+jsquid:CommentedOutCodeLineÔ"<This block of commented-out lines of code should be removed.(ëºµÎ8ËÈ’¡ö-
+Gsquid:S1148Ì"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ËÈ’¡ö-
+jsquid:CommentedOutCodeLineù"<This block of commented-out lines of code should be removed.(È¬¾8ËÈ’¡ö-
+osquid:CommentedOutCodeLine÷"<This block of commented-out lines of code should be removed.(õŸ²±ıÿÿÿÿ8ËÈ’¡ö-
+Gsquid:S1148ù"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ËÈ’¡ö-
+Gsquid:S1148‹"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8û¡¶“æ-
+osquid:CommentedOutCodeLineî"<This block of commented-out lines of code should be removed.(Åñ§åûÿÿÿÿ8ËÈ’¡ö-
+jsquid:CommentedOutCodeLine‘"<This block of commented-out lines of code should be removed.(êıÈØ8ËÈ’¡ö-
+qsquid:S3776¨"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.( ñàì8ËÈ’¡ö-
+ƒsquid:S1192ÿ"_Define a constant instead of duplicating this literal "åˆ›å»ºè®¡åˆ’å…¥å‚ä¸èƒ½ä¸ºç©º" 4 times.(œÒĞıÿÿÿÿ8àÈğ–á-
+osquid:CommentedOutCodeLineÍ"<This block of commented-out lines of code should be removed.(Şä£ûÿÿÿÿ8ËÈ’¡ö-
+Gsquid:S1148“"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ËÈ’¡ö-
+osquid:CommentedOutCodeLineñ"<This block of commented-out lines of code should be removed.(ñ®…úÿÿÿÿ8ËÈ’¡ö-
+jsquid:CommentedOutCodeLineŒ"<This block of commented-out lines of code should be removed.(‘€ûÕ8ËÈ’¡ö-
