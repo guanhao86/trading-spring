@@ -1,0 +1,70 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:content:edit", "isBack": true, "href": "manage/member/list"})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manange/member/save")
+                    <input type="hidden" name="id" value="$!{member.id}">
+                    #formInput({"name": "ID"} {"name": "memberId", "value":"$!{member.memberId}","id": "memberId","required": "required","readonly":"readonly"})
+                    #formInput({"name": "电话"} {"name": "phone", "value":"$!{member.phone}","id": "phone","required": "required","readonly":"readonly"})
+                    #formInput({"name": "姓名"} {"name": "reallyName", "value":"$!{member.reallyName}","id": "reallyName","required": "required","readonly":"readonly"})
+                    #formInput({"name": "注册时间"} {"name": "registerTime", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{member.registerTime})","id": "registerTime","required": "required","readonly":"readonly"})
+                    #formInput({"name": "推荐人ID"} {"name": "referenceId", "value":"$!{member.referenceId}","id": "referenceId","required": "required","readonly":"readonly"})
+                    #formInput({"name": "安置人ID"} {"name": "arrangeId", "value":"$!{member.arrangeId}","id": "arrangeId","required": "required","readonly":"readonly"})
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">左右区标识：</label>
+                        <div class="col-sm-2">
+                            #selectDisabledBS($!dict.getDictList("leftOrRight"), ["isAut", "$!{member.leftOrRight}", "value", "label"], false, [false, "$!{member.leftOrRight}"])
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">注册来源：</label>
+                        <div class="col-sm-2">
+                            #selectDisabledBS($!dict.getDictList("registerFrom"), ["isAut", "$!{member.registerFrom}", "value", "label"], false, [false, "$!{member.registerFrom}"])
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">会员级别：</label>
+                        <div class="col-sm-2">
+                            #selectDisabledBS($!dict.getDictList("level"), ["level", "$!{member.level}", "value", "label"], false, [false, "$!{member.level}"])
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">会员头衔：</label>
+                        <div class="col-sm-2">
+                            #selectDisabledBS($!dict.getDictList("mRank"), ["level", "$!{member.mRank}", "value", "label"], false, [false, "$!{member.mRank}"])
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">特殊标识：</label>
+                        <div class="col-sm-2">
+                            #selectDisabledBS($!dict.getDictList("flag"), ["level", "$!{member.flag}", "value", "label"], false, [false, "$!{member.flag}"])
+                        </div>
+                    </div>
+
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">实名认证：</label>
+                        <div class="col-sm-2">
+                            #selectDisabledBS($!dict.getDictList("isAut"), ["isAut", "$!{member.autFlag}", "value", "label"], false, [false, "$!{member.autFlag}"])
+                        </div>
+                    </div>
+
+                    #formInput({"name": "身份证号码"} {"name": "cartId", "value":"$!{member.cartId}","id": "cartId","required": "required","readonly":"readonly"})
+                    #formInput({"name": "银行卡号"} {"name": "bankCardId", "value":"$!{member.bankCardId}","id": "bankCardId","required": "required","readonly":"readonly"})
+                    #formInput({"name": "开户行名字"} {"name": "bankName", "value":"$!{member.bankName}","id": "bankName","required": "required","readonly":"readonly"})
+                    #formInput({"name": "银行卡开户行地址"} {"name": "bankOpenAre", "value":"$!{member.bankOpenAre}","id": "bankOpenAre","required": "required","readonly":"readonly"})
+                    #formInput({"name": "奖金发放到期时间"} {"name": "perfomanceTime", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{member.perfomanceTime})","id": "perfomanceTime","required": "required","readonly":"readonly"})
+
+
+
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

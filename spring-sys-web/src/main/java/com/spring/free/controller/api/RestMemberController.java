@@ -4,11 +4,9 @@ package com.spring.free.controller.api;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
-import com.spring.fee.model.TWheatMember;
-import com.spring.fee.model.TWheatMemberDZ;
-import com.spring.fee.model.TWheatMemberGroupDZ;
-import com.spring.fee.model.TWheatMemberTree;
+import com.spring.fee.model.*;
 import com.spring.fee.service.ITWheatMemberBusiSV;
+import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.free.common.domain.AccessResponse;
 import com.spring.free.service.RestMemberService;
 import com.spring.free.utils.velocity.DictUtils;
@@ -40,6 +38,9 @@ public class RestMemberController {
     private ITWheatMemberBusiSV itWheatMemberBusiSV;
     @Autowired
     private ITWheatMemberBusiSV twheatMemberBusiSV;
+
+    @Autowired
+    ITableMemberBusiSV iTableMemberBusiSV;
 
     @RequestMapping(value = "/register/{smscode}")
     public @ResponseBody AccessResponse register(@PathVariable String smscode,String uuid,String phone,String referenceId){
@@ -315,34 +316,34 @@ public class RestMemberController {
      */
     @RequestMapping(value = "/getMemberTree/{memberId}")
     public @ResponseBody
-    AccessResponse getMemberTree(@PathVariable String memberId, String image,HttpServletRequest request, HttpServletResponse response){
+    AccessResponse getMemberTree(@PathVariable String memberId, String image, HttpServletRequest request, HttpServletResponse response){
 
         //返回体
         JSONObject jsonObj=new JSONObject();
-        TWheatMemberTree tWheatMemberTree = new TWheatMemberTree();
+        TableMemberTree tWheatMemberTree = new TableMemberTree();
         tWheatMemberTree.setMemberId(memberId);
 
-        TWheatMember tWheatMember = this.itWheatMemberBusiSV.selectByMemberId(memberId);
-        if (tWheatMember == null) {
+        TableMember tableMember = this.iTableMemberBusiSV.selectByMemberId(memberId);
+        if (tableMember == null) {
             return AccessResponse.builder().data(null).success(true).rspcode(200).message("服务端处理请求成功。").build();
         }
 
-        tWheatMemberTree = this.itWheatMemberBusiSV.queryAllChildTree(tWheatMemberTree);
-        tWheatMemberTree.setPhone(tWheatMember.getPhone());
-        tWheatMemberTree.setLevel(tWheatMember.getLevel());
+        tWheatMemberTree = this.iTableMemberBusiSV.queryAllChildTree(tWheatMemberTree);
+        tWheatMemberTree.setPhone(tableMember.getPhone());
+        tWheatMemberTree.setLevel(tableMember.getLevel());
         TreeVO treeVO = new TreeVO();
         this.setTree(tWheatMemberTree, treeVO);
 
         return AccessResponse.builder().data(JSON.toJSON(treeVO)).success(true).rspcode(200).message("服务端处理请求成功。").build();
     }
 
-    private void setTree(TWheatMemberTree tWheatMemberTree, TreeVO treeVO){
+    private void setTree(TableMemberTree tWheatMemberTree, TreeVO treeVO){
         if (tWheatMemberTree != null && treeVO != null) {
-            String level = DictUtils.getDictLabel(tWheatMemberTree.getLevel(),"level","");
+            String level = DictUtils.getDictLabel(String.valueOf(tWheatMemberTree.getLevel()),"level","");
             treeVO.setName(tWheatMemberTree.getMemberId()+"\n("+level+":"+tWheatMemberTree.getPhone()+")");
             if (!CollectionUtils.isEmpty(tWheatMemberTree.getChildList())) {
                 List<TreeVO> treeVOList = new ArrayList<>();
-                for (TWheatMemberTree tmp : tWheatMemberTree.getChildList()) {
+                for (TableMemberTree tmp : tWheatMemberTree.getChildList()) {
                     TreeVO child = new TreeVO();
                     treeVOList.add(child);
                     this.setTree(tmp, child);

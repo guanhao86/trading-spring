@@ -314,63 +314,63 @@ public class TableBonusSettingExample {
             return (Criteria) this;
         }
 
-        public Criteria andBonusGourpVip2IsNull() {
-            addCriterion("bonus_gourp_vip2 is null");
+        public Criteria andBonusGroupVip2IsNull() {
+            addCriterion("bonus_group_vip2 is null");
             return (Criteria) this;
         }
 
-        public Criteria andBonusGourpVip2IsNotNull() {
-            addCriterion("bonus_gourp_vip2 is not null");
+        public Criteria andBonusGroupVip2IsNotNull() {
+            addCriterion("bonus_group_vip2 is not null");
             return (Criteria) this;
         }
 
-        public Criteria andBonusGourpVip2EqualTo(Float value) {
-            addCriterion("bonus_gourp_vip2 =", value, "bonusGourpVip2");
+        public Criteria andBonusGroupVip2EqualTo(Float value) {
+            addCriterion("bonus_group_vip2 =", value, "bonusGroupVip2");
             return (Criteria) this;
         }
 
-        public Criteria andBonusGourpVip2NotEqualTo(Float value) {
-            addCriterion("bonus_gourp_vip2 <>", value, "bonusGourpVip2");
+        public Criteria andBonusGroupVip2NotEqualTo(Float value) {
+            addCriterion("bonus_group_vip2 <>", value, "bonusGroupVip2");
             return (Criteria) this;
         }
 
-        public Criteria andBonusGourpVip2GreaterThan(Float value) {
-            addCriterion("bonus_gourp_vip2 >", value, "bonusGourpVip2");
+        public Criteria andBonusGroupVip2GreaterThan(Float value) {
+            addCriterion("bonus_group_vip2 >", value, "bonusGroupVip2");
             return (Criteria) this;
         }
 
-        public Criteria andBonusGourpVip2GreaterThanOrEqualTo(Float value) {
-            addCriterion("bonus_gourp_vip2 >=", value, "bonusGourpVip2");
+        public Criteria andBonusGroupVip2GreaterThanOrEqualTo(Float value) {
+            addCriterion("bonus_group_vip2 >=", value, "bonusGroupVip2");
             return (Criteria) this;
         }
 
-        public Criteria andBonusGourpVip2LessThan(Float value) {
-            addCriterion("bonus_gourp_vip2 <", value, "bonusGourpVip2");
+        public Criteria andBonusGroupVip2LessThan(Float value) {
+            addCriterion("bonus_group_vip2 <", value, "bonusGroupVip2");
             return (Criteria) this;
         }
 
-        public Criteria andBonusGourpVip2LessThanOrEqualTo(Float value) {
-            addCriterion("bonus_gourp_vip2 <=", value, "bonusGourpVip2");
+        public Criteria andBonusGroupVip2LessThanOrEqualTo(Float value) {
+            addCriterion("bonus_group_vip2 <=", value, "bonusGroupVip2");
             return (Criteria) this;
         }
 
-        public Criteria andBonusGourpVip2In(List<Float> values) {
-            addCriterion("bonus_gourp_vip2 in", values, "bonusGourpVip2");
+        public Criteria andBonusGroupVip2In(List<Float> values) {
+            addCriterion("bonus_group_vip2 in", values, "bonusGroupVip2");
             return (Criteria) this;
         }
 
-        public Criteria andBonusGourpVip2NotIn(List<Float> values) {
-            addCriterion("bonus_gourp_vip2 not in", values, "bonusGourpVip2");
+        public Criteria andBonusGroupVip2NotIn(List<Float> values) {
+            addCriterion("bonus_group_vip2 not in", values, "bonusGroupVip2");
             return (Criteria) this;
         }
 
-        public Criteria andBonusGourpVip2Between(Float value1, Float value2) {
-            addCriterion("bonus_gourp_vip2 between", value1, value2, "bonusGourpVip2");
+        public Criteria andBonusGroupVip2Between(Float value1, Float value2) {
+            addCriterion("bonus_group_vip2 between", value1, value2, "bonusGroupVip2");
             return (Criteria) this;
         }
 
-        public Criteria andBonusGourpVip2NotBetween(Float value1, Float value2) {
-            addCriterion("bonus_gourp_vip2 not between", value1, value2, "bonusGourpVip2");
+        public Criteria andBonusGroupVip2NotBetween(Float value1, Float value2) {
+            addCriterion("bonus_group_vip2 not between", value1, value2, "bonusGroupVip2");
             return (Criteria) this;
         }
 

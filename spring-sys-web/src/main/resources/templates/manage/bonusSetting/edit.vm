@@ -1,0 +1,28 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:edit", "isBack": false, "href": "manage/broadcast/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manage/bonusSetting/save")
+                    #formInput({"name": "直接推荐奖"} {"name": "bonusReference", "value":"$!{bonusSetting.bonusReference}","id": "bonusReference","required": "required"})
+                    #formInput({"name": "VIP1(金卡)的组织奖"} {"name": "bonusGroupVip1", "value":"$!{bonusSetting.bonusGroupVip1}","id": "bonusGroupVip1","required": "required"})
+                    #formInput({"name": "VIP2(钻石卡)的组织奖"} {"name": "bonusGroupVip2", "value":"$!{bonusSetting.bonusGroupVip2}","id": "bonusGroupVip2","required": "required"})
+                    #formInput({"name": "VIP3(至尊卡)的组织奖"} {"name": "bonusGroupVip3", "value":"$!{bonusSetting.bonusGroupVip3}","id": "bonusGroupVip4","required": "required"})
+                    #formInput({"name": "VIP1(金卡)的组织奖的每日封顶值"} {"name": "bonusGroupVip1DayMax", "value":"$!{bonusSetting.bonusGroupVip1DayMax}","id": "bonusGroupVip1DayMax","required": "required"})
+                    #formInput({"name": "VIP2(钻石卡的组织奖的每日封顶值"} {"name": "bonusGroupVip2DayMax", "value":"$!{bonusSetting.bonusGroupVip2DayMax}","id": "bonusGroupVip2DayMax","required": "required"})
+                    #formInput({"name": "VIP3(至尊卡)的组织奖的每日封顶值"} {"name": "bonusGroupVip3DayMax", "value":"$!{bonusSetting.bonusGroupVip3DayMax}","id": "bonusGroupVip3DayMax","required": "required"})
+                    #formInput({"name": "伯乐奖第一个代"} {"name": "bonusBoleLayer1", "value":"$!{bonusSetting.bonusBoleLayer1}","id": "bonusBoleLayer1","required": "required"})
+                    #formInput({"name": "伯乐奖第二个代"} {"name": "bonusBoleLayer2", "value":"$!{bonusSetting.bonusBoleLayer2}","id": "bonusBoleLayer2","required": "required"})
+                    #formInput({"name": "伯乐奖第三个代"} {"name": "bonusBoleLayer3", "value":"$!{bonusSetting.bonusBoleLayer3}","id": "bonusBoleLayer3","required": "required"})
+                #end
+            #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

@@ -1,0 +1,24 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:edit", "isBack": false, "href": "manage/systemConfig/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manage/systemConfig/save")
+                    #formInput({"name": "平台管理费"} {"name": "sysAdminCost", "value":"$!{systemConfig.sysAdminCost}","id": "sysAdminCost","required": "required"})
+                    #formInput({"name": "提现手续费"} {"name": "sysCashOutCost", "value":"$!{systemConfig.sysCashOutCost}","id": "sysCashOutCost","required": "required"})
+                    #formInput({"name": "平台收款账户"} {"name": "sysBankNumber", "value":"$!{systemConfig.sysBankNumber}","id": "sysBankNumber","required": "required"})
+                    #formInput({"name": "银行名"} {"name": "sysBankName", "value":"$!{systemConfig.sysBankName}","id": "sysBankName","required": "required"})
+                    #formInput({"name": "银行地址"} {"name": "sysBankOpenAre", "value":"$!{systemConfig.sysBankOpenAre}","id": "sysBankOpenAre","required": "required"})
+
+                #end
+            #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end
