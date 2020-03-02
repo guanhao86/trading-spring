@@ -29,7 +29,7 @@ public class TableGoodsBusiSVImpl implements ITableGoodsBusiSV {
     TableGoodsMapper iTableGoodsMapper;
 
     /**
-     * 创建结算记录
+     * 创建商品记录
      * @param bo
      * @return
      */
