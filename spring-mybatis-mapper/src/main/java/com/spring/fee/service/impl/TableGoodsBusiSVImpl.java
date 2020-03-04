@@ -106,6 +106,10 @@ public class TableGoodsBusiSVImpl implements ITableGoodsBusiSV {
         if (null != bo.getPePrice()) {
             criteria.andPePriceEqualTo(bo.getPePrice());
         }
+        if (StringUtils.isNotEmpty(bo.getGoodsName())) {
+            criteria.andGoodsNameEqualTo(bo.getGoodsName());
+        }
+
 
         PageInfo<TableGoods> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableGoodsMapper.selectByExample(example));

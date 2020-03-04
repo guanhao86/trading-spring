@@ -91,7 +91,7 @@ public class ManageMemberController {
      * @Param [view, request, post, buttonType]
      * @return org.springframework.web.servlet.ModelAndView
      **/
-    @RequiresPermissions("system:invest:edit")
+    @RequiresPermissions("system:member:edit")
     @RequestMapping(value = "edit")
     public ModelAndView views(ModelAndView view, HttpServletRequest request, TableMember member, String buttonType) {
         Map map = Maps.newHashMap();
@@ -117,7 +117,7 @@ public class ManageMemberController {
      * @Param [mav, request, topItem, post, buttonType, ghPic1]
      * @return org.springframework.web.servlet.ModelAndView
      **/
-    @RequiresPermissions("system:invest:edit")
+    @RequiresPermissions("system:member:edit")
     @RequestMapping(value = "save")
     public ModelAndView edit(ModelAndView mav, HttpServletRequest request, TableMember member) {
         Map map = Maps.newHashMap();

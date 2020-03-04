@@ -1,0 +1,28 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+<link rel="stylesheet" href="/summernote/summernote.css">
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"会员级别变更", "perm": "system:member:edit", "isBack": true, "href": "manage/member/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manage/levelChange/change")
+                    #formInput({"name": "会员ID"} {"name": "memberId", "value":"$!{member.memberId}","id": "memberId","required": "required","readonly":"readonly"})
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">会员级别：</label>
+                        <div class="col-sm-2">
+                            #selectBS($!dict.getDictList("level"), ["level", "$!{member.level}", "value", "label"], false, [false, "$!{member.level}"])
+                        </div>
+                    </div>
+                    #formInput({"name": "备注"} {"name": "remark", "value":"","id": "remark","required": "required"})
+
+                #end
+            #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

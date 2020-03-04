@@ -3,13 +3,18 @@ package com.spring.fee.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.spring.fee.dao.mapper.MemberAccountDetailMapper;
-import com.spring.fee.model.MemberAccountDetail;
-import com.spring.fee.model.MemberAccountDetailExample;
+import com.spring.fee.dao.mapper.TableMemberAccountDetailMapper;
+import com.spring.fee.model.TableMemberAccountDetail;
+import com.spring.fee.model.TableMemberAccountDetailExample;
+import com.spring.fee.model.TableMember;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
+import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.free.util.DateUtils;
+import com.spring.free.util.exception.ExceptionCodeEnum;
+import com.spring.free.util.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +31,10 @@ import java.util.Map;
 public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV {
 
     @Autowired
-    MemberAccountDetailMapper iMemberAccountDetailMapper;
+    TableMemberAccountDetailMapper iTableMemberAccountDetailMapper;
+
+    @Autowired
+    ITableMemberBusiSV iTableMemberBusiSV;
 
     /**
      * 创建记录
@@ -34,35 +42,80 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
      * @return
      */
     @Override
-    public MemberAccountDetail insert(MemberAccountDetail bo) {
+    public TableMemberAccountDetail insert(TableMemberAccountDetail bo) {
         log.info("创建账户资金情况变更表参数bo：{}", JSON.toJSON(bo));
         Date sysdate = DateUtils.getSysDate();
         bo.setModifyTime(sysdate);
-        iMemberAccountDetailMapper.insert(bo);
+        iTableMemberAccountDetailMapper.insert(bo);
         return bo;
     }
 
     @Override
-    public MemberAccountDetail update(MemberAccountDetail bo) {
+    public TableMemberAccountDetail update(TableMemberAccountDetail bo) {
         Date sysdate = DateUtils.getSysDate();
         bo.setModifyTime(sysdate);
-        if (this.iMemberAccountDetailMapper.updateByPrimaryKeySelective(bo) == 1) {
+        if (this.iTableMemberAccountDetailMapper.updateByPrimaryKeySelective(bo) == 1) {
             return bo;
         }
         return null;
     }
 
     @Override
-    public MemberAccountDetail delete(MemberAccountDetail bo) {
-        if (this.iMemberAccountDetailMapper.deleteByPrimaryKey(bo.getId()) == 1) {
+    public TableMemberAccountDetail delete(TableMemberAccountDetail bo) {
+        if (this.iTableMemberAccountDetailMapper.deleteByPrimaryKey(bo.getId()) == 1) {
             return bo;
         }
         return null;
     }
 
     @Override
-    public MemberAccountDetail select(MemberAccountDetail bo) {
-        return this.iMemberAccountDetailMapper.selectByPrimaryKey(bo.getId());
+    public TableMemberAccountDetail select(TableMemberAccountDetail bo) {
+        return this.iTableMemberAccountDetailMapper.selectByPrimaryKey(bo.getId());
+    }
+
+    /**
+     * 账户变更接口
+     *
+     * @param memberId
+     * @param accountType 1:充值  2:购物
+     * @param amount
+     * @param remark
+     * @return
+     */
+    @Override
+    public TableMemberAccountDetail changeMoney(String memberId, String accountType, Float amount, String remark) {
+
+        //获取会员信息
+        TableMember tableMember = iTableMemberBusiSV.selectByMemberId(memberId);
+
+        if (tableMember == null) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在！", "", null);
+        }
+
+        Float accountMoney = tableMember.getAccountMoney();
+        TableMemberAccountDetail memberAccountDetail = new TableMemberAccountDetail();
+        memberAccountDetail.setBeforeValue(accountMoney);
+        if ("1".equals(accountType)) {
+            //充值
+            memberAccountDetail.setAccountType(1);
+            accountMoney += amount;
+        }
+        if ("2".equals(accountType)) {
+            //购物
+            memberAccountDetail.setAccountType(1);
+            accountMoney -= amount;
+        }
+
+        tableMember.setAccountMoney(accountMoney);
+        this.iTableMemberBusiSV.update(tableMember);
+
+        memberAccountDetail.setModifyTime(DateUtils.getSysDate());
+        memberAccountDetail.setMemberId(memberId);
+        memberAccountDetail.setRemark(remark);
+        memberAccountDetail.setAfterValue(accountMoney);
+        this.insert(memberAccountDetail);
+
+        return memberAccountDetail;
     }
 
     /**
@@ -74,14 +127,14 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
      * @return
      */
     @Override
-    public PageInfo<MemberAccountDetail> queryListPage(MemberAccountDetail bo, Integer pageNum, Integer pageSize, Map<String ,Object> map) {
+    public PageInfo<TableMemberAccountDetail> queryListPage(TableMemberAccountDetail bo, Integer pageNum, Integer pageSize, Map<String ,Object> map) {
         log.info("获取账户资金情况变更表参数bo：{}", JSON.toJSON(bo));
         log.info("获取账户资金情况变更表参数pageNum：{}", pageNum);
         log.info("获取账户资金情况变更表参数pageSize：{}", pageSize);
         log.info("获取账户资金情况变更表参数map：{}", JSON.toJSON(map));
         
-        MemberAccountDetailExample example = new MemberAccountDetailExample();
-        MemberAccountDetailExample.Criteria criteria = example.createCriteria();
+        TableMemberAccountDetailExample example = new TableMemberAccountDetailExample();
+        TableMemberAccountDetailExample.Criteria criteria = example.createCriteria();
 
         if (null != bo.getId()) {
             criteria.andIdEqualTo(bo.getId());
@@ -105,8 +158,8 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
             criteria.andRemarkEqualTo(bo.getRemark());
         }
 
-        PageInfo<MemberAccountDetail> pageInfo = PageHelper.startPage(pageNum, pageSize)
-                .doSelectPageInfo(() -> this.iMemberAccountDetailMapper.selectByExample(example));
+        PageInfo<TableMemberAccountDetail> pageInfo = PageHelper.startPage(pageNum, pageSize)
+                .doSelectPageInfo(() -> this.iTableMemberAccountDetailMapper.selectByExample(example));
         log.info("获取账户资金情况变更表结果：{}", JSON.toJSON(pageInfo));
         return pageInfo;
     }

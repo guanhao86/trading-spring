@@ -41,6 +41,8 @@
                         #@tableTd()
                             #@a("查看" {"href": "$!{ctx}/manage/member/view?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
                             #@a("修改" {"href": "$!{ctx}/manage/member/edit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #@a("调整级别" {"href": "$!{ctx}/manage/levelChange/changeIndex?memberId=$!{l.memberId}", "class": "fa fa-pencil-square-o"})#end
+                            #@a("调整头衔" {"href": "$!{ctx}/manage/rankChange/changeIndex?memberId=$!{l.memberId}", "class": "fa fa-pencil-square-o"})#end
                             #if(${l.isAut}==1)
                               #@a("审核" {"href": "$!{ctx}/member/toAudit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
                             #end

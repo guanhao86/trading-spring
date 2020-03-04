@@ -1,0 +1,127 @@
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"订单管理 搜索", "perm": "", "isBack": false, "href": ""})
+                #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
+                #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
+            #end
+            #@panelBody()
+                #@form("search" false "post" "manage/order/list")
+                    #@divColSmNum(3)
+                        #formInput({"name": "订单ID", "length": "4,8", "asterisk": false} {"name": "id", "id": "id",
+                            "value": "$!{order.id}"})
+                    #end
+                    #@divColSmNum(3)
+                        #formInput({"name": "会员编号", "length": "4,8", "asterisk": false} {"name": "memberId", "id": "memberId",
+                            "value": "$!{order.memberId}"})
+                    #end
+                    #@divColSmNum(3)
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">订单类型：</label>
+                        <div class="col-sm-5">
+                            #selectBS($!dict.getDictList("goodsClass"), ["goodsClass", "$!{order.goodsClass}", "value", "label"], false, [true, ""])
+                        </div>
+                    </div>
+                    #end
+                    #@divColSmNum(3)
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">订单状态：</label>
+                        <div class="col-sm-5">
+                            #selectBS($!dict.getDictList("orderState"), ["state", "$!{order.state}", "value", "label"], false, [true, ""])
+                        </div>
+                    </div>
+                    #end
+                #end
+            #end
+        #end
+        #@panel()
+             #@panelBody()
+                #@table()
+                    #tableTHead(["id", "会员ID", "商品编号", "商品类型", "订单生成时间", "订单状态"],"", false)
+                    #@tableBody($page.list)
+
+                        #tableTd("$!{l.id}")
+                        #tableTd("$!{l.memberId}")
+                        #tableTd("$!{l.goodsId}")
+                        #tableTd("$!{l.goodsClass}", {"type": "dict", "format": "goodsClass"})
+                        #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.createTime}))
+                        #tableTd("$!{l.state}", {"type": "dict", "format": "orderState"})
+
+                        #@tableTd()
+                            #@a("查看" {"href": "$!{ctx}/manage/order/view?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #@a("发货" {"href": "$!{ctx}/manage/order/sendIndex?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                        #end
+                    #end
+                #end
+
+                #parse("modular/page.vm")
+            #end
+        #end
+    #end
+    #@script()
+    <script>
+        $(function () {
+            $("#review_id").on('click', function () {
+                var arr = "";
+                $("[pId='all']:checked").each(function () {
+                    if (arr == ""){
+                        arr = $(this).val();
+                    } else {
+                        arr += "," + $(this).val();
+                    }
+                })
+                alert(arr)
+                window.location.href = "$!{ctx}/member/delete?id=" + arr;
+            })
+
+        })
+
+        $(function () {
+            var startTime = $('.strat-time').datepicker().on('changeDate', function(ev) {
+                startTime.hide();
+            }).data('datepicker');
+            var endTime = $('.end-time').datepicker().on('changeDate', function(ev) {
+                endTime.hide();
+            }).data('datepicker');
+
+            $('button[empty="true"]').on('click', function () {
+                $("input[name='startTime']").eq(0).val($('#s_t_h').val());
+                $("input[name='endTime']").eq(0).val($('#e_t_h').val());
+            })
+        })
+
+        /*$.validator.setDefaults({
+            submitHandler: function(form) {
+                if($('#start_time').val()!=""&&$('#end_time').val()!=""){
+                    if (!(new Date($('#start_time').val()).compare(new Date($('#end_time').val()), DATE_CONS.DATE_COMPARE_SMALL_EQUAL))){
+                        $("#order_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
+                        shade.hideBg("dialog");
+                        return;
+                    }
+                }
+                form.submit();
+            }
+        });*/
+        $(document).ready(function () {
+            debugger;
+            $("#search").validate({
+                errorPlacement: function(error, element) {
+                    debugger;
+                    if (element.is(":checkbox")||element.is(":radio")||element.is(".date-time")){
+                        debugger;
+                        error.appendTo(element.parent().parent().parent());
+                    } else {
+                        debugger;
+                        error.insertAfter(element.parent());
+                    }
+                },
+                onfocus: true
+            });
+        })
+    </script>
+        #jsCalculate()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

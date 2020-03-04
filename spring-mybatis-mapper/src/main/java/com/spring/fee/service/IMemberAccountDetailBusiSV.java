@@ -1,7 +1,7 @@
 package com.spring.fee.service;
 
 import com.github.pagehelper.PageInfo;
-import com.spring.fee.model.MemberAccountDetail;
+import com.spring.fee.model.TableMemberAccountDetail;
 
 import java.util.Map;
 
@@ -10,13 +10,24 @@ import java.util.Map;
  */
 public interface IMemberAccountDetailBusiSV {
 
-    MemberAccountDetail insert(MemberAccountDetail bo);
+    TableMemberAccountDetail insert(TableMemberAccountDetail bo);
 
-    MemberAccountDetail update(MemberAccountDetail bo);
+    TableMemberAccountDetail update(TableMemberAccountDetail bo);
 
-    MemberAccountDetail delete(MemberAccountDetail bo);
+    TableMemberAccountDetail delete(TableMemberAccountDetail bo);
 
-    MemberAccountDetail select(MemberAccountDetail bo);
+    TableMemberAccountDetail select(TableMemberAccountDetail bo);
 
-    PageInfo<MemberAccountDetail> queryListPage(MemberAccountDetail bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
+    /**
+     * 账户变更接口
+     * @param memberId
+     * @param accountType
+     * 1:充值  2:购物
+     * @param amount
+     * @param remark
+     * @return
+     */
+    TableMemberAccountDetail changeMoney(String memberId, String accountType, Float amount, String remark);
+
+    PageInfo<TableMemberAccountDetail> queryListPage(TableMemberAccountDetail bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
 }

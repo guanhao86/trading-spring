@@ -4,11 +4,17 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.dao.mapper.TableMemberRankChangeDetailMapper;
+import com.spring.fee.model.TableMember;
+import com.spring.fee.model.TableMemberLevelChangeDetail;
 import com.spring.fee.model.TableMemberRankChangeDetail;
 import com.spring.fee.model.TableMemberRankChangeDetailExample;
+import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.fee.service.ITableMemberRankChangeDetailBusiSV;
 import com.spring.free.util.DateUtils;
+import com.spring.free.util.exception.ExceptionCodeEnum;
+import com.spring.free.util.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.asm.Advice;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +33,9 @@ public class TableMemberRankChangeDetailBusiSVImpl implements ITableMemberRankCh
 
     @Autowired
     TableMemberRankChangeDetailMapper iTableMemberRankChangeDetailMapper;
+
+    @Autowired
+    ITableMemberBusiSV iTableMemberBusiSV;
 
     /**
      * 创建记录
@@ -63,6 +72,34 @@ public class TableMemberRankChangeDetailBusiSVImpl implements ITableMemberRankCh
     @Override
     public TableMemberRankChangeDetail select(TableMemberRankChangeDetail bo) {
         return this.iTableMemberRankChangeDetailMapper.selectByPrimaryKey(bo.getId());
+    }
+
+    /**
+     * 改变头衔
+     *
+     * @param memberId
+     * @param value
+     * @param remark
+     * @return
+     */
+    @Override
+    public TableMemberRankChangeDetail changeRank(String memberId, Integer value, String remark) {
+        //查询原纪录
+        TableMember orig = this.iTableMemberBusiSV.selectByMemberId(memberId);
+        if (orig == null)
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在！", "", null);
+
+        TableMemberRankChangeDetail tableMemberRankChangeDetail = new TableMemberRankChangeDetail();
+        tableMemberRankChangeDetail.setMemberId(memberId);
+        tableMemberRankChangeDetail.setRemark(remark);
+        tableMemberRankChangeDetail.setBeforeRank(orig.getmRank());
+        tableMemberRankChangeDetail.setAfterRank(value);
+        this.insert(tableMemberRankChangeDetail);
+
+        orig.setmRank(value);
+        this.iTableMemberBusiSV.update(orig);
+
+        return tableMemberRankChangeDetail;
     }
 
     /**

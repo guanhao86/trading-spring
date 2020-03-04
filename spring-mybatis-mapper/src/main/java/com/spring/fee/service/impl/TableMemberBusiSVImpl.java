@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.spring.fee.dao.mapper.TableMemberMapper;
 import com.spring.fee.model.*;
 import com.spring.fee.service.ITableMemberBusiSV;
+import com.spring.fee.service.ITableMemberLevelChangeDetailBusiSV;
 import com.spring.free.util.DateUtils;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.exception.ExceptionCodeEnum;
@@ -34,6 +35,9 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
 
     @Autowired
     TableMemberMapper iTableMemberMapper;
+
+    @Autowired
+    ITableMemberLevelChangeDetailBusiSV iTableMemberLevelChangeDetailBusiSV;
 
     /**
      * 创建结算记录
@@ -483,8 +487,8 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         member.setLevel(0);
         member = this.insert(member);
         member.setMemberId("926"+String.format("%08d", member.getId()));
-        member.setLeftChildNode("0");
-        member.setRightChildNode("0");
+        member.setLeftChildNode("");
+        member.setRightChildNode("");
         member.setRegisterFrom(2); //注册来源：后台
         member.setmRank(0);
         member.setFlag("0001");
@@ -493,6 +497,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         member.setAccountJsyPoint(0f);
         member.setAccountPointAvailable(0f);
         member.setAccountPointFreeze(0f);
+        member.setReportingAmount(0f);
         member.setAutFlag(0);
         member.setLastLoginTime(DateUtils.getSysDate());
         member.setPerfomanceTime(DateUtils.getSysDate());

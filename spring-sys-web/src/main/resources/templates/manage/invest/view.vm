@@ -1,0 +1,36 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/invest/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:content:edit", "isBack": true, "href": "manage/invest/list"})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manange/invest/save")
+                    <input type="hidden" name="id" value="$!{invest.id}">
+                    #formInput({"name": "ID"} {"name": "id", "value":"$!{invest.id}","id": "id","required": "required","readonly":"readonly"})
+                    #formInput({"name": "会员ID"} {"name": "memberId", "value":"$!{invest.memberId}","id": "memberId","required": "required","readonly":"readonly"})
+                    #formInput({"name": "申请金额（元）"} {"name": "accountMoney", "value":"$!{invest.accountMoney}","id": "accountMoney","required": "required","readonly":"readonly"})
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label col-lg-2" for="content">截图凭证<font color="red">*</font>：</label>
+                        <div class="col-lg-3">
+                            <img src=$!{invest.certificateImgSrc} style= height:50px />
+                        </div>
+                    </div>
+                    #formInput({"name": "申请时间"} {"name": "investTime", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{invest.investTime})","id": "investTime","required": "required","readonly":"readonly"})
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">状态：</label>
+                        <div class="col-sm-2">
+                            #selectDisabledBS($!dict.getDictList("investState"), ["investState", "$!{invest.state}", "value", "label"], false, [false, "$!{invest.state}"])
+                        </div>
+                    </div>
+                    #formInput({"name": "审批结果"} {"name": "approvalResult ", "value":"$!{invest.approvalResult}","id": "approvalResult","required": "required","readonly":"readonly"})
+                    #formInput({"name": "审批时间"} {"name": "approvalTime", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{invest.approvalTime})","id": "approvalTime","required": "required","readonly":"readonly"})
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

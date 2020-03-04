@@ -76,7 +76,7 @@ public class ManageBroadcastController {
      * @Param [view, request, post, buttonType]
      * @return org.springframework.web.servlet.ModelAndView
      **/
-    @RequiresPermissions("system:invest:edit")
+    @RequiresPermissions("system:member:edit")
     @RequestMapping(value = "edit")
     public ModelAndView views(ModelAndView view, HttpServletRequest request, TableBroadcastInfo tableBroadcastInfo, String buttonType) {
         Map map = Maps.newHashMap();
@@ -95,7 +95,7 @@ public class ManageBroadcastController {
      * @Param [mav, request, topItem, post, buttonType, ghPic1]
      * @return org.springframework.web.servlet.ModelAndView
      **/
-    @RequiresPermissions("system:invest:edit")
+    @RequiresPermissions("system:member:edit")
     @RequestMapping(value = "save")
     public ModelAndView edit(ModelAndView mav, HttpServletRequest request, TableBroadcastInfo tableBroadcastInfo) {
         Map map = Maps.newHashMap();

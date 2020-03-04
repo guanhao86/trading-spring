@@ -4,10 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.dao.mapper.TableMemberLevelChangeDetailMapper;
+import com.spring.fee.model.TableMember;
 import com.spring.fee.model.TableMemberLevelChangeDetail;
 import com.spring.fee.model.TableMemberLevelChangeDetailExample;
+import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.fee.service.ITableMemberLevelChangeDetailBusiSV;
 import com.spring.free.util.DateUtils;
+import com.spring.free.util.exception.ExceptionCodeEnum;
+import com.spring.free.util.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,9 @@ public class TableMemberLevelChangeDetailBusiSVImpl implements ITableMemberLevel
 
     @Autowired
     TableMemberLevelChangeDetailMapper iTableMemberLevelChangeDetailMapper;
+
+    @Autowired
+    ITableMemberBusiSV iTableMemberBusiSV;
 
     /**
      * 创建记录
@@ -64,6 +71,32 @@ public class TableMemberLevelChangeDetailBusiSVImpl implements ITableMemberLevel
     public TableMemberLevelChangeDetail select(TableMemberLevelChangeDetail bo) {
         return this.iTableMemberLevelChangeDetailMapper.selectByPrimaryKey(bo.getId());
     }
+
+    /**
+     * 改变level
+     *
+     * @return
+     */
+    @Override
+    public TableMemberLevelChangeDetail changeLevel(String memberId, Integer value, String remark) {
+        //查询原纪录
+        TableMember orig = this.iTableMemberBusiSV.selectByMemberId(memberId);
+        if (orig == null)
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在！", "", null);
+
+        TableMemberLevelChangeDetail tableMemberLevelChangeDetail = new TableMemberLevelChangeDetail();
+        tableMemberLevelChangeDetail.setMemberId(memberId);
+        tableMemberLevelChangeDetail.setRemark(remark);
+        tableMemberLevelChangeDetail.setBeforeLevel(orig.getLevel());
+        tableMemberLevelChangeDetail.setAfterLevel(value);
+        this.insert(tableMemberLevelChangeDetail);
+
+        orig.setLevel(value);
+        this.iTableMemberBusiSV.update(orig);
+
+        return tableMemberLevelChangeDetail;
+    }
+
 
     /**
      * 数据列表分页

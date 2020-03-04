@@ -1,0 +1,38 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:edit", "isBack": true, "href": "manage/order/list"})
+                #btn({"btnName":"提交", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manage/order/send")
+
+                <input type="hidden" name="id" value="$!{order.id}">
+                    #formInput({"name": "订单ID"} {"name": "orderId", "value":"$!{order.orderId}","id": "orderId","required": "false","readonly":"readonly"})
+                    #formInput({"name": "会员ID"} {"name": "memberId", "value":"$!{order.memberId}","id": "memberId","required": "false","readonly":"readonly"})
+                    #formInput({"name": "商品编号"} {"name": "goodsId", "value":"$!{order.goodsId}","id": "goodsId","required": "false","readonly":"readonly"})
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">商品类型：</label>
+                    <div class="col-sm-2">
+                        #selectDisabledBS($!dict.getDictList("goodsClass"), ["goodsClass", "$!{order.goodsClass}", "value", "label"], false, [false, "$!{order.goodsClass}"])
+                    </div>
+                </div>
+                    #formInput({"name": "申请时间"} {"name": "orderTime", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{order.orderTime})","id": "orderTime","readonly":"readonly"})
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">状态：</label>
+                    <div class="col-sm-2">
+                        #selectDisabledBS($!dict.getDictList("orderState"), ["orderState", "$!{order.state}", "value", "label"], false, [false, "$!{order.state}"])
+                    </div>
+                </div>
+                    #formInput({"name": "订单时间"} {"name": "createTimeShow", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{order.createTime})","id": "createTimeShow","required": "false","readonly":"readonly"})
+                    #formInput({"name": "快递单号"} {"name": "expressNumber ", "value":"$!{order.expressNumber}","id": "expressNumber","required": "required"})
+                #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

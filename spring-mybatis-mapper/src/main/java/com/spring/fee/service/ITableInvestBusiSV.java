@@ -18,5 +18,12 @@ public interface ITableInvestBusiSV {
 
     TableInvest select(TableInvest bo);
 
+    /**
+     * 审核
+     * @param bo
+     * @return
+     */
+    TableInvest audit(TableInvest bo);
+
     PageInfo<TableInvest> queryListPage(TableInvest bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
 }
