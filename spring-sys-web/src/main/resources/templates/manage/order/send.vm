@@ -26,6 +26,11 @@
                     </div>
                 </div>
                     #formInput({"name": "订单时间"} {"name": "createTimeShow", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{order.createTime})","id": "createTimeShow","required": "false","readonly":"readonly"})
+                    #formInput({"name": "商品数量"} {"name": "amount", "value":"$!{order.amount}","id": "amount","required": "required","readonly":"readonly"})
+                    #formInput({"name": "订单金额"} {"name": "price", "value":"$!{order.price}","id": "price","required": "required","readonly":"readonly"})
+                    #formInput({"name": "收货人"} {"name": "receiverName", "value":"$!{member.reallyName}","id": "receiverName","required": "required","readonly":"readonly"})
+                    #formInput({"name": "收货电话"} {"name": "receiverPhone", "value":"$!{member.phone}","id": "receiverPhone","required": "required","readonly":"readonly"})
+                    #formInput({"name": "收货地址"} {"name": "receiverAddr", "value":"$!{member.addr}","id": "receiverAddr","required": "required","readonly":"readonly"})
                     #formInput({"name": "快递单号"} {"name": "expressNumber ", "value":"$!{order.expressNumber}","id": "expressNumber","required": "required"})
                 #end
     #end

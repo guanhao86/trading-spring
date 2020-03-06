@@ -1,0 +1,27 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:view", "isBack": false, "href": "manage/order/list"})
+                #btn({"btnName":"确认订单", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "front/order/buy")
+
+                    #formInput({"name": "会员ID"} {"name": "memberId", "value":"$!{member.memberId}","id": "memberId","required": "required","readonly":"readonly"})
+                    #formInput({"name": "商品编号"} {"name": "goodsId", "value":"$!{order.goodsId}","id": "goodsId","required": "required","readonly":"readonly"})
+                    #formInput({"name": "商品数量"} {"name": "amount", "value":"$!{order.amount}","id": "amount","required": "required","readonly":"readonly"})
+                    #formInput({"name": "订单金额"} {"name": "price", "value":"$!{order.price}","id": "price","required": "required","readonly":"readonly"})
+                    #formInput({"name": "收货人"} {"name": "receiverName", "value":"$!{member.reallyName}","id": "receiverName","required": "required"})
+                    #formInput({"name": "收货电话"} {"name": "receiverPhone", "value":"$!{member.phone}","id": "receiverPhone","required": "required"})
+                    #formInput({"name": "收货地址"} {"name": "receiverAddr", "value":"$!{member.addr}","id": "receiverAddr","required": "required"})
+
+                #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

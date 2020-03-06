@@ -106,6 +106,9 @@ public class TableGoodsBusiSVImpl implements ITableGoodsBusiSV {
         if (null != bo.getPePrice()) {
             criteria.andPePriceEqualTo(bo.getPePrice());
         }
+        if (null != bo.getState()) {
+            criteria.andStateEqualTo(bo.getState());
+        }
         if (StringUtils.isNotEmpty(bo.getGoodsName())) {
             criteria.andGoodsNameEqualTo(bo.getGoodsName());
         }

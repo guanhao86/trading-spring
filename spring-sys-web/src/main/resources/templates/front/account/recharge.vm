@@ -1,0 +1,21 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+<link rel="stylesheet" href="/summernote/summernote.css">
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"管理员充值", "perm": "system:member:edit", "isBack": false, "href": "manage/account/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manage/account/recharge")
+                    #formInput({"name": "会员ID"} {"name": "memberId", "value":"","id": "memberId","required": "required"})
+                    #formInput({"name": "充值金额（元）"} {"name": "amount", "value":"0","id": "amount","required": "required"})
+                #end
+            #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

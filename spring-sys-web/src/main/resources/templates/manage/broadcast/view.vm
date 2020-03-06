@@ -5,7 +5,7 @@
             #@panelHeader({"title":"$!{funTitle}", "perm": "system:content:edit", "isBack": true, "href": "manage/broadcast/list"})
             #end
             #@panelBody()
-                #@form("form_insert" true "post" "manange/broadcast/save")
+                #@form("form_insert" true "post" "manage/broadcast/save")
                     <input type="hidden" name="id" value="$!{broadcast.id}">
                     #formInput({"name": "ID"} {"name": "id", "value":"$!{broadcast.id}","id": "id","required": "required","readonly":"readonly"})
                     #formInput({"name": "标题"} {"name": "title", "value":"$!{broadcast.title}","id": "title","required": "required","readonly":"readonly"})

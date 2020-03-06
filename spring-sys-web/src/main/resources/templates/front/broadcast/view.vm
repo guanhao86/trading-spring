@@ -1,0 +1,25 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:content:edit", "isBack": true, "href": "front/broadcast/list"})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "front/broadcast/save")
+                    <input type="hidden" name="id" value="$!{broadcast.id}">
+                    #formInput({"name": "标题"} {"name": "title", "value":"$!{broadcast.title}","id": "title","required": "required","readonly":"readonly"})
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label col-lg-2" for="content">内容<font color="red">*</font>：</label>
+                        <div class="col-lg-3">
+                            <textarea rows="4" name="content" style="width: 100%" disabled>$!{broadcast.content}</textarea>
+                        </div>
+                    </div>
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

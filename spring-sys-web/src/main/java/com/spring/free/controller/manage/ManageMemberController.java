@@ -6,29 +6,24 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
-import com.spring.fee.constants.InvestConstants;
-import com.spring.fee.model.*;
+import com.spring.fee.model.TableMember;
 import com.spring.fee.service.ITableMemberBusiSV;
-import com.spring.free.common.domain.AccessResponse;
 import com.spring.free.domain.QueryVO;
-import com.spring.free.util.DateUtils;
+import com.spring.free.domain.UserInfo;
 import com.spring.free.util.PageResult;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
 import com.spring.free.util.exception.ExceptionCodeEnum;
-import com.spring.free.util.exception.RestException;
 import com.spring.free.util.exception.ServiceException;
 import com.spring.free.util.md5.Md5Util;
-import com.spring.free.utils.velocity.DictUtils;
-import com.spring.free.vo.TreeVO;
+import com.spring.free.utils.principal.BaseGetPrincipal;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,16 +31,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
  * 后台管理/会员
  **/
+@Slf4j
 @Controller
 @RequestMapping(Global.ADMIN_PATH + "/manage/member/")
 public class ManageMemberController {
@@ -134,6 +126,10 @@ public class ManageMemberController {
         Map map = Maps.newHashMap();
         PageResult.setPageTitle(view, "会员信息");
         PageResult.getPrompt(view, request, "");
+
+        UserInfo user = BaseGetPrincipal.getUser();
+
+
         TableMember tableMember=this.iTableMemberBusiSV.select(member);
 //        if(tableMember!=null) {
 //            member.setTotal(account.getTotal().doubleValue() / 1000);
@@ -173,7 +169,7 @@ public class ManageMemberController {
         map.put(Global.URL, Global.ADMIN_PATH +"/manage/member/register");
         TableMember member = null;
         try {
-            member = this.iTableMemberBusiSV.regist(m);
+            member = this.iTableMemberBusiSV.regist(m,2);
         }catch (ServiceException e) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
         }catch (Exception e1) {
@@ -184,6 +180,53 @@ public class ManageMemberController {
 
         PageResult.setPrompt(map,"操作成功", "success");
         return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/member/list"), map);
+    }
+
+    /**
+     * 跳转到注册页面
+     * @param mav
+     * @param session
+     * @param member
+     * @param request
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("registSimpleIndex")
+    public ModelAndView registSimpleIndex(ModelAndView mav, HttpSession session, TableMember member, HttpServletRequest request,
+                                  @RequestParam(value = "page",required = false, defaultValue = PageDefaultConstraints.PAGE) int page,
+                                  @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
+
+        mav.setViewName("manage/member/registSimple");
+        return mav;
+    }
+
+    /**
+     * 会员自己注册页面
+     * @param view
+     * @param request
+     * @param m
+     * @return
+     */
+    @RequestMapping(value = "registSimple")
+    @ResponseBody
+    public JSONObject registSimple(HttpServletRequest request,@RequestBody TableMember m) {
+
+        log.info(JSON.toJSONString(m));
+
+        JSONObject object = new JSONObject();
+        object.put("code","0");
+        TableMember member;
+        try {
+            member = this.iTableMemberBusiSV.regist(m, 1);
+        }catch (ServiceException e) {
+            object.put("code", "1");
+            object.put("msg", e.getMessage());
+        }catch (Exception e1) {
+            object.put("code", "1");
+            object.put("msg", e1.getMessage());
+        }
+        return object;
     }
 
     /**

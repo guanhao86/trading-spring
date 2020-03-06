@@ -85,6 +85,18 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
+     * 获取月份的第一天
+     * @return
+     */
+    public static Date getFirstDayOfMonth(Date date) {
+        // 获取前月的第一天
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        return calendar.getTime();
+    }
+
+    /**
      * 获取月份的最后一天
      * @return
      */
@@ -533,5 +545,15 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         String d = String.valueOf((date.getDate()<10?"0"+date.getDate():date.getDate()));
 
         return y+m+d;
+    }
+
+    public static String getYYYYMMDDHHMISS(Date date){
+        String y = (date.getYear()+1900)+"";
+        String m = String.valueOf((date.getMonth()+1)<10?"0"+(date.getMonth()+1):(date.getMonth()+1));
+        String d = String.valueOf((date.getDate()<10?"0"+date.getDate():date.getDate()));
+        String h = String.valueOf((date.getHours()<10?"0"+date.getHours():date.getHours()));
+        String mi = String.valueOf((date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()));
+        String s = String.valueOf((date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()));
+        return y+m+d+h+mi+s;
     }
 }

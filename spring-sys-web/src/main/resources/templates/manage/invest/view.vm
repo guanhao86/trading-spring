@@ -5,7 +5,7 @@
             #@panelHeader({"title":"$!{funTitle}", "perm": "system:content:edit", "isBack": true, "href": "manage/invest/list"})
             #end
             #@panelBody()
-                #@form("form_insert" true "post" "manange/invest/save")
+                #@form("form_insert" true "post" "manage/invest/save")
                     <input type="hidden" name="id" value="$!{invest.id}">
                     #formInput({"name": "ID"} {"name": "id", "value":"$!{invest.id}","id": "id","required": "required","readonly":"readonly"})
                     #formInput({"name": "会员ID"} {"name": "memberId", "value":"$!{invest.memberId}","id": "memberId","required": "required","readonly":"readonly"})

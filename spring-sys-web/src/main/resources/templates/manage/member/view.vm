@@ -5,7 +5,7 @@
             #@panelHeader({"title":"$!{funTitle}", "perm": "system:content:edit", "isBack": true, "href": "manage/member/list"})
             #end
             #@panelBody()
-                #@form("form_insert" true "post" "manange/member/save")
+                #@form("form_insert" true "post" "manage/member/save")
                     <input type="hidden" name="id" value="$!{member.id}">
                     #formInput({"name": "ID"} {"name": "memberId", "value":"$!{member.memberId}","id": "memberId","required": "required","readonly":"readonly"})
                     #formInput({"name": "电话"} {"name": "phone", "value":"$!{member.phone}","id": "phone","required": "required","readonly":"readonly"})

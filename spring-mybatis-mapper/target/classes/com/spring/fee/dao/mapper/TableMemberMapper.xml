@@ -40,6 +40,7 @@
     <result column="perfomance_time" jdbcType="TIMESTAMP" property="perfomanceTime" />
     <result column="reporting_amount" jdbcType="REAL" property="reportingAmount" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -117,7 +118,7 @@
     account_point_freeze, account_dj_point, account_jsy_point, aut_flag, really_name, 
     cart_id, bank_card_id, bank_name, bank_open_are, cart_img1, cart_img2, cart_img3, 
     bank_img1, bank_img2, register_time, last_login_time, perfomance_time, reporting_amount, 
-    update_time
+    update_time, addr
   </sql>
   <select id="selectByExample" parameterType="com.spring.fee.model.TableMemberExample" resultMap="BaseResultMap">
     <!--
@@ -184,8 +185,8 @@
       bank_name, bank_open_are, cart_img1, 
       cart_img2, cart_img3, bank_img1, 
       bank_img2, register_time, last_login_time, 
-      perfomance_time, reporting_amount, update_time
-      )
+      perfomance_time, reporting_amount, update_time, 
+      addr)
     values (#{memberId,jdbcType=VARCHAR}, #{referenceId,jdbcType=VARCHAR}, #{arrangeId,jdbcType=VARCHAR}, 
       #{leftOrRight,jdbcType=INTEGER}, #{leftChildNode,jdbcType=VARCHAR}, #{rightChildNode,jdbcType=VARCHAR}, 
       #{registerFrom,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
@@ -196,8 +197,8 @@
       #{bankName,jdbcType=VARCHAR}, #{bankOpenAre,jdbcType=VARCHAR}, #{cartImg1,jdbcType=VARCHAR}, 
       #{cartImg2,jdbcType=VARCHAR}, #{cartImg3,jdbcType=VARCHAR}, #{bankImg1,jdbcType=VARCHAR}, 
       #{bankImg2,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
-      #{perfomanceTime,jdbcType=TIMESTAMP}, #{reportingAmount,jdbcType=REAL}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{perfomanceTime,jdbcType=TIMESTAMP}, #{reportingAmount,jdbcType=REAL}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{addr,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.spring.fee.model.TableMember">
     <!--
@@ -308,6 +309,9 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="addr != null">
+        addr,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="memberId != null">
@@ -408,6 +412,9 @@
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -530,6 +537,9 @@
       <if test="record.updateTime != null">
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.addr != null">
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -574,7 +584,8 @@
       last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
       perfomance_time = #{record.perfomanceTime,jdbcType=TIMESTAMP},
       reporting_amount = #{record.reportingAmount,jdbcType=REAL},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      addr = #{record.addr,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -685,6 +696,9 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="addr != null">
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -726,7 +740,8 @@
       last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
       perfomance_time = #{perfomanceTime,jdbcType=TIMESTAMP},
       reporting_amount = #{reportingAmount,jdbcType=REAL},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      addr = #{addr,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title id="login_title">麦子国际 服务管理系统-注册</title>
+    <meta name="author" content="DeathGhost" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name='apple-touch-fullscreen' content='yes'>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <link rel="shortcut icon" href="/img/icon.png" type="image/png">
+    <link rel="icon" href="/img/icon.png" type="image/x-icon">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/fonts/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/js/plugins/chosen/chosen.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/login/style.css" />
+    <!--[if lt IE 8]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>
+        if(window.top!==window.self){window.top.location=window.location};
+    </script>
+    <style type="text/css">
+        .control-label {
+            position: absolute;
+            margin-left: -100px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body class="login-page">
+<section class="login-contain" style="width: 600px">
+    <header>
+        <h2 id="header_h2_title">注册会员</h2>
+        <p>REGIST MEMBER</p>
+    </header>
+    <div class="form-content" style="width: 300px; margin-left: 200px">
+        <form method="post" action="/admin/manage/member/registSimple" method="post" id="login_form">
+            <input type="hidden" value="$!{url}" name="url"/>
+            <input type="hidden" value="$!{session.getAttribute('mark')}" id="mark"  name="mark" />
+            <ul>
+                <li>
+                    <div class="form-group">
+                        <label class="control-label">手机号码：</label>
+                        <input type="text" placeholder="手机号码" class="form-control form-underlined" id="phone" name="phone" />
+                    </div>
+                </li>
+                <li>
+                    <div class="form-group">
+                        <label class="control-label">密码：</label>
+                        <input type="password" placeholder="密码" class="form-control form-underlined" id="password" name="password"/>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-group">
+                        <label class="control-label">确认密码：</label>
+                        <input type="password" placeholder="确认密码" class="form-control form-underlined" id="passwordAgain" name="passwordAgain"/>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-group">
+                        <label class="control-label">推荐人编号：</label>
+                        <input type="text" placeholder="推荐人编号" class="form-control form-underlined" id="referenceId" name="referenceId"/>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-group">
+                        <label class="control-label">安置人编号：</label>
+                        <input type="text" placeholder="安置人编号" class="form-control form-underlined" id="arrangeId" name="arrangeId"/>
+                    </div>
+                </li>
+                <li>
+                 <div class="form-group">
+                     <label class="control-label">安置区：</label>
+                     <input type="radio" name="leftOrRight" id="leftOrRight" style="vertical-align:middle" value="1"> 左区
+                     <input type="radio" name="leftOrRight" id="leftOrRight" style="vertical-align:middle" value="2"> 右区
+                 </div>
+                </li>
+                <li>
+                    <span id="error" style="margin-left: 15px; color: red; font-size: 12px; font-weight: bold;">$!{e}</span>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-lg btn-primary btn-block" id="login_btn" onclick="rigist(13);">注册</button>
+                </li>
+                <li>
+                ##                    <p class="btm-info">&copy;Copyright 2017-2018 <a href="javascript:void(0)" target="_blank" title="沈阳恒普科技">沈阳恒普科技</a></p>
+                </li>
+            </ul>
+        </form>
+
+    </div>
+</section>
+</body>
+<script src="/js/jquery-1.10.2.min.js?v=2.1.4"></script><!-- JQuery 1.10.2 -->
+<script src="/js/bootstrap.min.js?v=3.3.5"></script><!-- Bootstrap -->
+<script src="/js/system/modernizr.min.js"></script>
+<script src="/js/system/bs.backspace.js"></script><!-- Jquery -->
+<script src="/js/system/bs.tool.js"></script>
+<script src="/js/plugins/chosen/chosen.jquery.js"></script>
+<script src="/js/chosen-init.js"></script>
+<script src="/js/login.js"></script>
+<script>
+    function rigist(){
+
+        if ($("#password").val() != $("#passwordAgain").val())  {
+            $("#error").html("两次密码不同");
+        }
+
+        param = {}
+        param.phone = $("#phone").val();
+        param.password = $("#password").val();
+        param.referenceId = $("#referenceId").val();
+        param.arrangeId = $("#arrangeId").val();
+        param.leftOrRight = $("input[type='radio']:checked").val();
+
+        $.ajax({
+            //请求方式
+            type : "POST",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //请求地址
+            url : "/admin/front/member/registSimple",
+            //数据，json字符串
+            data : JSON.stringify(param),
+            //请求成功
+            success : function(result) {
+                console.log(result);
+                if ("1" == result.code)
+                    $("#error").html(result.msg);
+                else if ("0" == result.code)
+                    window.location.href="/login"
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+                $("#error").html("系统异常");
+            }
+        });
+    }
+</script>
+</html>

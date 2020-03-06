@@ -104,6 +104,9 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
             //购物
             memberAccountDetail.setAccountType(1);
             accountMoney -= amount;
+            if (accountMoney < 0) {
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "余额不足！", "", null);
+            }
         }
 
         tableMember.setAccountMoney(accountMoney);

@@ -1,0 +1,40 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/order/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:content:edit", "isBack": true, "href": "front/order/list"})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manage/order/save")
+                    <input type="hidden" name="id" value="$!{order.id}">
+                    #formInput({"name": "订单号"} {"name": "orderId", "value":"$!{order.orderId}","id": "orderId","required": "required","readonly":"readonly"})
+                    #formInput({"name": "会员ID"} {"name": "memberId", "value":"$!{order.memberId}","id": "memberId","required": "required","readonly":"readonly"})
+                    #formInput({"name": "商品编号"} {"name": "goodsId", "value":"$!{order.goodsId}","id": "goodsId","required": "required","readonly":"readonly"})
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">商品类型：</label>
+                        <div class="col-sm-2">
+                            #selectDisabledBS($!dict.getDictList("goodsClass"), ["goodsClass", "$!{order.goodsClass}", "value", "label"], false, [false, "$!{order.goodsClass}"])
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">状态：</label>
+                        <div class="col-sm-2">
+                            #selectDisabledBS($!dict.getDictList("orderState"), ["orderState", "$!{order.state}", "value", "label"], false, [false, "$!{order.state}"])
+                        </div>
+                    </div>
+                    #formInput({"name": "订单时间"} {"name": "createTime", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{order.createTime})","id": "createTime","required": "required","readonly":"readonly"})
+                    #formInput({"name": "商品数量"} {"name": "amount", "value":"$!{order.amount}","id": "amount","required": "required","readonly":"readonly"})
+                    #formInput({"name": "订单金额"} {"name": "price", "value":"$!{order.price}","id": "price","required": "required","readonly":"readonly"})
+                    #formInput({"name": "收货人"} {"name": "receiverName", "value":"$!{order.receiverName}","id": "receiverName","required": "required","readonly":"readonly"})
+                    #formInput({"name": "收货电话"} {"name": "receiverPhone", "value":"$!{order.receiverPhone}","id": "receiverPhone","required": "required","readonly":"readonly"})
+                    #formInput({"name": "收货地址"} {"name": "receiverAddr", "value":"$!{order.receiverAddr}","id": "receiverAddr","required": "required","readonly":"readonly"})
+                    #formInput({"name": "快递单号"} {"name": "expressNumber ", "value":"$!{order.expressNumber}","id": "expressNumber","required": "required","readonly":"readonly"})
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

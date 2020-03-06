@@ -75,5 +75,5 @@ public interface ITableMemberBusiSV {
      * @param bo
      * @return
      */
-    public TableMember regist(TableMember bo);
+    public TableMember regist(TableMember bo, int registerFrom);
 }

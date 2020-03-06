@@ -18,5 +18,7 @@ public interface ITableOrderBusiSV {
 
     TableOrder select(TableOrder bo);
 
+    TableOrder buy(TableOrder bo);
+
     PageInfo<TableOrder> queryListPage(TableOrder bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
 }

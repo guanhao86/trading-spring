@@ -5,7 +5,7 @@
             #@panelHeader({"title":"$!{funTitle}", "perm": "system:content:edit", "isBack": true, "href": "manage/goods/list"})
             #end
             #@panelBody()
-                #@form("form_insert" true "post" "manange/goods/save")
+                #@form("form_insert" true "post" "manage/goods/save")
                     <input type="hidden" name="id" value="$!{goods.id}">
                     #formInput({"name": "ID"} {"name": "id", "value":"$!{goods.id}","id": "id","required": "required","readonly":"readonly"})
                     #formInput({"name": "商品名"} {"name": "goodsName", "value":"$!{goods.goodsName}","id": "goodsName","required": "required","readonly":"readonly"})

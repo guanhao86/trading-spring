@@ -77,6 +77,14 @@ public class IndexController {
         return mav;
     }
 
+    @RequestMapping("/regist")
+    public ModelAndView regist(ModelAndView mav, HttpSession session) {
+
+        PageResult.publicModelTitle(mav, PromptInfoConstraints.MEMBER_SYSTEM_LOGIN, "", "");
+        mav.setViewName("registSimple");
+        return mav;
+    }
+
     @RequestMapping("/handle600")
     public ModelAndView handle600(ModelAndView mav, HttpServletRequest request) {
         mav.setViewName("600");

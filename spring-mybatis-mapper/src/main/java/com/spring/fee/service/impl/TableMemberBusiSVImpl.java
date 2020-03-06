@@ -3,10 +3,14 @@ package com.spring.fee.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Maps;
 import com.spring.fee.dao.mapper.TableMemberMapper;
 import com.spring.fee.model.*;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.fee.service.ITableMemberLevelChangeDetailBusiSV;
+import com.spring.free.domain.RoleInfo;
+import com.spring.free.domain.UserInfo;
+import com.spring.free.system.UserService;
 import com.spring.free.util.DateUtils;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.exception.ExceptionCodeEnum;
@@ -38,6 +42,9 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
 
     @Autowired
     ITableMemberLevelChangeDetailBusiSV iTableMemberLevelChangeDetailBusiSV;
+
+    @Autowired
+    UserService userService;
 
     /**
      * 创建结算记录
@@ -445,7 +452,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
      * @return
      */
     @Override
-    public TableMember regist(TableMember m) {
+    public TableMember regist(TableMember m, int registerFrom) {
         String phone=m.getPhone();
         String referenceId=m.getReferenceId();
         String arrangeId = m.getArrangeId();
@@ -463,33 +470,35 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         TableMember arrangeMemeber = this.selectByMemberId(arrangeId);
 
         if(arrangeMemeber==null){
-            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "推荐人不存在！","", null);
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "安置人不存在！","", null);
         }
 
         //判断左区，如果存在不允许注册
         if (1 == m.getLeftOrRight()) {
-            if(!"0".equals(arrangeMemeber.getLeftChildNode()) || !org.springframework.util.StringUtils.isEmpty(arrangeMemeber.getLeftChildNode())) {
+            if(!"0".equals(arrangeMemeber.getLeftChildNode()) && !org.springframework.util.StringUtils.isEmpty(arrangeMemeber.getLeftChildNode())) {
                 throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "推荐人左区已经存在会员，不允许注册！", "", null);
             }
         }
 
         //判断右区，如果存在不允许注册
         if (2 == m.getLeftOrRight()){
-            if(!"0".equals(arrangeMemeber.getRightChildNode()) || !org.springframework.util.StringUtils.isEmpty(arrangeMemeber.getRightChildNode())) {
+            if(!"0".equals(arrangeMemeber.getRightChildNode()) && !org.springframework.util.StringUtils.isEmpty(arrangeMemeber.getRightChildNode())) {
                 throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "推荐人右区已经存在会员，不允许注册！", "", null);
             }
         }
 
+        String password = StringUtils.isEmpty(m.getPassword())?phone.substring(phone.length()-6):m.getPassword();
+
         TableMember member = new TableMember();
         member.setPhone(phone);
-        member.setPassword(Md5Util.md5Hex(phone.substring(phone.length()-6)));
+        member.setPassword(Md5Util.md5Hex(password));
         member.setReferenceId(referenceId);
         member.setLevel(0);
         member = this.insert(member);
         member.setMemberId("926"+String.format("%08d", member.getId()));
         member.setLeftChildNode("");
         member.setRightChildNode("");
-        member.setRegisterFrom(2); //注册来源：后台
+        member.setRegisterFrom(registerFrom); //注册来源：后台
         member.setmRank(0);
         member.setFlag("0001");
         member.setAccountMoney(0f);
@@ -516,6 +525,26 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             arrangeMemeber.setRightChildNode(member.getMemberId());
         }
         this.update(arrangeMemeber);
+
+        //创建user信息，用于登陆系统
+        UserInfo user = new UserInfo();
+        user.setPassword(password);
+        user.setUsername(member.getMemberId());
+        user.setName(StringUtils.isEmpty(member.getReallyName())?member.getMemberId():member.getReallyName());
+        user.setLoginFlag("1");
+        user.setDelFlag("0");
+        user.setUserType("1");
+
+        List<RoleInfo> roleList = new ArrayList<RoleInfo>();
+        RoleInfo roleInfo = new RoleInfo();
+        roleInfo.setId(3l);
+        roleList.add(roleInfo);
+
+        user.setRoleList(roleList);
+
+        Map map = Maps.newHashMap();
+        map.put("userId", user.getId());
+        userService.save(user, map);
 
         return member;
     }

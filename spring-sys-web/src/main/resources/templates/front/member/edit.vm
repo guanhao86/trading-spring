@@ -1,0 +1,27 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:view", "isBack": false, "href": "front/member/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "front/member/save")
+                    <input type="hidden" name="id" value="$!{member.id}">
+                    #formInput({"name": "电话"} {"name": "phone", "value":"$!{member.phone}","id": "phone","required": "required"})
+                    #formInput({"name": "姓名"} {"name": "reallyName", "value":"$!{member.reallyName}","id": "reallyName","required": "required"})
+                    #formInput({"name": "身份证号码"} {"name": "cartId", "value":"$!{member.cartId}","id": "cartId","required": "required"})
+                    #formInput({"name": "银行卡号"} {"name": "bankCardId", "value":"$!{member.bankCardId}","id": "bankCardId","required": "required"})
+                    #formInput({"name": "开户行名字"} {"name": "bankName", "value":"$!{member.bankName}","id": "bankName","required": "required"})
+                    #formInput({"name": "银行卡开户行地址"} {"name": "bankOpenAre", "value":"$!{member.bankOpenAre}","id": "bankOpenAre","required": "required"})
+                    #formInput({"name": "收货地址"} {"name": "addr", "value":"$!{member.addr}","id": "addr","required": "required"})
+
+                #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end
