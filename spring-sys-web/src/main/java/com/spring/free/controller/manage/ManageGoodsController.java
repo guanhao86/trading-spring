@@ -101,22 +101,24 @@ public class ManageGoodsController {
         Map map = Maps.newHashMap();
         map.put(Global.URL, Global.ADMIN_PATH +"/manage/goods/list");
 
-        if (thumbnialImgSrcFile != null) {
+        if (thumbnialImgSrcFile != null && StringUtils.isNotEmpty(thumbnialImgSrcFile.getOriginalFilename())) {
             //缩略图
             String imgPath = ImageUtils.upload(thumbnialImgSrcFile);
             tableGoods.setThunmbanilImgSrc(imgPath);
         }
 
-        if (detailImgSrcFile != null) {
+        if (detailImgSrcFile != null && StringUtils.isNotEmpty(detailImgSrcFile.getOriginalFilename())) {
             //详情图
             String imgPath = ImageUtils.upload(detailImgSrcFile);
             tableGoods.setDetailImgSrc(imgPath);
         }
 
-        if (null != tableGoods.getId())
+        if (null != tableGoods.getId()) {
             this.iTableGoodsBusiSV.update(tableGoods);
-        else
+        } else {
+            tableGoods.setState("1");
             this.iTableGoodsBusiSV.insert(tableGoods);
+        }
         PageResult.setPrompt(map,"操作成功", "success");
         return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/goods/list"), map);
     }

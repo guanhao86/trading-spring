@@ -118,6 +118,8 @@ public class TableBalanceDetailBusiSVImpl implements ITableBalanceDetailBusiSV {
             criteria.andOperateTimeEqualTo(bo.getOperateTime());
         }
 
+        example.setOrderByClause("operate_time desc");
+
         PageInfo<TableBalanceDetail> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableBalanceDetailMapper.selectByExample(example));
         log.info("获取结算管理结果：{}", JSON.toJSON(pageInfo));

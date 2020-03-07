@@ -18,6 +18,7 @@ import com.spring.free.util.exception.ServiceException;
 import com.spring.free.util.md5.Md5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -364,7 +365,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         if (null != bo.getRegisterFrom()) {
             criteria.andRegisterFromEqualTo(bo.getRegisterFrom());
         }
-        if (null != bo.getPhone()) {
+        if (StringUtils.isNotEmpty(bo.getPhone())) {
             criteria.andPhoneEqualTo(bo.getPhone());
         }
         if (StringUtils.isNotEmpty(bo.getPassword())) {
@@ -456,6 +457,15 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         String phone=m.getPhone();
         String referenceId=m.getReferenceId();
         String arrangeId = m.getArrangeId();
+
+        if (StringUtils.isEmpty(phone)) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "手机号不能为空！", "", null);
+        }
+
+        if (phone.length() <= 6) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "手机号位数错误！", "", null);
+        }
+
         TableMember  checkMember = this.selectByPhone(phone);
         if(checkMember!=null){
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "手机号已注册！", "", null);
@@ -547,5 +557,40 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         userService.save(user, map);
 
         return member;
+    }
+
+    /**
+     * 修改密码（密码为空则为密码重置）
+     *
+     * @param bo
+     * @return
+     */
+    @Override
+    public TableMember changePwd(TableMember bo) {
+
+        String pwd = bo.getPassword();
+
+        TableMember tableMemberOrig = this.select(bo);
+
+        if (tableMemberOrig == null) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在！", "", null);
+        }
+
+        if (StringUtils.isEmpty(bo.getPassword())) {
+            pwd = tableMemberOrig.getPhone().substring(tableMemberOrig.getPhone().length()-6);
+        }
+
+        pwd = Md5Util.md5Hex(pwd);
+
+        bo.setPassword(pwd);
+
+        this.update(bo);
+
+        UserInfo userInfo = this.userService.getUserByUsernameLogin(tableMemberOrig.getMemberId());
+        userInfo.setPassword(pwd);
+
+        this.userService.update(userInfo, null);
+
+        return bo;
     }
 }

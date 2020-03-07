@@ -4,19 +4,23 @@ package com.spring.free.controller.front;/**
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
-import com.spring.fee.model.TableBroadcastInfo;
-import com.spring.fee.service.ITableBroadcastInfoBusiSV;
+import com.spring.fee.model.TableMemberAccountDetail;
+import com.spring.fee.service.IMemberAccountDetailBusiSV;
+import com.spring.free.config.CommonUtils;
 import com.spring.free.domain.QueryVO;
+import com.spring.free.domain.UserInfo;
 import com.spring.free.util.PageResult;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
+import com.spring.free.utils.principal.BaseGetPrincipal;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -25,14 +29,14 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
- * 前端/公告
+ * 前端/充值,账户接口
  **/
 @Controller
-@RequestMapping(Global.ADMIN_PATH + "/front/broadcast/")
-public class FrontBroadcastController {
+@RequestMapping(Global.ADMIN_PATH + "/front/account/")
+public class FrontAccountController {
 
     @Autowired
-    ITableBroadcastInfoBusiSV iTableBroadcastInfoBusiSV;
+    IMemberAccountDetailBusiSV iMemberAccountDetailBusiSV;
 
     /*
      * @Author gh
@@ -47,12 +51,13 @@ public class FrontBroadcastController {
                              @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
         // String postType = request.getParameter("postType");
 
-        TableBroadcastInfo tableBroadcastInfo = new TableBroadcastInfo();
-        BeanUtils.copyProperties(queryVO, tableBroadcastInfo);
+        TableMemberAccountDetail memberAccountDetail = new TableMemberAccountDetail();
+        BeanUtils.copyProperties(queryVO, memberAccountDetail);
 
-        tableBroadcastInfo.setIsDelete(0);
+        UserInfo user = BaseGetPrincipal.getUser();
+        memberAccountDetail.setMemberId(user.getUsername());
 
-        PageInfo<TableBroadcastInfo> pageInfo = this.iTableBroadcastInfoBusiSV.queryListPage(tableBroadcastInfo, page, pageSize, null);
+        PageInfo<TableMemberAccountDetail> pageInfo = this.iMemberAccountDetailBusiSV.queryListPage(memberAccountDetail, page, pageSize, CommonUtils.getStartEnd(queryVO));
 
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);
@@ -62,28 +67,8 @@ public class FrontBroadcastController {
         //返回操作提示信息
         PageResult.getPrompt(mav, request, queryVO.getParamMsg());
 
-        mav.setViewName("front/broadcast/list");
+        mav.setViewName("front/account/list");
         return mav;
     }
 
-
-
-    @RequiresPermissions("system:member:view")
-    @RequestMapping(value = "view")
-    public ModelAndView view(ModelAndView view, HttpServletRequest request, TableBroadcastInfo tableBroadcastInfo) {
-        Map map = Maps.newHashMap();
-        PageResult.setPageTitle(view, "公告信息");
-        PageResult.getPrompt(view, request, "");
-        TableBroadcastInfo tableBroadcastInfo1=this.iTableBroadcastInfoBusiSV.select(tableBroadcastInfo);
-//        if(tableMember!=null) {
-//            member.setTotal(account.getTotal().doubleValue() / 1000);
-//            member.setAvailable(account.getAvailable().doubleValue() / 1000);
-//            member.setFreeze(account.getFreeze().doubleValue() / 1000);
-//            member.setMoneyFreeze(account.getMoneyFreeze().doubleValue() / 1000);
-//            member.setGranaryFreeze(account.getGranaryFreeze().doubleValue() / 1000);
-//        }
-        view.addObject("broadcast",tableBroadcastInfo1);
-        view.setViewName("front/broadcast/view");
-        return view;
-    }
 }

@@ -6,11 +6,14 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.model.TableOrder;
 import com.spring.fee.service.ITableOrderBusiSV;
+import com.spring.free.config.CommonUtils;
 import com.spring.free.domain.QueryVO;
 import com.spring.free.util.PageResult;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
+import com.spring.free.util.exception.ExceptionCodeEnum;
+import com.spring.free.util.exception.ServiceException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +53,7 @@ public class ManageOrderController {
         TableOrder tableOrder = new TableOrder();
         BeanUtils.copyProperties(queryVO, tableOrder);
         tableOrder.setId(queryVO.getId()==null?null:queryVO.getId().intValue());
-        PageInfo<TableOrder> pageInfo = this.iTableOrderBusiSV.queryListPage(tableOrder, page, pageSize, null);
+        PageInfo<TableOrder> pageInfo = this.iTableOrderBusiSV.queryListPage(tableOrder, page, pageSize, CommonUtils.getStartEnd(queryVO));
 
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);
@@ -117,7 +120,11 @@ public class ManageOrderController {
         Map map = Maps.newHashMap();
         map.put(Global.URL, Global.ADMIN_PATH +"/manage/order/list");
         tableOrder.setState(2);
-        this.iTableOrderBusiSV.update(tableOrder);
+        try {
+            this.iTableOrderBusiSV.update(tableOrder);
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
 
         PageResult.setPrompt(map,"操作成功", "success");
         return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/order/list"), map);
@@ -136,6 +143,7 @@ public class ManageOrderController {
     public ModelAndView edit(ModelAndView mav, HttpServletRequest request, TableOrder tableOrder) {
         Map map = Maps.newHashMap();
         map.put(Global.URL, Global.ADMIN_PATH +"/manage/order/list");
+
         this.iTableOrderBusiSV.update(tableOrder);
 
         PageResult.setPrompt(map,"操作成功", "success");

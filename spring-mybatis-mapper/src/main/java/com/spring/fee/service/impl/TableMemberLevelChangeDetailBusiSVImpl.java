@@ -135,6 +135,8 @@ public class TableMemberLevelChangeDetailBusiSVImpl implements ITableMemberLevel
             criteria.andRemarkEqualTo(bo.getRemark());
         }
 
+        example.setOrderByClause("modify_time desc");
+
         PageInfo<TableMemberLevelChangeDetail> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableMemberLevelChangeDetailMapper.selectByExample(example));
         log.info("获取会员级别变更明细表结果：{}", JSON.toJSON(pageInfo));

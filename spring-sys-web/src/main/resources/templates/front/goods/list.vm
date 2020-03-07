@@ -9,13 +9,13 @@
                 #@form("search" false "post" "front/goods/list")
                     #@divColSmNum(3)
                         #formInput({"name": "名称", "length": "4,8", "asterisk": false} {"name": "goodsName", "id": "goodsName",
-                            "value": "$!{goods.goodsName}"})
+                            "value": "$!{queryVO.goodsName}"})
                     #end
                     #@divColSmNum(3)
                     <div class="form-group">
                         <label class="col-sm-4 control-label">商品类型：</label>
                         <div class="col-sm-5" style="width: 201px;">
-                            #selectBS($!dict.getDictList("goodsClass"), ["goodsClass", "$!{goods.goodsClass}", "value", "label"], false, [false, ""])
+                            #selectBS($!dict.getDictList("goodsClass"), ["goodsClass", "$!{queryVO.goodsClass}", "value", "label"], false, [true, ""])
                         </div>
                     </div>
                     #end
@@ -25,7 +25,7 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "商品名", "商品价格", "商品类型", "商品状态"],"", false)
+                    #tableTHead(["id", "商品名", "商品价格(元)", "商品类型", "商品状态"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.id}")

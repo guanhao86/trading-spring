@@ -106,6 +106,17 @@ public class TableBonusDetailBusiSVImpl implements ITableBonusDetailBusiSV {
             criteria.andCloseStateEqualTo(bo.getCloseState());
         }
 
+        if (null != map) {
+            if (null != map.get("start")) {
+                criteria.andRecodeTimeGreaterThanOrEqualTo((Date)map.get("start"));
+            }
+            if (null != map.get("end")) {
+                criteria.andRecodeTimeLessThanOrEqualTo((Date)map.get("end"));
+            }
+        }
+
+        example.setOrderByClause("recode_time desc");
+
         PageInfo<TableBonusDetail> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableBonusDetailMapper.selectByExample(example));
         log.info("获取奖金流水管理表结果：{}", JSON.toJSON(pageInfo));

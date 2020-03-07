@@ -55,12 +55,166 @@
                     #formInput({"name": "银行卡号"} {"name": "bankCardId", "value":"$!{member.bankCardId}","id": "bankCardId","required": "required"})
                     #formInput({"name": "开户行名字"} {"name": "bankName", "value":"$!{member.bankName}","id": "bankName","required": "required"})
                     #formInput({"name": "银行卡开户行地址"} {"name": "bankOpenAre", "value":"$!{member.bankOpenAre}","id": "bankOpenAre","required": "required"})
-
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">身份证正面<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-new thumbnail" >
+                                <img src="$!{member.cartImg1}" alt="" id="fcartImg1" value="$!{member.cartImg1}"
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+                            </div>
+                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                            <div id="btn_div_front">
+                        <span class="btn btn-default btn-file">
+                            <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择照片</span>
+                            <span class="fileupload-exists"><i class="fa fa-undo"></i> 重新选择</span>
+                            <input type="file" class="default" name="fcartImg1" id="fcartImg1"  />
+                        </span>
+                                <a href=" " class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i
+                                        class="fa fa-trash"></i> 删除</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">身份证反面<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-new thumbnail" >
+                                <img src="$!{member.cartImg2}" alt="" id="fcartImg2" value="$!{member.cartImg2}"
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+                            </div>
+                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                            <div id="btn_div_front">
+                            <span class="btn btn-default btn-file">
+                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择照片</span>
+                                <span class="fileupload-exists"><i class="fa fa-undo"></i> 重新选择</span>
+                                <input type="file" class="default" name="fcartImg2" id="fcartImg2"  />
+                            </span>
+                                <a href=" " class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i
+                                        class="fa fa-trash"></i> 删除</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">身份证手持<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-new thumbnail" >
+                                <img src="$!{member.cartImg3}" alt="" id="fcartImg3" value="$!{member.cartImg3}"
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+                            </div>
+                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                            <div id="btn_div_front">
+                            <span class="btn btn-default btn-file">
+                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择照片</span>
+                                <span class="fileupload-exists"><i class="fa fa-undo"></i> 重新选择</span>
+                                <input type="file" class="default" name="fcartImg3" id="fcartImg3"  />
+                            </span>
+                                <a href=" " class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i
+                                        class="fa fa-trash"></i> 删除</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">银行卡正面<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-new thumbnail" >
+                                <img src="$!{member.bankImg1}" alt="" id="fbankImg1" value="$!{member.bankImg1}"
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+                            </div>
+                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                            <div id="btn_div_front">
+                            <span class="btn btn-default btn-file">
+                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择照片</span>
+                                <span class="fileupload-exists"><i class="fa fa-undo"></i> 重新选择</span>
+                                <input type="file" class="default" name="fbankImg1" id="fbankImg1"  />
+                            </span>
+                                <a href=" " class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i
+                                        class="fa fa-trash"></i> 删除</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">银行卡反面<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-new thumbnail" >
+                                <img src="$!{member.bankImg2}" alt="" id="fbankImg2" value="$!{member.bankImg2}"
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+                            </div>
+                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                            <div id="btn_div_front">
+                            <span class="btn btn-default btn-file">
+                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择照片</span>
+                                <span class="fileupload-exists"><i class="fa fa-undo"></i> 重新选择</span>
+                                <input type="file" class="default" name="fbankImg2" id="fbankImg2"  />
+                            </span>
+                                <a href=" " class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i
+                                        class="fa fa-trash"></i> 删除</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 #end
     #end
         #end
     #end
     #@script()
+
+        #scriptSrc("/summernote/summernote.js")
+        #scriptSrc("/summernote/lang/summernote-zh-CN.js")
+        #scriptSrc("/js/backstage/bootstrap-fileupload.min.js")
+
+
+    <script>
+
+        $(document).ready(function() {
+            $('.summernote').summernote({
+//                toolbar: [
+//                    ['style', ['bold', 'italic', 'underline']],
+//                    ['fontsize', ['fontsize']],
+//                    ['para', ['paragraph']],
+//                    ['height', ['height']]
+//                ],
+                height: 400,
+                tabsize: 2,
+                lang: 'zh-CN',
+                callbacks: {
+                    onImageUpload: function(files) {
+                        //上传图片到服务器，使用了formData对象，至于兼容性...据说对低版本IE不太友好
+                        var formData = new FormData();
+                        formData.append('file',files[0]);
+                        $.ajax({
+                            url : '$!{ctx}/notice/upload',//后台文件上传接口
+                            type : 'POST',
+                            data : formData,
+                            processData : false,
+                            contentType : false,
+                            success : function(data) {
+//                            alert(data);
+                                $('#summernote').summernote('insertImage',data,'img');
+                            }
+                        });
+                    }
+                }
+
+            });
+
+
+        });
+
+    </script>
+
         #@jsValidate("form_insert")
         #end
     #end

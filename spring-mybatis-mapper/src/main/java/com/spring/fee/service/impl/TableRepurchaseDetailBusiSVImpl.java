@@ -100,6 +100,8 @@ public class TableRepurchaseDetailBusiSVImpl implements ITableRepurchaseDetailBu
             criteria.andCurrentRankEqualTo(bo.getCurrentRank());
         }
 
+        example.setOrderByClause("repurchase_time desc");
+
         PageInfo<TableRepurchaseDetail> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableRepurchaseDetailMapper.selectByExample(example));
         log.info("获取复消记录表结果：{}", JSON.toJSON(pageInfo));

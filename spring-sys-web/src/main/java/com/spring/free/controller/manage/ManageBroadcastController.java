@@ -16,6 +16,7 @@ import com.spring.free.util.constraints.PromptInfoConstraints;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
 import com.spring.free.util.md5.Md5Util;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +101,11 @@ public class ManageBroadcastController {
     public ModelAndView edit(ModelAndView mav, HttpServletRequest request, TableBroadcastInfo tableBroadcastInfo) {
         Map map = Maps.newHashMap();
         map.put(Global.URL, Global.ADMIN_PATH +"/manage/broadcast/list");
-        this.iTableBroadcastInfoBusiSV.update(tableBroadcastInfo);
+
+        if (null != tableBroadcastInfo.getId())
+            this.iTableBroadcastInfoBusiSV.update(tableBroadcastInfo);
+        else
+            this.iTableBroadcastInfoBusiSV.insert(tableBroadcastInfo);
 
         PageResult.setPrompt(map,"操作成功", "success");
         return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/broadcast/list"), map);

@@ -3,7 +3,7 @@
         #@panel()
             #@panelHeader({"title":"公告管理 搜索", "perm": "", "isBack": false, "href": ""})
                 #btn({"btnName":"新增", "icon":"fa-plus", "style":"primary",  "attr":{"data-button": "insert-pre",
-                    "data-href": "$!{ctx}/manage/broadcast/add"}})
+                    "data-href": "$!{ctx}/manage/broadcast/edit"}})
                 #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
                 #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
             #end
@@ -11,7 +11,7 @@
                 #@form("search" false "post" "manage/broadcast/list")
                     #@divColSmNum(3)
                         #formInput({"name": "标题", "length": "4,8", "asterisk": false} {"name": "title", "id": "title",
-                            "value": "$!{member.title}"})
+                            "value": "$!{queryVO.title}"})
                     #end
                 #end
             #end

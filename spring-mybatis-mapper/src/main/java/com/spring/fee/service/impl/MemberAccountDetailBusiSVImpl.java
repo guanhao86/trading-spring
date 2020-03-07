@@ -92,6 +92,10 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在！", "", null);
         }
 
+        if (amount == null || amount <= 0) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "金额不正确！", "", null);
+        }
+
         Float accountMoney = tableMember.getAccountMoney();
         TableMemberAccountDetail memberAccountDetail = new TableMemberAccountDetail();
         memberAccountDetail.setBeforeValue(accountMoney);
@@ -160,6 +164,18 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
         if (StringUtils.isNotEmpty(bo.getRemark())) {
             criteria.andRemarkEqualTo(bo.getRemark());
         }
+
+        if (null != map) {
+            if (null != map.get("start")) {
+                criteria.andModifyTimeGreaterThanOrEqualTo((Date)map.get("start"));
+            }
+            if (null != map.get("end")) {
+                criteria.andModifyTimeLessThanOrEqualTo((Date)map.get("end"));
+            }
+        }
+
+
+        example.setOrderByClause("modify_time desc");
 
         PageInfo<TableMemberAccountDetail> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableMemberAccountDetailMapper.selectByExample(example));

@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.model.TableMember;
 import com.spring.fee.service.ITableMemberBusiSV;
+import com.spring.free.config.ImageUtils;
 import com.spring.free.domain.QueryVO;
 import com.spring.free.domain.UserInfo;
 import com.spring.free.util.PageResult;
@@ -19,6 +20,7 @@ import com.spring.free.util.exception.ServiceException;
 import com.spring.free.util.md5.Md5Util;
 import com.spring.free.utils.principal.BaseGetPrincipal;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -105,10 +108,47 @@ public class FrontMemberController {
      **/
     @RequiresPermissions("system:member:view")
     @RequestMapping(value = "save")
-    public ModelAndView edit(ModelAndView mav, HttpServletRequest request, TableMember member) {
+    public ModelAndView edit(ModelAndView mav, HttpServletRequest request, TableMember member, MultipartFile fcartImg1
+            , MultipartFile fcartImg2, MultipartFile fcartImg3, MultipartFile fbankImg1, MultipartFile fbankImg2) {
         Map map = Maps.newHashMap();
         map.put(Global.URL, Global.ADMIN_PATH +"/front/member/edit");
-        this.iTableMemberBusiSV.update(member);
+
+        try {
+            if (fcartImg1 != null && StringUtils.isNotEmpty(fcartImg1.getOriginalFilename())) {
+                //身份证正面
+                String imgPath = ImageUtils.upload(fcartImg1);
+                member.setCartImg1(imgPath);
+            }
+
+            if (fcartImg2 != null && StringUtils.isNotEmpty(fcartImg2.getOriginalFilename())) {
+                //身份证反面
+                String imgPath = ImageUtils.upload(fcartImg2);
+                member.setCartImg2(imgPath);
+            }
+
+            if (fcartImg3 != null && StringUtils.isNotEmpty(fcartImg3.getOriginalFilename())) {
+                //身份证手持
+                String imgPath = ImageUtils.upload(fcartImg3);
+                member.setCartImg3(imgPath);
+            }
+
+            if (fbankImg1 != null && StringUtils.isNotEmpty(fbankImg1.getOriginalFilename())) {
+                //银行卡正面
+                String imgPath = ImageUtils.upload(fbankImg1);
+                member.setBankImg1(imgPath);
+            }
+
+            if (fbankImg2 != null && StringUtils.isNotEmpty(fbankImg2.getOriginalFilename())) {
+                //银行卡反面
+                String imgPath = ImageUtils.upload(fbankImg2);
+                member.setBankImg2(imgPath);
+            }
+
+
+            this.iTableMemberBusiSV.update(member);
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
 
         PageResult.setPrompt(map,"操作成功", "success");
         return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/front/member/edit"), map);

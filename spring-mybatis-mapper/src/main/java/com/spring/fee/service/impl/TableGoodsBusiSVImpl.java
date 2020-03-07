@@ -113,7 +113,6 @@ public class TableGoodsBusiSVImpl implements ITableGoodsBusiSV {
             criteria.andGoodsNameEqualTo(bo.getGoodsName());
         }
 
-
         PageInfo<TableGoods> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableGoodsMapper.selectByExample(example));
         log.info("获取商品结果：{}", JSON.toJSON(pageInfo));

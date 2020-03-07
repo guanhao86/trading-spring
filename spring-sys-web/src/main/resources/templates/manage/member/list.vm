@@ -10,16 +10,16 @@
             #@panelBody()
                 #@form("search" false "post" "manage/member/list")
                     #@divColSmNum(3)
-                        #formInput({"name": "昵称", "length": "4,8", "asterisk": false} {"name": "name", "id": "name",
-                            "value": "$!{member.name}"})
+                        #formInput({"name": "姓名", "length": "4,8", "asterisk": false} {"name": "reallyName", "id": "reallyName",
+                            "value": "$!{queryVO.reallyName}"})
                     #end
                     #@divColSmNum(3)
                         #formInput({"name": "手机号", "length": "4,8", "asterisk": false} {"name": "phone", "id": "phone",
-                            "value": "$!{member.phone}"})
+                            "value": "$!{queryVO.phone}"})
                     #end
                     #@divColSmNum(3)
                         #formInput({"name": "会员编号", "length": "4,8", "asterisk": false} {"name": "memberId", "id": "memberId",
-                            "value": "$!{member.memberId}"})
+                            "value": "$!{queryVO.memberId}"})
                     #end
                 #end
             #end
@@ -27,7 +27,7 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "电话", "姓名","注册时间","推荐人ID","安置人编号","会员级别"],"", false)
+                    #tableTHead(["会员ID", "电话", "姓名","注册时间","推荐人ID","安置人编号","会员级别"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.memberId}")

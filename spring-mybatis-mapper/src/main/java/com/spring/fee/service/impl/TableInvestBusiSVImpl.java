@@ -148,6 +148,17 @@ public class TableInvestBusiSVImpl implements ITableInvestBusiSV {
             criteria.andApprovalTimeEqualTo(bo.getApprovalTime());
         }
 
+        if (null != map) {
+            if (null != map.get("start")) {
+                criteria.andInvestTimeGreaterThanOrEqualTo((Date)map.get("start"));
+            }
+            if (null != map.get("end")) {
+                criteria.andInvestTimeLessThanOrEqualTo((Date)map.get("end"));
+            }
+        }
+
+        example.setOrderByClause("approval_time desc");
+
         PageInfo<TableInvest> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableInvestMapper.selectByExample(example));
         log.info("获取充值申请&审核管理表结果：{}", JSON.toJSON(pageInfo));

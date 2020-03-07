@@ -1,28 +1,24 @@
 #@html()
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"账户变更管理 搜索", "perm": "", "isBack": false, "href": ""})
+            #@panelHeader({"title":"账户变更记录 搜索", "perm": "", "isBack": false, "href": ""})
                 #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
                 #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
             #end
             #@panelBody()
                 #@form("search" false "post" "manage/account/list")
-                    #@divColSmNum(3)
-                        #formInput({"name": "会员ID", "length": "4,8", "asterisk": false} {"name": "memberId", "id": "memberId",
-                            "value": "$!{account.memberId}"})
-                    #end
+
                 #end
             #end
         #end
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "会员ID", "操作类型", "变更前", "变更更后", "变更时间", "变动原因"],"", false)
+                    #tableTHead(["id", "会员ID", "变更前(元)", "变更更后(元)", "变更时间", "变动原因"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.id}")
                         #tableTd("$!{l.memberId}")
-                        #tableTd("$!{l.accountType}", {"type": "dict", "format": "accountChangeType"})
                         #tableTd("$!{l.beforeValue}")
                         #tableTd("$!{l.afterValue}")
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.modifyTime}))

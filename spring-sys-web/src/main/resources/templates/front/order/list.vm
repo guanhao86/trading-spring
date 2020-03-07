@@ -8,16 +8,26 @@
             #@panelBody()
                 #@form("search" false "post" "front/order/list")
                     #@divColSmNum(3)
-                        #formInput({"name": "订单ID", "length": "4,8", "asterisk": false} {"name": "id", "id": "id",
-                            "value": "$!{order.id}"})
+                        #formInput({"name": "订单ID", "length": "4,8", "asterisk": false} {"name": "orderId", "id": "orderId",
+                            "value": "$!{queryVO.orderId}"})
                     #end
                     #@divColSmNum(3)
                     <div class="form-group">
                         <label class="col-sm-4 control-label">订单类型：</label>
-                        <div class="col-sm-5">
-                            #selectBS($!dict.getDictList("goodsClass"), ["goodsClass", "$!{order.goodsClass}", "value", "label"], false, [true, ""])
+                        <div class="col-sm-5" style="width: 200px;">
+                            #selectBS($!dict.getDictList("goodsClass"), ["goodsClass", "$!{queryVO.goodsClass}", "value", "label"], false, [true, ""])
                         </div>
                     </div>
+                    #end
+                    #@divColSmNum(3)
+                        #formDate({"name": "开始日期", "length": "4,8", "asterisk": false, "cl": "start-time"} {"name":
+                            "start", "id": "start","dateVal": "true", "value":
+                            "$!{queryVO.start}"})
+                    #end
+                    #@divColSmNum(3)
+                        #formDate({"name": "结束日期", "length": "4,8", "asterisk": false, "cl": "end-time"} {"name":
+                            "end", "id": "end","dateVal": "true", "value":
+                            "$!{queryVO.end}"})
                     #end
                 #end
             #end
@@ -25,7 +35,7 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["订单号", "订单类型", "订单生成时间", "订单金额", "订单状态"],"", false)
+                    #tableTHead(["订单号", "订单类型", "订单生成时间", "订单金额(元)", "订单状态"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.orderId}")
@@ -63,7 +73,7 @@
         })
 
         $(function () {
-            var startTime = $('.strat-time').datepicker().on('changeDate', function(ev) {
+            var startTime = $('.start-time').datepicker().on('changeDate', function(ev) {
                 startTime.hide();
             }).data('datepicker');
             var endTime = $('.end-time').datepicker().on('changeDate', function(ev) {
@@ -71,8 +81,8 @@
             }).data('datepicker');
 
             $('button[empty="true"]').on('click', function () {
-                $("input[name='startTime']").eq(0).val($('#s_t_h').val());
-                $("input[name='endTime']").eq(0).val($('#e_t_h').val());
+                $("input[name='start']").eq(0).val($('#s_t_h').val());
+                $("input[name='end']").eq(0).val($('#e_t_h').val());
             })
         })
 

@@ -5,6 +5,7 @@ import com.spring.fee.model.TWheatMember;
 import com.spring.fee.model.TWheatMemberTree;
 import com.spring.fee.model.TableMember;
 import com.spring.fee.model.TableMemberTree;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.List;
 import java.util.Map;
@@ -76,4 +77,11 @@ public interface ITableMemberBusiSV {
      * @return
      */
     public TableMember regist(TableMember bo, int registerFrom);
+
+    /**
+     * 修改密码（密码为空则为密码重置）
+     * @param bo
+     * @return
+     */
+    public TableMember changePwd(TableMember bo);
 }

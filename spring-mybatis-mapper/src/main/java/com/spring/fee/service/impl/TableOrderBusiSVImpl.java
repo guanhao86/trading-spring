@@ -184,6 +184,17 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
             criteria.andExpressNumberEqualTo(bo.getExpressNumber());
         }
 
+        if (null != map) {
+            if (null != map.get("start")) {
+                criteria.andCreateTimeGreaterThanOrEqualTo((Date)map.get("start"));
+            }
+            if (null != map.get("end")) {
+                criteria.andCreateTimeLessThanOrEqualTo((Date)map.get("end"));
+            }
+        }
+
+        example.setOrderByClause("create_time desc");
+
         PageInfo<TableOrder> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableOrderMapper.selectByExample(example));
         log.info("获取订单结果：{}", JSON.toJSON(pageInfo));

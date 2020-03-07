@@ -9,7 +9,7 @@
                 #@form("search" false "post" "front/broadcast/list")
                     #@divColSmNum(3)
                         #formInput({"name": "标题", "length": "4,8", "asterisk": false} {"name": "title", "id": "title",
-                            "value": "$!{member.title}"})
+                            "value": "$!{queryVO.title}"})
                     #end
                 #end
             #end

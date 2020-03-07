@@ -139,6 +139,8 @@ public class TableMemberRankChangeDetailBusiSVImpl implements ITableMemberRankCh
             criteria.andRemarkEqualTo(bo.getRemark());
         }
 
+        example.setOrderByClause("modify_time desc");
+
         PageInfo<TableMemberRankChangeDetail> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableMemberRankChangeDetailMapper.selectByExample(example));
         log.info("获取会员头衔变更明细表结果：{}", JSON.toJSON(pageInfo));

@@ -5,13 +5,22 @@
 
             #end
             #@panelBody()
-
+                #@divColSmNum(3)
+                    #formDate({"name": "开始日期", "length": "4,8", "asterisk": false, "cl": "start-time"} {"name":
+                        "start", "id": "start","dateVal": "true", "value":
+                        "$!{queryVO.start}"})
+                #end
+                #@divColSmNum(3)
+                    #formDate({"name": "结束日期", "length": "4,8", "asterisk": false, "cl": "end-time"} {"name":
+                        "end", "id": "end","dateVal": "true", "value":
+                        "$!{queryVO.end}"})
+                #end
             #end
         #end
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "会员ID", "充值金额", "申请时间", "申请状态"],"", false)
+                    #tableTHead(["id", "会员ID", "充值金额(元)", "申请时间", "申请状态"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.id}")
@@ -48,7 +57,7 @@
         })
 
         $(function () {
-            var startTime = $('.strat-time').datepicker().on('changeDate', function(ev) {
+            var startTime = $('.start-time').datepicker().on('changeDate', function(ev) {
                 startTime.hide();
             }).data('datepicker');
             var endTime = $('.end-time').datepicker().on('changeDate', function(ev) {
@@ -56,8 +65,8 @@
             }).data('datepicker');
 
             $('button[empty="true"]').on('click', function () {
-                $("input[name='startTime']").eq(0).val($('#s_t_h').val());
-                $("input[name='endTime']").eq(0).val($('#e_t_h').val());
+                $("input[name='start']").eq(0).val($('#s_t_h').val());
+                $("input[name='end']").eq(0).val($('#e_t_h').val());
             })
         })
 

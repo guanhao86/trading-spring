@@ -1,16 +1,12 @@
 #@html()
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"账户变更列表 搜索", "perm": "", "isBack": false, "href": ""})
+            #@panelHeader({"title":"奖金记录 搜索", "perm": "", "isBack": false, "href": ""})
                 #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
                 #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
             #end
             #@panelBody()
-                #@form("search" false "post" "manage/account/list")
-                    #@divColSmNum(3)
-                        #formInput({"name": "会员ID", "length": "4,8", "asterisk": false} {"name": "memberId", "id": "memberId",
-                            "value": "$!{queryVO.memberId}"})
-                    #end
+                #@form("search" false "post" "front/bonus/list")
                     #@divColSmNum(3)
                         #formDate({"name": "开始日期", "length": "4,8", "asterisk": false, "cl": "start-time"} {"name":
                             "start", "id": "start","dateVal": "true", "value":
@@ -27,15 +23,16 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "会员ID", "变更前(元)", "变更更后(元)", "变更时间", "变动原因"],"", false)
+                    #tableTHead(["id", "会员ID", "款项编号", "奖金类型", "奖金(元)", "时间", "状态", "备注"],"", false)
                     #@tableBody($page.list)
-
                         #tableTd("$!{l.id}")
                         #tableTd("$!{l.memberId}")
-                        #tableTd("$!{l.beforeValue}")
-                        #tableTd("$!{l.afterValue}")
-                        #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.modifyTime}))
+                        #tableTd("$!{l.bonusId}", {"type": "dict", "format": "bonusId"})
+                        #tableTd("$!{l.bonusType}", {"type": "dict", "format": "bonusType"})
+                        #tableTd("$!{l.bonus}")
+                        #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.recodeTime}))
                         #tableTd("$!{l.remark}")
+                        #tableTd("$!{l.closeState}", {"type": "dict", "format": "bonusCloseState"})
                     #end
                 #end
 
@@ -79,7 +76,7 @@
             submitHandler: function(form) {
                 if($('#start_time').val()!=""&&$('#end_time').val()!=""){
                     if (!(new Date($('#start_time').val()).compare(new Date($('#end_time').val()), DATE_CONS.DATE_COMPARE_SMALL_EQUAL))){
-                        $("#account_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
+                        $("#goods_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
                         shade.hideBg("dialog");
                         return;
                     }

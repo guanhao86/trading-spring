@@ -6,12 +6,16 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.model.TableMemberAccountDetail;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
+import com.spring.free.config.CommonUtils;
 import com.spring.free.domain.QueryVO;
 import com.spring.free.util.PageResult;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
+import com.spring.free.util.exception.ExceptionCodeEnum;
+import com.spring.free.util.exception.ServiceException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.redisson.misc.Hash;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +27,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -51,7 +56,7 @@ public class ManageAccountController {
         TableMemberAccountDetail memberAccountDetail = new TableMemberAccountDetail();
         BeanUtils.copyProperties(queryVO, memberAccountDetail);
 
-        PageInfo<TableMemberAccountDetail> pageInfo = this.iMemberAccountDetailBusiSV.queryListPage(memberAccountDetail, page, pageSize, null);
+        PageInfo<TableMemberAccountDetail> pageInfo = this.iMemberAccountDetailBusiSV.queryListPage(memberAccountDetail, page, pageSize, CommonUtils.getStartEnd(queryVO));
 
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);
@@ -106,8 +111,8 @@ public class ManageAccountController {
                     Float.parseFloat(queryVO.getAmount()),
                     "管理员充值");
         }catch (Exception e) {
-            PageResult.setPrompt(map,e.getMessage(), "false");
-            return modelAndView;
+            map.put(Global.URL, Global.ADMIN_PATH +"/manage/account/rechargeIndex");
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
         }
 
         PageResult.setPrompt(map,"操作成功", "success");

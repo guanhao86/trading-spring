@@ -7,8 +7,8 @@
             #end
             #@panelBody()
                 #@form("form_insert" true "post" "manage/systemConfig/save")
-                    #formInput({"name": "平台管理费"} {"name": "sysAdminCost", "value":"$!{systemConfig.sysAdminCost}","id": "sysAdminCost","required": "required"})
-                    #formInput({"name": "提现手续费"} {"name": "sysCashOutCost", "value":"$!{systemConfig.sysCashOutCost}","id": "sysCashOutCost","required": "required"})
+                    #formInput({"name": "平台管理费(元)"} {"name": "sysAdminCost", "value":"$!{systemConfig.sysAdminCost}","id": "sysAdminCost","required": "required"})
+                    #formInput({"name": "提现手续费(元)"} {"name": "sysCashOutCost", "value":"$!{systemConfig.sysCashOutCost}","id": "sysCashOutCost","required": "required"})
                     #formInput({"name": "平台收款账户"} {"name": "sysBankNumber", "value":"$!{systemConfig.sysBankNumber}","id": "sysBankNumber","required": "required"})
                     #formInput({"name": "银行名"} {"name": "sysBankName", "value":"$!{systemConfig.sysBankName}","id": "sysBankName","required": "required"})
                     #formInput({"name": "银行地址"} {"name": "sysBankOpenAre", "value":"$!{systemConfig.sysBankOpenAre}","id": "sysBankOpenAre","required": "required"})

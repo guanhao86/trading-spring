@@ -22,20 +22,20 @@
                             <img src=$!{goods.thunmbanilImgSrc} style= height:50px />
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label class="col-sm-2 control-label col-lg-2" for="content">商品详情图<font color="red">*</font>：</label>
-                        <div class="col-lg-3">
+                        <div class="col-lg-3" style="width: 60%">
                             <img src=$!{goods.detailImgSrc} style= width:100% />
                         </div>
                     </div>
-                    #formInput({"name": "价格"} {"name": "goodsprice", "value":"$!{goods.price}","id": "goodsprice","required": "required","readonly":"readonly"})
+                    #formInput({"name": "价格(元)"} {"name": "goodsprice", "value":"$!{goods.price}","id": "goodsprice","required": "required","readonly":"readonly"})
                     #formInput({"name": "购买商品后获得的级别"} {"name": "incomeVipLevel", "value":"$!{goods.incomeVipLevel}","id": "incomeVipLevel","required": "required","readonly":"readonly"})
                     #formInput({"name": "购买商品后获得的三方商城积分"} {"name": "incomeDjPoint", "value":"$!{goods.incomeDjPoint}","id": "incomeDjPoint","required": "required","readonly":"readonly"})
                     #formInput({"name": "购买商品后获得的交易系统积分"} {"name": "incomeJysPoint", "value":"$!{goods.incomeJysPoint}","id": "incomeJysPoint","required": "required","readonly":"readonly"})
-                    #formInput({"name": "可分配利润"} {"name": "pePrice", "value":"$!{goods.pePrice}","id": "pePrice","required": "required","readonly":"readonly"})
+                    #formInput({"name": "可分配利润(元)"} {"name": "pePrice", "value":"$!{goods.pePrice}","id": "pePrice","required": "required","readonly":"readonly"})
                     <hr style="height:10px;border:none;border-top:10px groove skyblue;" />
                     #formInput({"name": "数量"} {"name": "amount", "value":"1","id": "amount","required": "required"})
-                    #formInput({"name": "金额"} {"name": "price", "value":"$!{goods.price}","id": "price","required": "required","readonly":"readonly"})
+                    #formInput({"name": "金额(元)"} {"name": "price", "value":"$!{goods.price}","id": "price","required": "required","readonly":"readonly"})
         #end
     #end
         #end

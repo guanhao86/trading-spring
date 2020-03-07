@@ -132,11 +132,14 @@ public class ManageInvestController {
             tableInvest.setCertificateImgSrc(imgPath);
         }
 
-
-        if (null != tableInvest.getId())
-            this.iTableInvestBusiSV.update(tableInvest);
-        else
-            this.iTableInvestBusiSV.insert(tableInvest);
+        try {
+            if (null != tableInvest.getId())
+                this.iTableInvestBusiSV.update(tableInvest);
+            else
+                this.iTableInvestBusiSV.insert(tableInvest);
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
 
         PageResult.setPrompt(map,"操作成功", "success");
         return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/invest/list"), map);

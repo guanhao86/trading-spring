@@ -10,12 +10,12 @@
                     #@divColSmNum(3)
                         #formDate({"name": "开始日期", "length": "4,8", "asterisk": false, "cl": "start-time"} {"name":
                             "start", "id": "start","dateVal": "true", "value":
-                            "$!{param.start}"})
+                            "$!{queryVO.start}"})
                     #end
                     #@divColSmNum(3)
                         #formDate({"name": "结束日期", "length": "4,8", "asterisk": false, "cl": "end-time"} {"name":
                             "end", "id": "end","dateVal": "true", "value":
-                            "$!{param.end}"})
+                            "$!{queryVO.end}"})
                     #end
                 #end
             #end
@@ -23,7 +23,7 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "结算人", "结算时间", "直推奖金", "组织奖金", "伯乐奖金", "重消奖励", "奖衔奖励"],"", false)
+                    #tableTHead(["id", "结算人", "结算时间", "直推奖金(元)", "组织奖金(元)", "伯乐奖金(元)", "重消奖励(元)", "奖衔奖励(元)"],"", false)
                     #@tableBody($page.list)
                         #tableTd("$!{l.id}")
                         #tableTd("$!{l.adminId}")
