@@ -1,25 +1,6 @@
 #@html()
     #@wrapper()
-        #@panel()
-            #@panelHeader({"title":"奖金记录 搜索", "perm": "", "isBack": false, "href": ""})
-                #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
-                #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
-            #end
-            #@panelBody()
-                #@form("search" false "post" "front/bonus/list")
-                    #@divColSmNum(3)
-                        #formDate({"name": "开始日期", "length": "4,8", "asterisk": false, "cl": "start-time"} {"name":
-                            "start", "id": "start","dateVal": "true", "value":
-                            "$!{queryVO.start}"})
-                    #end
-                    #@divColSmNum(3)
-                        #formDate({"name": "结束日期", "length": "4,8", "asterisk": false, "cl": "end-time"} {"name":
-                            "end", "id": "end","dateVal": "true", "value":
-                            "$!{queryVO.end}"})
-                    #end
-                #end
-            #end
-        #end
+
         #@panel()
              #@panelBody()
                 #@table()

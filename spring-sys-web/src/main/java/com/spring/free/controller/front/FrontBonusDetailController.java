@@ -41,6 +41,33 @@ public class FrontBonusDetailController {
      * @return org.springframework.web.servlet.ModelAndView
      **/
     @RequiresPermissions("system:member:view")
+    @RequestMapping({"", "listIndex"})
+    public ModelAndView listIndex(ModelAndView mav, HttpSession session, QueryVO queryVO, HttpServletRequest request,
+                                  @RequestParam(value = "page",required = false, defaultValue = PageDefaultConstraints.PAGE) int page,
+                                  @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
+        // String postType = request.getParameter("postType");
+
+        TableBonusDetail memberAccountDetail = new TableBonusDetail();
+        BeanUtils.copyProperties(queryVO, memberAccountDetail);
+
+        //获取热门话题列表信息
+        mav.addObject("queryVO",queryVO);
+        //返回页面header标题
+        PageResult.setPageTitle(mav, PromptInfoConstraints.FUN_TITLE_DICT_LIST);
+        //返回操作提示信息
+        PageResult.getPrompt(mav, request, queryVO.getParamMsg());
+
+        mav.setViewName("front/bonus/listIndex");
+        return mav;
+    }
+
+    /*
+     * @Author gh
+     * @Description //TODO 配置列表
+     * @Param [mav, session, post, request, page, pageSize]
+     * @return org.springframework.web.servlet.ModelAndView
+     **/
+    @RequiresPermissions("system:member:view")
     @RequestMapping({"", "list"})
     public ModelAndView list(ModelAndView mav, HttpSession session, QueryVO queryVO, HttpServletRequest request,
                              @RequestParam(value = "page",required = false, defaultValue = PageDefaultConstraints.PAGE) int page,

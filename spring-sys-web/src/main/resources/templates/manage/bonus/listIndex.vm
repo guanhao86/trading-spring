@@ -1,0 +1,205 @@
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"奖金记录 搜索", "perm": "", "isBack": false, "href": ""})
+                #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
+                #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
+            #end
+            #@panelBody()
+                #@form("search" false "post" "manage/bonus/listIndex")
+                    #@divColSmNum(3)
+                        #formInput({"name": "会员ID", "length": "4,8", "asterisk": false} {"name": "memberId", "id": "memberId",
+                            "value": "$!{queryVO.memberId}"})
+                    #end
+                    #@divColSmNum(3)
+                        #formDate({"name": "开始日期", "length": "4,8", "asterisk": false, "cl": "start-time"} {"name":
+                            "start", "id": "start","dateVal": "true", "value":
+                            "$!{queryVO.start}"})
+                    #end
+                    #@divColSmNum(3)
+                        #formDate({"name": "结束日期", "length": "4,8", "asterisk": false, "cl": "end-time"} {"name":
+                            "end", "id": "end","dateVal": "true", "value":
+                            "$!{queryVO.end}"})
+                    #end
+                #end
+
+            <div class="wrap">
+                <label class="lable_tab">
+
+                    <input type="radio" name="tab" checked>
+                    <span onClick="show(1)">直推奖金</span>
+                    <div class="tab">
+                        <iframe class="iframe_tab"  src="" id="myFrame1"></iframe>
+                    </div>
+                </label>
+                <label class="lable_tab">
+
+                    <input type="radio" name="tab">
+                    <span onClick="show(2)">组织奖</span>
+                    <div>
+                        <iframe class="iframe_tab"  src="" id="myFrame2"></iframe>
+                    </div>
+                </label>
+                <label class="lable_tab">
+
+                    <input type="radio" name="tab">
+                    <span onClick="show(3)">伯乐奖</span>
+                    <div>
+                        <iframe class="iframe_tab"  src="" id="myFrame3"></iframe>
+                    </div>
+                </label>
+                <label class="lable_tab">
+
+                    <input type="radio" name="tab">
+                    <span onClick="show(4)">复消奖</span>
+                    <div>
+                        <iframe class="iframe_tab"  src="" id="myFrame4"></iframe>
+                    </div>
+                </label>
+                <label class="lable_tab">
+                    <input type="radio" name="tab">
+                    <span onClick="show(5)">奖衔奖</span>
+
+                    <div>
+                        <iframe class="iframe_tab"  src="" id="myFrame5"></iframe>
+                    </div>
+                </label>
+            </div>
+            #end
+        #end
+    #end
+
+<style type="text/css">
+    *{margin: 0;padding: 0;}
+    .wrap{
+        margin: 20px auto;
+        width: 100%;
+        height: 1033px;
+        border:1px solid brown;
+        position: relative;
+        margin-top: 70px;
+    }
+    .lable_tab{
+        width: 100px;
+        height: 30px;
+        float: left;
+        text-align: center;
+        line-height:30px;
+        border-right: 1px solid brown;
+        border-bottom: 1px solid brown;
+        border-left:1px solid brown;
+        border-radius: 10% 10% 0 0;
+    }
+
+    label span{
+        cursor: pointer;
+    }
+    label div{
+        width: 100%;
+        height: 568px;
+        position: absolute;
+        left: 0;
+        top: 31px;
+        background: #eeeeee;
+        display: none;
+    }
+    label input{
+        width: 0;
+    }
+    input:checked+span+div{
+        display: block;
+    }
+
+    input:checked+span{
+        font-size: 20px;
+    }
+
+    .panel-body {
+        height: 1150px;
+    }
+
+    .iframe_tab{
+        width:100%;
+        height:1000px
+    }
+</style>
+
+    #@script()
+    <script>
+        show(1)
+        function show(v){
+            bonusId = v;
+            console.log("Start",$("#start").val())
+            if ("" == window.document.getElementById("myFrame"+v).name) {
+                window.document.getElementById("myFrame" + v).src =
+                        "/admin/manage/bonus/list?memberId=" + $("#memberId").val() + "&bonusId=" + bonusId +
+                                "&start="+$("#start").val()+"&end="+$("[name='end']").val()
+                window.document.getElementById("myFrame"+v).name = "myFrame"+v;
+            }
+        }
+
+        $(function () {
+            $("#review_id").on('click', function () {
+                var arr = "";
+                $("[pId='all']:checked").each(function () {
+                    if (arr == ""){
+                        arr = $(this).val();
+                    } else {
+                        arr += "," + $(this).val();
+                    }
+                })
+                alert(arr)
+                window.location.href = "$!{ctx}/member/delete?id=" + arr;
+            })
+
+        })
+
+        $(function () {
+            var startTime = $('.start-time').datepicker().on('changeDate', function(ev) {
+                startTime.hide();
+            }).data('datepicker');
+            var endTime = $('.end-time').datepicker().on('changeDate', function(ev) {
+                endTime.hide();
+            }).data('datepicker');
+
+            $('button[empty="true"]').on('click', function () {
+                $("input[name='start']").eq(0).val($('#s_t_h').val());
+                $("input[name='end']").eq(0).val($('#e_t_h').val());
+            })
+        })
+
+        /*$.validator.setDefaults({
+            submitHandler: function(form) {
+                if($('#start_time').val()!=""&&$('#end_time').val()!=""){
+                    if (!(new Date($('#start_time').val()).compare(new Date($('#end_time').val()), DATE_CONS.DATE_COMPARE_SMALL_EQUAL))){
+                        $("#goods_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
+                        shade.hideBg("dialog");
+                        return;
+                    }
+                }
+                form.submit();
+            }
+        });*/
+        $(document).ready(function () {
+            debugger;
+            $("#search").validate({
+                errorPlacement: function(error, element) {
+                    debugger;
+                    if (element.is(":checkbox")||element.is(":radio")||element.is(".date-time")){
+                        debugger;
+                        error.appendTo(element.parent().parent().parent());
+                    } else {
+                        debugger;
+                        error.insertAfter(element.parent());
+                    }
+                },
+                onfocus: true
+            });
+        })
+    </script>
+        #jsCalculate()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

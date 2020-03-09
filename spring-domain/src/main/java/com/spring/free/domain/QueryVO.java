@@ -44,4 +44,6 @@ public class QueryVO extends BaseEntity<QueryVO> {
 
     private String orderId;
 
+    private Integer bonusId;
+
 }
