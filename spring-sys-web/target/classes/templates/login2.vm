@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title id="login_title">麦子国际 服务管理系统-登录</title>
+    <title id="login_title">东家百货 服务管理系统-登录</title>
     <meta name="author" content="DeathGhost" />
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
@@ -28,7 +28,7 @@
 <body class="login-page">
 <section class="login-contain">
     <header>
-        <h2 id="header_h2_title">麦子国际 管理系统</h2>
+        <h2 id="header_h2_title">东家百货 管理系统</h2>
         <p>management system</p>
     </header>
     <div class="form-content">

@@ -55,14 +55,15 @@ public class FrontMemberController {
      * @return org.springframework.web.servlet.ModelAndView
      **/
     @RequiresPermissions("system:member:view")
-    @RequestMapping({"", "list"})
+    @RequestMapping({"", "myChildlist"})
     public ModelAndView list(ModelAndView mav, HttpSession session, QueryVO queryVO, HttpServletRequest request,
                              @RequestParam(value = "page",required = false, defaultValue = PageDefaultConstraints.PAGE) int page,
                              @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
         // String postType = request.getParameter("postType");
 
         TableMember tableMember = new TableMember();
-        BeanUtils.copyProperties(queryVO, tableMember);
+        UserInfo user = BaseGetPrincipal.getUser();
+        tableMember.setReferenceId(user.getUsername());
 
         PageInfo<TableMember> pageInfo = this.iTableMemberBusiSV.queryListPage(tableMember, page, pageSize, null);
 
@@ -208,9 +209,11 @@ public class FrontMemberController {
 
         JSONObject object = new JSONObject();
         object.put("code","0");
+
         TableMember member;
         try {
             member = this.iTableMemberBusiSV.regist(m, 1);
+            object.put("msg",member.getMemberId());
         }catch (ServiceException e) {
             object.put("code", "1");
             object.put("msg", e.getMessage());
@@ -229,14 +232,83 @@ public class FrontMemberController {
      * @return
      */
     @RequiresPermissions("system:member:view")
-    @RequestMapping(value = "changePassword")
-    public ModelAndView changePassword(ModelAndView mav, HttpServletRequest request, TableMember member) {
+    @RequestMapping(value = "changePasswordIndex")
+    public ModelAndView changePasswordIndex(ModelAndView mav, HttpServletRequest request, TableMember member) {
         Map map = Maps.newHashMap();
-        map.put(Global.URL, Global.ADMIN_PATH +"/front/member/list");
-        TableMember m= this.iTableMemberBusiSV.select(member);
-        m.setPassword(Md5Util.md5Hex(member.getPassword()));
-        this.iTableMemberBusiSV.update(m);
+        map.put(Global.URL, Global.ADMIN_PATH +"/front/member/changePassword");
         PageResult.setPrompt(map,"操作成功", "success");
-        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/front/member/list"), map);
+
+        mav.setViewName("front/member/changePassword");
+
+        return mav;
+    }
+
+    /**
+     * 修改密码
+     * @param mav
+     * @param request
+     * @param queryVO
+     * @return
+     */
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "changePassword")
+    public ModelAndView changePassword(ModelAndView mav, HttpServletRequest request, QueryVO queryVO) {
+        Map map = Maps.newHashMap();
+        map.put(Global.URL, Global.ADMIN_PATH +"/front/member/changePasswordIndex");
+        UserInfo user = BaseGetPrincipal.getUser();
+        TableMember tableMember=new TableMember();
+        try {
+            tableMember.setPassword(queryVO.getPassword());
+            this.iTableMemberBusiSV.changePwd(tableMember, queryVO.getOldPassword());
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
+        PageResult.setPrompt(map,"操作成功", "success");
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/front/member/changePasswordIndex"), map);
+    }
+
+    /**
+     * 替别人注册
+     * @param view
+     * @param request
+     * @return
+     */
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "registIndex")
+    public ModelAndView registIndex(ModelAndView view, HttpServletRequest request) {
+        Map map = Maps.newHashMap();
+        PageResult.setPageTitle(view, "会员信息注册");
+
+        UserInfo user = BaseGetPrincipal.getUser();
+        TableMember tableMember=this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
+
+        view.addObject("member",tableMember);
+        view.setViewName("front/member/regist");
+        return view;
+    }
+    /**
+     * 替别人注册
+     * @param view
+     * @param request
+     * @return
+     */
+    @RequiresPermissions("system:member:edit")
+    @RequestMapping(value = "register")
+    public ModelAndView register(ModelAndView view, HttpServletRequest request, TableMember m) {
+        Map map = Maps.newHashMap();
+        map.put(Global.URL, Global.ADMIN_PATH +"/front/member/register");
+        TableMember member = null;
+        try {
+            member = this.iTableMemberBusiSV.regist(m,1);
+        }catch (ServiceException e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }catch (Exception e1) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e1.getMessage(), map.get(Global.URL).toString(), map);
+        }
+
+        String msg = "恭喜您注册成功，您注册的会员编号为："+member.getMemberId()+"，默认登录密码为注册手机号码后6位，请登录后自行修改密码";
+
+        PageResult.setPrompt(map,msg, "success");
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/front/member/register"), map);
     }
 }

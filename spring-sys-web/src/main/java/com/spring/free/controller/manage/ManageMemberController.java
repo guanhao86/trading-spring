@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.model.TableMember;
+import com.spring.fee.model.TableMemberDZ;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.free.config.ImageUtils;
 import com.spring.free.domain.QueryVO;
@@ -276,7 +277,48 @@ public class ManageMemberController {
         Map map = Maps.newHashMap();
         map.put(Global.URL, Global.ADMIN_PATH +"/manage/member/list");
         try {
-            this.iTableMemberBusiSV.changePwd(member);
+            this.iTableMemberBusiSV.changePwd(member, null);
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
+        PageResult.setPrompt(map,"操作成功", "success");
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/member/list"), map);
+    }
+
+    /*
+     * @Author bianyx
+     * @Description //TODO 审核
+     * @Date 11:07 2019/1/18
+     * @Param [mav, request, topItem, post, buttonType, ghPic1]
+     * @return org.springframework.web.servlet.ModelAndView
+     **/
+    @RequiresPermissions("system:member:edit")
+    @RequestMapping(value = "auditIndex")
+    public ModelAndView auditIndex(ModelAndView view, HttpServletRequest request, TableMember member) {
+        Map map = Maps.newHashMap();
+        PageResult.setPageTitle(view, "会员信息");
+        PageResult.getPrompt(view, request, "");
+
+        TableMember tableMember=this.iTableMemberBusiSV.select(member);
+        view.addObject("member",tableMember);
+        view.setViewName("manage/member/audit");
+        return view;
+    }
+
+    /**
+     * 审核
+     * @param mav
+     * @param request
+     * @param member
+     * @return
+     */
+    @RequiresPermissions("system:member:edit")
+    @RequestMapping(value = "audit")
+    public ModelAndView audit(ModelAndView mav, HttpServletRequest request, TableMemberDZ member) {
+        Map map = Maps.newHashMap();
+        map.put(Global.URL, Global.ADMIN_PATH +"/manage/member/list");
+        try {
+            this.iTableMemberBusiSV.audit(member.getId(), member.getAutFlag());
         }catch (Exception e) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
         }

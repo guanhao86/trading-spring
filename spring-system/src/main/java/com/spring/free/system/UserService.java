@@ -118,6 +118,47 @@ public class UserService {
      * @param username
      * @return
      */
+    public UserInfo getUserByUsernameOrPhoneLogin(String username) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername(username.trim());
+        try {
+            UserInfo user = userManager.getByLoginName(userInfo);
+            if (user == null) {
+                userInfo.setPhone(username.trim());
+                userInfo.setUsername(null);
+                user = userManager.getByLoginName(userInfo);
+                if (user == null) {
+                    throw new UserException(PromptInfoConstraints.SYS_USER_NOT_EXISTENT);
+                }
+            }
+            List<RoleInfo> roleList = roleManager.getUserRoleInfo(user.getId());
+            if (roleList.isEmpty()){
+                setSystemTypes(user);
+            }
+            if (StringUtils.isEmpty(user.getUserType())){
+                throw new UserException(PromptInfoConstraints.SYS_USER_ROLE_FAIL);
+            }
+            user.setRoleList(roleList);
+
+            if (Global.STR_NUMBER_ZERO.equals(user.getLoginFlag().trim())) {
+                throw new EnabledException(PromptInfoConstraints.SYS_USER_ENABLED);
+            }
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (PromptInfoConstraints.SYS_USER_ENABLED.equals(e.getMessage())) {
+                throw new EnabledException(PromptInfoConstraints.SYS_USER_ENABLED);
+            }
+            throw new UserException(e.getMessage());
+        }
+    }
+
+    /**
+     * 用户登录查询认证
+     *
+     * @param username
+     * @return
+     */
     public UserInfo getUserByUsernameLogin(String username) {
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername(username.trim());

@@ -1,0 +1,28 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:edit", "isBack": true, "href": "front/member/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "front/member/register")
+                    #*#formInput({"name": "姓名"} {"name": "name", "value":"$!{member.name}","id": "name","required": "required"})*#
+                    #formInput({"name": "电话"} {"name": "phone", "value":"","id": "phone","required": "required"})
+                    #formInput({"name": "推荐人ID"} {"name": "referenceId", "value":"$!{member.memberId}","id": "referenceId","required": "required"})
+                    #formInput({"name": "安置人ID"} {"name": "arrangeId", "value":"$!{member.memberId}","id": "arrangeId","required": "required"})
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">安置区：</label>
+                        <div class="col-sm-2">
+                            #selectBS($!dict.getDictList("leftOrRight"), ["leftOrRight", "$!{member.leftOrRight}", "value", "label"], false, [false, "$!{member.leftOrRight}"])
+                        </div>
+                    </div>
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

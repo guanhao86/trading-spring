@@ -20,6 +20,10 @@ public class QueryVO extends BaseEntity<QueryVO> {
 
     private String phone;
 
+    private String password;
+
+    private String oldPassword;
+
     //公告
     private String title;
 

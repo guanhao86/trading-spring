@@ -73,6 +73,19 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
+     * 获取上个月第一天
+     * @return
+     */
+    public static Date getFirstDayOfLastMonth(Date date) {
+        // 获取前月的第一天
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, -1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        return calendar.getTime();
+    }
+
+    /**
      * 获取月份的第一天
      * @return
      */
@@ -102,6 +115,18 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      */
     public static Date getLastDayOfMonth(){
         Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 0);
+        return calendar.getTime();
+    }
+
+    /**
+     * 获取月份的最后一天
+     * @return
+     */
+    public static Date getLastDayOfMonth(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         calendar.add(Calendar.MONTH, 1);
         calendar.set(Calendar.DAY_OF_MONTH, 0);
         return calendar.getTime();
@@ -273,6 +298,19 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         }
         return date;
     }
+
+    /**
+     * 昨天
+     * @param date
+     * @return
+     */
+    public static Date getYesterday(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -1);
+        return cal.getTime();
+    }
+
 
     public static Date getNextDate(Date date) {
         Calendar cal = Calendar.getInstance();

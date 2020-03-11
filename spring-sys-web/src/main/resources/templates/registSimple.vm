@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title id="login_title">麦子国际 服务管理系统-注册</title>
+    <title id="login_title">东家百货-注册</title>
     <meta name="author" content="DeathGhost" />
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
@@ -134,8 +134,10 @@
                 console.log(result);
                 if ("1" == result.code)
                     $("#error").html(result.msg);
-                else if ("0" == result.code)
+                else if ("0" == result.code){
+                    alert("注册成功，会员编号："+result.msg);
                     window.location.href="/login"
+                }
             },
             //请求失败，包含具体的错误信息
             error : function(e){

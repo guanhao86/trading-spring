@@ -9,6 +9,7 @@ import com.spring.fee.service.ITWheatMemberBusiSV;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.free.common.domain.AccessResponse;
 import com.spring.free.service.RestMemberService;
+import com.spring.free.util.DateUtils;
 import com.spring.free.utils.velocity.DictUtils;
 import com.spring.free.vo.MemberReqVO;
 import com.spring.free.vo.TreeVO;
@@ -291,6 +292,8 @@ public class RestMemberController {
     @RequestMapping(value = "/getMemberInfo/{memberId}")
     public @ResponseBody
     AccessResponse getMemberInfo(@PathVariable String memberId, String image,HttpServletRequest request, HttpServletResponse response){
+
+        System.out.println("接收请求" + DateUtils.getYYYYMMDDHHMISS(DateUtils.getSysDate()));
 
         //返回体
         JSONObject jsonObj=new JSONObject();

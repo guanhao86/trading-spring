@@ -25,6 +25,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +60,19 @@ public class ManageBalanceDetailController {
             tableBalanceDetail.setLastTimeEnd(DateUtils.parseDate(queryVO.getEnd()+" 23:59:59"));
 
         PageInfo<TableBalanceDetail> pageInfo = this.iTableBalanceDetailBusiSV.queryListPage(tableBalanceDetail, page, pageSize, null);
+
+        //累计
+        List<TableBalanceDetail> listAll = this.iTableBalanceDetailBusiSV.selectByGroup(null, null, null);
+        //上月
+        Date start = DateUtils.getFirstDayOfLastMonth(DateUtils.getSysDate());
+        Date end = DateUtils.getFirstDayOfMonth(DateUtils.getSysDate());
+        List<TableBalanceDetail> listLastMonth = this.iTableBalanceDetailBusiSV.selectByGroup(null, start, end);
+
+        //前日
+        start = DateUtils.getYesterday(DateUtils.getSysDate());
+        end = DateUtils.getNextDate(DateUtils.getSysDate());
+        List<TableBalanceDetail> listYesterday = this.iTableBalanceDetailBusiSV.selectByGroup(null, start, end);
+
 
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);

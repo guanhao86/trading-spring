@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.dao.mapper.TableBonusDetailMapper;
+import com.spring.fee.dao.mapper.TableBonusDetailMapperDZ;
 import com.spring.fee.model.TableBonusDetail;
 import com.spring.fee.model.TableBonusDetailExample;
 import com.spring.fee.service.ITableBonusDetailBusiSV;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +29,9 @@ public class TableBonusDetailBusiSVImpl implements ITableBonusDetailBusiSV {
 
     @Autowired
     TableBonusDetailMapper iTableBonusDetailMapper;
+
+    @Autowired
+    TableBonusDetailMapperDZ iTableBonusDetailMapperDZ;
 
     /**
      * 创建结算记录
@@ -61,6 +66,18 @@ public class TableBonusDetailBusiSVImpl implements ITableBonusDetailBusiSV {
     @Override
     public TableBonusDetail select(TableBonusDetail bo) {
         return this.iTableBonusDetailMapper.selectByPrimaryKey(bo.getId());
+    }
+
+    /**
+     * 根据BrondId统计奖金
+     *
+     * @param start
+     * @param end
+     * @return
+     */
+    @Override
+    public List<TableBonusDetail> selectByGroupBonusId(String memberId, Date start, Date end) {
+        return iTableBonusDetailMapperDZ.selectByGroupBonusId( memberId, start, end);
     }
 
     /**

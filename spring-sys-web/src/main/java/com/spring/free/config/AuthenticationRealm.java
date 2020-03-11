@@ -73,7 +73,7 @@ public class AuthenticationRealm extends AuthorizingRealm {
             }
         }
 
-        UserInfo user = userService.getUserByUsernameLogin(principal.getUsername());
+        UserInfo user = userService.getUserByUsernameOrPhoneLogin(principal.getUsername());
         if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             MenuInfo menu2 = new MenuInfo();
@@ -142,7 +142,7 @@ public class AuthenticationRealm extends AuthorizingRealm {
         token.setPassword(Md5Util.md5Hex(password).toCharArray());
 
         if (StringUtils.hasText(username)) {
-            user = this.userService.getUserByUsernameLogin(username);
+            user = this.userService.getUserByUsernameOrPhoneLogin(username);
         }
 
         if (user != null) {

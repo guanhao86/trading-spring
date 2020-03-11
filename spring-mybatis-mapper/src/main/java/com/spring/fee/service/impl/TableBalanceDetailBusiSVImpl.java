@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.dao.mapper.TableBalanceDetailMapper;
+import com.spring.fee.dao.mapper.TableBalanceDetailMapperDZ;
 import com.spring.fee.model.TableBalanceDetail;
 import com.spring.fee.model.TableBalanceDetailDZ;
 import com.spring.fee.model.TableBalanceDetailExample;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,6 +30,9 @@ public class TableBalanceDetailBusiSVImpl implements ITableBalanceDetailBusiSV {
 
     @Autowired
     TableBalanceDetailMapper iTableBalanceDetailMapper;
+
+    @Autowired
+    TableBalanceDetailMapperDZ iTableBalanceDetailMapperDZ;
 
     /**
      * 创建结算记录
@@ -62,6 +67,19 @@ public class TableBalanceDetailBusiSVImpl implements ITableBalanceDetailBusiSV {
     @Override
     public TableBalanceDetail select(TableBalanceDetail bo) {
         return this.iTableBalanceDetailMapper.selectByPrimaryKey(bo.getId());
+    }
+
+    /**
+     * 统计奖金发放总和
+     *
+     * @param memberId
+     * @param start
+     * @param end
+     * @return
+     */
+    @Override
+    public List<TableBalanceDetail> selectByGroup(String memberId, Date start, Date end) {
+        return iTableBalanceDetailMapperDZ.selectByGroup(memberId, start, end);
     }
 
     /**

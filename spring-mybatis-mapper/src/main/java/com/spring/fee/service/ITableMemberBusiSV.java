@@ -1,10 +1,8 @@
 package com.spring.fee.service;
 
 import com.github.pagehelper.PageInfo;
-import com.spring.fee.model.TWheatMember;
-import com.spring.fee.model.TWheatMemberTree;
-import com.spring.fee.model.TableMember;
-import com.spring.fee.model.TableMemberTree;
+import com.spring.fee.model.*;
+import jnr.ffi.annotations.In;
 import org.apache.poi.ss.formula.functions.T;
 
 import java.util.List;
@@ -83,5 +81,11 @@ public interface ITableMemberBusiSV {
      * @param bo
      * @return
      */
-    public TableMember changePwd(TableMember bo);
+    public TableMember changePwd(TableMember bo, String oldPassword);
+
+    /**
+     * 实名认证审核
+     * @return
+     */
+    TableMember audit(Integer id, Integer autFlag);
 }

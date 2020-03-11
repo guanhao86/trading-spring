@@ -135,7 +135,7 @@ public class AuthenticationFilter extends FormAuthenticationFilter {
             username = u.getUsername();
 
             insertUserLoginIP(username, request.getRemoteAddr());
-            UserInfo userInfo = userService.getUserByUsernameLogin(username);
+            UserInfo userInfo = userService.getUserByUsernameOrPhoneLogin(username);
             session.setAttribute(GlobalConstraints.USER_INFO, userInfo);
             WebUtils.getAndClearSavedRequest(request);
             session.setAttribute("systemType", userInfo.getUserType().split(",")[0]);

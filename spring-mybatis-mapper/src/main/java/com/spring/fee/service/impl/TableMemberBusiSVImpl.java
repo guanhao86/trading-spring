@@ -566,7 +566,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
      * @return
      */
     @Override
-    public TableMember changePwd(TableMember bo) {
+    public TableMember changePwd(TableMember bo, String oldPassword) {
 
         String pwd = bo.getPassword();
 
@@ -576,8 +576,13 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在！", "", null);
         }
 
-        if (StringUtils.isEmpty(bo.getPassword())) {
+        if (StringUtils.isEmpty(pwd)) {
             pwd = tableMemberOrig.getPhone().substring(tableMemberOrig.getPhone().length()-6);
+        } else {
+            //校验密码是否正确
+            if (!bo.getPassword().equals(Md5Util.md5Hex(oldPassword))) {
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "原密码不正确！", "", null);
+            }
         }
 
         pwd = Md5Util.md5Hex(pwd);
@@ -592,5 +597,18 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         this.userService.update(userInfo, null);
 
         return bo;
+    }
+
+    /**
+     * 实名认证审核
+     *
+     * @return
+     */
+    @Override
+    public TableMember audit(Integer id, Integer autFlag) {
+        TableMember tableMember = new TableMember();
+        tableMember.setId(id);
+        tableMember.setAutFlag(autFlag);
+        return this.update(tableMember) ;
     }
 }
