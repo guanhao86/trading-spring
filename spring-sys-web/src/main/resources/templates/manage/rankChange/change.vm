@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="/summernote/summernote.css">
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"会员头衔变更", "perm": "system:member:edit", "isBack": true, "href": "manage/member/list"})
+            #@panelHeader({"title":"会员奖衔变更", "perm": "system:member:edit", "isBack": true, "href": "manage/member/list"})
                 #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
             #end
             #@panelBody()
@@ -11,7 +11,7 @@
                     #formInput({"name": "会员ID"} {"name": "memberId", "value":"$!{member.memberId}","id": "memberId","required": "required","readonly":"readonly"})
 
                 <div class="form-group" >
-                        <label class="col-sm-2 control-label">会员头衔：</label>
+                        <label class="col-sm-2 control-label">会员奖衔：</label>
                         <div class="col-sm-2">
                             #selectBS($!dict.getDictList("mRank"), ["rank", "$!{member.rank}", "value", "label"], false, [false, "$!{member.rank}"])
                         </div>

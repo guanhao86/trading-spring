@@ -10,7 +10,7 @@ public enum EnumSystemType {
     /**
      * Wallet 服务管理系统服务系统
      */
-    TRADING_SYSTEM(1, "麦子国际 服务管理系统"),
+    TRADING_SYSTEM(1, "东家百货 服务管理系统"),
     /**
      * 配置系统后台管理
      */

@@ -64,8 +64,8 @@ public class ManageBalanceDetailController {
         //累计
         List<TableBalanceDetail> listAll = this.iTableBalanceDetailBusiSV.selectByGroup(null, null, null);
         //上月
-        Date start = DateUtils.getFirstDayOfLastMonth(DateUtils.getSysDate());
-        Date end = DateUtils.getFirstDayOfMonth(DateUtils.getSysDate());
+        Date start = DateUtils.getFirstDayOfMonth(DateUtils.getSysDate());
+        Date end = DateUtils.getFirstDayOfNextMonth(DateUtils.getSysDate());
         List<TableBalanceDetail> listLastMonth = this.iTableBalanceDetailBusiSV.selectByGroup(null, start, end);
 
         //前日
@@ -77,9 +77,9 @@ public class ManageBalanceDetailController {
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);
         mav.addObject("queryVO",queryVO);
-        mav.addObject("all", listAll.get(0));
-        mav.addObject("lastMonth", listLastMonth.get(0));
-        mav.addObject("yesterday", listYesterday.get(0));
+        mav.addObject("all", listAll);
+        mav.addObject("thisMonth", listLastMonth);
+        mav.addObject("yesterday", listYesterday);
         //返回页面header标题
         PageResult.setPageTitle(mav, PromptInfoConstraints.FUN_TITLE_DICT_LIST);
         //返回操作提示信息

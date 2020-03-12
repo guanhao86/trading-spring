@@ -1,7 +1,7 @@
 #@html()
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"会员头衔变更管理 搜索", "perm": "", "isBack": false, "href": ""})
+            #@panelHeader({"title":"会员奖衔变更管理 搜索", "perm": "", "isBack": false, "href": ""})
                 #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
                 #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
             #end

@@ -82,7 +82,7 @@ public class MemberRankChangeController {
     @RequestMapping(value = "changeIndex")
     public ModelAndView changeIndex(ModelAndView view, HttpServletRequest request, String buttonType, QueryVO queryVO) {
         Map map = Maps.newHashMap();
-        PageResult.setPageTitle(view, "会员头衔变更");
+        PageResult.setPageTitle(view, "会员奖衔变更");
         PageResult.getPrompt(view, request, "");
         TableMember tableMember = iTableMemberBusiSV.selectByMemberId(queryVO.getMemberId());
         if (tableMember == null) {

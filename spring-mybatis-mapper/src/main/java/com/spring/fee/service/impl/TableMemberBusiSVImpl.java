@@ -571,7 +571,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
 
         String pwd = bo.getPassword();
 
-        TableMember tableMemberOrig = this.select(bo);
+        TableMember tableMemberOrig = this.selectByMemberId(bo.getMemberId());
 
         if (tableMemberOrig == null) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在！", "", null);
@@ -581,7 +581,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             pwd = tableMemberOrig.getPhone().substring(tableMemberOrig.getPhone().length()-6);
         } else {
             //校验密码是否正确
-            if (!bo.getPassword().equals(Md5Util.md5Hex(oldPassword))) {
+            if (!tableMemberOrig.getPassword().equals(Md5Util.md5Hex(oldPassword))) {
                 throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "原密码不正确！", "", null);
             }
         }
@@ -589,7 +589,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         pwd = Md5Util.md5Hex(pwd);
 
         bo.setPassword(pwd);
-
+        bo.setId(tableMemberOrig.getId());
         this.update(bo);
 
         UserInfo userInfo = this.userService.getUserByUsernameLogin(tableMemberOrig.getMemberId());

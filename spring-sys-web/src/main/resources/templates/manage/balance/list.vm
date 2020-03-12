@@ -1,6 +1,53 @@
 #@html()
     #@wrapper()
         #@panel()
+            #@panelHeader({"title":"累计发放奖金", "perm": "", "isBack": false, "href": ""})
+            #end
+            #@panelBody()
+
+                #@table()
+                    #tableTHead(["直推", "组织", "伯乐", "重消", "奖衔"],"", false)
+                    #@tableBody($all)
+                        #tableTd("$!{l.bonusReference}")
+                        #tableTd("$!{l.bonusGroup}")
+                        #tableTd("$!{l.bonusBole}")
+                        #tableTd("$!{l.bonusRepurchase}")
+                        #tableTd("$!{l.bonusRank}")
+                    #end
+                #end
+            #end
+        #end
+        #@panel()
+            #@panelHeader({"title":"当月发放奖金", "perm": "", "isBack": false, "href": ""})
+            #end
+            #@panelBody()
+                #@table()
+                    #tableTHead(["直推", "组织", "伯乐", "重消", "奖衔"],"", false)
+                    #@tableBody($thisMonth)
+                        #tableTd("$!{l.bonusReference}")
+                        #tableTd("$!{l.bonusGroup}")
+                        #tableTd("$!{l.bonusBole}")
+                        #tableTd("$!{l.bonusRepurchase}")
+                        #tableTd("$!{l.bonusRank}")
+                    #end
+                #end
+            #end
+        #end
+        #@panel()
+            #@panelHeader({"title":"作日发放奖金", "perm": "", "isBack": false, "href": ""})
+            #end
+            #@panelBody()
+                #@table()
+                    #tableTHead(["直推", "组织", "伯乐"],"", false)
+                    #@tableBody($yesterday)
+                        #tableTd("$!{l.bonusReference}")
+                        #tableTd("$!{l.bonusGroup}")
+                        #tableTd("$!{l.bonusBole}")
+                    #end
+                #end
+            #end
+        #end
+        #@panel()
             #@panelHeader({"title":"结算记录 搜索", "perm": "", "isBack": false, "href": ""})
                 #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
                 #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
@@ -17,63 +64,6 @@
                             "end", "id": "end","dateVal": "true", "value":
                             "$!{queryVO.end}"})
                     #end
-                #end
-            #end
-        #end
-        #@panel()
-            #@panelHeader({"title":"累计发放奖金", "perm": "", "isBack": false, "href": ""})
-            #end
-            #@panelBody()
-                #@divColSmNum(3)
-                    #formInput({"name": "直推"} {"name": "memberId", "value":"$!{all.memberId}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "组织"} {"name": "memberId", "value":"$!{all.memberId}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "伯乐"} {"name": "memberId", "value":"$!{all.memberId}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "重消"} {"name": "memberId", "value":"$!{all.memberId}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "奖衔"} {"name": "memberId", "value":"$!{all.memberId}","id": "memberId","readonly":"readonly"})
-                #end
-            #end
-        #end
-        #@panel()
-            #@panelHeader({"title":"当月发放奖金", "perm": "", "isBack": false, "href": ""})
-            #end
-            #@panelBody()
-                #@divColSmNum(3)
-                    #formInput({"name": "直推"} {"name": "memberId", "value":"$!{lastMonth.memberId}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "组织"} {"name": "memberId", "value":"$!{lastMonth.memberId}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "伯乐"} {"name": "memberId", "value":"$!{lastMonth.memberId}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "复消"} {"name": "memberId", "value":"$!{lastMonth.memberId}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "奖衔"} {"name": "memberId", "value":"$!{lastMonth.memberId}","id": "memberId","readonly":"readonly"})
-                #end
-            #end
-        #end
-        #@panel()
-            #@panelHeader({"title":"作日发放奖金", "perm": "", "isBack": false, "href": ""})
-            #end
-            #@panelBody()
-                #@divColSmNum(3)
-                    #formInput({"name": "直推"} {"name": "memberId", "value":"$!{yesterday.memberId}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "组织"} {"name": "memberId", "value":"$!{yesterday.memberId}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "伯乐"} {"name": "memberId", "value":"$!{yesterday.memberId}","id": "memberId","readonly":"readonly"})
                 #end
             #end
         #end

@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:edit", "isBack": true, "href": "front/member/list"})
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:view", "isBack": true, "href": "front/member/list"})
                 #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
             #end
             #@panelBody()

@@ -43,7 +43,7 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["会员ID", "电话", "姓名","注册时间","推荐人ID","安置人编号","会员级别","奖衔"],"", false)
+                    #tableTHead(["会员ID", "电话", "姓名","注册时间","推荐人ID","安置人编号","会员级别","会员奖衔", "实名制"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.memberId}")
@@ -60,8 +60,8 @@
                             #@a("修改" {"href": "$!{ctx}/manage/member/edit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
                             #@a("调整级别" {"href": "$!{ctx}/manage/levelChange/changeIndex?memberId=$!{l.memberId}", "class": "fa fa-pencil-square-o"})#end
                             #@a("调整奖衔" {"href": "$!{ctx}/manage/rankChange/changeIndex?memberId=$!{l.memberId}", "class": "fa fa-pencil-square-o"})#end
-                            #if(${l.isAut}==1)
-                              #@a("审核" {"href": "$!{ctx}/member/toAudit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #if(${l.autFlag}==0)
+                              #@a("审核" {"href": "$!{ctx}/manage/member/auditIndex?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
                             #end
                             <a href="$!{ctx}/manage/member/resetPassword?id=$!{l.id}" class="fa fa-lock"
                                confirm="true" message="确定要重置密码吗" title="密码重置"> 密码重置</a>

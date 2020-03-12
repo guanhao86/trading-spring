@@ -28,6 +28,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,6 +65,8 @@ public class FrontAccountController {
 
         //获取会员信息
         TableMember tabelMember = iTableMemberBusiSV.selectByMemberId(user.getUsername());
+        List<TableMember> list = new ArrayList();
+        list.add(tabelMember);
 
         memberAccountDetail.setMemberId(user.getUsername());
 
@@ -70,7 +74,7 @@ public class FrontAccountController {
 
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);
-        mav.addObject("member", tabelMember);
+        mav.addObject("member", list);
         mav.addObject("queryVO",queryVO);
         //返回页面header标题
         PageResult.setPageTitle(mav, PromptInfoConstraints.FUN_TITLE_DICT_LIST);

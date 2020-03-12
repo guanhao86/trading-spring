@@ -63,6 +63,9 @@ public class ManageMemberController {
 
         TableMember tableMember = new TableMember();
         BeanUtils.copyProperties(queryVO, tableMember);
+        if (StringUtils.isNotEmpty(queryVO.getLevel())){
+            tableMember.setLevel(Integer.parseInt(queryVO.getLevel()));
+        }
 
         PageInfo<TableMember> pageInfo = this.iTableMemberBusiSV.queryListPage(tableMember, page, pageSize, null);
 

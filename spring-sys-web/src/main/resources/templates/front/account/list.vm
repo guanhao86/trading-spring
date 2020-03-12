@@ -3,21 +3,19 @@
         #@panel()
             #@panelHeader({"title":"当前账号余额", "perm": "", "isBack": false, "href": ""})
             #end
+
             #@panelBody()
-                #@divColSmNum(3)
-                    #formInput({"name": "现金积分"} {"name": "memberId", "value":"$!{member.accountMoney}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "奖金积分（可用）"} {"name": "memberId", "value":"$!{member.accountPointAvailable}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "奖金积分（冻结）"} {"name": "memberId", "value":"$!{member.accountPointFreeze}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "购物积分"} {"name": "memberId", "value":"$!{member.accountDjPoint}","id": "memberId","readonly":"readonly"})
-                #end
-                #@divColSmNum(3)
-                    #formInput({"name": "保值积分"} {"name": "memberId", "value":"$!{member.accountJsyPoint}","id": "memberId","readonly":"readonly"})
+                #@table()
+                    #tableTHead(["现金积分", "奖金积分（可用）", "奖金积分（冻结）", "购物积分", "保值积分"],"", false)
+                    #@tableBody($member)
+
+                        #tableTd("$!{l.accountMoney}")
+                        #tableTd("$!{l.accountPointAvailable}")
+                        #tableTd("$!{l.accountPointFreeze}")
+                        #tableTd("$!{l.accountDjPoint}")
+                        #tableTd("$!{l.accountJsyPoint}")
+
+                    #end
                 #end
             #end
         #end
@@ -27,12 +25,12 @@
                 #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
             #end
             #@panelBody()
-                #@form("search" false "post" "manage/account/list")
+                #@form("search" false "post" "front/account/list")
                     #@divColSmNum(3)
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="margin-top: 5px">货币类型：</label>
-                        <div class="col-sm-5" style="width: 200px;">
-                            #selectBS($!dict.getDictList("accountType"), ["level", "$!{queryVO.accountType}", "value", "label"], false, [true, ""])
+                        <label class="col-sm-4 control-label" style="margin-top: 5px">货币类型：</label>
+                        <div class="col-sm-5">
+                            #selectBS($!dict.getDictList("bonusType"), ["accountType", "$!{queryVO.accountType}", "value", "label"], false, [true, ""])
                         </div>
                     </div>
                     #end
