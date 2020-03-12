@@ -540,6 +540,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         UserInfo user = new UserInfo();
         user.setPassword(password);
         user.setUsername(member.getMemberId());
+        user.setPhone(member.getPhone());
         user.setName(StringUtils.isEmpty(member.getReallyName())?member.getMemberId():member.getReallyName());
         user.setLoginFlag("1");
         user.setDelFlag("0");
