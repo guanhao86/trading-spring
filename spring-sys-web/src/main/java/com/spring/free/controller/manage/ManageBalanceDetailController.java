@@ -77,6 +77,9 @@ public class ManageBalanceDetailController {
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);
         mav.addObject("queryVO",queryVO);
+        mav.addObject("all", listAll.get(0));
+        mav.addObject("lastMonth", listLastMonth.get(0));
+        mav.addObject("yesterday", listYesterday.get(0));
         //返回页面header标题
         PageResult.setPageTitle(mav, PromptInfoConstraints.FUN_TITLE_DICT_LIST);
         //返回操作提示信息

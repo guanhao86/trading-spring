@@ -1,13 +1,41 @@
 #@html()
     #@wrapper()
         #@panel()
+            #@panelHeader({"title":"当前账号余额", "perm": "", "isBack": false, "href": ""})
+            #end
+            #@panelBody()
+                #@divColSmNum(3)
+                    #formInput({"name": "现金积分"} {"name": "memberId", "value":"$!{member.accountMoney}","id": "memberId","readonly":"readonly"})
+                #end
+                #@divColSmNum(3)
+                    #formInput({"name": "奖金积分（可用）"} {"name": "memberId", "value":"$!{member.accountPointAvailable}","id": "memberId","readonly":"readonly"})
+                #end
+                #@divColSmNum(3)
+                    #formInput({"name": "奖金积分（冻结）"} {"name": "memberId", "value":"$!{member.accountPointFreeze}","id": "memberId","readonly":"readonly"})
+                #end
+                #@divColSmNum(3)
+                    #formInput({"name": "购物积分"} {"name": "memberId", "value":"$!{member.accountDjPoint}","id": "memberId","readonly":"readonly"})
+                #end
+                #@divColSmNum(3)
+                    #formInput({"name": "保值积分"} {"name": "memberId", "value":"$!{member.accountJsyPoint}","id": "memberId","readonly":"readonly"})
+                #end
+            #end
+        #end
+        #@panel()
             #@panelHeader({"title":"账户变更记录 搜索", "perm": "", "isBack": false, "href": ""})
                 #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
                 #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
             #end
             #@panelBody()
                 #@form("search" false "post" "manage/account/list")
-
+                    #@divColSmNum(3)
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" style="margin-top: 5px">货币类型：</label>
+                        <div class="col-sm-5" style="width: 200px;">
+                            #selectBS($!dict.getDictList("accountType"), ["level", "$!{queryVO.accountType}", "value", "label"], false, [true, ""])
+                        </div>
+                    </div>
+                    #end
                 #end
             #end
         #end

@@ -64,6 +64,14 @@
                         <iframe class="iframe_tab"  src="" id="myFrame5"></iframe>
                     </div>
                 </label>
+                <label class="lable_tab">
+                    <input type="radio" name="tab">
+                    <span onClick="show(6)">平台管理费</span>
+
+                    <div>
+                        <iframe class="iframe_tab"  src="" id="myFrame6"></iframe>
+                    </div>
+                </label>
             </div>
             #end
         #end

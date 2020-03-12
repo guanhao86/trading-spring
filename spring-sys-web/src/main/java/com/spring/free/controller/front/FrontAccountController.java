@@ -4,8 +4,10 @@ package com.spring.free.controller.front;/**
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import com.spring.fee.model.TableMember;
 import com.spring.fee.model.TableMemberAccountDetail;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
+import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.free.config.CommonUtils;
 import com.spring.free.domain.QueryVO;
 import com.spring.free.domain.UserInfo;
@@ -38,6 +40,9 @@ public class FrontAccountController {
     @Autowired
     IMemberAccountDetailBusiSV iMemberAccountDetailBusiSV;
 
+    @Autowired
+    ITableMemberBusiSV iTableMemberBusiSV;
+
     /*
      * @Author gh
      * @Description //TODO 配置列表
@@ -55,12 +60,17 @@ public class FrontAccountController {
         BeanUtils.copyProperties(queryVO, memberAccountDetail);
 
         UserInfo user = BaseGetPrincipal.getUser();
+
+        //获取会员信息
+        TableMember tabelMember = iTableMemberBusiSV.selectByMemberId(user.getUsername());
+
         memberAccountDetail.setMemberId(user.getUsername());
 
         PageInfo<TableMemberAccountDetail> pageInfo = this.iMemberAccountDetailBusiSV.queryListPage(memberAccountDetail, page, pageSize, CommonUtils.getStartEnd(queryVO));
 
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);
+        mav.addObject("member", tabelMember);
         mav.addObject("queryVO",queryVO);
         //返回页面header标题
         PageResult.setPageTitle(mav, PromptInfoConstraints.FUN_TITLE_DICT_LIST);

@@ -21,13 +21,29 @@
                         #formInput({"name": "会员编号", "length": "4,8", "asterisk": false} {"name": "memberId", "id": "memberId",
                             "value": "$!{queryVO.memberId}"})
                     #end
+                    #@divColSmNum(3)
+                        #formInput({"name": "推荐人编号", "length": "4,8", "asterisk": false} {"name": "referenceId", "id": "referenceId",
+                            "value": "$!{queryVO.referenceId}"})
+                    #end
+                    #@divColSmNum(3)
+                        #formInput({"name": "安置人编号", "length": "4,8", "asterisk": false} {"name": "arrangeId", "id": "arrangeId",
+                            "value": "$!{queryVO.arrangeId}"})
+                    #end
+                    #@divColSmNum(3)
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" style="margin-top: 5px">会员级别：</label>
+                            <div class="col-sm-5" style="width: 200px;">
+                                #selectBS($!dict.getDictList("level"), ["level", "$!{queryVO.level}", "value", "label"], false, [true, ""])
+                            </div>
+                        </div>
+                    #end
                 #end
             #end
         #end
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["会员ID", "电话", "姓名","注册时间","推荐人ID","安置人编号","会员级别"],"", false)
+                    #tableTHead(["会员ID", "电话", "姓名","注册时间","推荐人ID","安置人编号","会员级别","奖衔"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.memberId}")
@@ -37,12 +53,13 @@
                         #tableTd("$!{l.referenceId}")
                         #tableTd("$!{l.arrangeId}")
                         #tableTd("$!{l.level}", {"type": "dict", "format": "level"})
+                        #tableTd("$!{l.mRank}", {"type": "dict", "format": "mRank"})
 
                         #@tableTd()
                             #@a("查看" {"href": "$!{ctx}/manage/member/view?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
                             #@a("修改" {"href": "$!{ctx}/manage/member/edit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
                             #@a("调整级别" {"href": "$!{ctx}/manage/levelChange/changeIndex?memberId=$!{l.memberId}", "class": "fa fa-pencil-square-o"})#end
-                            #@a("调整头衔" {"href": "$!{ctx}/manage/rankChange/changeIndex?memberId=$!{l.memberId}", "class": "fa fa-pencil-square-o"})#end
+                            #@a("调整奖衔" {"href": "$!{ctx}/manage/rankChange/changeIndex?memberId=$!{l.memberId}", "class": "fa fa-pencil-square-o"})#end
                             #if(${l.isAut}==1)
                               #@a("审核" {"href": "$!{ctx}/member/toAudit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
                             #end

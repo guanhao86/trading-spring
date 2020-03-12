@@ -55,7 +55,7 @@ public class ManageSettleController {
         //返回操作提示信息
         PageResult.getPrompt(mav, request, queryVO.getParamMsg());
 
-        mav.setViewName("manage/settle/settleIndex");
+        mav.setViewName("manage/settle/settle");
         return mav;
     }
 

@@ -16,6 +16,8 @@ public class QueryVO extends BaseEntity<QueryVO> {
 
     private String referenceId;
 
+    private String arrangeId;
+
     private String reallyName;
 
     private String phone;
@@ -23,6 +25,7 @@ public class QueryVO extends BaseEntity<QueryVO> {
     private String password;
 
     private String oldPassword;
+
 
     //公告
     private String title;
@@ -50,4 +53,6 @@ public class QueryVO extends BaseEntity<QueryVO> {
 
     private Integer bonusId;
 
+    //账户类型
+    private Integer accountType;
 }
