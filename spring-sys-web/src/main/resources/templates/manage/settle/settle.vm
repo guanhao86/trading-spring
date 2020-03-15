@@ -2,35 +2,35 @@
 <link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:edit", "isBack": true, "href": "manage/goods/list"})
-                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
-            #end
             #@panelBody()
-                #@form("form_insert" true "post" "manage/goods/save")
+                #@form("form_insert1" true "post" "manage/settle/settle")
 
                 <div class="form-group" >
                     <label class="col-sm-3 control-label" style="margin-top: 5px">直推/组织/伯乐：</label>
                     <div class="col-sm-2">
-                        #btn({"btnName":"日结", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+                        #btn({"btnName":"日结", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert1"}})
                     </div>
+                    <input type="hidden" name="settleType" value="1">
                 </div>
                 #end
-                #@form("form_insert" true "post" "manage/goods/save")
+                #@form("form_insert2" true "post" "manage/settle/settle")
 
                 <div class="form-group" >
                     <label class="col-sm-3 control-label" style="margin-top: 5px">周：</label>
                     <div class="col-sm-2">
-                        #btn({"btnName":"奖金发放", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+                        #btn({"btnName":"奖金发放", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert2"}})
                     </div>
+                    <input type="hidden" name="settleType" value="2">
                 </div>
                 #end
-                #@form("form_insert" true "post" "manage/goods/save")
+                #@form("form_insert3" true "post" "manage/settle/settle")
 
                 <div class="form-group" >
                     <label class="col-sm-3 control-label" style="margin-top: 5px">复消/奖衔：</label>
                     <div class="col-sm-2">
-                        #btn({"btnName":"月结", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+                        #btn({"btnName":"月结", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert3"}})
                     </div>
+                    <input type="hidden" name="settleType" value="3">
                 </div>
                 #end
     #end

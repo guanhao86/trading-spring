@@ -54,6 +54,10 @@ public class UserManager extends BaseManager<UserMapper, UserInfo> {
         return mapper.getByLoginName(user);
     }
 
+    public UserInfo getByPhone(UserInfo user){
+        return mapper.getByPhone(user);
+    }
+
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public int outUserInRole(UserRole userRole){
         return mapper.outUserInRole(userRole);

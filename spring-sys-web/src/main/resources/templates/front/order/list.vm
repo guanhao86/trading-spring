@@ -35,7 +35,7 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["订单号", "订单类型", "订单生成时间", "订单金额(元)", "订单状态"],"", false)
+                    #tableTHead(["订单号", "订单类型", "订单生成时间", "订单金额(元)", "订单状态", "操作人编号"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.orderId}")
@@ -43,7 +43,7 @@
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.createTime}))
                         #tableTd("$!{l.price}")
                         #tableTd("$!{l.state}", {"type": "dict", "format": "orderState"})
-
+                        #tableTd("$!{l.operMemberId}")
                         #@tableTd()
                             #@a("查看" {"href": "$!{ctx}/front/order/view?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
                         #end

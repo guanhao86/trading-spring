@@ -166,6 +166,15 @@
 		WHERE a.username = #{username} AND a.del_flag = #{DEL_FLAG_NORMAL}
 	</select>
 
+	<!-- 根据登录名查询用户 -->
+	<select id="getByPhone" resultType="com.spring.free.domain.UserInfo" parameterType="com.spring.free.domain.UserInfo">
+		SELECT
+		<include refid="userColumns"/>
+		FROM <include refid="table_name" /> a
+		<include refid="userJoins"/>
+		WHERE a.phone = #{phone} AND a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+
 <!-- =============================================================================================================== -->
 
 	<!-- 删除用户和角色关联表数据 -->

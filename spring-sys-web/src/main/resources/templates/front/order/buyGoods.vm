@@ -7,8 +7,8 @@
             #end
             #@panelBody()
                 #@form("form_insert" true "post" "front/order/buy")
-
-                    #formInput({"name": "会员ID"} {"name": "memberId", "value":"$!{member.memberId}","id": "memberId","required": "required","readonly":"readonly"})
+                    <input type="hidden" name="goodsClass" value="$!{order.goodsClass}" />
+                    #formInput({"name": "会员ID"} {"name": "memberId", "value":"$!{order.memberId}","id": "memberId","required": "required","readonly":"readonly"})
                     #formInput({"name": "商品编号"} {"name": "goodsId", "value":"$!{order.goodsId}","id": "goodsId","required": "required","readonly":"readonly"})
                     #formInput({"name": "商品数量"} {"name": "amount", "value":"$!{order.amount}","id": "amount","required": "required","readonly":"readonly"})
                     #formInput({"name": "订单金额(元)"} {"name": "price", "value":"$!{order.price}","id": "price","required": "required","readonly":"readonly"})

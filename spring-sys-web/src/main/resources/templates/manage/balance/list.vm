@@ -34,7 +34,7 @@
             #end
         #end
         #@panel()
-            #@panelHeader({"title":"作日发放奖金", "perm": "", "isBack": false, "href": ""})
+            #@panelHeader({"title":"昨日发放奖金", "perm": "", "isBack": false, "href": ""})
             #end
             #@panelBody()
                 #@table()
@@ -70,10 +70,11 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "结算人", "结算时间", "直推奖金(元)", "组织奖金(元)", "伯乐奖金(元)", "重消奖励(元)", "奖衔奖励(元)"],"", false)
+                    #tableTHead(["id", "结算人", "结算类型", "结算时间", "直推奖金(元)", "组织奖金(元)", "伯乐奖金(元)", "重消奖励(元)", "奖衔奖励(元)"],"", false)
                     #@tableBody($page.list)
                         #tableTd("$!{l.id}")
                         #tableTd("$!{l.adminId}")
+                        #tableTd("$!{l.balanceType}", {"type": "dict", "format": "balanceType"})
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.lastTime}))
                         #tableTd("$!{l.bonusReference}")
                         #tableTd("$!{l.bonusGroup}")

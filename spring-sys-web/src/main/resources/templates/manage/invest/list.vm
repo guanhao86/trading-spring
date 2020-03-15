@@ -35,7 +35,10 @@
                         #tableTd("$!{l.state}", {"type": "dict", "format": "investState"})
                         #@tableTd()
                             #@a("查看" {"href": "$!{ctx}/manage/invest/view?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
-                            #@a("审核" {"href": "$!{ctx}/manage/invest/auditIndex?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #if("2" != $!{l.state})
+                                #@a("审核" {"href": "$!{ctx}/manage/invest/auditIndex?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #end
+
                         #end
                     #end
                 #end

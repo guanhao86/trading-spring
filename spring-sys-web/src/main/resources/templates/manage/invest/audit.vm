@@ -67,10 +67,10 @@
     .white_content {
         display: none;
         position: absolute;
-        top: 25%;
-        left: 25%;
-        width: 55%;
-        height: 55%;
+        top: 15%;
+        left: 15%;
+        width: 75%;
+        height: 75%;
         padding: 20px;
         border: 5px solid #ff4c00;
         background-color: white;

@@ -145,7 +145,7 @@ public class FrontMemberController {
                 member.setBankImg2(imgPath);
             }
 
-
+            member.setAutFlag(2); //修改信息后为待审核
             this.iTableMemberBusiSV.update(member);
         }catch (Exception e) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
@@ -286,11 +286,17 @@ public class FrontMemberController {
         Map map = Maps.newHashMap();
         PageResult.setPageTitle(view, "会员信息注册");
 
+        String registMemberId = request.getParameter("registMemberId");
+
         UserInfo user = BaseGetPrincipal.getUser();
         TableMember tableMember=this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
         PageResult.getPrompt(view, request, "");
-
-        view.addObject("member",tableMember);
+        if (registMemberId != null) {
+            TableMember tableMember1 = new TableMember();
+            tableMember1.setMemberId(registMemberId);
+            view.addObject("registMember", tableMember1);
+        }
+        view.addObject("member", tableMember);
         view.setViewName("front/member/regist");
         return view;
     }
@@ -315,8 +321,28 @@ public class FrontMemberController {
         }
 
         String msg = "恭喜您注册成功，您注册的会员编号为："+member.getMemberId()+"，默认登录密码为注册手机号码后6位，请登录后自行修改密码";
-
+        view.addObject("registMember", member);
         PageResult.setPrompt(map,msg, "success");
-        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/front/member/registIndex"), map);
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/front/member/registIndex?registMemberId="+member.getMemberId()), map);
+    }
+
+    /**
+     * 去报单
+     * @param mav
+     * @param request
+     * @param member
+     * @return
+     */
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "beMemberIndex")
+    public ModelAndView beMemberIndex(ModelAndView mav, HttpServletRequest request, TableMember member) {
+        Map map = Maps.newHashMap();
+
+        mav.addObject("member", member);
+
+        PageResult.getPrompt(mav, request, "");
+        mav.setViewName("front/member/beMember");
+
+        return mav;
     }
 }

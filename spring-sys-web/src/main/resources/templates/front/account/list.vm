@@ -29,7 +29,7 @@
                     #@divColSmNum(3)
                     <div class="form-group">
                         <label class="col-sm-4 control-label" style="margin-top: 5px">货币类型：</label>
-                        <div class="col-sm-5">
+                        <div class="col-sm-7">
                             #selectBS($!dict.getDictList("bonusType"), ["accountType", "$!{queryVO.accountType}", "value", "label"], false, [true, ""])
                         </div>
                     </div>
@@ -40,11 +40,12 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "会员ID", "变更前(元)", "变更更后(元)", "变更时间", "变动原因"],"", false)
+                    #tableTHead(["id", "会员ID", "账户类型", "变更前(元)", "变更更后(元)", "变更时间", "变动原因"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.id}")
                         #tableTd("$!{l.memberId}")
+                        #tableTd("$!{l.accountType}", {"type": "dict", "format": "bonusType"})
                         #tableTd("$!{l.beforeValue}")
                         #tableTd("$!{l.afterValue}")
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.modifyTime}))

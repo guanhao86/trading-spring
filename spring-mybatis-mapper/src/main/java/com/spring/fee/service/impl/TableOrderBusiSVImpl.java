@@ -84,9 +84,23 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
 
     @Override
     public TableOrder buy(TableOrder bo) {
-        UserInfo user = BaseGetPrincipal.getUser();
 
-        TableMember member = this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
+        /**
+         * 如果操作员和会员不相同，则从操作员扣款，其他操作均为会员信息
+         */
+
+        UserInfo user = BaseGetPrincipal.getUser();
+        TableMember operMember = this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
+        TableMember member;
+
+        //判断操作员和会员是否是同一人
+        if (StringUtils.isNotEmpty(bo.getMemberId()) && !user.getUsername().equals(bo.getMemberId())) {
+            bo.setOrderType("2");
+            member = this.iTableMemberBusiSV.selectByMemberId(bo.getMemberId());
+        } else {
+            bo.setOrderType("1");
+            member = operMember;
+        }
 
         //计算总金额
         TableGoods goods = new TableGoods();
@@ -111,7 +125,11 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
             //报单商品只能购买一个
             bo.setPrice(goods.getPrice());
 
-            remark = "报单商品购买";
+            if ("2".equals(bo.getOrderType())) {
+                remark = "替会员【"+member.getMemberId()+"】购买报单商品";
+            }else{
+                remark = "报单商品购买";
+            }
 
             //修改会员信息
             member.setLevel(goods.getIncomeVipLevel());
@@ -129,7 +147,7 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
 
         //扣减金额
         this.iMemberAccountDetailBusiSV.changeMoney(
-                member.getMemberId(),
+                operMember.getMemberId(),
                 "2",
                 bo.getPrice(),
                 remark);

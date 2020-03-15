@@ -5,7 +5,9 @@ package com.spring.free.controller.front;/**
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.model.TableInvest;
+import com.spring.fee.model.TableSystemConfig;
 import com.spring.fee.service.ITableInvestBusiSV;
+import com.spring.fee.service.ITableSystemConfigBusiSV;
 import com.spring.free.config.ImageUtils;
 import com.spring.free.domain.QueryVO;
 import com.spring.free.domain.UserInfo;
@@ -43,6 +45,9 @@ public class FrontInvestController {
 
     @Autowired
     ImageService imageService;
+
+    @Autowired
+    ITableSystemConfigBusiSV iTableSystemConfigBusiSV;
 
     /*
      * @Author gh
@@ -92,7 +97,11 @@ public class FrontInvestController {
         PageResult.getPrompt(view, request, "");
         UserInfo user = BaseGetPrincipal.getUser();
         tableInvest.setMemberId(user.getUsername());
+
+        TableSystemConfig tableSystemConfig = iTableSystemConfigBusiSV.select(new TableSystemConfig());
+
         view.addObject("invest",tableInvest);
+        view.addObject("tableSystemConfig", tableSystemConfig);
         view.setViewName("front/invest/edit");
         return view;
     }

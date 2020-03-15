@@ -28,6 +28,13 @@ public interface UserMapper extends BaseMapper<UserInfo> {
     UserInfo getByLoginName(UserInfo user);
 
     /**
+     * 根据手机号码获取用户
+     * @param user
+     * @return
+     */
+    UserInfo getByPhone(UserInfo user);
+
+    /**
      * 删除用户角色关联数据
      * @param user
      * @return

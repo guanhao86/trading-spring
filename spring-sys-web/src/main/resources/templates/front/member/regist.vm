@@ -2,10 +2,14 @@
 <link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:view", "isBack": true, "href": "front/member/list"})
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:view", "isBack": false, "href": "front/member/list"})
                 #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+                #btn({"btnName":"报单", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_beMember"}})
             #end
             #@panelBody()
+                #@form("form_beMember" true "post" "front/member/beMemberIndex")
+                    <input type="hidden" name="memberId" value="$!{registMember.memberId}"/>
+                #end
                 #@form("form_insert" true "post" "front/member/register")
                     #*#formInput({"name": "姓名"} {"name": "name", "value":"$!{member.name}","id": "name","required": "required"})*#
                     #formInput({"name": "电话"} {"name": "phone", "value":"","id": "phone","required": "required"})

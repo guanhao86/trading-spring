@@ -19,6 +19,7 @@ import com.spring.free.util.constraints.PromptInfoConstraints;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
 import com.spring.free.utils.principal.BaseGetPrincipal;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,6 +136,10 @@ public class FrontOrderController {
 
         UserInfo user = BaseGetPrincipal.getUser();
 
+        if (StringUtils.isEmpty(tableOrder.getMemberId())) {
+            tableOrder.setMemberId(user.getUsername());
+        }
+
         TableMember member = this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
 
         //计算总金额
@@ -143,7 +148,7 @@ public class FrontOrderController {
         goods = this.iTableGoodsBusiSV.select(goods);
 
         tableOrder.setPrice(tableOrder.getAmount() * goods.getPrice());
-
+        tableOrder.setGoodsClass(goods.getGoodsClass());
         //查询会员信息，返回地址
         view.addObject("order", tableOrder);
         view.addObject("member", member);
@@ -159,7 +164,8 @@ public class FrontOrderController {
         PageResult.getPrompt(view, request, "");
 
         UserInfo user = BaseGetPrincipal.getUser();
-        tableOrder.setMemberId(user.getUsername());
+        tableOrder.setOperMemberId(user.getUsername());
+        view.addObject("order", tableOrder);
         try {
             this.iTableOrderBusiSV.buy(tableOrder);
         }catch (Exception e) {
@@ -168,9 +174,8 @@ public class FrontOrderController {
         }
 
         //查询会员信息，返回地址
-        view.addObject("result", "购买成功");
-        view.setViewName("front/order/buyResult");
-        return view;
+        PageResult.setPrompt(map,"购买成功", "success");
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/front/order/buyResult"), map);
     }
 
     /*

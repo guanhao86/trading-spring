@@ -10,8 +10,8 @@
             </span>
             #end
             #@panelBody()
-                #@divColSmNum(3)
-                    #formInput({"name": "会员编号", "length": "4,8", "asterisk": false} {"name": "memberId", "id": "memberId"})
+                #@divColSmNum(5)
+                    #formInput({"name": "会员编号", "length": "3,8", "asterisk": false} {"name": "memberId", "id": "memberId"})
                 #end
             #end
         #end

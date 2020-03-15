@@ -34,7 +34,7 @@
                     <div class="form-group" >
                         <label class="col-sm-2 control-label">会员奖衔：</label>
                         <div class="col-sm-2">
-                            #selectDisabledBS($!dict.getDictList("mRank"), ["level", "$!{member.mRank}", "value", "label"], false, [false, "$!{member.mRank}"])
+                            #selectDisabledBS($!dict.getDictList("mRank"), ["mRank", "$!{member.mRank}", "value", "label"], false, [false, "$!{member.mRank}"])
                         </div>
                     </div>
                     <div class="form-group" >

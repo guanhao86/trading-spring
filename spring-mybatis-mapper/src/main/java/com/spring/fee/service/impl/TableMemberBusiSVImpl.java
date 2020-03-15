@@ -211,7 +211,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         criteria.andPhoneEqualTo(phone);
 
         List<TableMember> tWheatMemberList = this.iTableMemberMapper.selectByExample(example);
-        if (tWheatMemberList != null && tWheatMemberList.size() == 1) {
+        if (tWheatMemberList != null && tWheatMemberList.size() >= 1) {
             return tWheatMemberList.get(0);
         }
         return null;

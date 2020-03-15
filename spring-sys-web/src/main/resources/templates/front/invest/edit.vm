@@ -35,6 +35,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">请往以下账户打款</label>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">公司账户：</label>
+                    <div class="col-sm-2" style="margin-top: 5px">
+                        $!{tableSystemConfig.sysBankNumber}
+                    </div>
+                    <label class="col-sm-1 control-label">银行卡：</label>
+                    <div class="col-sm-2" style="margin-top: 5px">
+                        $!{tableSystemConfig.sysBankName}
+                    </div>
+                    <label class="col-sm-1 control-label">开户行：</label>
+                    <div class="col-sm-2" style="margin-top: 5px">
+                        $!{tableSystemConfig.sysBankOpenAre}
+                    </div>
+                </div>
                 #end
             #end
         #end

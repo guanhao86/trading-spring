@@ -1,0 +1,25 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:view", "isBack": false, "href": "front/member/list"})
+                #btn({"btnName":"去购买", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "front/goods/list?goodsClass=0")
+                    #*#formInput({"name": "姓名"} {"name": "name", "value":"$!{member.name}","id": "name","required": "required"})*#
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">请输入要报单的会员ID</label>
+
+                </div>
+                #formInput({"name": "会员ID"} {"name": "memberId", "value":"$!{member.memberId}","id": "memberId","required": "required"})
+
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

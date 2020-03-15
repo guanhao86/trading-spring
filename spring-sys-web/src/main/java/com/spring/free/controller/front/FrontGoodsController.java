@@ -6,12 +6,16 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.model.TableGoods;
 import com.spring.fee.service.ITableGoodsBusiSV;
+import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.free.config.ImageUtils;
 import com.spring.free.domain.QueryVO;
 import com.spring.free.util.PageResult;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
+import com.spring.free.util.exception.ExceptionCodeEnum;
+import com.spring.free.util.exception.ServiceException;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +40,9 @@ public class FrontGoodsController {
     @Autowired
     ITableGoodsBusiSV iTableGoodsBusiSV;
 
+    @Autowired
+    ITableMemberBusiSV iTableMemberBusiSV;
+
     /*
      * @Author gh
      * @Description //TODO 配置列表
@@ -51,6 +58,15 @@ public class FrontGoodsController {
 
         TableGoods tableGoods = new TableGoods();
         BeanUtils.copyProperties(queryVO, tableGoods);
+
+        if (StringUtils.isNotEmpty(queryVO.getMemberId())) {
+            Map map = Maps.newHashMap();
+            map.put(Global.URL, Global.ADMIN_PATH +"/front/member/beMemberIndex");
+            if (null == this.iTableMemberBusiSV.selectByMemberId(queryVO.getMemberId())) {
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在，请确认会员ID输入是否正确", map.get(Global.URL).toString(), map);
+            }
+        }
+
         tableGoods.setState("1");
         PageInfo<TableGoods> pageInfo = this.iTableGoodsBusiSV.queryListPage(tableGoods, page, pageSize, null);
 
@@ -68,12 +84,15 @@ public class FrontGoodsController {
 
     @RequiresPermissions("system:member:view")
     @RequestMapping(value = "view")
-    public ModelAndView view(ModelAndView view, HttpServletRequest request, TableGoods tableGoods) {
+    public ModelAndView view(ModelAndView view, HttpServletRequest request, QueryVO queryVO) {
         Map map = Maps.newHashMap();
         PageResult.setPageTitle(view, "商品信息");
         PageResult.getPrompt(view, request, "");
+        TableGoods tableGoods = new TableGoods();
+        tableGoods.setId(Integer.parseInt(queryVO.getId()+""));
         TableGoods tableGoods1=this.iTableGoodsBusiSV.select(tableGoods);
         view.addObject("goods",tableGoods1);
+        view.addObject("queryVO",queryVO);
         view.setViewName("front/goods/view");
         return view;
     }

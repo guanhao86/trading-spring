@@ -744,6 +744,66 @@ public class TableBalanceDetailExample {
             addCriterion("operate_time not between", value1, value2, "operateTime");
             return (Criteria) this;
         }
+
+        public Criteria andBalanceTypeIsNull() {
+            addCriterion("balance_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceTypeIsNotNull() {
+            addCriterion("balance_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceTypeEqualTo(Integer value) {
+            addCriterion("balance_type =", value, "balanceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceTypeNotEqualTo(Integer value) {
+            addCriterion("balance_type <>", value, "balanceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceTypeGreaterThan(Integer value) {
+            addCriterion("balance_type >", value, "balanceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("balance_type >=", value, "balanceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceTypeLessThan(Integer value) {
+            addCriterion("balance_type <", value, "balanceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("balance_type <=", value, "balanceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceTypeIn(List<Integer> values) {
+            addCriterion("balance_type in", values, "balanceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceTypeNotIn(List<Integer> values) {
+            addCriterion("balance_type not in", values, "balanceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceTypeBetween(Integer value1, Integer value2) {
+            addCriterion("balance_type between", value1, value2, "balanceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("balance_type not between", value1, value2, "balanceType");
+            return (Criteria) this;
+        }
     }
 
     /**

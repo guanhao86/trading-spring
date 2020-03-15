@@ -26,6 +26,8 @@ public class QueryVO extends BaseEntity<QueryVO> {
 
     private String oldPassword;
 
+    private Integer autFlag;
+
 
     //公告
     private String title;
@@ -55,4 +57,10 @@ public class QueryVO extends BaseEntity<QueryVO> {
 
     //账户类型
     private Integer accountType;
+
+    /**
+     * 结算类型
+     * 1：日结  2：奖金发放  3：月结
+     */
+    private String settleType;
 }

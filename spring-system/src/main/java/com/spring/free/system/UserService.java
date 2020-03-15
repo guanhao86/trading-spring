@@ -126,7 +126,7 @@ public class UserService {
             if (user == null) {
                 userInfo.setPhone(username.trim());
                 userInfo.setUsername(null);
-                user = userManager.getByLoginName(userInfo);
+                user = userManager.getByPhone(userInfo);
                 if (user == null) {
                     throw new UserException(PromptInfoConstraints.SYS_USER_NOT_EXISTENT);
                 }

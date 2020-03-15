@@ -2,11 +2,21 @@
 <link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
     #@wrapper()
         #@panel()
-            $!{result}
+            #@panelHeader({"title":"", "perm": "system:member:view", "isBack": false, "click": "goback()"})
+
+            #end
+            #@panelBody()
+
+            #end
         #end
     #end
     #@script()
         #@jsValidate("form_insert")
         #end
+        <script>
+            function goback() {
+                history.go(-1);
+            }
+        </script>
     #end
 #end

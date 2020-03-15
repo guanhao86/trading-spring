@@ -24,6 +24,7 @@
     sum(bonus_rank) as bonus_rank
     FROM table_balance_detail
     where 1=1
+    and balance_type in (1, 2)
     <if test="memberId != null" >
       and member_id = #{memberId,jdbcType=VARCHAR}
     </if>

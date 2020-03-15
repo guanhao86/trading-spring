@@ -98,12 +98,12 @@
                <!--selectByExampleQueryId="true">-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <table tableName="table_member" domainObjectName="TableMember"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-        </table>
+        <!--<table tableName="table_member" domainObjectName="TableMember"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
         <!--<table tableName="table_member_level_change_detail" domainObjectName="TableMemberLevelChangeDetail"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->

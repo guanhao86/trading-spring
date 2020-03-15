@@ -10,32 +10,25 @@
                     #@divColSmNum(3)
                         #formInput({"name": "名称", "length": "4,8", "asterisk": false} {"name": "goodsName", "id": "goodsName",
                             "value": "$!{queryVO.goodsName}"})
+                        <input type="hidden" name="goodsClass" value="$!{queryVO.goodsClass}">
                     #end
-                    #@divColSmNum(3)
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">商品类型：</label>
-                        <div class="col-sm-5" style="width: 201px;">
-                            #selectBS($!dict.getDictList("goodsClass"), ["goodsClass", "$!{queryVO.goodsClass}", "value", "label"], false, [true, ""])
-                        </div>
-                    </div>
-                    #end
+
                 #end
             #end
         #end
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "商品图片", "商品价格(元)", "商品类型", "商品状态"],"", false)
+                    #tableTHead(["商品图片", "商品名称", "商品价格(元)", "商品类型", "商品状态"],"", false)
                     #@tableBody($page.list)
 
-                        #tableTd("$!{l.id}")
                         #tableTd("<img src=$!{l.thunmbanilImgSrc} style= height:30px />")
                         #tableTd("$!{l.goodsName}")
                         #tableTd("$!{l.price}")
                         #tableTd("$!{l.goodsClass}", {"type": "dict", "format": "goodsClass"})
                         #tableTd("$!{l.state}", {"type": "dict", "format": "goodsState"})
                         #@tableTd()
-                            #@a("查看" {"href": "$!{ctx}/front/goods/view?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #@a("购买" {"href": "$!{ctx}/front/goods/view?id=$!{l.id}&memberId=$!{queryVO.memberId}", "class": "fa fa-pencil-square-o"})#end
                         #end
                     #end
                 #end
