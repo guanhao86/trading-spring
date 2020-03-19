@@ -2,10 +2,14 @@
     #@wrapper()
         #@panel()
             #@panelHeader({"title":"订单管理 搜索", "perm": "", "isBack": false, "href": ""})
+                #btn({"btnName":"批量发货", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "sendBatchForm"}})
+
                 #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
                 #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
             #end
             #@panelBody()
+                #@form("sendBatchForm" false "post" "manage/order/sendBatchIndex")
+                #end
                 #@form("search" false "post" "manage/order/list")
                     #@divColSmNum(3)
                         #formInput({"name": "订单ID", "length": "4,8", "asterisk": false} {"name": "orderId", "id": "orderId",
@@ -46,6 +50,9 @@
         #end
         #@panel()
              #@panelBody()
+                 <div style="width: 100%; text-align: right; font-size: large">
+                    <a href="/admin/manage/order/exportOrderFile">导出订单</a>
+                 </div>
                 #@table()
                     #tableTHead(["订单ID", "会员ID", "商品编号", "商品类型", "订单金额(元)", "订单生成时间", "订单状态"],"", false)
                     #@tableBody($page.list)

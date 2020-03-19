@@ -1,0 +1,35 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/message/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:view", "isBack": true, "href": "manage/message/list"})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manage/message/save")
+                    <input type="hidden" name="id" value="$!{message.id}">
+
+                    #formInput({"name": "标题"} {"name": "title", "value":"$!{message.title}","id": "title","required": "required","readonly":"readonly"})
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label col-lg-2" for="content">留言内容<font color="red">*</font>：</label>
+                        <div class="col-lg-3">
+                            <textarea rows="4" name="message" style="width: 100%" disabled>$!{message.message}</textarea>
+                        </div>
+                    </div>
+                    #formInput({"name": "留言时间"} {"name": "createTime", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{message.createTime})","id": "createTime","required": "required","readonly":"readonly"})
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label col-lg-2" for="content">答复内容<font color="red">*</font>：</label>
+                        <div class="col-lg-3">
+                            <textarea rows="4" name="response" style="width: 100%" disabled>$!{message.response}</textarea>
+                        </div>
+                    </div>
+                    #formInput({"name": "答复时间"} {"name": "responseTime", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{message.responseTime})","id": "responseTime","required": "required","readonly":"readonly"})
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

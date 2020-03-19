@@ -9,6 +9,7 @@ import com.spring.fee.model.TableMember;
 import com.spring.fee.model.TableOrder;
 import com.spring.fee.model.TableOrderExample;
 import com.spring.fee.service.*;
+import com.spring.free.common.util.ExcelUtils;
 import com.spring.free.domain.UserInfo;
 import com.spring.free.util.DateUtils;
 import com.spring.free.util.exception.ExceptionCodeEnum;
@@ -16,11 +17,16 @@ import com.spring.free.util.exception.ServiceException;
 import com.spring.free.utils.principal.BaseGetPrincipal;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -81,6 +87,23 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
     public TableOrder select(TableOrder bo) {
         return this.iTableOrderMapper.selectByPrimaryKey(bo.getId());
     }
+
+    @Override
+    public TableOrder selectByOrderId(String orderId) {
+        TableOrderExample example = new TableOrderExample();
+        TableOrderExample.Criteria criteria = example.createCriteria();
+
+        criteria.andOrderIdEqualTo(orderId);
+
+        List<TableOrder> tableOrderLIst = this.iTableOrderMapper.selectByExample(example);
+
+        if (tableOrderLIst.size() == 1) {
+            return tableOrderLIst.get(0);
+        }
+
+        return null;
+    }
+
 
     @Override
     public TableOrder buy(TableOrder bo) {
@@ -217,5 +240,95 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
                 .doSelectPageInfo(() -> this.iTableOrderMapper.selectByExample(example));
         log.info("获取订单结果：{}", JSON.toJSON(pageInfo));
         return pageInfo;
+    }
+
+    /**
+     * 导出订单
+     *
+     * @param bo
+     * @param pageNum
+     * @param pageSize
+     * @param map
+     * @return
+     */
+    @Override
+    public HSSFWorkbook exportFile(TableOrder bo, Integer pageNum, Integer pageSize, Map<String, Object> map) {
+
+        PageInfo<TableOrder> pageInfo = this.queryListPage(bo, 1, 10000000, map);
+
+        List<TableOrder> list = new ArrayList<>();
+        if (pageInfo != null && !CollectionUtils.isEmpty(pageInfo.getList())) {
+            list = pageInfo.getList();
+        } else {
+            System.out.println("没有数据");
+        }
+
+        String sheetName = "传输计划";
+        String[] title = {"ID", "快递单号", "订单编号", "会员编号", "商品ID", "商品数量", "总金额", "订单时间", "状态", "收货人姓名", "收货人电话", "收货人地址"};
+        String[][] values = new String[list.size()+1][title.length];
+
+        int i = 0;
+        for (TableOrder order : list) {
+            values[i][0] = String.valueOf(order.getId());
+            values[i][1] = order.getOrderId();
+            values[i][2] = order.getMemberId();
+            values[i][3] = String.valueOf(order.getGoodsId());
+            values[i][4] = String.valueOf(order.getAmount());
+            values[i][5] = String.valueOf(order.getPrice());
+            values[i][6] = DateUtils.formatDateTime(order.getCreateTime());
+            String state = "";
+            if (1 == order.getState()) {
+                state = "等待发货";
+            } else if (2 == order.getState()) {
+                state = "发货完成";
+            }
+            values[i][7] = state;
+            values[i][8] = order.getReceiverName();
+            values[i][9] = order.getReceiverPhone();
+            values[i][10] = order.getReceiverAddr();
+            values[i][11] = order.getExpressNumber();
+            i++;
+        }
+
+        HSSFWorkbook wb = ExcelUtils.getHSSFWorkbook(sheetName, title, values, null);
+        return wb;
+    }
+
+    /**
+     * 批量发货
+     *
+     * @param orderList
+     * @return
+     */
+    @Override
+    public List<TableOrder> sendOrder(List<TableOrder> orderList) {
+        List<TableOrder> list = new ArrayList<>();
+        for (TableOrder tableOrder : orderList) {
+            if (StringUtils.isNotEmpty(tableOrder.getExpressNumber())) {
+                //查询订单
+                TableOrder orig = this.selectByOrderId(tableOrder.getOrderId());
+                if (null == orig) {
+                    throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "订单编号="+tableOrder.getOrderId()+"未查询到订单信息，请确认订单编号是否正确", "", null);
+                }
+
+                if (orig.getState() == 2) {
+                    continue;
+                }
+
+                if (StringUtils.isNotEmpty(orig.getExpressNumber())) {
+                    continue;
+                }
+
+                TableOrder update = new TableOrder();
+                update.setId(tableOrder.getId());
+                update.setState(2);
+                update.setExpressNumber(tableOrder.getExpressNumber());
+                this.update(update);
+                list.add(update);
+            }
+
+        }
+
+        return list;
     }
 }

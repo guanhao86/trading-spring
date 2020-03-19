@@ -3,6 +3,7 @@ package com.spring.fee.service;
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.model.*;
 import jnr.ffi.annotations.In;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.formula.functions.T;
 
 import java.util.List;
@@ -88,4 +89,14 @@ public interface ITableMemberBusiSV {
      * @return
      */
     TableMember audit(Integer id, Integer autFlag);
+
+    /**
+     * 导出会员文件
+     * @param bo
+     * @param pageNum
+     * @param pageSize
+     * @param map
+     * @return
+     */
+    HSSFWorkbook exportFile(TableMember bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
 }

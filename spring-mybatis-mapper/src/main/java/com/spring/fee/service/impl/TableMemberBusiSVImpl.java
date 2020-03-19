@@ -8,6 +8,7 @@ import com.spring.fee.dao.mapper.TableMemberMapper;
 import com.spring.fee.model.*;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.fee.service.ITableMemberLevelChangeDetailBusiSV;
+import com.spring.free.common.util.ExcelUtils;
 import com.spring.free.domain.RoleInfo;
 import com.spring.free.domain.UserInfo;
 import com.spring.free.system.UserService;
@@ -16,8 +17,10 @@ import com.spring.free.util.constraints.Global;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
 import com.spring.free.util.md5.Md5Util;
+import com.spring.free.utils.velocity.DictUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -611,5 +615,60 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         tableMember.setId(id);
         tableMember.setAutFlag(autFlag);
         return this.update(tableMember) ;
+    }
+
+    /**
+     * 导出会员文件
+     *
+     * @param bo
+     * @param pageNum
+     * @param pageSize
+     * @param map
+     * @return
+     */
+    @Override
+    public HSSFWorkbook exportFile(TableMember bo, Integer pageNum, Integer pageSize, Map<String, Object> map) {
+
+        PageInfo<TableMember> pageInfo = this.queryListPage(bo, 1, 10000000, map);
+
+        List<TableMember> list = new ArrayList<>();
+        if (pageInfo != null && !CollectionUtils.isEmpty(pageInfo.getList())) {
+            list = pageInfo.getList();
+        } else {
+            System.out.println("没有数据");
+        }
+
+        String sheetName = "传输计划";
+        String[] title = {"会员编号", "会员姓名", "推荐人编号", "安置人编号", "左右区标识", "电话号码", "会员级别", "会员头衔"
+                , "现金", "积分(可用)", "积分(冻结)", "购物积分", "保值积分", "实名认证标识", "身份证号码", "银行卡号"
+                ,"开户行名字", "银行卡开户行地址", "注册时间"};
+        String[][] values = new String[list.size()+1][title.length];
+
+        int i = 0;
+        for (TableMember member : list) {
+            values[i][0] = member.getMemberId();
+            values[i][1] = member.getReallyName();
+            values[i][2] = member.getReferenceId();
+            values[i][3] = member.getArrangeId();
+            values[i][4] = DictUtils.getDictLabel(String.valueOf(member.getLevel()),"leftOrRight","");
+            values[i][5] = member.getPhone();
+            values[i][6] = DictUtils.getDictLabel(String.valueOf(member.getLevel()),"level","");
+            values[i][7] = DictUtils.getDictLabel(String.valueOf(member.getLevel()),"mRank","");
+            values[i][8] = String.valueOf(member.getAccountMoney());
+            values[i][9] = String.valueOf(member.getAccountPointAvailable());
+            values[i][10] = String.valueOf(member.getAccountPointFreeze());
+            values[i][11] = String.valueOf(member.getAccountDjPoint());
+            values[i][12] = String.valueOf(member.getAccountJsyPoint());
+            values[i][13] = DictUtils.getDictLabel(String.valueOf(member.getLevel()),"autFlag","");
+            values[i][14] = member.getCartId();
+            values[i][15] = member.getBankCardId();
+            values[i][16] = member.getBankName();
+            values[i][17] = member.getBankOpenAre();
+            values[i][18] = DateUtils.formatDateTime(member.getRegisterTime());
+            i++;
+        }
+
+        HSSFWorkbook wb = ExcelUtils.getHSSFWorkbook(sheetName, title, values, null);
+        return wb;
     }
 }

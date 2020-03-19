@@ -4,8 +4,10 @@ package com.spring.free.controller.front;/**
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import com.spring.fee.model.TableGoods;
 import com.spring.fee.model.TableMember;
 import com.spring.fee.model.TableMemberAccountDetail;
+import com.spring.fee.model.TableOrder;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.free.config.CommonUtils;
@@ -15,7 +17,10 @@ import com.spring.free.util.PageResult;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
+import com.spring.free.util.exception.ExceptionCodeEnum;
+import com.spring.free.util.exception.ServiceException;
 import com.spring.free.utils.principal.BaseGetPrincipal;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +88,43 @@ public class FrontAccountController {
 
         mav.setViewName("front/account/list");
         return mav;
+    }
+
+
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "transferIndex")
+    public ModelAndView transferIndex(ModelAndView view, HttpServletRequest request) {
+        Map map = Maps.newHashMap();
+        PageResult.setPageTitle(view, "转账");
+        PageResult.getPrompt(view, request, "");
+
+        UserInfo user = BaseGetPrincipal.getUser();
+
+        TableMember member = this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
+
+        view.addObject("member", member);
+        view.setViewName("front/account/transfer");
+        return view;
+    }
+
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "transfer")
+    public ModelAndView transfer(ModelAndView view, HttpServletRequest request, QueryVO queryVO) {
+        Map map = Maps.newHashMap();
+        PageResult.setPageTitle(view, "转账");
+        PageResult.getPrompt(view, request, "");
+
+        try {
+            UserInfo user = BaseGetPrincipal.getUser();
+            this.iMemberAccountDetailBusiSV.transfer(user.getUsername(), queryVO.getMemberId(), queryVO.getAmount(), queryVO.getRemark());
+        }catch (Exception e) {
+            map.put(Global.URL, Global.ADMIN_PATH +"/front/account/transferIndex");
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
+
+        //查询会员信息，返回地址
+        PageResult.setPrompt(map,"转账成功", "success");
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/front/account/transferIndex"), map);
     }
 
 }

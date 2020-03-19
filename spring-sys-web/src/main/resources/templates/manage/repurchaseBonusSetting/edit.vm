@@ -1,0 +1,24 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:edit", "isBack": true, "href": "manage/repurchaseBonusSetting/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manage/repurchaseBonusSetting/save")
+
+                    #formInput({"name": "ID"} {"name": "id", "value":"$!{repurchaseBonusSetting.id}","id": "id", "readonly":"readonly"})
+                    #formInput({"name": "购买价值"} {"name": "price", "value":"$!{repurchaseBonusSetting.price}","id": "price","required": "required"})
+                    #formInput({"name": "层级"} {"name": "layer", "value":"$!{repurchaseBonusSetting.layer}","id": "layer","required": "required"})
+                    #formInput({"name": "分配利润（X%）"} {"name": "point", "value":"$!{repurchaseBonusSetting.point}","id": "point","required": "required"})
+
+                #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

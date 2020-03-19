@@ -1,0 +1,37 @@
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"奖衔配置管理 搜索", "perm": "", "isBack": false, "href": ""})
+                #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
+                #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
+            #end
+        #end
+        #@panel()
+             #@panelBody()
+                #@table()
+                    #tableTHead(["id", "奖衔", "累计业绩", "下级左右区会员数", "获得奖金（X%）"],"", false)
+                    #@tableBody($page.list)
+
+                        #tableTd("$!{l.id}")
+                        #tableTd("$!{l.name}")
+                        #tableTd("$!{l.casePerformance}")
+                        #tableTd("$!{l.caseDownRankCount}")
+                        #tableTd("$!{l.repurchaseBonus}")
+                        #@tableTd()
+                            #@a("修改" {"href": "$!{ctx}/manage/rankSetting/edit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                        #end
+                    #end
+                #end
+
+                #parse("modular/page.vm")
+            #end
+        #end
+    #end
+    #@script()
+    <script>
+        #jsCalculate()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

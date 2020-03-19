@@ -10,16 +10,23 @@
                 <input type="hidden" name="id" value="$!{broadcast.id}">
                     #formInput({"name": "ID"} {"name": "id", "value":"$!{broadcast.id}","id": "id","readonly":"readonly"})
                     #formInput({"name": "标题"} {"name": "title", "value":"$!{broadcast.title}","id": "title","required": "required"})
-                <div class="form-group">
-                    <label class="col-sm-2 control-label col-lg-2" for="content">内容<font color="red">*</font>：</label>
-                    <div class="col-lg-3">
-                        <textarea rows="4" name="content" style="width: 100%">$!{broadcast.content}</textarea>
+
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">会员级别：</label>
+                    <div class="col-sm-2">
+                        #selectBS($!dict.getDictList("level"), ["memberLevel", "$!{broadcast.memberLevel}", "value", "label"], false, [false, "$!{broadcast.level}"])
                     </div>
                 </div>
                 <div class="form-group" >
                     <label class="col-sm-2 control-label">状态：</label>
                     <div class="col-sm-2">
                         #selectBS($!dict.getDictList("broadcastState"), ["isDelete", "$!{broadcast.isDelete}", "value", "label"], false, [false, "$!{broadcast.isDelete}"])
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label col-lg-2" for="content">内容<font color="red">*</font>：</label>
+                    <div class="col-lg-3">
+                        <textarea rows="4" name="content" style="width: 100%">$!{broadcast.content}</textarea>
                     </div>
                 </div>
                 #end

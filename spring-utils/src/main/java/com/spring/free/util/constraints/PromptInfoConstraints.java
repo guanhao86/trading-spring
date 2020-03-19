@@ -74,7 +74,7 @@ public class PromptInfoConstraints {
      */
     public static final String INDEX = "首页";
 
-    public static final String TRADE_SYSTEM = "东家百货 服务管理系统";
+    public static final String TRADE_SYSTEM = "艾斯派客管理系统";
 
     public static final String TRADE_SYSTEM_INDEX = TRADE_SYSTEM + "-首页";
 

@@ -514,6 +514,66 @@ public class TableBroadcastInfoExample {
             addCriterion("is_delete not between", value1, value2, "isDelete");
             return (Criteria) this;
         }
+
+        public Criteria andMemberLevelIsNull() {
+            addCriterion("member_level is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberLevelIsNotNull() {
+            addCriterion("member_level is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberLevelEqualTo(Integer value) {
+            addCriterion("member_level =", value, "memberLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberLevelNotEqualTo(Integer value) {
+            addCriterion("member_level <>", value, "memberLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberLevelGreaterThan(Integer value) {
+            addCriterion("member_level >", value, "memberLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberLevelGreaterThanOrEqualTo(Integer value) {
+            addCriterion("member_level >=", value, "memberLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberLevelLessThan(Integer value) {
+            addCriterion("member_level <", value, "memberLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberLevelLessThanOrEqualTo(Integer value) {
+            addCriterion("member_level <=", value, "memberLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberLevelIn(List<Integer> values) {
+            addCriterion("member_level in", values, "memberLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberLevelNotIn(List<Integer> values) {
+            addCriterion("member_level not in", values, "memberLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberLevelBetween(Integer value1, Integer value2) {
+            addCriterion("member_level between", value1, value2, "memberLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberLevelNotBetween(Integer value1, Integer value2) {
+            addCriterion("member_level not between", value1, value2, "memberLevel");
+            return (Criteria) this;
+        }
     }
 
     /**

@@ -50,6 +50,9 @@
         #end
         #@panel()
              #@panelBody()
+             <div style="width: 100%; text-align: right; font-size: large">
+                 <a href="/admin/manage/member/exportMemberFile">导出会员</a>
+             </div>
                 #@table()
                     #tableTHead(["会员ID", "电话", "姓名","注册时间","余额","推荐人ID","安置人编号","左右区标识","会员级别","会员奖衔","实名制"],"", false)
                     #@tableBody($page.list)

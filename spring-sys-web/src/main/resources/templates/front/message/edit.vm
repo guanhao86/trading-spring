@@ -1,0 +1,28 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/message/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:view", "isBack": true, "href": "front/message/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "front/message/save")
+                    <input type="hidden" name="id" value="$!{message.id}">
+
+                    #formInput({"name": "标题"} {"name": "title", "value":"$!{message.title}","id": "title","required": "required"})
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label col-lg-2" for="content">留言内容<font color="red">*</font>：</label>
+                        <div class="col-lg-3">
+                            <textarea rows="4" name="message" style="width: 100%">$!{message.message}</textarea>
+                        </div>
+                    </div>
+        #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

@@ -1,0 +1,25 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:edit", "isBack": true, "href": "manage/rankSetting/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manage/rankSetting/save")
+
+                    #formInput({"name": "ID"} {"name": "id", "value":"$!{rankSetting.id}","id": "id", "readonly":"readonly"})
+                    #formInput({"name": "奖衔"} {"name": "name", "value":"$!{rankSetting.name}","id": "name","required": "required", "readonly":"readonly"})
+                    #formInput({"name": "累计业绩"} {"name": "casePerformance", "value":"$!{rankSetting.casePerformance}","id": "casePerformance","required": "required"})
+                    #formInput({"name": "下级左右区会员数"} {"name": "caseDownRankCount", "value":"$!{rankSetting.caseDownRankCount}","id": "caseDownRankCount","required": "required"})
+                    #formInput({"name": "获得奖金（X%）"} {"name": "repurchaseBonus", "value":"$!{rankSetting.repurchaseBonus}","id": "repurchaseBonus","required": "required"})
+
+                #end
+    #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

@@ -1,0 +1,46 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"批量发货", "perm": "system:member:edit", "isBack": true, "href": "manage/order/list"})
+                #btn({"btnName":"提交", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manage/order/sendBatch")
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">上传批量发货订单文件<font color="red">*</font>：</label>
+                    <div class="col-sm-3">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+
+                            <span class="btn btn-default btn-file">
+                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择文件</span>
+                                <span class="fileupload-exists"><i class="fa fa-undo"></i> 重新选择</span>
+                                <input type="file" class="default" name="orderFile" id="orderFile"  />
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                #end
+    #end
+        #end
+    #end
+    #@script()
+
+        #scriptSrc("/summernote/summernote.js")
+        #scriptSrc("/summernote/lang/summernote-zh-CN.js")
+        #scriptSrc("/js/backstage/bootstrap-fileupload.min.js")
+
+
+    <script>
+
+
+
+    </script>
+
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

@@ -182,4 +182,45 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
         log.info("获取账户资金情况变更表结果：{}", JSON.toJSON(pageInfo));
         return pageInfo;
     }
+
+    /**
+     * 转账
+     *
+     * @param fromMemberId
+     * @param toMemberId
+     * @param amount
+     * @param remark
+     * @return
+     */
+    @Override
+    public TableMemberAccountDetail transfer(String fromMemberId, String toMemberId, String amount, String remark) {
+
+        //查询frommember
+        TableMember fromMember = this.iTableMemberBusiSV.selectByMemberId(fromMemberId);
+        Float amount1 = 0f;
+        try{
+            amount1 = Float.parseFloat(amount);
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "转账金额格式错误！", "", null);
+        }
+
+        if (toMemberId == null) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "转出会员ID不能为空！", "", null);
+        }
+
+        if (fromMember == null) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "转出会员不存在！", "", null);
+        }
+
+        //查询tomember
+        TableMember toMember = this.iTableMemberBusiSV.selectByMemberId(toMemberId);
+        if (toMember == null) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "转入会员不存在！", "", null);
+        }
+
+        this.changeMoney(fromMemberId, "2", amount1, "转账到会员"+toMemberId+"。备注："+remark);
+        this.changeMoney(toMemberId, "1", amount1, "会员"+fromMemberId+"转入。备注："+remark);
+
+        return null;
+    }
 }

@@ -30,4 +30,14 @@ public interface IMemberAccountDetailBusiSV {
     TableMemberAccountDetail changeMoney(String memberId, String accountType, Float amount, String remark);
 
     PageInfo<TableMemberAccountDetail> queryListPage(TableMemberAccountDetail bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
+
+    /**
+     * 转账
+     * @param fromMemberId
+     * @param toMemberId
+     * @param amount
+     * @param remark
+     * @return
+     */
+    TableMemberAccountDetail transfer(String fromMemberId, String toMemberId, String amount, String remark);
 }

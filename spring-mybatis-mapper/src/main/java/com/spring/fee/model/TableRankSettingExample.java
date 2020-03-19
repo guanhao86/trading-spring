@@ -443,6 +443,66 @@ public class TableRankSettingExample {
             addCriterion("case_down_rank_count not between", value1, value2, "caseDownRankCount");
             return (Criteria) this;
         }
+
+        public Criteria andRepurchaseBonusIsNull() {
+            addCriterion("repurchase_bonus is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepurchaseBonusIsNotNull() {
+            addCriterion("repurchase_bonus is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepurchaseBonusEqualTo(Float value) {
+            addCriterion("repurchase_bonus =", value, "repurchaseBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepurchaseBonusNotEqualTo(Float value) {
+            addCriterion("repurchase_bonus <>", value, "repurchaseBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepurchaseBonusGreaterThan(Float value) {
+            addCriterion("repurchase_bonus >", value, "repurchaseBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepurchaseBonusGreaterThanOrEqualTo(Float value) {
+            addCriterion("repurchase_bonus >=", value, "repurchaseBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepurchaseBonusLessThan(Float value) {
+            addCriterion("repurchase_bonus <", value, "repurchaseBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepurchaseBonusLessThanOrEqualTo(Float value) {
+            addCriterion("repurchase_bonus <=", value, "repurchaseBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepurchaseBonusIn(List<Float> values) {
+            addCriterion("repurchase_bonus in", values, "repurchaseBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepurchaseBonusNotIn(List<Float> values) {
+            addCriterion("repurchase_bonus not in", values, "repurchaseBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepurchaseBonusBetween(Float value1, Float value2) {
+            addCriterion("repurchase_bonus between", value1, value2, "repurchaseBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepurchaseBonusNotBetween(Float value1, Float value2) {
+            addCriterion("repurchase_bonus not between", value1, value2, "repurchaseBonus");
+            return (Criteria) this;
+        }
     }
 
     /**

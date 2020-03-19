@@ -65,6 +65,8 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/", "user");
         filterChainDefinitionMap.put("/index", "user");
         filterChainDefinitionMap.put("/admin/front/member/registSimple", "anon");
+        filterChainDefinitionMap.put("/admin/manage/member/exportMemberFile", "anon");
+        filterChainDefinitionMap.put("/admin/manage/order/exportOrderFile", "anon");
         filterChainDefinitionMap.put(Global.ADMIN_PATH + "/**", "user");
         filterChainDefinitionMap.put("/**", "anon");
 

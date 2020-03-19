@@ -2,8 +2,25 @@
     #@wrapper()
         #@panel()
             #@panelHeader({"title":"我的粉丝", "perm": "", "isBack": false, "href": ""})
+
             #end
-        #end
+
+            #@panelBody()
+            <div class="form-group">
+                <label class="col-sm-1 control-label">左区业绩：</label>
+                <div class="col-sm-3">
+                    $!{left}
+                </div>
+                <label class="col-sm-1 control-label" >右区业绩：</label>
+                <div class="col-sm-3">
+                    $!{right}
+                </div>
+            </div>
+            #end
+
+            #end
+
+
         #@panel()
              #@panelBody()
                 #@table()

@@ -9,6 +9,12 @@
                     <input type="hidden" name="id" value="$!{broadcast.id}">
                     #formInput({"name": "ID"} {"name": "id", "value":"$!{broadcast.id}","id": "id","required": "required","readonly":"readonly"})
                     #formInput({"name": "标题"} {"name": "title", "value":"$!{broadcast.title}","id": "title","required": "required","readonly":"readonly"})
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">会员级别：</label>
+                        <div class="col-sm-2">
+                            #selectDisabledBS($!dict.getDictList("level"), ["memberLevel", "$!{broadcast.memberLevel}", "value", "label"], false, [false, "$!{broadcast.level}"])
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label col-lg-2" for="content">内容<font color="red">*</font>：</label>
                         <div class="col-lg-3">

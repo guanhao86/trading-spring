@@ -1,0 +1,14 @@
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"批量发货结果", "perm": "", "isBack": true, "href": "manage/order/list"})
+            #end
+        #end
+    #end
+    #@script()
+        #jsCalculate()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

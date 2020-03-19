@@ -5,12 +5,16 @@ package com.spring.free.controller.front;/**
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.model.TableBroadcastInfo;
+import com.spring.fee.model.TableMember;
 import com.spring.fee.service.ITableBroadcastInfoBusiSV;
+import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.free.domain.QueryVO;
+import com.spring.free.domain.UserInfo;
 import com.spring.free.util.PageResult;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
+import com.spring.free.utils.principal.BaseGetPrincipal;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +38,9 @@ public class FrontBroadcastController {
     @Autowired
     ITableBroadcastInfoBusiSV iTableBroadcastInfoBusiSV;
 
+    @Autowired
+    ITableMemberBusiSV iTableMemberBusiSV;
+
     /*
      * @Author gh
      * @Description //TODO 配置列表
@@ -51,6 +58,12 @@ public class FrontBroadcastController {
         BeanUtils.copyProperties(queryVO, tableBroadcastInfo);
 
         tableBroadcastInfo.setIsDelete(0);
+
+        UserInfo user = BaseGetPrincipal.getUser();
+
+        //获取会员信息
+        TableMember tabelMember = iTableMemberBusiSV.selectByMemberId(user.getUsername());
+        tableBroadcastInfo.setMemberLevel(tabelMember.getLevel());
 
         PageInfo<TableBroadcastInfo> pageInfo = this.iTableBroadcastInfoBusiSV.queryListPage(tableBroadcastInfo, page, pageSize, null);
 

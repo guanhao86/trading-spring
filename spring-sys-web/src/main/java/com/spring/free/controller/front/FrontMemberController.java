@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.model.TableMember;
 import com.spring.fee.service.ITableMemberBusiSV;
+import com.spring.free.common.util.PythonUtil3;
 import com.spring.free.config.ImageUtils;
 import com.spring.free.domain.QueryVO;
 import com.spring.free.domain.UserInfo;
@@ -67,8 +68,30 @@ public class FrontMemberController {
 
         PageInfo<TableMember> pageInfo = this.iTableMemberBusiSV.queryListPage(tableMember, page, pageSize, null);
 
+        //调用python获取在客户端我的粉丝这个界面，最上面加两行，左区业绩： 右区业绩
+        //调用我这个函数获得数据就可以了，传参数是字符串类型的，member_id
+        //String result = "(1,2)";
+        String result = PythonUtil3.runPy("/usr/maitao/run_python", "get_child_achievement.py", user.getUsername(), "");
+
+        if (StringUtils.isNotEmpty(result) && result.indexOf("(") >= 0 && result.indexOf(")")>=0) {
+            result = result.substring(1, result.length()-1);
+        }
+
+
+        System.out.println("左区业绩： 右区业绩："+result);
+
+        String left = "0";
+        String right = "0";
+        String[] results = result.split(",");
+
+        if (results != null && results.length == 2) {
+            left = results[0];
+            right = results[1];
+        }
 
         //获取热门话题列表信息
+        mav.addObject("left", left);
+        mav.addObject("right", right);
         mav.addObject("page", pageInfo);
         mav.addObject("queryVO",queryVO);
         //返回页面header标题
