@@ -136,7 +136,7 @@ public class ManageOrderController {
     public ModelAndView send(ModelAndView mav, HttpServletRequest request, TableOrder tableOrder) {
         Map map = Maps.newHashMap();
         map.put(Global.URL, Global.ADMIN_PATH +"/manage/order/list");
-        tableOrder.setState(2);
+        tableOrder.setState(3); //发货完成
         try {
             this.iTableOrderBusiSV.update(tableOrder);
         }catch (Exception e) {
