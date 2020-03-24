@@ -18,6 +18,12 @@
                     </div>
                 </div>
                 <div class="form-group" >
+                    <label class="col-sm-2 control-label">奖衔：</label>
+                    <div class="col-sm-2">
+                        #selectBS($!dict.getDictList("mRank"), ["mrankLevel", "$!{broadcast.mrankLevel}", "value", "label"], false, [false, "$!{broadcast.mrankLevel}"])
+                    </div>
+                </div>
+                <div class="form-group" >
                     <label class="col-sm-2 control-label">状态：</label>
                     <div class="col-sm-2">
                         #selectBS($!dict.getDictList("broadcastState"), ["isDelete", "$!{broadcast.isDelete}", "value", "label"], false, [false, "$!{broadcast.isDelete}"])

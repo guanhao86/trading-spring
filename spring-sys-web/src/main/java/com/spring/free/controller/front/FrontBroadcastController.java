@@ -64,6 +64,7 @@ public class FrontBroadcastController {
         //获取会员信息
         TableMember tabelMember = iTableMemberBusiSV.selectByMemberId(user.getUsername());
         tableBroadcastInfo.setMemberLevel(tabelMember.getLevel());
+        tableBroadcastInfo.setMrankLevel(tabelMember.getmRank());
 
         PageInfo<TableBroadcastInfo> pageInfo = this.iTableBroadcastInfoBusiSV.queryListPage(tableBroadcastInfo, page, pageSize, null);
 

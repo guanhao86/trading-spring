@@ -19,12 +19,13 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "标题", "会员级别", "创建时间"],"", false)
+                    #tableTHead(["id", "标题", "会员级别", "奖衔", "创建时间"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.id}")
                         #tableTd("$!{l.title}")
                         #tableTd("$!{l.memberLevel}", {"type": "dict", "format": "level"})
+                        #tableTd("$!{l.mrankLevel}", {"type": "dict", "format": "mRank"})
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.time}))
 
                         #@tableTd()

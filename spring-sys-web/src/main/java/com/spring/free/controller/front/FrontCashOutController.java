@@ -4,13 +4,10 @@ package com.spring.free.controller.front;/**
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
-import com.spring.fee.model.TableGoods;
+import com.spring.fee.model.TableCashOut;
 import com.spring.fee.model.TableMember;
-import com.spring.fee.model.TableMemberAccountDetail;
-import com.spring.fee.model.TableOrder;
-import com.spring.fee.service.IMemberAccountDetailBusiSV;
+import com.spring.fee.service.ITableCashOutBusiSV;
 import com.spring.fee.service.ITableMemberBusiSV;
-import com.spring.free.config.CommonUtils;
 import com.spring.free.domain.QueryVO;
 import com.spring.free.domain.UserInfo;
 import com.spring.free.util.PageResult;
@@ -20,32 +17,28 @@ import com.spring.free.util.constraints.PromptInfoConstraints;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
 import com.spring.free.utils.principal.BaseGetPrincipal;
-import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
- * 前端/充值,账户接口
+ * 前端/提现
  **/
 @Controller
-@RequestMapping(Global.ADMIN_PATH + "/front/account/")
-public class FrontAccountController {
+@RequestMapping(Global.ADMIN_PATH + "/front/cashout/")
+public class FrontCashOutController {
 
     @Autowired
-    IMemberAccountDetailBusiSV iMemberAccountDetailBusiSV;
+    ITableCashOutBusiSV iTableCashOutBusiSV;
 
     @Autowired
     ITableMemberBusiSV iTableMemberBusiSV;
@@ -63,72 +56,98 @@ public class FrontAccountController {
                              @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
         // String postType = request.getParameter("postType");
 
-        TableMemberAccountDetail memberAccountDetail = new TableMemberAccountDetail();
-        BeanUtils.copyProperties(queryVO, memberAccountDetail);
+        TableCashOut tableCashOut = new TableCashOut();
+        BeanUtils.copyProperties(queryVO, tableCashOut);
 
         UserInfo user = BaseGetPrincipal.getUser();
+        tableCashOut.setMemberId(user.getUsername());
 
-        //获取会员信息
-        TableMember tabelMember = iTableMemberBusiSV.selectByMemberId(user.getUsername());
-        List<TableMember> list = new ArrayList();
-        list.add(tabelMember);
-
-        memberAccountDetail.setMemberId(user.getUsername());
-
-        PageInfo<TableMemberAccountDetail> pageInfo = this.iMemberAccountDetailBusiSV.queryListPage(memberAccountDetail, page, pageSize, CommonUtils.getStartEnd(queryVO));
+        PageInfo<TableCashOut> pageInfo = this.iTableCashOutBusiSV.queryListPage(tableCashOut, page, pageSize, null);
 
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);
-        mav.addObject("member", list);
         mav.addObject("queryVO",queryVO);
         //返回页面header标题
         PageResult.setPageTitle(mav, PromptInfoConstraints.FUN_TITLE_DICT_LIST);
         //返回操作提示信息
         PageResult.getPrompt(mav, request, queryVO.getParamMsg());
 
-        mav.setViewName("front/account/list");
+        mav.setViewName("front/cashout/list");
         return mav;
     }
 
 
+    /*
+     * @Author jzc
+     * @Date 11:06 2019/2/28
+     * @Param [view, request, post, buttonType]
+     * @return org.springframework.web.servlet.ModelAndView
+     **/
     @RequiresPermissions("system:member:view")
-    @RequestMapping(value = "transferIndex")
-    public ModelAndView transferIndex(ModelAndView view, HttpServletRequest request) {
+    @RequestMapping(value = "edit")
+    public ModelAndView views(ModelAndView view, HttpServletRequest request, TableCashOut tableCashOut, String buttonType) {
         Map map = Maps.newHashMap();
-        PageResult.setPageTitle(view, "转账");
+        PageResult.setPageTitle(view, "提现信息");
         PageResult.getPrompt(view, request, "");
-
         UserInfo user = BaseGetPrincipal.getUser();
 
-        TableMember member = this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
+        TableMember tableMember = this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
 
-        view.addObject("member", member);
-        view.setViewName("front/account/transfer");
+        tableCashOut.setMemberId(user.getUsername());
+
+        TableCashOut tableCashOut1 = this.iTableCashOutBusiSV.select(tableCashOut);
+
+        view.addObject("member",tableMember);
+        view.addObject("cashout",tableCashOut1);
+        view.setViewName("front/cashout/edit");
         return view;
     }
 
+    //
+    /*
+     * @Author bianyx
+     * @Description //TODO 编辑新增保存
+     * @Date 11:07 2019/1/18
+     * @Param [mav, request, topItem, post, buttonType, ghPic1]
+     * @return org.springframework.web.servlet.ModelAndView
+     **/
     @RequiresPermissions("system:member:view")
-    @RequestMapping(value = "transfer")
-    public ModelAndView transfer(ModelAndView view, HttpServletRequest request, QueryVO queryVO) {
+    @RequestMapping(value = "save")
+    public ModelAndView edit(ModelAndView mav, HttpServletRequest request, TableCashOut tableCashOut) {
         Map map = Maps.newHashMap();
-        PageResult.setPageTitle(view, "转账");
-        PageResult.getPrompt(view, request, "");
+        map.put(Global.URL, Global.ADMIN_PATH +"/front/cashout/list");
 
         try {
             UserInfo user = BaseGetPrincipal.getUser();
-            if(!user.getPassword().equals(queryVO.getPassword())) {
-                map.put(Global.URL, Global.ADMIN_PATH +"/front/account/transferIndex");
-                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "密码错误", map.get(Global.URL).toString(), map);
+
+            TableMember tableMember = this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
+
+            if (tableCashOut.getAmount() > tableMember.getAccountMoney()) {
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "余额不足", map.get(Global.URL).toString(), map);
             }
-            this.iMemberAccountDetailBusiSV.transfer(user.getUsername(), queryVO.getMemberId(), queryVO.getAmount(), queryVO.getRemark());
+
+            tableCashOut.setMemberId(user.getUsername());
+            this.iTableCashOutBusiSV.insert(tableCashOut);
         }catch (Exception e) {
-            map.put(Global.URL, Global.ADMIN_PATH +"/front/account/transferIndex");
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
         }
 
-        //查询会员信息，返回地址
-        PageResult.setPrompt(map,"转账成功", "success");
-        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/front/account/transferIndex"), map);
+        PageResult.setPrompt(map,"操作成功", "success");
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/front/cashout/list"), map);
+    }
+
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "view")
+    public ModelAndView view(ModelAndView view, HttpServletRequest request, TableCashOut tableCashOut) {
+        Map map = Maps.newHashMap();
+        PageResult.setPageTitle(view, "提现信息");
+        PageResult.getPrompt(view, request, "");
+
+        TableCashOut tableCashOut1=this.iTableCashOutBusiSV.select(tableCashOut);
+
+        view.addObject("cashout",tableCashOut1);
+        view.setViewName("front/cashout/view");
+        return view;
     }
 
 }

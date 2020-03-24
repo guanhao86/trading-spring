@@ -1,0 +1,108 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:view", "isBack": true, "href": "manage/cashout/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manage/cashout/save")
+                <input type="hidden" name="id" value="$!{cashout.id}">
+                    #formInput({"name": "申请人"} {"name": "memberId", "value":"$!{cashout.memberId}","id": "memberId","required": "required","readonly":"readonly"})
+                    #formInput({"name": "金额"} {"name": "amount", "value":"$!{cashout.amount}","id": "amount","required": "required","readonly":"readonly"})
+                    #formInput({"name": "姓名"} {"name": "memberName", "value":"$!{cashout.memberName}","id": "memberName","required": "required","readonly":"readonly"})
+                    #formInput({"name": "银行卡号"} {"name": "bankCardId", "value":"$!{cashout.bankCardId}","id": "bankCardId","required": "required","readonly":"readonly"})
+                    #formInput({"name": "开户行名字"} {"name": "bankName", "value":"$!{cashout.bankName}","id": "bankName","required": "required","readonly":"readonly"})
+                    #formInput({"name": "银行卡开户行地址"} {"name": "bankOpenAre", "value":"$!{cashout.bankOpenAre}","id": "bankOpenAre","required": "required","readonly":"readonly"})
+                    #formInput({"name": "申请时间"} {"name": "createTime1", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{cashout.createTime})","id": "createTime","required": "required","readonly":"readonly"})
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">打款凭证<font color="red">*</font>：</label>
+                        <div class="col-sm-3">
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div class="fileupload-new thumbnail" >
+                                    <img src="/img/add-file.png" alt="" id="auditImage"  value="$!{cashout.auditImage}"
+                                         style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+                                </div>
+                                <div class="fileupload-preview fileupload-exists thumbnail"
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                <div id="btn_div_front">
+                                    <span class="btn btn-default btn-file">
+                                        <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择照片</span>
+                                        <span class="fileupload-exists"><i class="fa fa-undo"></i> 重新选择</span>
+                                        <input type="file" class="default" name="file" id="auditImage"  />
+                                    </span>
+                                    <a href=" " class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> 删除</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">状态：</label>
+                        <div class="col-sm-2">
+                            #selectBS($!dict.getDictList("cashoutState"), ["auditState", "$!{cashout.auditState}", "value", "label"], false, [false, "$!{cashout.auditState}"])
+                        </div>
+                    </div>
+                    #formInput({"name": "审核结果"} {"name": "auditRemark", "value":"$!{cashout.auditRemark}","id": "auditRemark","required": "required"})
+
+
+
+
+                #end
+            #end
+        #end
+    #end
+    #@script()
+
+        #scriptSrc("/summernote/summernote.js")
+        #scriptSrc("/summernote/lang/summernote-zh-CN.js")
+        #scriptSrc("/js/backstage/bootstrap-fileupload.min.js")
+
+
+    <script>
+
+        $(document).ready(function() {
+
+
+            $('.summernote').summernote({
+//                toolbar: [
+//                    ['style', ['bold', 'italic', 'underline']],
+//                    ['fontsize', ['fontsize']],
+//                    ['para', ['paragraph']],
+//                    ['height', ['height']]
+//                ],
+                height: 400,
+                tabsize: 2,
+                lang: 'zh-CN',
+                callbacks: {
+                    onImageUpload: function(files) {
+                        //上传图片到服务器，使用了formData对象，至于兼容性...据说对低版本IE不太友好
+                        var formData = new FormData();
+                        formData.append('file',files[0]);
+                        $.ajax({
+                            url : '$!{ctx}/notice/upload',//后台文件上传接口
+                            type : 'POST',
+                            data : formData,
+                            processData : false,
+                            contentType : false,
+                            success : function(data) {
+//                            alert(data);
+                                $('#summernote').summernote('insertImage',data,'img');
+                            }
+                        });
+                    }
+                }
+
+            });
+
+
+        });
+
+    </script>
+
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

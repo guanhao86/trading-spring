@@ -575,7 +575,12 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
 
         String pwd = bo.getPassword();
 
-        TableMember tableMemberOrig = this.selectByMemberId(bo.getMemberId());
+        TableMember tableMemberOrig;
+        try {
+            tableMemberOrig = this.selectByMemberId(bo.getMemberId());
+        }catch (Exception e) {
+            tableMemberOrig = this.select(bo);
+        }
 
         if (tableMemberOrig == null) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在！", "", null);

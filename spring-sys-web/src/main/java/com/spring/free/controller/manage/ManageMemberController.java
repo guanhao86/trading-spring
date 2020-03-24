@@ -10,6 +10,7 @@ import com.spring.fee.model.TableMember;
 import com.spring.fee.model.TableMemberDZ;
 import com.spring.fee.model.TableOrder;
 import com.spring.fee.service.ITableMemberBusiSV;
+import com.spring.free.common.util.PythonUtil3;
 import com.spring.free.config.CommonUtils;
 import com.spring.free.config.ImageUtils;
 import com.spring.free.domain.QueryVO;
@@ -170,11 +171,31 @@ public class ManageMemberController {
         Map map = Maps.newHashMap();
         PageResult.setPageTitle(view, "会员信息");
         PageResult.getPrompt(view, request, "");
-
-        UserInfo user = BaseGetPrincipal.getUser();
-
+        String result = "(0,0)";
 
         TableMember tableMember=this.iTableMemberBusiSV.select(member);
+
+        try {
+            result = PythonUtil3.runPy("/usr/maitao/run_python", "get_child_achievement.py", tableMember.getMemberId(), "");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (StringUtils.isNotEmpty(result) && result.indexOf("(") >= 0 && result.indexOf(")")>=0) {
+            result = result.substring(1, result.length()-1);
+        }
+
+
+        System.out.println("左区业绩： 右区业绩："+result);
+        String left = "0";
+        String right = "0";
+        String[] results = result.split(",");
+
+        if (results != null && results.length == 2) {
+            left = results[0];
+            right = results[1];
+        }
+
 //        if(tableMember!=null) {
 //            member.setTotal(account.getTotal().doubleValue() / 1000);
 //            member.setAvailable(account.getAvailable().doubleValue() / 1000);
@@ -182,6 +203,8 @@ public class ManageMemberController {
 //            member.setMoneyFreeze(account.getMoneyFreeze().doubleValue() / 1000);
 //            member.setGranaryFreeze(account.getGranaryFreeze().doubleValue() / 1000);
 //        }
+        view.addObject("left", left);
+        view.addObject("right", right);
         view.addObject("member",tableMember);
         view.setViewName("manage/member/view");
         return view;

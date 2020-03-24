@@ -7,6 +7,16 @@
             #@panelBody()
                 #@form("form_insert" true "post" "manage/member/save")
                     <input type="hidden" name="id" value="$!{member.id}">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">左区业绩：</label>
+                        <div class="col-sm-3">
+                            $!{left}
+                        </div>
+                        <label class="col-sm-1 control-label" >右区业绩：</label>
+                        <div class="col-sm-3">
+                            $!{right}
+                        </div>
+                    </div>
                     #formInput({"name": "ID"} {"name": "memberId", "value":"$!{member.memberId}","id": "memberId","required": "required","readonly":"readonly"})
                     #formInput({"name": "电话"} {"name": "phone", "value":"$!{member.phone}","id": "phone","required": "required","readonly":"readonly"})
                     #formInput({"name": "姓名"} {"name": "reallyName", "value":"$!{member.reallyName}","id": "reallyName","required": "required","readonly":"readonly"})

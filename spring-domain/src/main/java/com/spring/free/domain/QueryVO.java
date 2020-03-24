@@ -63,4 +63,8 @@ public class QueryVO extends BaseEntity<QueryVO> {
      * 1：日结  2：奖金发放  3：月结
      */
     private String settleType;
+
+    private String auditState;
+
+    private String respState;
 }

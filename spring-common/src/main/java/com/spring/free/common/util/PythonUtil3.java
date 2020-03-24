@@ -38,8 +38,4 @@ public class PythonUtil3 {
         return result;
     }
 
-    public static void main(String[] args) {
-        PythonUtil3.runPy("E:\\工作\\01 需求\\20191014 麦子科技\\东家嗨团\\结算代码\\结算代码", "aaa.py", "1111", "");
-        //PythonUtil.runPy("E:\\工作\\05 学习资料\\python\\testPython\\test-函数-1.py", "mySum", "");
-    }
 }

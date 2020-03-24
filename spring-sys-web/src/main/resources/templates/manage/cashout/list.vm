@@ -1,20 +1,18 @@
 #@html()
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"留言列表 搜索", "perm": "", "isBack": false, "href": ""})
-                #btn({"btnName":"发起留言", "icon":"fa-plus", "style":"primary",  "attr":{"data-button": "insert-pre",
-                    "data-href": "$!{ctx}/front/message/edit"}})
+            #@panelHeader({"title":"提现列表 搜索", "perm": "", "isBack": false, "href": ""})
                 #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
                 #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
             #end
             #@panelBody()
-                #@form("search" false "post" "front/message/list")
+                #@form("search" false "post" "manage/cashout/list")
 
                     #@divColSmNum(3)
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">答复状态：</label>
+                        <label class="col-sm-4 control-label">审核状态：</label>
                         <div class="col-sm-5" style="width: 200px;">
-                            #selectBS($!dict.getDictList("messageState"), ["respState", "$!{queryVO.respState}", "value", "label"], false, [true, ""])
+                            #selectBS($!dict.getDictList("cashoutState"), ["auditState", "$!{queryVO.auditState}", "value", "label"], false, [true, ""])
                         </div>
                     </div>
                     #end
@@ -25,15 +23,18 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "标题", "状态", "留言时间"],"", false)
+                    #tableTHead(["id","申请人", "金额", "状态", "申请时间"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.id}")
-                        #tableTd("$!{l.title}")
-                        #tableTd("$!{l.state}", {"type": "dict", "format": "messageState"})
+                        #tableTd("$!{l.memberId}")
+                        #tableTd("$!{l.amount}")
+                        #tableTd("$!{l.auditState}", {"type": "dict", "format": "cashoutState"})
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.createTime}))
                         #@tableTd()
-                            #@a("查看" {"href": "$!{ctx}/front/message/view?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #if(${l.auditState} != "2")
+                                #@a("审核" {"href": "$!{ctx}/manage/cashout/edit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #end
                         #end
                     #end
                 #end
@@ -78,7 +79,7 @@
             submitHandler: function(form) {
                 if($('#start_time').val()!=""&&$('#end_time').val()!=""){
                     if (!(new Date($('#start_time').val()).compare(new Date($('#end_time').val()), DATE_CONS.DATE_COMPARE_SMALL_EQUAL))){
-                        $("#message_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
+                        $("#cashout_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
                         shade.hideBg("dialog");
                         return;
                     }

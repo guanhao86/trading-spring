@@ -97,7 +97,10 @@ public class TableBroadcastInfoBusiSVImpl implements ITableBroadcastInfoBusiSV {
             criteria.andIsDeleteEqualTo(bo.getIsDelete());
         }
         if (null != bo.getMemberLevel()) {
-            criteria.andMemberLevelGreaterThanOrEqualTo(bo.getMemberLevel());
+            criteria.andMemberLevelLessThanOrEqualTo(bo.getMemberLevel());
+        }
+        if (null != bo.getMrankLevel()) {
+            criteria.andMrankLevelLessThanOrEqualTo(bo.getMrankLevel());
         }
 
         PageInfo<TableBroadcastInfo> pageInfo = PageHelper.startPage(pageNum, pageSize)

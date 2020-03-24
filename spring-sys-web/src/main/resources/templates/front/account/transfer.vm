@@ -12,7 +12,12 @@
                     #formInput({"name": "转账到会员ID"} {"name": "memberId", "value":"","id": "memberId","required": "required"})
                     #formInput({"name": "转账金额（元）"} {"name": "amount", "value":"","id": "amount","required": "required"})
                     #formInput({"name": "备注"} {"name": "remark", "value":"","id": "remark","required": "required"})
-
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">密码：</label>
+                    <div class="col-sm-2">
+                        <input type="password" placeholder="请输入密码" class="form-control form-underlined" id="password" name="password"/>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">可转账金额：</label>
                     <div class="col-sm-2" style="margin-top: 5px">

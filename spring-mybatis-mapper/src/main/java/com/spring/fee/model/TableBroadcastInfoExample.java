@@ -574,6 +574,66 @@ public class TableBroadcastInfoExample {
             addCriterion("member_level not between", value1, value2, "memberLevel");
             return (Criteria) this;
         }
+
+        public Criteria andMrankLevelIsNull() {
+            addCriterion("mRank_level is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMrankLevelIsNotNull() {
+            addCriterion("mRank_level is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMrankLevelEqualTo(Integer value) {
+            addCriterion("mRank_level =", value, "mrankLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMrankLevelNotEqualTo(Integer value) {
+            addCriterion("mRank_level <>", value, "mrankLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMrankLevelGreaterThan(Integer value) {
+            addCriterion("mRank_level >", value, "mrankLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMrankLevelGreaterThanOrEqualTo(Integer value) {
+            addCriterion("mRank_level >=", value, "mrankLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMrankLevelLessThan(Integer value) {
+            addCriterion("mRank_level <", value, "mrankLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMrankLevelLessThanOrEqualTo(Integer value) {
+            addCriterion("mRank_level <=", value, "mrankLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMrankLevelIn(List<Integer> values) {
+            addCriterion("mRank_level in", values, "mrankLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMrankLevelNotIn(List<Integer> values) {
+            addCriterion("mRank_level not in", values, "mrankLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMrankLevelBetween(Integer value1, Integer value2) {
+            addCriterion("mRank_level between", value1, value2, "mrankLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMrankLevelNotBetween(Integer value1, Integer value2) {
+            addCriterion("mRank_level not between", value1, value2, "mrankLevel");
+            return (Criteria) this;
+        }
     }
 
     /**

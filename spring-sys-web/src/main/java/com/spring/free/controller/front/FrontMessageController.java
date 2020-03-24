@@ -19,6 +19,7 @@ import com.spring.free.util.constraints.PromptInfoConstraints;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
 import com.spring.free.utils.principal.BaseGetPrincipal;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,9 @@ public class FrontMessageController {
 
         UserInfo user = BaseGetPrincipal.getUser();
         tableMessage.setMemberId(user.getUsername());
+
+        if (StringUtils.isNotEmpty(queryVO.getRespState()))
+            tableMessage.setState(queryVO.getRespState());
 
         PageInfo<TableMessage> pageInfo = this.iTableMessageBusiSV.queryListPage(tableMessage, page, pageSize, null);
 

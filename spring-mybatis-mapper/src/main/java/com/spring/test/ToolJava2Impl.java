@@ -9,7 +9,7 @@ public class ToolJava2Impl {
     public static void main(String[] args) {
         List<String> classList = new ArrayList();
         String path = "com.spring.fee.model.";
-        classList.add(path + "TableMessage");
+        classList.add(path + "TableCashOut");
 
         for (String s : classList) {
             run(s);

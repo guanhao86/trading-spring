@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">答复状态：</label>
                         <div class="col-sm-5" style="width: 200px;">
-                            #selectBS($!dict.getDictList("messageState"), ["state", "$!{queryVO.state}", "value", "label"], false, [true, ""])
+                            #selectBS($!dict.getDictList("messageState"), ["respState", "$!{queryVO.respState}", "value", "label"], false, [true, ""])
                         </div>
                     </div>
                     #end

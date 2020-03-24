@@ -37,12 +37,14 @@ public class TableMessageBusiSVImpl implements ITableMessageBusiSV {
     public TableMessage insert(TableMessage bo) {
         log.info("创建留言参数bo：{}", JSON.toJSON(bo));
         bo.setCreateTime(DateUtils.getSysDate());
+        bo.setState("1");
         iTableMessageMapper.insert(bo);
         return bo;
     }
 
     @Override
     public TableMessage update(TableMessage bo) {
+        bo.setResponseTime(DateUtils.getSysDate());
         if (this.iTableMessageMapper.updateByPrimaryKeySelective(bo) == 1) {
             return bo;
         }
