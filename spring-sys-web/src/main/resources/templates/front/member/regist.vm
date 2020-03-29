@@ -15,6 +15,7 @@
                     #formInput({"name": "电话"} {"name": "phone", "value":"","id": "phone","required": "required"})
                     #formInput({"name": "推荐人ID"} {"name": "referenceId", "value":"$!{member.memberId}","id": "referenceId","required": "required"})
                     #formInput({"name": "安置人ID"} {"name": "arrangeId", "value":"$!{member.memberId}","id": "arrangeId","required": "required"})
+                    #formInput({"name": "安置人姓名"} {"name": "arrangeName", "value":"$!{member.arrangeName}","id": "arrangeName","readonly":"readonly"})
                     <div class="form-group" >
                         <label class="col-sm-2 control-label">安置区：</label>
                         <div class="col-sm-2">
@@ -26,6 +27,27 @@
         #end
     #end
     #@script()
+
+    <script>
+        getMember()
+        $(document).ready(function() {
+            $("#arrangeId").blur(function(){
+                console.log("获取姓名")
+                getMember()
+            })
+
+        });
+
+        function getMember(){
+            console.log("dddddd")
+            $("#arrangeName").val('')
+            $.get('/api/member/getMemberInfo/'+$("#arrangeId").val(), function (data) {
+                console.log("data", data)
+                $("#arrangeName").val(data.data.reallyName)
+            });
+        }
+    </script>
+
         #@jsValidate("form_insert")
         #end
     #end

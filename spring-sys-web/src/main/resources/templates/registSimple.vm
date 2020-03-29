@@ -68,9 +68,14 @@
                     </div>
                 </li>
                 <li>
-                    <div class="form-group">
-                        <label class="control-label">安置人编号：</label>
-                        <input type="text" placeholder="安置人编号" class="form-control form-underlined" id="arrangeId" name="arrangeId"/>
+                    <div class="form-group" style="display: inline-block">
+                        <div style="display:inline-block; float: left">
+                            <label class="control-label">安置人编号：</label>
+                            <input type="text" placeholder="安置人编号" class="form-control form-underlined" id="arrangeId" name="arrangeId" onblur="getMember(this, 'arrangeName')"/>
+                        </div>
+                        <div style="display:inline-block; float: left; margin-left: 20px; margin-top: 5px">
+                            <font id="arrangeName" ></font>
+                        </div>
                     </div>
                 </li>
                 <li>
@@ -78,6 +83,8 @@
                      <label class="control-label">安置区：</label>
                      <input type="radio" name="leftOrRight" id="leftOrRight" style="vertical-align:middle" value="1"> 左区
                      <input type="radio" name="leftOrRight" id="leftOrRight" style="vertical-align:middle" value="2"> 右区
+                     <input type="radio" name="leftOrRight" id="leftOrRight" style="vertical-align:middle" value="3"> 左区滑落
+                     <input type="radio" name="leftOrRight" id="leftOrRight" style="vertical-align:middle" value="4"> 右区滑落
                  </div>
                 </li>
                 <li>
@@ -145,6 +152,14 @@
                 console.log(e.responseText);
                 $("#error").html("系统异常");
             }
+        });
+    }
+
+    function getMember(obj, id){
+        document.getElementById(id).innerHTML = '';
+        $.get('/api/member/getMemberInfo/'+obj.value, function (data) {
+            console.log("data", data)
+            document.getElementById(id).innerHTML = data.data.reallyName;
         });
     }
 </script>

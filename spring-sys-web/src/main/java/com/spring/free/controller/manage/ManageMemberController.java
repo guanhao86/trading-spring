@@ -224,6 +224,7 @@ public class ManageMemberController {
     @RequestMapping(value = "add")
     public ModelAndView add(ModelAndView view, HttpServletRequest request) {
         Map map = Maps.newHashMap();
+        PageResult.getPrompt(view, request, "");
         PageResult.setPageTitle(view, "会员信息注册");
         view.setViewName("manage/member/form");
         return view;
@@ -233,7 +234,7 @@ public class ManageMemberController {
     @RequestMapping(value = "register")
     public ModelAndView register(ModelAndView view, HttpServletRequest request, TableMember m) {
         Map map = Maps.newHashMap();
-        map.put(Global.URL, Global.ADMIN_PATH +"/manage/member/register");
+        map.put(Global.URL, Global.ADMIN_PATH +"/manage/member/add");
         TableMember member = null;
         try {
             member = this.iTableMemberBusiSV.regist(m,2);

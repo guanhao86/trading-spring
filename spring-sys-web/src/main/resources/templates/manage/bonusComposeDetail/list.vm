@@ -1,0 +1,28 @@
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"组织奖详情", "perm": "", "isBack": true, "href": "manage/bonus/list?bonusId=2&memberId=$!{queryVO.queryMemberId}"})
+            #end
+        #end
+        #@panel()
+             #@panelBody()
+                #@table()
+                    #tableTHead(["会员编号", "新增业绩", "最后一条新增业绩的时间"],"", false)
+                    #@tableBody($page.list)
+                        #tableTd("$!{l.memberId}")
+                        #tableTd("$!{l.orderPrice}")
+                        #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.orderTime}))
+                    #end
+                #end
+
+                #parse("modular/page.vm")
+            #end
+        #end
+    #end
+    #@script()
+        #jsCalculate()
+        #@jsValidate("form_insert")
+
+        #end
+    #end
+#end

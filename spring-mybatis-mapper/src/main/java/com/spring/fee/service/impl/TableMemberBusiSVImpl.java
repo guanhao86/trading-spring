@@ -9,6 +9,7 @@ import com.spring.fee.model.*;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.fee.service.ITableMemberLevelChangeDetailBusiSV;
 import com.spring.free.common.util.ExcelUtils;
+import com.spring.free.common.util.PythonUtil3;
 import com.spring.free.domain.RoleInfo;
 import com.spring.free.domain.UserInfo;
 import com.spring.free.system.UserService;
@@ -478,6 +479,32 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
 
         if(referenceIdMember==null){
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "推荐人不存在！", "", null);
+        }
+        try {
+            //判断左右区类型
+            if (3 == m.getLeftOrRight() || 4 == m.getLeftOrRight()) {
+                log.info("自动滑落");
+                //3 左区滑落
+                //4 右区滑落
+                String result = PythonUtil3.runPy("/usr/maitao/run_python", "get_leaf_node.py", arrangeId, "");
+                if (StringUtils.isEmpty(result)) {
+                    throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "根据安置人"+arrangeId+"获取自动滑落会员编号失败","", null);
+                }
+                result = result.replace("(", "").replace(")", "").trim();
+                if (3 == m.getLeftOrRight()) {
+                    arrangeId = result.split(",")[0].replace("'","").trim();
+                    m.setLeftOrRight(1);
+                    log.info("自动滑落左区，推荐人ID={}", arrangeId);
+                }
+                if (4 == m.getLeftOrRight()) {
+                    arrangeId = result.split(",")[1].replace("'","").trim();
+                    m.setLeftOrRight(2);
+                    log.info("自动滑落右区，推荐人ID={}", arrangeId);
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "根据安置人"+arrangeId+"获取自动滑落会员编号失败","", null);
         }
 
         //判断安置人

@@ -12,6 +12,11 @@
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.recodeTime}))
                         #tableTd("$!{l.remark}")
                         #tableTd("$!{l.closeState}", {"type": "dict", "format": "bonusCloseState"})
+                        #@tableTd()
+                            #if(${l.bonusId}==2)
+                                #@a("奖金明细" {"href": "$!{ctx}/manage/bonusComposeDetail/list?memberId=$!{l.memberId}&queryMemberId=$!{queryVO.memberId}", "class": "fa fa-pencil-square-o"})#end
+                            #end
+                        #end
                     #end
                 #end
 

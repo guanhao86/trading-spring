@@ -12,6 +12,8 @@ import java.util.Date;
 @ToString
 public class QueryVO extends BaseEntity<QueryVO> {
 
+    private String queryMemberId;
+
     private String memberId;
 
     private String referenceId;
