@@ -8,6 +8,7 @@ import com.spring.fee.model.*;
 import com.spring.fee.service.ITWheatMemberBusiSV;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.free.common.domain.AccessResponse;
+import com.spring.free.config.PassToken;
 import com.spring.free.service.RestMemberService;
 import com.spring.free.util.DateUtils;
 import com.spring.free.utils.velocity.DictUtils;
@@ -34,7 +35,7 @@ public class RestMemberController {
     @Autowired
     ITableMemberBusiSV iTableMemberBusiSV;
 
-
+    @PassToken
     @RequestMapping(value = "/getMemberInfo/{memberId}")
     public @ResponseBody
     AccessResponse getMemberInfo(@PathVariable String memberId, String image,HttpServletRequest request, HttpServletResponse response){
