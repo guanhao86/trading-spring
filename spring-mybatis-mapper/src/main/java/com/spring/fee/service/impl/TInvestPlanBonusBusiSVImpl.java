@@ -352,7 +352,7 @@ public class TInvestPlanBonusBusiSVImpl implements ITInvestPlanBonusBusiSV {
         investPlanBonusTmpList = this.itInvestPlanBonusTmpBusiSV.queryList(param);
         if (investPlanBonusTmpList != null) {
             log.info("获取待结算列表数量：{}", investPlanBonusTmpList.size());
-            //modify by guanhao 20191118 结算与购买计划级别无关，只取正在执行计划数量
+            //modify by gg 20191118 结算与购买计划级别无关，只取正在执行计划数量
             Map<String, Double> map = this.itInvestPlanBonusBusiSV.getMemberBonusEarningRate2();
             for (TInvestPlanBonusTmp tInvestPlanBonusTmp : investPlanBonusTmpList) {
                 TInvestPlanBonusTmpDZ dz = new TInvestPlanBonusTmpDZ();

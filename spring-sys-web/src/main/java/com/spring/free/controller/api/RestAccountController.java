@@ -30,7 +30,7 @@ public class RestAccountController {
     ITWheatAccountBusiSV itWheatAccountBusiSV;
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 会员账户变更明细列表
      * @param request
      * @param response
@@ -51,7 +51,7 @@ public class RestAccountController {
     }
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 会员账户信息
      * @param request
      * @param response

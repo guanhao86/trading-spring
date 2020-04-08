@@ -54,7 +54,7 @@ public class RestInvestPlanController {
     ITInvestMemberUpConfigBusiSV itInvestMemberUpConfigBusiSV;
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 获取所有粮仓配置项
      * @param request
      * @param response
@@ -74,7 +74,7 @@ public class RestInvestPlanController {
     }
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 购买粮仓 / 复投
      * @param request
      * @param response
@@ -117,7 +117,7 @@ public class RestInvestPlanController {
     }
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 会员可购买粮仓计划列表
      * @param request
      * @param response
@@ -138,7 +138,7 @@ public class RestInvestPlanController {
     }
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 获取粮仓计划列表
      * @param request
      * @param response
@@ -159,7 +159,7 @@ public class RestInvestPlanController {
     }
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 获取粮仓计划列表
      * @param request
      * @param response
@@ -180,7 +180,7 @@ public class RestInvestPlanController {
     }
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 获取是否自动续仓标志位
      * @param request
      * @param response
@@ -201,7 +201,7 @@ public class RestInvestPlanController {
     }
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 获取是否自动续仓标志位
      * @param request
      * @param response
@@ -229,7 +229,7 @@ public class RestInvestPlanController {
     }
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 获取粮仓收益明细
      * @param request
      * @param response
@@ -250,7 +250,7 @@ public class RestInvestPlanController {
     }
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 粮仓统计：已购买数量，执行中数量，所有粮仓数量
      * @param request
      * @param response
@@ -269,7 +269,7 @@ public class RestInvestPlanController {
     }
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 统计收益：支持全部收益，历史收益  会员ID必填
      * @param request
      * @param response
@@ -319,7 +319,7 @@ public class RestInvestPlanController {
     }
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 统计团队业绩：今日业绩，累计业绩，自动复投人数，复投率
      * @param request
      * @param response
@@ -382,7 +382,7 @@ public class RestInvestPlanController {
     }
 
     /**
-     * @Author guanhao
+     * @Author gg
      * 排行榜：富豪榜，大户榜，江湖榜
      * @param request
      * @param response

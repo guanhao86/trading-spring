@@ -330,7 +330,7 @@ public class TInvestQueueBusiSVImpl implements ITInvestQueueBusiSV {
             investPlanMainParam.setId(mainId);
             TInvestPlanMain investPlanMainOrig = this.itInvestPlanMainBusiSV.select(investPlanMainParam);
             memberId = investPlanMainOrig.getMemberId();
-            //已经存在其他类型计划正在执行中，不允许续仓(modify by guanhao  由只能购买一种计划，修改为可以购买多种计划)
+            //已经存在其他类型计划正在执行中，不允许续仓(modify by gg  由只能购买一种计划，修改为可以购买多种计划)
 //            if (!this.itInvestPlanMainBusiSV.checkOtherPlanIng(investPlanMainOrig.getMemberId(), investPlanMainOrig.getPlanId())) {
 //                log.info("已经存在其他类型计划正在执行中，不允许续仓");
 //                throw new ServiceException(ExceptionConstants.Param.NULL, "已经存在其他类型计划正在执行中，不允许续仓");
