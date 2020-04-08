@@ -12,6 +12,7 @@ import com.spring.free.utils.principal.BaseGetPrincipal;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,6 +27,9 @@ import java.util.List;
  */
 @Controller
 public class IndexController {
+
+    @Value("${system.type}")
+    public String system_type;
 
     @Autowired
     private MenuService menuService;
@@ -72,7 +76,8 @@ public class IndexController {
             Subject currentUser = SecurityUtils.getSubject();
             currentUser.logout();
         }
-        PageResult.publicModelTitle(mav, PromptInfoConstraints.MEMBER_SYSTEM_LOGIN, "", "");
+
+        PageResult.publicModelTitle(mav, "FRONT".equals(system_type)?PromptInfoConstraints.MEMBER_SYSTEM_LOGIN:PromptInfoConstraints.TRADE_SYSTEM, "", "");
         mav.setViewName("login2");
         return mav;
     }
@@ -80,7 +85,7 @@ public class IndexController {
     @RequestMapping("/regist")
     public ModelAndView regist(ModelAndView mav, HttpSession session) {
 
-        PageResult.publicModelTitle(mav, PromptInfoConstraints.MEMBER_SYSTEM_LOGIN, "", "");
+        PageResult.publicModelTitle(mav, "FRONT".equals(system_type)?PromptInfoConstraints.MEMBER_SYSTEM_LOGIN:PromptInfoConstraints.TRADE_SYSTEM, "", "");
         mav.setViewName("registSimple");
         return mav;
     }

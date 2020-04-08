@@ -78,7 +78,7 @@ public class PromptInfoConstraints {
 
     public static final String TRADE_SYSTEM_INDEX = TRADE_SYSTEM + "-首页";
 
-    public static final String MEMBER_SYSTEM_LOGIN = "会员系统-登录";
+    public static final String MEMBER_SYSTEM_LOGIN = "会员管理系统";
 
     public static final String SYSTEM_SETTING = "系统设置";
 
