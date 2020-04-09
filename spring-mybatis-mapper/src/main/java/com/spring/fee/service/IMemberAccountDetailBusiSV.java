@@ -27,7 +27,7 @@ public interface IMemberAccountDetailBusiSV {
      * @param remark
      * @return
      */
-    TableMemberAccountDetail changeMoney(String memberId, String accountType, Float amount, String remark);
+    TableMemberAccountDetail changeMoney(String memberId, String operType, Float amount, String remark, Integer accountType);
 
     PageInfo<TableMemberAccountDetail> queryListPage(TableMemberAccountDetail bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
 
@@ -40,4 +40,12 @@ public interface IMemberAccountDetailBusiSV {
      * @return
      */
     TableMemberAccountDetail transfer(String fromMemberId, String toMemberId, String amount, String remark);
+
+    /**
+     * 账本内部互转
+     * @param amount
+     * @param type  1:奖金可用到现金
+     * @return
+     */
+    TableMemberAccountDetail transferInner(String memberId, String amount, String type);
 }

@@ -90,7 +90,7 @@ public class TableCashOutBusiSVImpl implements ITableCashOutBusiSV {
                     throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "余额不足！", "", null);
                 }
 
-                this.iMemberAccountDetailBusiSV.changeMoney(tableMember.getMemberId(), "2", bo.getAmount(), "提现");
+                this.iMemberAccountDetailBusiSV.changeMoney(tableMember.getMemberId(), "2", bo.getAmount(), "提现", null);
 
                 this.update(bo);
             }

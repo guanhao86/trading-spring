@@ -97,7 +97,8 @@ public class TableInvestBusiSVImpl implements ITableInvestBusiSV {
                     bo.getMemberId(),
                     "1",
                     bo.getAccountMoney(),
-                    "充值申请，审核通过");
+                    "充值申请，审核通过",
+                    null);
         }
         orig.setState(bo.getState());
         orig.setApprovalResult(bo.getApprovalResult());

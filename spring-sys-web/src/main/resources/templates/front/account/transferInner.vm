@@ -1,0 +1,28 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+<link rel="stylesheet" href="/summernote/summernote.css">
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"奖金可用到现金转账", "perm": "system:member:view", "isBack": false, "href": "front/account/list"})
+                #btn({"btnName":"提交", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "front/account/transferInner")
+
+                    #formInput({"name": "转账金额（元）"} {"name": "amount", "value":"","id": "amount","required": "required"})
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">可转账金额：</label>
+                        <div class="col-sm-2" style="margin-top: 5px">
+                            $!{member.accountPointAvailable}
+                        </div>
+                    </div>
+                #end
+            #end
+        #end
+    #end
+    #@script()
+
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

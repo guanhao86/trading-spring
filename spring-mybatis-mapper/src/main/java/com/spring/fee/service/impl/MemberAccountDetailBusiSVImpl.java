@@ -12,6 +12,7 @@ import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.free.util.DateUtils;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
+import jnr.ffi.annotations.In;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.formula.functions.T;
@@ -77,13 +78,18 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
      * 账户变更接口
      *
      * @param memberId
-     * @param accountType 1:充值  2:购物
+     * @param operType 1:增加  2:扣减
      * @param amount
      * @param remark
+     * @param accountType
+     * 1：account_money
+     * 2：account_point_available
+     * 3：account_dj_point
+     * 4：account_jys_point
      * @return
      */
     @Override
-    public TableMemberAccountDetail changeMoney(String memberId, String accountType, Float amount, String remark) {
+    public TableMemberAccountDetail changeMoney(String memberId, String operType, Float amount, String remark, Integer accountType) {
 
         //获取会员信息
         TableMember tableMember = iTableMemberBusiSV.selectByMemberId(memberId);
@@ -96,24 +102,49 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "金额不正确！", "", null);
         }
 
+
         Float accountMoney = tableMember.getAccountMoney();
+
+        if (null == accountType || accountType == 1) {
+            accountMoney = tableMember.getAccountMoney();
+        }
+        if (accountType == 2) {
+            accountMoney = tableMember.getAccountPointAvailable();
+        }
+        if (accountType == 3) {
+            accountMoney = tableMember.getAccountDjPoint();
+        }
+        if (accountType == 4) {
+            accountMoney = tableMember.getAccountJsyPoint();
+        }
+
         TableMemberAccountDetail memberAccountDetail = new TableMemberAccountDetail();
         memberAccountDetail.setBeforeValue(accountMoney);
-        if ("1".equals(accountType)) {
+        if ("1".equals(operType)) {
             //充值
-            memberAccountDetail.setAccountType(1);
+            memberAccountDetail.setAccountType(accountType==null?1:accountType);
             accountMoney += amount;
         }
-        if ("2".equals(accountType)) {
+        if ("2".equals(operType)) {
             //购物
-            memberAccountDetail.setAccountType(1);
+            memberAccountDetail.setAccountType(accountType==null?1:accountType);
             accountMoney -= amount;
             if (accountMoney < 0) {
                 throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "余额不足！", "", null);
             }
         }
-
-        tableMember.setAccountMoney(accountMoney);
+        if (null == accountType || accountType == 1) {
+            tableMember.setAccountMoney(accountMoney);
+        }
+        if (accountType == 2) {
+            tableMember.setAccountPointAvailable(accountMoney);
+        }
+        if (accountType == 3) {
+            tableMember.setAccountDjPoint(accountMoney);
+        }
+        if (accountType == 4) {
+            tableMember.setAccountJsyPoint(accountMoney);
+        }
         this.iTableMemberBusiSV.update(tableMember);
 
         memberAccountDetail.setModifyTime(DateUtils.getSysDate());
@@ -218,9 +249,33 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "转入会员不存在！", "", null);
         }
 
-        this.changeMoney(fromMemberId, "2", amount1, "转账到会员"+toMemberId+"。备注："+remark);
-        this.changeMoney(toMemberId, "1", amount1, "会员"+fromMemberId+"转入。备注："+remark);
+        this.changeMoney(fromMemberId, "2", amount1, "转账到会员"+toMemberId+"。备注："+remark, null);
+        this.changeMoney(toMemberId, "1", amount1, "会员"+fromMemberId+"转入。备注："+remark, null);
 
+        return null;
+    }
+
+    /**
+     * 账本内部互转
+     *
+     * @param memberId
+     * @param amount
+     * @param type     1:奖金可用到现金
+     * @return
+     */
+    @Override
+    public TableMemberAccountDetail transferInner(String memberId, String amount, String type) {
+        Float amount1 = 0f;
+        try{
+            amount1 = Float.parseFloat(amount);
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "转账金额格式错误！", "", null);
+        }
+
+        //转出
+        this.changeMoney(memberId, "2", amount1, "账本内转出", type==null?2:Integer.parseInt(type));
+        //转入
+        this.changeMoney(memberId, "1", amount1, "账本内转入", type==null?1:Integer.parseInt(type));
         return null;
     }
 }

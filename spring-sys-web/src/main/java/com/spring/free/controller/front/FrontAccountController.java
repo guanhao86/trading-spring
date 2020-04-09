@@ -92,6 +92,42 @@ public class FrontAccountController {
 
 
     @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "transferInnerIndex")
+    public ModelAndView transferInnerIndex(ModelAndView view, HttpServletRequest request) {
+        Map map = Maps.newHashMap();
+        PageResult.setPageTitle(view, "账本内部互转");
+        PageResult.getPrompt(view, request, "");
+
+        UserInfo user = BaseGetPrincipal.getUser();
+
+        TableMember member = this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
+
+        view.addObject("member", member);
+        view.setViewName("front/account/transferInner");
+        return view;
+    }
+
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "transferInner")
+    public ModelAndView transferInner(ModelAndView view, HttpServletRequest request, QueryVO queryVO) {
+        Map map = Maps.newHashMap();
+        PageResult.setPageTitle(view, "账本内部互转");
+        PageResult.getPrompt(view, request, "");
+
+        try {
+            UserInfo user = BaseGetPrincipal.getUser();
+            this.iMemberAccountDetailBusiSV.transferInner(user.getUsername(), queryVO.getAmount(), null);
+        }catch (Exception e) {
+            map.put(Global.URL, Global.ADMIN_PATH +"/front/account/transferInnerIndex");
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
+
+        //查询会员信息，返回地址
+        PageResult.setPrompt(map,"转账成功", "success");
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/front/account/transferInnerIndex"), map);
+    }
+
+    @RequiresPermissions("system:member:view")
     @RequestMapping(value = "transferIndex")
     public ModelAndView transferIndex(ModelAndView view, HttpServletRequest request) {
         Map map = Maps.newHashMap();

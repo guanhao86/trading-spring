@@ -173,7 +173,8 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
                 operMember.getMemberId(),
                 "2",
                 bo.getPrice(),
-                remark);
+                remark,
+                null);
 
 
         //生成订单

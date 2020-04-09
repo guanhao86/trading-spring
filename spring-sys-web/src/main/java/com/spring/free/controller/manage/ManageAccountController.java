@@ -109,7 +109,8 @@ public class ManageAccountController {
                     queryVO.getMemberId(),
                     "1",
                     Float.parseFloat(queryVO.getAmount()),
-                    "管理员充值");
+                    "管理员充值",
+                    null);
         }catch (Exception e) {
             map.put(Global.URL, Global.ADMIN_PATH +"/manage/account/rechargeIndex");
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
