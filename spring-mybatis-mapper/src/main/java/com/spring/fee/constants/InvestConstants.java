@@ -160,4 +160,42 @@ public final class InvestConstants {
         //数量类型：1、计划总数  2、当前计划数量
         public static final String COUNT_TYPE_PLAN = "2";
     }
+     public static final class BonusId {
+         private BonusId() {}
+         //1：直推奖金
+         public static final String BONUS_ID_1 = "1";
+         //2：组织奖
+         public static final String BONUS_ID_2 = "2";
+         //3：伯乐奖
+         public static final String BONUS_ID_3 = "3";
+         //4：复消奖
+         public static final String BONUS_ID_4 = "4";
+         //
+         public static final String BONUS_ID_5 = "5";
+         //
+         public static final String BONUS_ID_6 = "6";
+         //7：金蛋
+         public static final String BONUS_ID_7 = "7";
+     }
+
+    public static final class BonusType {
+        /**
+         * 获得奖金的类型：
+         * 1：account_money
+         * 2：account_point
+         * 3：account_dj_point
+         * 4：account_jys_point  5：score
+         */
+        private BonusType() {}
+        //1：account_money
+        public static final String BONUS_TYPE_1 = "1";
+        //2：account_point
+        public static final String BONUS_TYPE_2 = "2";
+        //3：account_dj_point
+        public static final String BONUS_TYPE_3 = "3";
+        //4：account_jys_point
+        public static final String BONUS_TYPE_4 = "4";
+        //5：score（金蛋）
+        public static final String BONUS_TYPE_5 = "5";
+    }
 }

@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.dao.mapper.TableOrderMapper;
-import com.spring.fee.model.TableGoods;
-import com.spring.fee.model.TableMember;
-import com.spring.fee.model.TableOrder;
-import com.spring.fee.model.TableOrderExample;
+import com.spring.fee.model.*;
 import com.spring.fee.service.*;
 import com.spring.free.common.util.ExcelUtils;
 import com.spring.free.domain.UserInfo;
@@ -42,6 +39,9 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
 
     @Autowired
     ITableMemberBusiSV iTableMemberBusiSV;
+
+    @Autowired
+    ITableMemberGoodsBusiSV iTableMemberGoodsBusiSV;
 
     @Autowired
     ITableGoodsBusiSV iTableGoodsBusiSV;
@@ -134,7 +134,22 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         bo.setGoodsId(goods.getId());
         bo.setState(1);
 
-        bo.setPrice(bo.getAmount() * goods.getPrice());
+        Float price = bo.getAmount() * goods.getPrice();
+
+        //是否购买了金鸡商品
+        if (StringUtils.isNotEmpty(bo.getExtentGoodsId())) {
+            //计算金鸡商品价格
+            TableGoods ex = new TableGoods();
+            ex.setId(goods.getId());
+            ex = this.iTableGoodsBusiSV.select(ex);
+            price += ex.getPrice() * bo.getExtentGoodsCount();
+            bo.setExtentGoodsPrice(ex.getPrice());
+        }
+
+        bo.setPrice(price);
+
+        //计算总积分
+        bo.setScorePrice(bo.getAmount() * goods.getScorePrice());
 
         String remark = "商品购买";
 
@@ -169,18 +184,57 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         }
 
         //扣减金额
-        this.iMemberAccountDetailBusiSV.changeMoney(
-                operMember.getMemberId(),
-                "2",
-                bo.getPrice(),
-                remark,
-                null);
-
+        if (bo.getPrice() > 0) {
+            this.iMemberAccountDetailBusiSV.changeMoney(
+                    operMember.getMemberId(),
+                    "2",
+                    bo.getPrice(),
+                    remark,
+                    null);
+        }
+        //扣减积分
+        if (bo.getScorePrice() > 0) {
+            this.iMemberAccountDetailBusiSV.changeMoney(
+                    operMember.getMemberId(),
+                    "2",
+                    (float)bo.getScorePrice(),
+                    remark,
+                    5);
+        }
 
         //生成订单
         bo = this.insert(bo);
 
+        //购买的商品存在金鸡产品，把金鸡商品插入用户商品表
+        if (StringUtils.isNotEmpty(goods.getExtentGoodsId())) {
+            //购买的商品存在金鸡产品，把金鸡商品插入用户商品表
+            log.info("购买的商品存在金鸡产品，把金鸡商品插入用户商品表");
+            createMemberGoods(Integer.parseInt(goods.getExtentGoodsId()), goods.getExtentGoodsCount(), bo);
+        }
+        if (StringUtils.isNotEmpty(bo.getExtentGoodsId())) {
+            //购买的商品存在金鸡产品，把金鸡商品插入用户商品表
+            log.info("订单额外购买金鸡产品，把金鸡商品插入用户商品表");
+            createMemberGoods(Integer.parseInt(bo.getExtentGoodsId()), bo.getExtentGoodsCount(), bo);
+        }
+
         return bo;
+    }
+
+    public void createMemberGoods(int exGoogsId, int exGoodsCount, TableOrder order){
+        log.info("把金鸡商品插入用户商品表");
+        //查询商品属性
+        TableGoods ex = new TableGoods();
+        ex.setId(exGoogsId);
+        ex = this.iTableGoodsBusiSV.select(ex);
+
+        TableMemberGoods memberGoods = new TableMemberGoods();
+        memberGoods.setOrderId(order.getOrderId());
+        memberGoods.setGoodsId(ex.getId());
+        memberGoods.setGoodsClass(ex.getGoodsClass());
+        memberGoods.setAddScoreByonegoods(ex.getAddScore());
+        memberGoods.setAmount(exGoodsCount * order.getAmount());  //每个商品赠送金鸡数 * 商品数量
+        memberGoods.setCreateTime(DateUtils.getSysDate());
+        this.iTableMemberGoodsBusiSV.insert(memberGoods);
     }
 
     /**

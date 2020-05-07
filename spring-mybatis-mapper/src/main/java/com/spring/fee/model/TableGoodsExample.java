@@ -893,6 +893,256 @@ public class TableGoodsExample {
             addCriterion("state not between", value1, value2, "state");
             return (Criteria) this;
         }
+
+        public Criteria andExtentGoodsIdIsNull() {
+            addCriterion("extent_goods_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsIdIsNotNull() {
+            addCriterion("extent_goods_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsIdEqualTo(String value) {
+            addCriterion("extent_goods_id =", value, "extentGoodsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsIdNotEqualTo(String value) {
+            addCriterion("extent_goods_id <>", value, "extentGoodsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsIdGreaterThan(String value) {
+            addCriterion("extent_goods_id >", value, "extentGoodsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsIdGreaterThanOrEqualTo(String value) {
+            addCriterion("extent_goods_id >=", value, "extentGoodsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsIdLessThan(String value) {
+            addCriterion("extent_goods_id <", value, "extentGoodsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsIdLessThanOrEqualTo(String value) {
+            addCriterion("extent_goods_id <=", value, "extentGoodsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsIdLike(String value) {
+            addCriterion("extent_goods_id like", value, "extentGoodsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsIdNotLike(String value) {
+            addCriterion("extent_goods_id not like", value, "extentGoodsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsIdIn(List<String> values) {
+            addCriterion("extent_goods_id in", values, "extentGoodsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsIdNotIn(List<String> values) {
+            addCriterion("extent_goods_id not in", values, "extentGoodsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsIdBetween(String value1, String value2) {
+            addCriterion("extent_goods_id between", value1, value2, "extentGoodsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsIdNotBetween(String value1, String value2) {
+            addCriterion("extent_goods_id not between", value1, value2, "extentGoodsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsCountIsNull() {
+            addCriterion("extent_goods_count is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsCountIsNotNull() {
+            addCriterion("extent_goods_count is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsCountEqualTo(Integer value) {
+            addCriterion("extent_goods_count =", value, "extentGoodsCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsCountNotEqualTo(Integer value) {
+            addCriterion("extent_goods_count <>", value, "extentGoodsCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsCountGreaterThan(Integer value) {
+            addCriterion("extent_goods_count >", value, "extentGoodsCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsCountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("extent_goods_count >=", value, "extentGoodsCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsCountLessThan(Integer value) {
+            addCriterion("extent_goods_count <", value, "extentGoodsCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsCountLessThanOrEqualTo(Integer value) {
+            addCriterion("extent_goods_count <=", value, "extentGoodsCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsCountIn(List<Integer> values) {
+            addCriterion("extent_goods_count in", values, "extentGoodsCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsCountNotIn(List<Integer> values) {
+            addCriterion("extent_goods_count not in", values, "extentGoodsCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsCountBetween(Integer value1, Integer value2) {
+            addCriterion("extent_goods_count between", value1, value2, "extentGoodsCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtentGoodsCountNotBetween(Integer value1, Integer value2) {
+            addCriterion("extent_goods_count not between", value1, value2, "extentGoodsCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andScorePriceIsNull() {
+            addCriterion("score_price is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andScorePriceIsNotNull() {
+            addCriterion("score_price is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andScorePriceEqualTo(Integer value) {
+            addCriterion("score_price =", value, "scorePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andScorePriceNotEqualTo(Integer value) {
+            addCriterion("score_price <>", value, "scorePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andScorePriceGreaterThan(Integer value) {
+            addCriterion("score_price >", value, "scorePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andScorePriceGreaterThanOrEqualTo(Integer value) {
+            addCriterion("score_price >=", value, "scorePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andScorePriceLessThan(Integer value) {
+            addCriterion("score_price <", value, "scorePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andScorePriceLessThanOrEqualTo(Integer value) {
+            addCriterion("score_price <=", value, "scorePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andScorePriceIn(List<Integer> values) {
+            addCriterion("score_price in", values, "scorePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andScorePriceNotIn(List<Integer> values) {
+            addCriterion("score_price not in", values, "scorePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andScorePriceBetween(Integer value1, Integer value2) {
+            addCriterion("score_price between", value1, value2, "scorePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andScorePriceNotBetween(Integer value1, Integer value2) {
+            addCriterion("score_price not between", value1, value2, "scorePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddScoreIsNull() {
+            addCriterion("add_score is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddScoreIsNotNull() {
+            addCriterion("add_score is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddScoreEqualTo(Integer value) {
+            addCriterion("add_score =", value, "addScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddScoreNotEqualTo(Integer value) {
+            addCriterion("add_score <>", value, "addScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddScoreGreaterThan(Integer value) {
+            addCriterion("add_score >", value, "addScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddScoreGreaterThanOrEqualTo(Integer value) {
+            addCriterion("add_score >=", value, "addScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddScoreLessThan(Integer value) {
+            addCriterion("add_score <", value, "addScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddScoreLessThanOrEqualTo(Integer value) {
+            addCriterion("add_score <=", value, "addScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddScoreIn(List<Integer> values) {
+            addCriterion("add_score in", values, "addScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddScoreNotIn(List<Integer> values) {
+            addCriterion("add_score not in", values, "addScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddScoreBetween(Integer value1, Integer value2) {
+            addCriterion("add_score between", value1, value2, "addScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddScoreNotBetween(Integer value1, Integer value2) {
+            addCriterion("add_score not between", value1, value2, "addScore");
+            return (Criteria) this;
+        }
     }
 
     /**

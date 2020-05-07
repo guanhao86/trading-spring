@@ -41,6 +41,7 @@
     <result column="reporting_amount" jdbcType="REAL" property="reportingAmount" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="score" jdbcType="INTEGER" property="score" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -118,7 +119,7 @@
     account_point_freeze, account_dj_point, account_jsy_point, aut_flag, really_name, 
     cart_id, bank_card_id, bank_name, bank_open_are, cart_img1, cart_img2, cart_img3, 
     bank_img1, bank_img2, register_time, last_login_time, perfomance_time, reporting_amount, 
-    update_time, addr
+    update_time, addr, score
   </sql>
   <select id="selectByExample" parameterType="com.spring.fee.model.TableMemberExample" resultMap="BaseResultMap">
     <!--
@@ -186,7 +187,7 @@
       cart_img2, cart_img3, bank_img1, 
       bank_img2, register_time, last_login_time, 
       perfomance_time, reporting_amount, update_time, 
-      addr)
+      addr, score)
     values (#{memberId,jdbcType=VARCHAR}, #{referenceId,jdbcType=VARCHAR}, #{arrangeId,jdbcType=VARCHAR}, 
       #{leftOrRight,jdbcType=INTEGER}, #{leftChildNode,jdbcType=VARCHAR}, #{rightChildNode,jdbcType=VARCHAR}, 
       #{registerFrom,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
@@ -198,7 +199,7 @@
       #{cartImg2,jdbcType=VARCHAR}, #{cartImg3,jdbcType=VARCHAR}, #{bankImg1,jdbcType=VARCHAR}, 
       #{bankImg2,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
       #{perfomanceTime,jdbcType=TIMESTAMP}, #{reportingAmount,jdbcType=REAL}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{addr,jdbcType=VARCHAR})
+      #{addr,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.spring.fee.model.TableMember">
     <!--
@@ -312,6 +313,9 @@
       <if test="addr != null">
         addr,
       </if>
+      <if test="score != null">
+        score,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="memberId != null">
@@ -415,6 +419,9 @@
       </if>
       <if test="addr != null">
         #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -540,6 +547,9 @@
       <if test="record.addr != null">
         addr = #{record.addr,jdbcType=VARCHAR},
       </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -585,7 +595,8 @@
       perfomance_time = #{record.perfomanceTime,jdbcType=TIMESTAMP},
       reporting_amount = #{record.reportingAmount,jdbcType=REAL},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      addr = #{record.addr,jdbcType=VARCHAR}
+      addr = #{record.addr,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -699,6 +710,9 @@
       <if test="addr != null">
         addr = #{addr,jdbcType=VARCHAR},
       </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -741,7 +755,8 @@
       perfomance_time = #{perfomanceTime,jdbcType=TIMESTAMP},
       reporting_amount = #{reportingAmount,jdbcType=REAL},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      addr = #{addr,jdbcType=VARCHAR}
+      addr = #{addr,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -156,7 +156,7 @@ public class FrontAccountController {
                 map.put(Global.URL, Global.ADMIN_PATH +"/front/account/transferIndex");
                 throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "密码错误", map.get(Global.URL).toString(), map);
             }
-            this.iMemberAccountDetailBusiSV.transfer(user.getUsername(), queryVO.getMemberId(), queryVO.getAmount(), queryVO.getRemark());
+            this.iMemberAccountDetailBusiSV.transfer(user.getUsername(), queryVO.getMemberId(), queryVO.getAmount(), queryVO.getRemark(), queryVO.getTransType());
         }catch (Exception e) {
             map.put(Global.URL, Global.ADMIN_PATH +"/front/account/transferIndex");
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);

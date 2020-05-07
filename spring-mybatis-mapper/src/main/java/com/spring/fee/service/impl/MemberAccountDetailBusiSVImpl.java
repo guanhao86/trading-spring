@@ -86,6 +86,7 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
      * 2：account_point_available
      * 3：account_dj_point
      * 4：account_jys_point
+     * 5：score（金蛋）
      * @return
      */
     @Override
@@ -117,6 +118,13 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
         if (accountType == 4) {
             accountMoney = tableMember.getAccountJsyPoint();
         }
+        if (accountType == 5) {
+            if (tableMember.getScore() == null) {
+                accountMoney = 0f;
+            }else {
+                accountMoney = (float) tableMember.getScore();
+            }
+        }
 
         TableMemberAccountDetail memberAccountDetail = new TableMemberAccountDetail();
         memberAccountDetail.setBeforeValue(accountMoney);
@@ -144,6 +152,9 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
         }
         if (accountType == 4) {
             tableMember.setAccountJsyPoint(accountMoney);
+        }
+        if (accountType == 5) {
+            tableMember.setScore(accountMoney.intValue());
         }
         this.iTableMemberBusiSV.update(tableMember);
 
@@ -221,10 +232,11 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
      * @param toMemberId
      * @param amount
      * @param remark
+     * @param transType  1或空：现金    2：积分
      * @return
      */
     @Override
-    public TableMemberAccountDetail transfer(String fromMemberId, String toMemberId, String amount, String remark) {
+    public TableMemberAccountDetail transfer(String fromMemberId, String toMemberId, String amount, String remark, String transType) {
 
         //查询frommember
         TableMember fromMember = this.iTableMemberBusiSV.selectByMemberId(fromMemberId);
@@ -249,8 +261,10 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "转入会员不存在！", "", null);
         }
 
-        this.changeMoney(fromMemberId, "2", amount1, "转账到会员"+toMemberId+"。备注："+remark, null);
-        this.changeMoney(toMemberId, "1", amount1, "会员"+fromMemberId+"转入。备注："+remark, null);
+        int accountType = "2".equals(transType)?5:null;
+
+        this.changeMoney(fromMemberId, "2", amount1, "转账到会员"+toMemberId+"。备注："+remark, accountType);
+        this.changeMoney(toMemberId, "1", amount1, "会员"+fromMemberId+"转入。备注："+remark, accountType);
 
         return null;
     }

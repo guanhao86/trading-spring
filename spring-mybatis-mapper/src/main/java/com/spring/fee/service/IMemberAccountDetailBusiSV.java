@@ -39,7 +39,7 @@ public interface IMemberAccountDetailBusiSV {
      * @param remark
      * @return
      */
-    TableMemberAccountDetail transfer(String fromMemberId, String toMemberId, String amount, String remark);
+    TableMemberAccountDetail transfer(String fromMemberId, String toMemberId, String amount, String remark, String transType);
 
     /**
      * 账本内部互转

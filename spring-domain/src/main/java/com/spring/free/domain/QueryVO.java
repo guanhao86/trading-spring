@@ -69,4 +69,6 @@ public class QueryVO extends BaseEntity<QueryVO> {
     private String auditState;
 
     private String respState;
+    //1:现金 2：积分
+    private String transType;
 }
