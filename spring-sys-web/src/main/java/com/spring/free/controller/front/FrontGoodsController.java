@@ -4,6 +4,7 @@ package com.spring.free.controller.front;/**
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import com.spring.fee.constants.InvestConstants;
 import com.spring.fee.model.TableGoods;
 import com.spring.fee.service.ITableGoodsBusiSV;
 import com.spring.fee.service.ITableMemberBusiSV;
@@ -91,6 +92,21 @@ public class FrontGoodsController {
         TableGoods tableGoods = new TableGoods();
         tableGoods.setId(Integer.parseInt(queryVO.getId()+""));
         TableGoods tableGoods1=this.iTableGoodsBusiSV.select(tableGoods);
+
+        TableGoods jjGoods = new TableGoods();
+        if (StringUtils.isNotEmpty(tableGoods1.getExtentGoodsId())) {
+            jjGoods.setId(Integer.parseInt(tableGoods1.getExtentGoodsId()));
+            jjGoods = this.iTableGoodsBusiSV.select(jjGoods);
+        }
+
+        //获取金鸡商品列表
+        TableGoods jjTableGoods = new TableGoods();
+        jjTableGoods.setGoodsClass(Integer.parseInt(InvestConstants.GoodsClass.BONUS_TYPE_3));
+        jjTableGoods.setState(InvestConstants.GoodsState.effect);
+        PageInfo<TableGoods> pageInfo = this.iTableGoodsBusiSV.queryListPage(jjTableGoods, 1, 100, null);
+        view.addObject("jjGoodsList",pageInfo.getList());
+
+        view.addObject("jjGoods",jjGoods);
         view.addObject("goods",tableGoods1);
         view.addObject("queryVO",queryVO);
         view.setViewName("front/goods/view");

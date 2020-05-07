@@ -82,11 +82,12 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
      * @param amount
      * @param remark
      * @param accountType
-     * 1：account_money
-     * 2：account_point_available
-     * 3：account_dj_point
-     * 4：account_jys_point
-     * 5：score（金蛋）
+     * 1	现金积分
+     * 2	奖金积分（可用）
+     * 3	奖金积分（冻结）
+     * 4	购物积分
+     * 5	保值积分
+     * 6    score（金蛋）
      * @return
      */
     @Override
@@ -108,17 +109,15 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
 
         if (null == accountType || accountType == 1) {
             accountMoney = tableMember.getAccountMoney();
-        }
-        if (accountType == 2) {
+        }else if (accountType == 2) {
             accountMoney = tableMember.getAccountPointAvailable();
-        }
-        if (accountType == 3) {
+        }else if (accountType == 3) {
+            accountMoney = tableMember.getAccountPointFreeze();
+        }else if (accountType == 4) {
             accountMoney = tableMember.getAccountDjPoint();
-        }
-        if (accountType == 4) {
+        }else if (accountType == 5) {
             accountMoney = tableMember.getAccountJsyPoint();
-        }
-        if (accountType == 5) {
+        }else  if (accountType == 6) {
             if (tableMember.getScore() == null) {
                 accountMoney = 0f;
             }else {
@@ -143,17 +142,15 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
         }
         if (null == accountType || accountType == 1) {
             tableMember.setAccountMoney(accountMoney);
-        }
-        if (accountType == 2) {
+        }else if (accountType == 2) {
             tableMember.setAccountPointAvailable(accountMoney);
-        }
-        if (accountType == 3) {
+        }else if (accountType == 3) {
+            tableMember.setAccountPointFreeze(accountMoney);
+        }else if (accountType == 4) {
             tableMember.setAccountDjPoint(accountMoney);
-        }
-        if (accountType == 4) {
+        }else if (accountType == 5) {
             tableMember.setAccountJsyPoint(accountMoney);
-        }
-        if (accountType == 5) {
+        }else if (accountType == 6) {
             tableMember.setScore(accountMoney.intValue());
         }
         this.iTableMemberBusiSV.update(tableMember);
@@ -261,7 +258,7 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "转入会员不存在！", "", null);
         }
 
-        int accountType = "2".equals(transType)?5:null;
+        int accountType = "2".equals(transType)?6:null;
 
         this.changeMoney(fromMemberId, "2", amount1, "转账到会员"+toMemberId+"。备注："+remark, accountType);
         this.changeMoney(toMemberId, "1", amount1, "会员"+fromMemberId+"转入。备注："+remark, accountType);

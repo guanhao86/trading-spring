@@ -111,7 +111,7 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
                         "1",
                         (float)tableMemberGoods.getAmount() * tableMemberGoods.getAddScoreByonegoods(),
                                 "金鸡下蛋",
-                        5
+                        6
                         );
 
                 //更新最后一次下蛋时间

@@ -19,6 +19,7 @@ import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
+import com.spring.free.util.md5.Md5Util;
 import com.spring.free.utils.principal.BaseGetPrincipal;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -152,7 +153,7 @@ public class FrontAccountController {
 
         try {
             UserInfo user = BaseGetPrincipal.getUser();
-            if(!user.getPassword().equals(queryVO.getPassword())) {
+            if(!user.getPassword().equals(Md5Util.md5Hex(queryVO.getPassword()))) {
                 map.put(Global.URL, Global.ADMIN_PATH +"/front/account/transferIndex");
                 throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "密码错误", map.get(Global.URL).toString(), map);
             }

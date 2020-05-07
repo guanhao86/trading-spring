@@ -4,6 +4,7 @@ package com.spring.free.controller.manage;/**
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import com.spring.fee.constants.InvestConstants;
 import com.spring.fee.model.TableGoods;
 import com.spring.fee.model.TableMember;
 import com.spring.fee.service.ITableGoodsBusiSV;
@@ -14,6 +15,7 @@ import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
 import com.spring.free.util.md5.Md5Util;
+import jnr.ffi.annotations.In;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
@@ -83,6 +85,13 @@ public class ManageGoodsController {
         PageResult.setPageTitle(view, "商品信息");
         PageResult.getPrompt(view, request, "");
         TableGoods tableMember=this.iTableGoodsBusiSV.select(tableGoods);
+
+        //获取金鸡商品列表
+        TableGoods jjTableGoods = new TableGoods();
+        jjTableGoods.setGoodsClass(Integer.parseInt(InvestConstants.GoodsClass.BONUS_TYPE_3));
+        jjTableGoods.setState(InvestConstants.GoodsState.effect);
+        PageInfo<TableGoods> pageInfo = this.iTableGoodsBusiSV.queryListPage(jjTableGoods, 1, 100, null);
+        view.addObject("jjGoodsList",pageInfo.getList());
         view.addObject("goods",tableMember);
         view.setViewName("manage/goods/edit");
         return view;
@@ -130,6 +139,12 @@ public class ManageGoodsController {
         PageResult.setPageTitle(view, "商品信息");
         PageResult.getPrompt(view, request, "");
         TableGoods tableGoods1=this.iTableGoodsBusiSV.select(tableGoods);
+        TableGoods jjGoods = new TableGoods();
+        if (StringUtils.isNotEmpty(tableGoods1.getExtentGoodsId())) {
+            jjGoods.setId(Integer.parseInt(tableGoods1.getExtentGoodsId()));
+            jjGoods = this.iTableGoodsBusiSV.select(jjGoods);
+        }
+
 //        if(tableMember!=null) {
 //            member.setTotal(account.getTotal().doubleValue() / 1000);
 //            member.setAvailable(account.getAvailable().doubleValue() / 1000);
@@ -137,6 +152,7 @@ public class ManageGoodsController {
 //            member.setMoneyFreeze(account.getMoneyFreeze().doubleValue() / 1000);
 //            member.setGranaryFreeze(account.getGranaryFreeze().doubleValue() / 1000);
 //        }
+        view.addObject("jjGoods",jjGoods);
         view.addObject("goods",tableGoods1);
         view.setViewName("manage/goods/view");
         return view;

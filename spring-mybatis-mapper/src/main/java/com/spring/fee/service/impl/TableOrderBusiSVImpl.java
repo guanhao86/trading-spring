@@ -140,7 +140,7 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         if (StringUtils.isNotEmpty(bo.getExtentGoodsId())) {
             //计算金鸡商品价格
             TableGoods ex = new TableGoods();
-            ex.setId(goods.getId());
+            ex.setId(Integer.parseInt(bo.getExtentGoodsId()));
             ex = this.iTableGoodsBusiSV.select(ex);
             price += ex.getPrice() * bo.getExtentGoodsCount();
             bo.setExtentGoodsPrice(ex.getPrice());
@@ -149,7 +149,7 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         bo.setPrice(price);
 
         //计算总积分
-        bo.setScorePrice(bo.getAmount() * goods.getScorePrice());
+        bo.setScorePrice(bo.getAmount() * (goods.getScorePrice()==null?0:goods.getScorePrice()));
 
         String remark = "商品购买";
 
@@ -199,7 +199,7 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
                     "2",
                     (float)bo.getScorePrice(),
                     remark,
-                    5);
+                    6);
         }
 
         //生成订单
@@ -228,6 +228,7 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         ex = this.iTableGoodsBusiSV.select(ex);
 
         TableMemberGoods memberGoods = new TableMemberGoods();
+        memberGoods.setMemberId(order.getMemberId());
         memberGoods.setOrderId(order.getOrderId());
         memberGoods.setGoodsId(ex.getId());
         memberGoods.setGoodsClass(ex.getGoodsClass());

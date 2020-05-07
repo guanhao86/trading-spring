@@ -198,4 +198,27 @@ public final class InvestConstants {
         //5：score（金蛋）
         public static final String BONUS_TYPE_5 = "5";
     }
+
+    public static final class GoodsClass {
+
+        private GoodsClass() {}
+        //0：报单
+        public static final String BONUS_TYPE_0 = "0";
+        //1：复消
+        public static final String BONUS_TYPE_1 = "1";
+        //2：提现货
+        public static final String BONUS_TYPE_2 = "2";
+        //3：金鸡
+        public static final String BONUS_TYPE_3 = "3";
+    }
+
+    public static final class GoodsState {
+
+        private GoodsState() {}
+        //1：上架
+        public static final String effect = "1";
+        //2：下架
+        public static final String expire = "2";
+
+    }
 }

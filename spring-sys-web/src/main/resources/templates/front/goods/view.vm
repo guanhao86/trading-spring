@@ -40,6 +40,10 @@
                         </div>
                     </div>
                     #formInput({"name": "价格(元)"} {"name": "goodsprice", "value":"$!{goods.price}","id": "goodsprice","required": "required","readonly":"readonly"})
+                    <div id="txhDiv">
+                        <!--提现货DIV-->
+                        #formInput({"name": "金蛋价格"} {"name": "scorePrice", "value":"$!{goods.scorePrice}","id": "scorePrice","readonly":"readonly"})
+                    </div>
                     <div id="paramDiv">
                         <div class="form-group" >
                             <label class="col-sm-2 control-label">购买商品后获得的级别：</label>
@@ -50,11 +54,30 @@
                         #formInput({"name": "购买商品后获得的三方商城积分"} {"name": "incomeDjPoint", "value":"$!{goods.incomeDjPoint}","id": "incomeDjPoint","required": "required","readonly":"readonly"})
                         #formInput({"name": "购买商品后获得的交易系统积分"} {"name": "incomeJysPoint", "value":"$!{goods.incomeJysPoint}","id": "incomeJysPoint","required": "required","readonly":"readonly"})
                         #formInput({"name": "可分配利润(元)"} {"name": "pePrice", "value":"$!{goods.pePrice}","id": "pePrice","required": "required","readonly":"readonly"})
+                        #formInput({"name": "赠送金鸡商品"} {"name": "extentGoodsId1", "value":"$!{jjGoods.goodsName}","id": "extentGoodsId1","readonly":"readonly"})
+                        #formInput({"name": "赠送金鸡数量"} {"name": "extentGoodsCount1", "value":"$!{goods.extentGoodsCount}","id": "extentGoodsCount1","readonly":"readonly"})
                     </div>
                     <hr style="height:10px;border:none;border-top:10px groove skyblue;" />
                     #formInput({"name": "数量"} {"name": "amount", "value":"1","id": "amount","required": "required"})
                     #formInput({"name": "金额(元)"} {"name": "price", "value":"$!{goods.price}","id": "price","required": "required","readonly":"readonly"})
-        #end
+                    <div id="jjDiv" >
+                        <hr style="height:10px;border:none;border-top:10px groove skyblue;" />
+                        <div class="form-group" >
+                            <label class="col-sm-2 control-label">金鸡商品：</label>
+                            <div class="col-sm-2">
+
+                                <select data-placeholder="请选择..." class="chosen-select" style="width:100%;" cityClick="true" id="extentGoodsId" name="extentGoodsId">
+                                    <option value="">请选择</option>
+                                    #foreach($l in $!jjGoodsList)
+                                        <option value="$l.id">$l.goodsName</option>
+                                    #end
+                                </select>
+
+                            </div>
+                        </div>
+                        #formInput({"name": "金鸡数量"} {"name": "extentGoodsCount", "value":"","id": "extentGoodsCount"})
+                    </div>
+                #end
     #end
         #end
     #end
@@ -69,13 +92,28 @@
 
                 if (goodsClass == '0' || goodsClass == undefined) {
                     $("#paramDiv").show();
+                    $("#jjDiv").hide();
+                    $("#txhDiv").hide();
+                } else if (goodsClass == '1') {
+                    $("#jjDiv").show();
+                    $("#paramDiv").hide();
+                    $("#txhDiv").hide();
+                } else if (goodsClass == '2') {
+                    $("#txhDiv").show();
+                    $("#jjDiv").hide();
+                    $("#paramDiv").hide();
                 } else {
                     $("#paramDiv").hide();
+                    $("#jjDiv").hide();
+                    $("#txhDiv").hide();
                     $("#incomeVipLevel").val("");
                     $("#incomeDjPoint").val("");
                     $("#incomeJysPoint").val("");
                     $("#pePrice").val("");
                 }
+
+
+
             }
 
             $("#amount").change(function(){

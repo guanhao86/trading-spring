@@ -62,15 +62,42 @@
                 </div>
                     #formInput({"name": "价格(元)"} {"name": "price", "value":"$!{goods.price}","id": "price","required": "required"})
                     <div id="paramDiv">
+                        <!--报单商品DIV-->
                         <div class="form-group" >
                             <label class="col-sm-2 control-label">购买商品后获得的级别：</label>
                             <div class="col-sm-2">
                                 #selectBS($!dict.getDictList("level"), ["level", "$!{goods.incomeVipLevel}", "value", "label"], false, [false, "$!{goods.incomeVipLevel}"])
                             </div>
                         </div>
-                    #formInput({"name": "购买商品后获得的三方商城积分"} {"name": "incomeDjPoint", "value":"$!{goods.incomeDjPoint}","id": "incomeDjPoint"})
-                    #formInput({"name": "购买商品后获得的交易系统积分"} {"name": "incomeJysPoint", "value":"$!{goods.incomeJysPoint}","id": "incomeJysPoint"})
-                    #formInput({"name": "可分配利润(元)"} {"name": "pePrice", "value":"$!{goods.pePrice}","id": "pePrice"})
+                        #formInput({"name": "购买商品后获得的三方商城积分"} {"name": "incomeDjPoint", "value":"$!{goods.incomeDjPoint}","id": "incomeDjPoint"})
+                        #formInput({"name": "购买商品后获得的交易系统积分"} {"name": "incomeJysPoint", "value":"$!{goods.incomeJysPoint}","id": "incomeJysPoint"})
+                        #formInput({"name": "可分配利润(元)"} {"name": "pePrice", "value":"$!{goods.pePrice}","id": "pePrice"})
+                        <div class="form-group" >
+                            <label class="col-sm-2 control-label">赠送金鸡商品：</label>
+                            <div class="col-sm-2">
+
+                                <select data-placeholder="请选择..." class="chosen-select" style="width:100%;" cityClick="true" id="extentGoodsId" name="extentGoodsId">
+                                    <option value="">请选择</option>
+                                    #foreach($l in $!jjGoodsList)
+                                        #if($!{goods.extentGoodsId} == $l.id)
+                                        <option value="$l.id" selected>$l.goodsName</option>
+                                        #else
+                                        <option value="$l.id">$l.goodsName</option>
+                                        #end
+                                    #end
+                                </select>
+
+                            </div>
+                        </div>
+                        #formInput({"name": "赠送金鸡数量"} {"name": "extentGoodsCount", "value":"$!{goods.extentGoodsCount}","id": "extentGoodsCount"})
+                    </div>
+                    <div id="jjDiv">
+                        <!--金鸡商品DIV-->
+                        #formInput({"name": "每天产生金蛋数量"} {"name": "addScore", "value":"$!{goods.addScore}","id": "addScore"})
+                    </div>
+                    <div id="txhDiv">
+                        <!--提现货DIV-->
+                        #formInput({"name": "金蛋价格"} {"name": "scorePrice", "value":"$!{goods.scorePrice}","id": "scorePrice"})
                     </div>
                 #end
     #end
@@ -95,14 +122,55 @@
             function init(goodsClass){
                 console.log("goodsClass", goodsClass)
                 if(goodsClass == '0' || goodsClass == undefined) {
+                    //报单商品
                     $("#paramDiv").show();
-                }else{
+                    $("#txhDiv").hide();
+                    $("#jjDiv").hide();
+                    $("#addScore").val("");
+                    $("#scorePrice").val("");
+                }else if(goodsClass == '3') {
+                    //金鸡商品
+                    $("#jjDiv").show();
+
                     $("#paramDiv").hide();
+                    $("#txhDiv").hide();
+
+                    $("#scorePrice").val("");
                     $("#incomeVipLevel").val("");
                     $("#incomeDjPoint").val("");
                     $("#incomeJysPoint").val("");
                     $("#pePrice").val("");
+                    $("#extentGoodsId").val("");
+                    $("#extentGoodsCount").val("");
+                }else if(goodsClass == '2') {
+                    //提现货商品
+                    $("#txhDiv").show();
+                    $("#jjDiv").hide();
+                    $("#paramDiv").hide();
+
+                    $("#addScore").val("");
+                    $("#incomeVipLevel").val("");
+                    $("#incomeDjPoint").val("");
+                    $("#incomeJysPoint").val("");
+                    $("#pePrice").val("");
+                    $("#extentGoodsId").val("");
+                    $("#extentGoodsCount").val("");
+                }else{
+                    //复消商品
+                    $("#paramDiv").hide();
+                    $("#jjDiv").hide();
+                    $("#txhDiv").hide();
+
+                    $("#addScore").val("");
+                    $("#scorePrice").val("");
+                    $("#incomeVipLevel").val("");
+                    $("#incomeDjPoint").val("");
+                    $("#incomeJysPoint").val("");
+                    $("#pePrice").val("");
+                    $("#extentGoodsId").val("");
+                    $("#extentGoodsCount").val("");
                 }
+
             }
 
             $('.summernote').summernote({

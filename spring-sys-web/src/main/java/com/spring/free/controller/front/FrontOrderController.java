@@ -147,7 +147,18 @@ public class FrontOrderController {
         goods.setId(tableOrder.getGoodsId());
         goods = this.iTableGoodsBusiSV.select(goods);
 
-        tableOrder.setPrice(tableOrder.getAmount() * goods.getPrice());
+        float price = tableOrder.getAmount() * goods.getPrice();
+
+        //金鸡商品
+        if (StringUtils.isNotEmpty(tableOrder.getExtentGoodsId())) {
+            TableGoods extGoods = new TableGoods();
+            extGoods.setId(Integer.parseInt(tableOrder.getExtentGoodsId()));
+            extGoods = this.iTableGoodsBusiSV.select(extGoods);
+
+            price += extGoods.getPrice() * (tableOrder.getExtentGoodsCount()==null?0:tableOrder.getExtentGoodsCount());
+        }
+
+        tableOrder.setPrice(price);
         tableOrder.setGoodsClass(goods.getGoodsClass());
         //查询会员信息，返回地址
         view.addObject("order", tableOrder);

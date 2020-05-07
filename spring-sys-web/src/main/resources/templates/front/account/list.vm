@@ -6,7 +6,7 @@
 
             #@panelBody()
                 #@table()
-                    #tableTHead(["现金积分", "奖金积分（可用）", "奖金积分（冻结）", "购物积分", "保值积分"],"", false)
+                    #tableTHead(["现金积分", "奖金积分（可用）", "奖金积分（冻结）", "购物积分", "保值积分", "金蛋"],"", false)
                     #@tableBody($member)
 
                         #tableTd("$!{l.accountMoney}")
@@ -14,6 +14,7 @@
                         #tableTd("$!{l.accountPointFreeze}")
                         #tableTd("$!{l.accountDjPoint}")
                         #tableTd("$!{l.accountJsyPoint}")
+                        #tableTd("$!{l.score}")
 
                     #end
                 #end
