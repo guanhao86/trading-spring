@@ -22,8 +22,12 @@
     <if test="memberId != null" >
       and member_id = #{memberId,jdbcType=VARCHAR}
     </if>
+      <if test="start != null" >
     and CLOSE_Time >= #{start,jdbcType=TIMESTAMP}
-    and #{end,jdbcType=TIMESTAMP} > CLOSE_Time
+      </if>
+      <if test="end != null" >
+    and #{end,jdbcType=TIMESTAMP} >= CLOSE_Time
+      </if>
     group by bonus_id
   </select>
 </mapper>

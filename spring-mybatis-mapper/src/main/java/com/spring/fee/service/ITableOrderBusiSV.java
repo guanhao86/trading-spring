@@ -2,6 +2,7 @@ package com.spring.fee.service;
 
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.model.TableOrder;
+import com.spring.fee.model.TableOrderDZ;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.util.List;
@@ -25,6 +26,9 @@ public interface ITableOrderBusiSV {
     TableOrder buy(TableOrder bo);
 
     PageInfo<TableOrder> queryListPage(TableOrder bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
+
+    TableOrderDZ selectByGroup(TableOrderDZ bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
+
 
     /**
      * 导出订单

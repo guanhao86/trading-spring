@@ -6,10 +6,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.constants.InvestConstants;
 import com.spring.fee.dao.mapper.TableMemberGoodsMapper;
-import com.spring.fee.model.TableBonusDetail;
-import com.spring.fee.model.TableMemberGoods;
-import com.spring.fee.model.TableMemberGoodsExample;
-import com.spring.fee.model.TableTask;
+import com.spring.fee.dao.mapper.TableMemberGoodsMapperDZ;
+import com.spring.fee.model.*;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
 import com.spring.fee.service.ITableBonusDetailBusiSV;
 import com.spring.fee.service.ITableMemberGoodsBusiSV;
@@ -37,6 +35,9 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
     TableMemberGoodsMapper iTableMemberGoodsMapper;
 
     @Autowired
+    TableMemberGoodsMapperDZ iTableMemberGoodsMapperDZ;
+
+    @Autowired
     ITableTaskBusiSV iTableTaskBusiSV;
 
     @Autowired
@@ -53,6 +54,10 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
     @Override
     public TableMemberGoods insert(TableMemberGoods bo) {
         log.info("会员持有商品参数bo：{}", JSON.toJSON(bo));
+        bo.setAddTimes(0);
+        bo.setAddCount(0);
+        bo.setCreateTime(DateUtils.getSysDate());
+        bo.setInvalidTime(DateUtils.getNextYear(DateUtils.getSysDate()));
         iTableMemberGoodsMapper.insert(bo);
         return bo;
     }
@@ -106,16 +111,22 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
 
                 iTableBonusDetailBusiSV.insert(tableBonusDetail);
 
+                int price = tableMemberGoods.getAmount() * tableMemberGoods.getAddScoreByonegoods();
+
                 //插入账户变更表
                 iMemberAccountDetailBusiSV.changeMoney(tableMemberGoods.getMemberId(),
                         "1",
-                        (float)tableMemberGoods.getAmount() * tableMemberGoods.getAddScoreByonegoods(),
+                        (float)price,
                                 "金鸡下蛋",
                         6
                         );
 
                 //更新最后一次下蛋时间
                 tableMemberGoods.setLastTime(DateUtils.getSysDate());
+                //已下金蛋数量
+                tableMemberGoods.setAddCount(tableMemberGoods.getAddCount()+price);
+                //已下金蛋次数
+                tableMemberGoods.setAddTimes(tableMemberGoods.getAddTimes()+1);
                 this.update(tableMemberGoods);
             }
         }
@@ -123,6 +134,10 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
 
     public List<TableMemberGoods> getList(){
         TableMemberGoodsExample example = new TableMemberGoodsExample();
+        TableMemberGoodsExample.Criteria criteria = example.createCriteria();
+
+        criteria.andInvalidTimeGreaterThanOrEqualTo(DateUtils.getSysDate());
+
         return this.iTableMemberGoodsMapper.selectByExample(example);
     }
 
@@ -177,6 +192,27 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
 
         PageInfo<TableMemberGoods> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableMemberGoodsMapper.selectByExample(example));
+        log.info("获取会员持有商品结果：{}", JSON.toJSON(pageInfo));
+        return pageInfo;
+    }
+
+    /**
+     * 数据列表分页
+     * @param bo
+     * @param pageNum
+     * @param pageSize
+     * @param map
+     * @return
+     */
+    @Override
+    public PageInfo<TableMemberGoodsDZ> queryListPageDZ(TableMemberGoodsDZ bo, Integer pageNum, Integer pageSize, Map<String ,Object> map) {
+        log.info("获取会员持有商品参数bo：{}", JSON.toJSON(bo));
+        log.info("获取会员持有商品参数pageNum：{}", pageNum);
+        log.info("获取会员持有商品参数pageSize：{}", pageSize);
+        log.info("获取会员持有商品参数map：{}", JSON.toJSON(map));
+
+        PageInfo<TableMemberGoodsDZ> pageInfo = PageHelper.startPage(pageNum, pageSize)
+                .doSelectPageInfo(() -> this.iTableMemberGoodsMapperDZ.selectByExample(bo));
         log.info("获取会员持有商品结果：{}", JSON.toJSON(pageInfo));
         return pageInfo;
     }

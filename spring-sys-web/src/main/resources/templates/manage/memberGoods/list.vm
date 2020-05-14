@@ -1,33 +1,15 @@
 #@html()
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"订单列表 搜索", "perm": "", "isBack": false, "href": ""})
+            #@panelHeader({"title":"会员金鸡管理 搜索", "perm": "", "isBack": false, "href": ""})
                 #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
                 #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
             #end
             #@panelBody()
-                #@form("search" false "post" "front/order/list")
+                #@form("search" false "post" "manage/memberGoods/list")
                     #@divColSmNum(3)
-                        #formInput({"name": "订单ID", "length": "4,8", "asterisk": false} {"name": "orderId", "id": "orderId",
-                            "value": "$!{queryVO.orderId}"})
-                    #end
-                    #@divColSmNum(3)
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">订单类型：</label>
-                        <div class="col-sm-5" style="width: 200px;">
-                            #selectBS($!dict.getDictList("goodsClass"), ["goodsClass", "$!{queryVO.goodsClass}", "value", "label"], false, [true, ""])
-                        </div>
-                    </div>
-                    #end
-                    #@divColSmNum(3)
-                        #formDate({"name": "开始日期", "length": "4,8", "asterisk": false, "cl": "start-time"} {"name":
-                            "start", "id": "start","dateVal": "true", "value":
-                            "$!{queryVO.start}"})
-                    #end
-                    #@divColSmNum(3)
-                        #formDate({"name": "结束日期", "length": "4,8", "asterisk": false, "cl": "end-time"} {"name":
-                            "end", "id": "end","dateVal": "true", "value":
-                            "$!{queryVO.end}"})
+                        #formInput({"name": "会员编号", "length": "4,8", "asterisk": false} {"name": "memberId", "id": "memberId",
+                            "value": "$!{queryVO.memberId}"})
                     #end
                 #end
             #end
@@ -35,19 +17,18 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["订单号", "订单类型", "订单生成时间", "订单金额(元)", "金蛋金额", "订单状态", "操作人编号"],"", false)
+                    #tableTHead(["id", "会员编号", "金鸡数量", "每只金鸡每天下金蛋数量", "已下金蛋数量", "创建时间", "金鸡来源"],"", false)
                     #@tableBody($page.list)
 
-                        #tableTd("$!{l.orderId}")
-                        #tableTd("$!{l.goodsClass}", {"type": "dict", "format": "goodsClass"})
+                        #tableTd("$!{l.id}")
+                        #tableTd("$!{l.memberId}")
+                        #tableTd("$!{l.amount}")
+                        #tableTd("$!{l.addScoreByonegoods}")
+                        #tableTd("$!{l.addCount}")
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.createTime}))
-                        #tableTd("$!{l.price}")
-                        #tableTd("$!{l.scorePrice}")
-                        #tableTd("$!{l.state}", {"type": "dict", "format": "orderState"})
-                        #tableTd("$!{l.operMemberId}")
-                        #@tableTd()
-                            #@a("查看" {"href": "$!{ctx}/front/order/view?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
-                        #end
+                        #tableTd("$!{l.type}", {"type": "dict", "format": "memberGoodsType"})
+                        #tableTd("$!{l.state}", {"type": "dict", "format": "goodsState"})
+
                     #end
                 #end
 
@@ -74,7 +55,7 @@
         })
 
         $(function () {
-            var startTime = $('.start-time').datepicker().on('changeDate', function(ev) {
+            var startTime = $('.strat-time').datepicker().on('changeDate', function(ev) {
                 startTime.hide();
             }).data('datepicker');
             var endTime = $('.end-time').datepicker().on('changeDate', function(ev) {
@@ -82,8 +63,8 @@
             }).data('datepicker');
 
             $('button[empty="true"]').on('click', function () {
-                $("input[name='start']").eq(0).val($('#s_t_h').val());
-                $("input[name='end']").eq(0).val($('#e_t_h').val());
+                $("input[name='startTime']").eq(0).val($('#s_t_h').val());
+                $("input[name='endTime']").eq(0).val($('#e_t_h').val());
             })
         })
 
@@ -91,7 +72,7 @@
             submitHandler: function(form) {
                 if($('#start_time').val()!=""&&$('#end_time').val()!=""){
                     if (!(new Date($('#start_time').val()).compare(new Date($('#end_time').val()), DATE_CONS.DATE_COMPARE_SMALL_EQUAL))){
-                        $("#order_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
+                        $("#goods_prompt").html(promptInfo.prompt("结束日期不能小于开始日期"));
                         shade.hideBg("dialog");
                         return;
                     }

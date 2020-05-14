@@ -19,7 +19,7 @@ public class ScoreScheduledService {
     private ITableMemberGoodsBusiSV iTableMemberGoodsBusiSV;
 
     //每天1点执行
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void scheduled(){
         int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         log.info("========金鸡下蛋定时任务========时间:"+System.currentTimeMillis()+"START");

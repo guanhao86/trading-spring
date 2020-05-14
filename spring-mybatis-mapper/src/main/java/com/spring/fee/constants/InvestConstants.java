@@ -221,4 +221,15 @@ public final class InvestConstants {
         public static final String expire = "2";
 
     }
+
+    //金鸡来源类型
+    public static final class MemberGoodsType {
+
+        private MemberGoodsType() {}
+        //1：赠送（购买报单商品）
+        public static final String type1 = "1";
+        //2：购买（购买复消商品，额外购买金鸡）
+        public static final String type2 = "2";
+
+    }
 }

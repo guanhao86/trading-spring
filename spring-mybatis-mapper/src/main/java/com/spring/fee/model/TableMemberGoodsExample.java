@@ -874,6 +874,256 @@ public class TableMemberGoodsExample {
             addCriterion("last_time not between", value1, value2, "lastTime");
             return (Criteria) this;
         }
+
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(String value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(String value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(String value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(String value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(String value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLike(String value) {
+            addCriterion("type like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotLike(String value) {
+            addCriterion("type not like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<String> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<String> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(String value1, String value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(String value1, String value2) {
+            addCriterion("type not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddCountIsNull() {
+            addCriterion("add_count is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddCountIsNotNull() {
+            addCriterion("add_count is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddCountEqualTo(Integer value) {
+            addCriterion("add_count =", value, "addCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddCountNotEqualTo(Integer value) {
+            addCriterion("add_count <>", value, "addCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddCountGreaterThan(Integer value) {
+            addCriterion("add_count >", value, "addCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddCountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("add_count >=", value, "addCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddCountLessThan(Integer value) {
+            addCriterion("add_count <", value, "addCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddCountLessThanOrEqualTo(Integer value) {
+            addCriterion("add_count <=", value, "addCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddCountIn(List<Integer> values) {
+            addCriterion("add_count in", values, "addCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddCountNotIn(List<Integer> values) {
+            addCriterion("add_count not in", values, "addCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddCountBetween(Integer value1, Integer value2) {
+            addCriterion("add_count between", value1, value2, "addCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddCountNotBetween(Integer value1, Integer value2) {
+            addCriterion("add_count not between", value1, value2, "addCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddTimesIsNull() {
+            addCriterion("add_times is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddTimesIsNotNull() {
+            addCriterion("add_times is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddTimesEqualTo(Integer value) {
+            addCriterion("add_times =", value, "addTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddTimesNotEqualTo(Integer value) {
+            addCriterion("add_times <>", value, "addTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddTimesGreaterThan(Integer value) {
+            addCriterion("add_times >", value, "addTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddTimesGreaterThanOrEqualTo(Integer value) {
+            addCriterion("add_times >=", value, "addTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddTimesLessThan(Integer value) {
+            addCriterion("add_times <", value, "addTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddTimesLessThanOrEqualTo(Integer value) {
+            addCriterion("add_times <=", value, "addTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddTimesIn(List<Integer> values) {
+            addCriterion("add_times in", values, "addTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddTimesNotIn(List<Integer> values) {
+            addCriterion("add_times not in", values, "addTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddTimesBetween(Integer value1, Integer value2) {
+            addCriterion("add_times between", value1, value2, "addTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddTimesNotBetween(Integer value1, Integer value2) {
+            addCriterion("add_times not between", value1, value2, "addTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvalidTimeIsNull() {
+            addCriterion("invalid_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvalidTimeIsNotNull() {
+            addCriterion("invalid_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvalidTimeEqualTo(Date value) {
+            addCriterion("invalid_time =", value, "invalidTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvalidTimeNotEqualTo(Date value) {
+            addCriterion("invalid_time <>", value, "invalidTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvalidTimeGreaterThan(Date value) {
+            addCriterion("invalid_time >", value, "invalidTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvalidTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("invalid_time >=", value, "invalidTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvalidTimeLessThan(Date value) {
+            addCriterion("invalid_time <", value, "invalidTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvalidTimeLessThanOrEqualTo(Date value) {
+            addCriterion("invalid_time <=", value, "invalidTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvalidTimeIn(List<Date> values) {
+            addCriterion("invalid_time in", values, "invalidTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvalidTimeNotIn(List<Date> values) {
+            addCriterion("invalid_time not in", values, "invalidTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvalidTimeBetween(Date value1, Date value2) {
+            addCriterion("invalid_time between", value1, value2, "invalidTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvalidTimeNotBetween(Date value1, Date value2) {
+            addCriterion("invalid_time not between", value1, value2, "invalidTime");
+            return (Criteria) this;
+        }
     }
 
     /**

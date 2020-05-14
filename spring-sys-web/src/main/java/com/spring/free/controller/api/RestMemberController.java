@@ -17,6 +17,7 @@ import com.spring.free.vo.TreeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,12 +40,15 @@ public class RestMemberController {
     @RequestMapping(value = "/getMemberInfo/{memberId}")
     public @ResponseBody
     AccessResponse getMemberInfo(@PathVariable String memberId, String image,HttpServletRequest request, HttpServletResponse response){
-
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         System.out.println("接收请求" + DateUtils.getYYYYMMDDHHMISS(DateUtils.getSysDate()));
 
         //返回体
         TableMember tableMember = iTableMemberBusiSV.selectByMemberId(memberId);
         JSONObject jsonObj = (JSONObject)JSON.toJSON(tableMember);
+        stopWatch.stop();
+        System.out.println("耗时：" + stopWatch.getTotalTimeSeconds());
         return AccessResponse.builder().data(jsonObj).success(true).rspcode(200).message("服务端处理请求成功。").build();
     }
 
@@ -63,6 +67,7 @@ public class RestMemberController {
      * @param response
      * @return
      */
+    @PassToken
     @RequestMapping(value = "/getMemberTree/{memberId}")
     public @ResponseBody
     AccessResponse getMemberTree(@PathVariable String memberId, String image, HttpServletRequest request, HttpServletResponse response){

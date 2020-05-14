@@ -6,19 +6,26 @@ import com.github.pagehelper.PageInfo;
 import com.spring.fee.dao.mapper.TableCashOutMapper;
 import com.spring.fee.model.TableCashOut;
 import com.spring.fee.model.TableCashOutExample;
+import com.spring.fee.model.TableInvest;
 import com.spring.fee.model.TableMember;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
 import com.spring.fee.service.ITableCashOutBusiSV;
 import com.spring.fee.service.ITableMemberBusiSV;
+import com.spring.free.common.util.ExcelUtils;
 import com.spring.free.util.DateUtils;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
+import com.spring.free.utils.velocity.DictUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -163,5 +170,50 @@ public class TableCashOutBusiSVImpl implements ITableCashOutBusiSV {
                 .doSelectPageInfo(() -> this.iTableCashOutMapper.selectByExample(example));
         log.info("获取提现结果：{}", JSON.toJSON(pageInfo));
         return pageInfo;
+    }
+
+    /**
+     * 导出文件
+     *
+     * @param bo
+     * @param pageNum
+     * @param pageSize
+     * @param map
+     * @return
+     */
+    @Override
+    public HSSFWorkbook exportFile(TableCashOut bo, Integer pageNum, Integer pageSize, Map<String, Object> map) {
+        PageInfo<TableCashOut> pageInfo = this.queryListPage(bo, 1, 10000000, map);
+
+        List<TableCashOut> list = new ArrayList<>();
+        if (pageInfo != null && !CollectionUtils.isEmpty(pageInfo.getList())) {
+            list = pageInfo.getList();
+        } else {
+            System.out.println("没有数据");
+        }
+
+        String sheetName = "提现申请";
+        String[] title = {"id", "申请人", "金额", "姓名", "银行卡号", "银行名", "开户行", "申请时间", "审核时间", "审核备注", "状态"};
+        String[][] values = new String[list.size()+1][title.length];
+
+        int i = 0;
+        for (TableCashOut tmp : list) {
+            values[i][0] = String.valueOf(tmp.getId());
+            values[i][1] = tmp.getMemberId();
+            values[i][2] = tmp.getAmount()+"";
+            values[i][3] = tmp.getMemberName();
+            values[i][4] = tmp.getBankCardId();
+            values[i][5] = tmp.getBankName();
+            values[i][6] = tmp.getBankOpenAre();
+            values[i][7] = DateUtils.formatDateTime(tmp.getCreateTime());
+            values[i][8] = DateUtils.formatDateTime(tmp.getAuditTime());
+            values[i][9] = tmp.getAuditRemark();
+            values[i][10] = DictUtils.getDictLabel(String.valueOf(tmp.getAuditState()),"cashoutState","");
+
+            i++;
+        }
+
+        HSSFWorkbook wb = ExcelUtils.getHSSFWorkbook(sheetName, title, values, null);
+        return wb;
     }
 }

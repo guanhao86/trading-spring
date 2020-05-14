@@ -6,18 +6,25 @@ import com.github.pagehelper.PageInfo;
 import com.spring.fee.dao.mapper.TableInvestMapper;
 import com.spring.fee.model.TableInvest;
 import com.spring.fee.model.TableInvestExample;
+import com.spring.fee.model.TableMember;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
 import com.spring.fee.service.ITableInvestBusiSV;
+import com.spring.free.common.util.ExcelUtils;
 import com.spring.free.util.DateUtils;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
+import com.spring.free.utils.velocity.DictUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -164,5 +171,44 @@ public class TableInvestBusiSVImpl implements ITableInvestBusiSV {
                 .doSelectPageInfo(() -> this.iTableInvestMapper.selectByExample(example));
         log.info("获取充值申请&审核管理表结果：{}", JSON.toJSON(pageInfo));
         return pageInfo;
+    }
+
+    /**
+     * 导出会员文件
+     *
+     * @param bo
+     * @param pageNum
+     * @param pageSize
+     * @param map
+     * @return
+     */
+    @Override
+    public HSSFWorkbook exportFile(TableInvest bo, Integer pageNum, Integer pageSize, Map<String, Object> map) {
+        PageInfo<TableInvest> pageInfo = this.queryListPage(bo, 1, 10000000, map);
+
+        List<TableInvest> list = new ArrayList<>();
+        if (pageInfo != null && !CollectionUtils.isEmpty(pageInfo.getList())) {
+            list = pageInfo.getList();
+        } else {
+            System.out.println("没有数据");
+        }
+
+        String sheetName = "充值申请";
+        String[] title = {"id", "会员ID", "充值金额(元)", "申请时间", "申请状态"};
+        String[][] values = new String[list.size()+1][title.length];
+
+        int i = 0;
+        for (TableInvest tmp : list) {
+            values[i][0] = String.valueOf(tmp.getId());
+            values[i][1] = tmp.getMemberId();
+            values[i][2] = tmp.getAccountMoney()+"";
+            values[i][3] = DateUtils.formatDateTime(tmp.getInvestTime());
+            values[i][4] = DictUtils.getDictLabel(String.valueOf(tmp.getState()),"investState","");
+
+            i++;
+        }
+
+        HSSFWorkbook wb = ExcelUtils.getHSSFWorkbook(sheetName, title, values, null);
+        return wb;
     }
 }

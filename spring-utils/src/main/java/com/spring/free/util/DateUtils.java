@@ -332,6 +332,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         return cal.getTime();
     }
 
+    public static Date getNextYear(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.YEAR, 1);
+        return cal.getTime();
+    }
+
     public static String getWeek(Date date) {
         String[] weeks = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
         Calendar cal = Calendar.getInstance();

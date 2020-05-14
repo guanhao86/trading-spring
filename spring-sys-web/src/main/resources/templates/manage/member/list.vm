@@ -54,7 +54,7 @@
                  <a href="/admin/manage/member/exportMemberFile">导出会员</a>
              </div>
                 #@table()
-                    #tableTHead(["会员ID", "电话", "姓名","注册时间","余额","推荐人ID","安置人编号","左右区标识","会员级别","会员奖衔","实名制"],"", false)
+                    #tableTHead(["会员ID", "电话", "姓名","注册时间","余额","金蛋","推荐人ID","安置人编号","左右区标识","会员级别","会员奖衔","实名制"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.memberId}")
@@ -62,6 +62,7 @@
                         #tableTd("$!{l.reallyName}")
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.registerTime}))
                         #tableTd("$!{l.accountMoney}")
+                        #tableTd("$!{l.score}")
                         #tableTd("$!{l.referenceId}")
                         #tableTd("$!{l.arrangeId}")
                         #tableTd("$!{l.leftOrRight}", {"type": "dict", "format": "leftOrRight"})

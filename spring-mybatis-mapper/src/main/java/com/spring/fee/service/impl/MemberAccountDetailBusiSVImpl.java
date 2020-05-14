@@ -7,8 +7,10 @@ import com.spring.fee.dao.mapper.TableMemberAccountDetailMapper;
 import com.spring.fee.model.TableMemberAccountDetail;
 import com.spring.fee.model.TableMemberAccountDetailExample;
 import com.spring.fee.model.TableMember;
+import com.spring.fee.model.TableMemberTransfer;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
 import com.spring.fee.service.ITableMemberBusiSV;
+import com.spring.fee.service.ITableMemberTransferBusiSV;
 import com.spring.free.util.DateUtils;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
@@ -37,6 +39,8 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
     @Autowired
     ITableMemberBusiSV iTableMemberBusiSV;
 
+    @Autowired
+    ITableMemberTransferBusiSV iTableMemberTransferBusiSV;
     /**
      * 创建记录
      * @param bo
@@ -235,6 +239,10 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
     @Override
     public TableMemberAccountDetail transfer(String fromMemberId, String toMemberId, String amount, String remark, String transType) {
 
+        if (remark == null) {
+            remark = "";
+        }
+
         //查询frommember
         TableMember fromMember = this.iTableMemberBusiSV.selectByMemberId(fromMemberId);
         Float amount1 = 0f;
@@ -263,6 +271,16 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
         this.changeMoney(fromMemberId, "2", amount1, "转账到会员"+toMemberId+"。备注："+remark, accountType);
         this.changeMoney(toMemberId, "1", amount1, "会员"+fromMemberId+"转入。备注："+remark, accountType);
 
+        if ("2".equals(transType)) {
+            //转账记录(积分)
+            TableMemberTransfer tableMemberTransfer = new TableMemberTransfer();
+            tableMemberTransfer.setFromMemberId(fromMemberId);
+            tableMemberTransfer.setToMemberId(toMemberId);
+            tableMemberTransfer.setAmount(amount1);
+            tableMemberTransfer.setType("2");
+            this.iTableMemberTransferBusiSV.insert(tableMemberTransfer);
+        }
+
         return null;
     }
 
@@ -287,6 +305,7 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
         this.changeMoney(memberId, "2", amount1, "账本内转出", type==null?2:Integer.parseInt(type));
         //转入
         this.changeMoney(memberId, "1", amount1, "账本内转入", type==null?1:Integer.parseInt(type));
+
         return null;
     }
 }

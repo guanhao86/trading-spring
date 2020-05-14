@@ -3,7 +3,9 @@ package com.spring.fee.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.spring.fee.constants.InvestConstants;
 import com.spring.fee.dao.mapper.TableOrderMapper;
+import com.spring.fee.dao.mapper.TableOrderMapperDZ;
 import com.spring.fee.model.*;
 import com.spring.fee.service.*;
 import com.spring.free.common.util.ExcelUtils;
@@ -51,6 +53,9 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
 
     @Autowired
     ITableMemberLevelChangeDetailBusiSV iTableMemberLevelChangeDetailBusiSV;
+
+    @Autowired
+    TableOrderMapperDZ iTableOrderMapperDZ;
 
     /**
      * 创建记录
@@ -209,18 +214,18 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         if (StringUtils.isNotEmpty(goods.getExtentGoodsId())) {
             //购买的商品存在金鸡产品，把金鸡商品插入用户商品表
             log.info("购买的商品存在金鸡产品，把金鸡商品插入用户商品表");
-            createMemberGoods(Integer.parseInt(goods.getExtentGoodsId()), goods.getExtentGoodsCount(), bo);
+            createMemberGoods(Integer.parseInt(goods.getExtentGoodsId()), goods.getExtentGoodsCount(), bo, InvestConstants.MemberGoodsType.type1);
         }
         if (StringUtils.isNotEmpty(bo.getExtentGoodsId())) {
             //购买的商品存在金鸡产品，把金鸡商品插入用户商品表
             log.info("订单额外购买金鸡产品，把金鸡商品插入用户商品表");
-            createMemberGoods(Integer.parseInt(bo.getExtentGoodsId()), bo.getExtentGoodsCount(), bo);
+            createMemberGoods(Integer.parseInt(bo.getExtentGoodsId()), bo.getExtentGoodsCount(), bo, InvestConstants.MemberGoodsType.type2);
         }
 
         return bo;
     }
 
-    public void createMemberGoods(int exGoogsId, int exGoodsCount, TableOrder order){
+    public void createMemberGoods(int exGoogsId, int exGoodsCount, TableOrder order, String memberGoodsType){
         log.info("把金鸡商品插入用户商品表");
         //查询商品属性
         TableGoods ex = new TableGoods();
@@ -235,6 +240,8 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         memberGoods.setAddScoreByonegoods(ex.getAddScore());
         memberGoods.setAmount(exGoodsCount * order.getAmount());  //每个商品赠送金鸡数 * 商品数量
         memberGoods.setCreateTime(DateUtils.getSysDate());
+        memberGoods.setType(memberGoodsType);
+        memberGoods.setAddCount(0);
         this.iTableMemberGoodsBusiSV.insert(memberGoods);
     }
 
@@ -298,6 +305,11 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         return pageInfo;
     }
 
+    @Override
+    public TableOrderDZ selectByGroup(TableOrderDZ bo, Integer pageNum, Integer pageSize, Map<String, Object> map) {
+        return this.iTableOrderMapperDZ.selectByGroup(bo.getMemberId(), bo.getStart(), bo.getEnd());
+    }
+
     /**
      * 导出订单
      *
@@ -326,23 +338,23 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         int i = 0;
         for (TableOrder order : list) {
             values[i][0] = String.valueOf(order.getId());
-            values[i][1] = order.getOrderId();
-            values[i][2] = order.getMemberId();
-            values[i][3] = String.valueOf(order.getGoodsId());
-            values[i][4] = String.valueOf(order.getAmount());
-            values[i][5] = String.valueOf(order.getPrice());
-            values[i][6] = DateUtils.formatDateTime(order.getCreateTime());
+            values[i][1] = order.getExpressNumber();
+            values[i][2] = order.getOrderId();
+            values[i][3] = order.getMemberId();
+            values[i][4] = String.valueOf(order.getGoodsId());
+            values[i][5] = String.valueOf(order.getAmount());
+            values[i][6] = String.valueOf(order.getPrice());
+            values[i][7] = DateUtils.formatDateTime(order.getCreateTime());
             String state = "";
             if (1 == order.getState()) {
                 state = "等待发货";
             } else if (2 == order.getState()) {
                 state = "发货完成";
             }
-            values[i][7] = state;
-            values[i][8] = order.getReceiverName();
-            values[i][9] = order.getReceiverPhone();
-            values[i][10] = order.getReceiverAddr();
-            values[i][11] = order.getExpressNumber();
+            values[i][8] = state;
+            values[i][9] = order.getReceiverName();
+            values[i][10] = order.getReceiverPhone();
+            values[i][11] = order.getReceiverAddr();
             i++;
         }
 

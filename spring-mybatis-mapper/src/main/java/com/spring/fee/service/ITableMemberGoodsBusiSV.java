@@ -2,6 +2,7 @@ package com.spring.fee.service;
 
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.model.TableMemberGoods;
+import com.spring.fee.model.TableMemberGoodsDZ;
 
 import java.util.Map;
 
@@ -24,4 +25,6 @@ public interface ITableMemberGoodsBusiSV {
     void calcScore();
 
     PageInfo<TableMemberGoods> queryListPage(TableMemberGoods bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
+
+    PageInfo<TableMemberGoodsDZ> queryListPageDZ(TableMemberGoodsDZ bo, Integer pageNum, Integer pageSize, Map<String ,Object> map) ;
 }

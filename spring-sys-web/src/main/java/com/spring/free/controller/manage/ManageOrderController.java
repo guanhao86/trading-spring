@@ -264,6 +264,9 @@ public class ManageOrderController {
                     TableOrder tableOrder = new TableOrder();
                     tableOrder.setId(Integer.parseInt(row.getCell(0).getStringCellValue()));
                     tableOrder.setOrderId(row.getCell(2).getStringCellValue());
+                    if (row.getCell(1) == null || StringUtils.isEmpty(row.getCell(1).getStringCellValue())){
+                        continue;
+                    }
                     tableOrder.setExpressNumber(row.getCell(1).getStringCellValue());
                     tableOrderList.add(tableOrder);
                 }

@@ -16,6 +16,8 @@ public class QueryVO extends BaseEntity<QueryVO> {
 
     private String memberId;
 
+    private String toMemberId;
+
     private String referenceId;
 
     private String arrangeId;
@@ -71,4 +73,6 @@ public class QueryVO extends BaseEntity<QueryVO> {
     private String respState;
     //1:现金 2：积分
     private String transType;
+    //1：日结，2：月结，3:周发放
+    private String balanceType;
 }
