@@ -30,7 +30,7 @@
     SELECT sum(score_price) as score_price
     FROM table_order
     where 1=1
-    <if test="memberId != null" >
+    <if test="memberId != null and memberId !=''" >
       and member_id = #{memberId,jdbcType=VARCHAR}
     </if>
     <if test="start != null" >

@@ -58,6 +58,8 @@ public class ManageBalanceDetailController {
             tableBalanceDetail.setLastTimeStart(DateUtils.parseDate(queryVO.getStart()+" 00:00:00"));
         if (StringUtils.isNotEmpty(queryVO.getEnd()))
             tableBalanceDetail.setLastTimeEnd(DateUtils.parseDate(queryVO.getEnd()+" 23:59:59"));
+        if (StringUtils.isNotEmpty(queryVO.getBalanceType()))
+            tableBalanceDetail.setBalanceType(Integer.parseInt(queryVO.getBalanceType()));
 
         PageInfo<TableBalanceDetail> pageInfo = this.iTableBalanceDetailBusiSV.queryListPage(tableBalanceDetail, page, pageSize, null);
 

@@ -210,7 +210,7 @@ public class ManageInvestController {
             outputStream = response.getOutputStream();
             HSSFWorkbook hssfWorkbook = this.iTableInvestBusiSV.exportFile(tableInvest, 0, 0, CommonUtils.getStartEnd(queryVO));
             response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
-            response.setHeader("Content-Disposition", "attachment;filename=member.xls");
+            response.setHeader("Content-Disposition", "attachment;filename=invest.xls");
 
             hssfWorkbook.write(outputStream);
 

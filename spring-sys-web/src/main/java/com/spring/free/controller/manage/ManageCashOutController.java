@@ -167,7 +167,7 @@ public class ManageCashOutController {
             outputStream = response.getOutputStream();
             HSSFWorkbook hssfWorkbook = this.iTableCashOutBusiSV.exportFile(tableCashOut, 0, 0, CommonUtils.getStartEnd(queryVO));
             response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
-            response.setHeader("Content-Disposition", "attachment;filename=member.xls");
+            response.setHeader("Content-Disposition", "attachment;filename=cashout.xls");
 
             hssfWorkbook.write(outputStream);
 

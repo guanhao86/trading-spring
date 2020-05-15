@@ -22,6 +22,9 @@
         #end
         #@panel()
              #@panelBody()
+             <div style="width: 100%; text-align: right; font-size: large">
+                 <a href="/admin/manage/cashout/exportCashoutFile">导出</a>
+             </div>
                 #@table()
                     #tableTHead(["id","申请人", "金额", "状态", "申请时间"],"", false)
                     #@tableBody($page.list)

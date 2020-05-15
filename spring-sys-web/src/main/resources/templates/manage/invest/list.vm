@@ -24,6 +24,9 @@
         #end
         #@panel()
              #@panelBody()
+             <div style="width: 100%; text-align: right; font-size: large">
+                 <a href="/admin/manage/invest/exportInvestFile">导出</a>
+             </div>
                 #@table()
                     #tableTHead(["id", "会员ID", "充值金额(元)", "申请时间", "申请状态"],"", false)
                     #@tableBody($page.list)

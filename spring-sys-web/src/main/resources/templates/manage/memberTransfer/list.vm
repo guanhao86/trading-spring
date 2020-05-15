@@ -6,7 +6,7 @@
                 #btn({"btnName":"清空", "icon":"fa-trash-o", "style":"danger",  "attr":{"empty": "true", "reset-id": "reset_form"}})
             #end
             #@panelBody()
-                #@form("search" false "post" "manage/memberGoods/list")
+                #@form("search" false "post" "manage/memberTransfer/list")
                     #@divColSmNum(3)
                         #formInput({"name": "转出会员编号", "length": "4,8", "asterisk": false} {"name": "memberId", "id": "memberId",
                             "value": "$!{queryVO.memberId}"})
@@ -21,7 +21,7 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "会员编号", "转出人编号", "转入人编号", "转增数量", "转账时间"],"", false)
+                    #tableTHead(["id", "转出人编号", "转入人编号", "转增数量", "转账时间"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.id}")

@@ -38,8 +38,8 @@
     FROM `table_member_goods` tmg
     LEFT JOIN table_member tm on tm.member_id = tmg.member_id
     where 1 = 1
-    <if test="memberId != null">
-      and member_id = #{memberId}
+    <if test="memberId != null and memberId !=''">
+      and tmg.member_id = #{memberId}
     </if>
   </select>
 

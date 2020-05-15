@@ -97,7 +97,7 @@ public class TableMemberTransferBusiSVImpl implements ITableMemberTransferBusiSV
         if (StringUtils.isNotEmpty(bo.getFromMemberId())) {
             criteria.andFromMemberIdEqualTo(bo.getFromMemberId());
         }
-        if (null != bo.getToMemberId()) {
+        if (StringUtils.isNotEmpty(bo.getToMemberId())) {
             criteria.andToMemberIdEqualTo(bo.getToMemberId());
         }
         if (null != bo.getAmount()) {

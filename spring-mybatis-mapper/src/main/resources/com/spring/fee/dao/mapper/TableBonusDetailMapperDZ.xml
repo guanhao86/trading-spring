@@ -19,7 +19,7 @@
     SELECT bonus_id, sum(bonus) as bonus
     FROM table_bonus_detail
     where 1=1
-    <if test="memberId != null" >
+    <if test="memberId != null and memberId !=''" >
       and member_id = #{memberId,jdbcType=VARCHAR}
     </if>
       <if test="start != null" >
