@@ -68,6 +68,16 @@ public interface ITableMemberBusiSV {
 
     List<TableMember> queryList(TableMember bo);
 
+    Map<String, TableMember> queryListMap(TableMember bo);
+
+    /**
+     * parent 是否是bo的父节点，可跨级别
+     * @param bo
+     * @param parentMemberId
+     * @return
+     */
+    boolean checkParent(TableMember bo, String parentMemberId);
+
     PageInfo<TableMember> queryListPage(TableMember bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
 
     /**

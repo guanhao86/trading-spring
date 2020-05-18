@@ -74,12 +74,12 @@
                 <!--selectByExampleQueryId="true">-->
                 <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <!--<table tableName="table_bonus_setting" domainObjectName="TableBonusSetting"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="table_bonus_setting" domainObjectName="TableBonusSetting"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
         <!--<table tableName="table_broadcast_info" domainObjectName="TableBroadcastInfo"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
@@ -98,12 +98,12 @@
                <!--selectByExampleQueryId="true">-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <!--<table tableName="table_member" domainObjectName="TableMember"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="table_member" domainObjectName="TableMember"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
         <!--<table tableName="table_member_level_change_detail" domainObjectName="TableMemberLevelChangeDetail"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
@@ -176,12 +176,12 @@
                <!--selectByExampleQueryId="true">-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <table tableName="table_member_goods" domainObjectName="TableMemberGoods"
-            enableCountByExample="true" enableUpdateByExample="true"
-            enableDeleteByExample="true" enableSelectByExample="true"
-            selectByExampleQueryId="true">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-        </table>
+        <!--<table tableName="table_member_goods" domainObjectName="TableMemberGoods"-->
+            <!--enableCountByExample="true" enableUpdateByExample="true"-->
+            <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+            <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
         <!--<table tableName="table_task" domainObjectName="TableTask"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->

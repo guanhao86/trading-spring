@@ -245,6 +245,7 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
 
         //查询frommember
         TableMember fromMember = this.iTableMemberBusiSV.selectByMemberId(fromMemberId);
+
         Float amount1 = 0f;
         try{
             amount1 = Float.parseFloat(amount);
@@ -264,6 +265,11 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
         TableMember toMember = this.iTableMemberBusiSV.selectByMemberId(toMemberId);
         if (toMember == null) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "转入会员不存在！", "", null);
+        }
+
+        //是否同一网体
+        if (!this.iTableMemberBusiSV.checkParent(fromMember, toMemberId)) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "转账双方不在同一网体！", "", null);
         }
 
         int accountType = "2".equals(transType)?6:null;

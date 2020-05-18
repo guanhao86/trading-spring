@@ -30,10 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 会员管理表服务
@@ -61,6 +58,14 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
     public TableMember insert(TableMember bo) {
         log.info("创建会员管理表参数bo：{}", JSON.toJSON(bo));
         Date sysdate = DateUtils.getSysDate();
+        bo.setAccountCarPoint(0f);
+        bo.setScore(0);
+        bo.setAccountPointFreeze(0f);
+        bo.setAccountJsyPoint(0f);
+        bo.setAccountDjPoint(0f);
+        bo.setAccountPointAvailable(0f);
+        bo.setReportingAmount(0f);
+        bo.setAccountMoney(0f);
         bo.setRegisterTime(sysdate);
         iTableMemberMapper.insert(bo);
         return bo;
@@ -326,6 +331,49 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         }
 
         return this.iTableMemberMapper.selectByExample(example);
+    }
+
+    @Override
+    public Map<String, TableMember> queryListMap(TableMember bo) {
+        List<TableMember> list = this.queryList(new TableMember());
+        Map<String, TableMember> map = new HashMap<>();
+        for(TableMember tableMember : list) {
+            map.put(tableMember.getMemberId(), tableMember);
+        }
+        return map;
+    }
+
+    /**
+     * parent 是否是bo的父节点，可跨级别
+     *
+     * @param bo
+     * @param parentMemberId
+     * @return
+     */
+    @Override
+    public boolean checkParent(TableMember bo, String parentMemberId) {
+        return this.checkParent(null, bo ,parentMemberId);
+    }
+
+    /**
+     * parent 是否是bo的父节点，可跨级别
+     *
+     * @param bo
+     * @param parentMemberId
+     * @return
+     */
+    public boolean checkParent(Map<String, TableMember> map, TableMember bo, String parentMemberId) {
+        if (map == null) {
+            map = this.queryListMap(new TableMember());
+        }
+        TableMember parent = map.get(bo.getReferenceId());
+        if (parent == null) {
+            return false;
+        }
+        if (parent.getMemberId().equals(parentMemberId)) {
+            return true;
+        }
+        return this.checkParent(map, parent, parentMemberId);
     }
 
     /**

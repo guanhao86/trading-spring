@@ -2544,6 +2544,66 @@ public class TableMemberExample {
             addCriterion("score not between", value1, value2, "score");
             return (Criteria) this;
         }
+
+        public Criteria andAccountCarPointIsNull() {
+            addCriterion("account_car_point is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountCarPointIsNotNull() {
+            addCriterion("account_car_point is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountCarPointEqualTo(Float value) {
+            addCriterion("account_car_point =", value, "accountCarPoint");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountCarPointNotEqualTo(Float value) {
+            addCriterion("account_car_point <>", value, "accountCarPoint");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountCarPointGreaterThan(Float value) {
+            addCriterion("account_car_point >", value, "accountCarPoint");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountCarPointGreaterThanOrEqualTo(Float value) {
+            addCriterion("account_car_point >=", value, "accountCarPoint");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountCarPointLessThan(Float value) {
+            addCriterion("account_car_point <", value, "accountCarPoint");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountCarPointLessThanOrEqualTo(Float value) {
+            addCriterion("account_car_point <=", value, "accountCarPoint");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountCarPointIn(List<Float> values) {
+            addCriterion("account_car_point in", values, "accountCarPoint");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountCarPointNotIn(List<Float> values) {
+            addCriterion("account_car_point not in", values, "accountCarPoint");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountCarPointBetween(Float value1, Float value2) {
+            addCriterion("account_car_point between", value1, value2, "accountCarPoint");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountCarPointNotBetween(Float value1, Float value2) {
+            addCriterion("account_car_point not between", value1, value2, "accountCarPoint");
+            return (Criteria) this;
+        }
     }
 
     /**

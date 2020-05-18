@@ -793,6 +793,306 @@ public class TableBonusSettingExample {
             addCriterion("bonus_bole_layer3 not between", value1, value2, "bonusBoleLayer3");
             return (Criteria) this;
         }
+
+        public Criteria andBonusBoleLayer4IsNull() {
+            addCriterion("bonus_bole_layer4 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer4IsNotNull() {
+            addCriterion("bonus_bole_layer4 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer4EqualTo(Float value) {
+            addCriterion("bonus_bole_layer4 =", value, "bonusBoleLayer4");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer4NotEqualTo(Float value) {
+            addCriterion("bonus_bole_layer4 <>", value, "bonusBoleLayer4");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer4GreaterThan(Float value) {
+            addCriterion("bonus_bole_layer4 >", value, "bonusBoleLayer4");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer4GreaterThanOrEqualTo(Float value) {
+            addCriterion("bonus_bole_layer4 >=", value, "bonusBoleLayer4");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer4LessThan(Float value) {
+            addCriterion("bonus_bole_layer4 <", value, "bonusBoleLayer4");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer4LessThanOrEqualTo(Float value) {
+            addCriterion("bonus_bole_layer4 <=", value, "bonusBoleLayer4");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer4In(List<Float> values) {
+            addCriterion("bonus_bole_layer4 in", values, "bonusBoleLayer4");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer4NotIn(List<Float> values) {
+            addCriterion("bonus_bole_layer4 not in", values, "bonusBoleLayer4");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer4Between(Float value1, Float value2) {
+            addCriterion("bonus_bole_layer4 between", value1, value2, "bonusBoleLayer4");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer4NotBetween(Float value1, Float value2) {
+            addCriterion("bonus_bole_layer4 not between", value1, value2, "bonusBoleLayer4");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer5IsNull() {
+            addCriterion("bonus_bole_layer5 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer5IsNotNull() {
+            addCriterion("bonus_bole_layer5 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer5EqualTo(Float value) {
+            addCriterion("bonus_bole_layer5 =", value, "bonusBoleLayer5");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer5NotEqualTo(Float value) {
+            addCriterion("bonus_bole_layer5 <>", value, "bonusBoleLayer5");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer5GreaterThan(Float value) {
+            addCriterion("bonus_bole_layer5 >", value, "bonusBoleLayer5");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer5GreaterThanOrEqualTo(Float value) {
+            addCriterion("bonus_bole_layer5 >=", value, "bonusBoleLayer5");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer5LessThan(Float value) {
+            addCriterion("bonus_bole_layer5 <", value, "bonusBoleLayer5");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer5LessThanOrEqualTo(Float value) {
+            addCriterion("bonus_bole_layer5 <=", value, "bonusBoleLayer5");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer5In(List<Float> values) {
+            addCriterion("bonus_bole_layer5 in", values, "bonusBoleLayer5");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer5NotIn(List<Float> values) {
+            addCriterion("bonus_bole_layer5 not in", values, "bonusBoleLayer5");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer5Between(Float value1, Float value2) {
+            addCriterion("bonus_bole_layer5 between", value1, value2, "bonusBoleLayer5");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer5NotBetween(Float value1, Float value2) {
+            addCriterion("bonus_bole_layer5 not between", value1, value2, "bonusBoleLayer5");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer6IsNull() {
+            addCriterion("bonus_bole_layer6 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer6IsNotNull() {
+            addCriterion("bonus_bole_layer6 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer6EqualTo(Float value) {
+            addCriterion("bonus_bole_layer6 =", value, "bonusBoleLayer6");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer6NotEqualTo(Float value) {
+            addCriterion("bonus_bole_layer6 <>", value, "bonusBoleLayer6");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer6GreaterThan(Float value) {
+            addCriterion("bonus_bole_layer6 >", value, "bonusBoleLayer6");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer6GreaterThanOrEqualTo(Float value) {
+            addCriterion("bonus_bole_layer6 >=", value, "bonusBoleLayer6");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer6LessThan(Float value) {
+            addCriterion("bonus_bole_layer6 <", value, "bonusBoleLayer6");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer6LessThanOrEqualTo(Float value) {
+            addCriterion("bonus_bole_layer6 <=", value, "bonusBoleLayer6");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer6In(List<Float> values) {
+            addCriterion("bonus_bole_layer6 in", values, "bonusBoleLayer6");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer6NotIn(List<Float> values) {
+            addCriterion("bonus_bole_layer6 not in", values, "bonusBoleLayer6");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer6Between(Float value1, Float value2) {
+            addCriterion("bonus_bole_layer6 between", value1, value2, "bonusBoleLayer6");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer6NotBetween(Float value1, Float value2) {
+            addCriterion("bonus_bole_layer6 not between", value1, value2, "bonusBoleLayer6");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer7IsNull() {
+            addCriterion("bonus_bole_layer7 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer7IsNotNull() {
+            addCriterion("bonus_bole_layer7 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer7EqualTo(Float value) {
+            addCriterion("bonus_bole_layer7 =", value, "bonusBoleLayer7");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer7NotEqualTo(Float value) {
+            addCriterion("bonus_bole_layer7 <>", value, "bonusBoleLayer7");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer7GreaterThan(Float value) {
+            addCriterion("bonus_bole_layer7 >", value, "bonusBoleLayer7");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer7GreaterThanOrEqualTo(Float value) {
+            addCriterion("bonus_bole_layer7 >=", value, "bonusBoleLayer7");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer7LessThan(Float value) {
+            addCriterion("bonus_bole_layer7 <", value, "bonusBoleLayer7");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer7LessThanOrEqualTo(Float value) {
+            addCriterion("bonus_bole_layer7 <=", value, "bonusBoleLayer7");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer7In(List<Float> values) {
+            addCriterion("bonus_bole_layer7 in", values, "bonusBoleLayer7");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer7NotIn(List<Float> values) {
+            addCriterion("bonus_bole_layer7 not in", values, "bonusBoleLayer7");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer7Between(Float value1, Float value2) {
+            addCriterion("bonus_bole_layer7 between", value1, value2, "bonusBoleLayer7");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer7NotBetween(Float value1, Float value2) {
+            addCriterion("bonus_bole_layer7 not between", value1, value2, "bonusBoleLayer7");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer8IsNull() {
+            addCriterion("bonus_bole_layer8 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer8IsNotNull() {
+            addCriterion("bonus_bole_layer8 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer8EqualTo(Float value) {
+            addCriterion("bonus_bole_layer8 =", value, "bonusBoleLayer8");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer8NotEqualTo(Float value) {
+            addCriterion("bonus_bole_layer8 <>", value, "bonusBoleLayer8");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer8GreaterThan(Float value) {
+            addCriterion("bonus_bole_layer8 >", value, "bonusBoleLayer8");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer8GreaterThanOrEqualTo(Float value) {
+            addCriterion("bonus_bole_layer8 >=", value, "bonusBoleLayer8");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer8LessThan(Float value) {
+            addCriterion("bonus_bole_layer8 <", value, "bonusBoleLayer8");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer8LessThanOrEqualTo(Float value) {
+            addCriterion("bonus_bole_layer8 <=", value, "bonusBoleLayer8");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer8In(List<Float> values) {
+            addCriterion("bonus_bole_layer8 in", values, "bonusBoleLayer8");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer8NotIn(List<Float> values) {
+            addCriterion("bonus_bole_layer8 not in", values, "bonusBoleLayer8");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer8Between(Float value1, Float value2) {
+            addCriterion("bonus_bole_layer8 between", value1, value2, "bonusBoleLayer8");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusBoleLayer8NotBetween(Float value1, Float value2) {
+            addCriterion("bonus_bole_layer8 not between", value1, value2, "bonusBoleLayer8");
+            return (Criteria) this;
+        }
     }
 
     /**

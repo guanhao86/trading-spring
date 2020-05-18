@@ -16,6 +16,11 @@
     <result column="bonus_bole_layer1" jdbcType="REAL" property="bonusBoleLayer1" />
     <result column="bonus_bole_layer2" jdbcType="REAL" property="bonusBoleLayer2" />
     <result column="bonus_bole_layer3" jdbcType="REAL" property="bonusBoleLayer3" />
+    <result column="bonus_bole_layer4" jdbcType="REAL" property="bonusBoleLayer4" />
+    <result column="bonus_bole_layer5" jdbcType="REAL" property="bonusBoleLayer5" />
+    <result column="bonus_bole_layer6" jdbcType="REAL" property="bonusBoleLayer6" />
+    <result column="bonus_bole_layer7" jdbcType="REAL" property="bonusBoleLayer7" />
+    <result column="bonus_bole_layer8" jdbcType="REAL" property="bonusBoleLayer8" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -90,7 +95,8 @@
     -->
     bonus_reference, bonus_group_vip1, bonus_group_vip2, bonus_group_vip3, bonus_group_vip1_day_max, 
     bonus_group_vip2_day_max, bonus_group_vip3_day_max, bonus_bole_layer1, bonus_bole_layer2, 
-    bonus_bole_layer3
+    bonus_bole_layer3, bonus_bole_layer4, bonus_bole_layer5, bonus_bole_layer6, bonus_bole_layer7, 
+    bonus_bole_layer8
   </sql>
   <select id="selectByExample" parameterType="com.spring.fee.model.TableBonusSettingExample" resultMap="BaseResultMap">
     <!--
@@ -129,11 +135,15 @@
     insert into table_bonus_setting (bonus_reference, bonus_group_vip1, bonus_group_vip2, 
       bonus_group_vip3, bonus_group_vip1_day_max, bonus_group_vip2_day_max, 
       bonus_group_vip3_day_max, bonus_bole_layer1, bonus_bole_layer2, 
-      bonus_bole_layer3)
+      bonus_bole_layer3, bonus_bole_layer4, bonus_bole_layer5, 
+      bonus_bole_layer6, bonus_bole_layer7, bonus_bole_layer8
+      )
     values (#{bonusReference,jdbcType=REAL}, #{bonusGroupVip1,jdbcType=REAL}, #{bonusGroupVip2,jdbcType=REAL}, 
       #{bonusGroupVip3,jdbcType=REAL}, #{bonusGroupVip1DayMax,jdbcType=REAL}, #{bonusGroupVip2DayMax,jdbcType=REAL}, 
       #{bonusGroupVip3DayMax,jdbcType=REAL}, #{bonusBoleLayer1,jdbcType=REAL}, #{bonusBoleLayer2,jdbcType=REAL}, 
-      #{bonusBoleLayer3,jdbcType=REAL})
+      #{bonusBoleLayer3,jdbcType=REAL}, #{bonusBoleLayer4,jdbcType=REAL}, #{bonusBoleLayer5,jdbcType=REAL}, 
+      #{bonusBoleLayer6,jdbcType=REAL}, #{bonusBoleLayer7,jdbcType=REAL}, #{bonusBoleLayer8,jdbcType=REAL}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.spring.fee.model.TableBonusSetting">
     <!--
@@ -172,6 +182,21 @@
       <if test="bonusBoleLayer3 != null">
         bonus_bole_layer3,
       </if>
+      <if test="bonusBoleLayer4 != null">
+        bonus_bole_layer4,
+      </if>
+      <if test="bonusBoleLayer5 != null">
+        bonus_bole_layer5,
+      </if>
+      <if test="bonusBoleLayer6 != null">
+        bonus_bole_layer6,
+      </if>
+      <if test="bonusBoleLayer7 != null">
+        bonus_bole_layer7,
+      </if>
+      <if test="bonusBoleLayer8 != null">
+        bonus_bole_layer8,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="bonusReference != null">
@@ -203,6 +228,21 @@
       </if>
       <if test="bonusBoleLayer3 != null">
         #{bonusBoleLayer3,jdbcType=REAL},
+      </if>
+      <if test="bonusBoleLayer4 != null">
+        #{bonusBoleLayer4,jdbcType=REAL},
+      </if>
+      <if test="bonusBoleLayer5 != null">
+        #{bonusBoleLayer5,jdbcType=REAL},
+      </if>
+      <if test="bonusBoleLayer6 != null">
+        #{bonusBoleLayer6,jdbcType=REAL},
+      </if>
+      <if test="bonusBoleLayer7 != null">
+        #{bonusBoleLayer7,jdbcType=REAL},
+      </if>
+      <if test="bonusBoleLayer8 != null">
+        #{bonusBoleLayer8,jdbcType=REAL},
       </if>
     </trim>
   </insert>
@@ -253,6 +293,21 @@
       <if test="record.bonusBoleLayer3 != null">
         bonus_bole_layer3 = #{record.bonusBoleLayer3,jdbcType=REAL},
       </if>
+      <if test="record.bonusBoleLayer4 != null">
+        bonus_bole_layer4 = #{record.bonusBoleLayer4,jdbcType=REAL},
+      </if>
+      <if test="record.bonusBoleLayer5 != null">
+        bonus_bole_layer5 = #{record.bonusBoleLayer5,jdbcType=REAL},
+      </if>
+      <if test="record.bonusBoleLayer6 != null">
+        bonus_bole_layer6 = #{record.bonusBoleLayer6,jdbcType=REAL},
+      </if>
+      <if test="record.bonusBoleLayer7 != null">
+        bonus_bole_layer7 = #{record.bonusBoleLayer7,jdbcType=REAL},
+      </if>
+      <if test="record.bonusBoleLayer8 != null">
+        bonus_bole_layer8 = #{record.bonusBoleLayer8,jdbcType=REAL},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -273,7 +328,12 @@
       bonus_group_vip3_day_max = #{record.bonusGroupVip3DayMax,jdbcType=REAL},
       bonus_bole_layer1 = #{record.bonusBoleLayer1,jdbcType=REAL},
       bonus_bole_layer2 = #{record.bonusBoleLayer2,jdbcType=REAL},
-      bonus_bole_layer3 = #{record.bonusBoleLayer3,jdbcType=REAL}
+      bonus_bole_layer3 = #{record.bonusBoleLayer3,jdbcType=REAL},
+      bonus_bole_layer4 = #{record.bonusBoleLayer4,jdbcType=REAL},
+      bonus_bole_layer5 = #{record.bonusBoleLayer5,jdbcType=REAL},
+      bonus_bole_layer6 = #{record.bonusBoleLayer6,jdbcType=REAL},
+      bonus_bole_layer7 = #{record.bonusBoleLayer7,jdbcType=REAL},
+      bonus_bole_layer8 = #{record.bonusBoleLayer8,jdbcType=REAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
