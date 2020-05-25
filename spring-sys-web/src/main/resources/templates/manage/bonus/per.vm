@@ -1,0 +1,42 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"奖金总账", "perm": "system:content:edit", "isBack": false, "href": "manage/bonus/listPer"})
+            #end
+            #@panelBody()
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">日新增业绩(元)：</label>
+                    <div class="col-sm-3">
+                        $!{bonusDetailPerVO.yesterdayAddBonus}
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">总业绩(元)：</label>
+                    <div class="col-sm-3">
+                        $!{bonusDetailPerVO.allOrderPrice}
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">总奖金(元)：</label>
+                    <div class="col-sm-3">
+                        $!{bonusDetailPerVO.allAddBonus}
+                    </div>
+                </div>
+                 <br>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">总波比：</label>
+                    <div class="col-sm-3">
+                        $!{bonusDetailPerVO.allPer}
+                    </div>
+                </div>
+            #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

@@ -232,4 +232,15 @@ public final class InvestConstants {
         public static final String type2 = "2";
 
     }
+
+    //
+    public static final class MemberState {
+
+        private MemberState() {}
+        //1：在用
+        public static final String VALID = "0";
+        //2：失效
+        public static final String INVALID = "1";
+
+    }
 }

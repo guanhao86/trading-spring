@@ -28,5 +28,14 @@ public interface ITableBonusDetailBusiSV {
      */
     List<TableBonusDetail> selectByGroupBonusId( String memberId, Date start, Date end);
 
+    /**
+     * 统计奖金（日新增业绩）
+     *
+     * @param start
+     * @param end
+     * @return
+     */
+    TableBonusDetail selectByGroup(Date start, Date end, List<String> bonusIdIn);
+
     PageInfo<TableBonusDetail> queryListPage(TableBonusDetail bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
 }

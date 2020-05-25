@@ -215,6 +215,18 @@ public class UserService {
         return userManager.get(info);
     }
 
+    /**
+     * 获取用户信息
+     *
+     * @param id
+     * @return
+     */
+    public UserInfo getUserByUserName(String userName) {
+        UserInfo info = new UserInfo();
+        info.setUsername(userName);
+        return userManager.getByLoginName(info);
+    }
+
     public String getJobNumber() {
         String no = "00001";
         List<UserInfo> userList = userManager.jobNumber();

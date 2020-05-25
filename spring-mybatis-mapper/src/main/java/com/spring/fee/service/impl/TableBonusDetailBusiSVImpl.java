@@ -81,6 +81,18 @@ public class TableBonusDetailBusiSVImpl implements ITableBonusDetailBusiSV {
     }
 
     /**
+     * 统计奖金（日新增业绩）
+     *
+     * @param start
+     * @param end
+     * @return
+     */
+    @Override
+    public TableBonusDetail selectByGroup(Date start, Date end, List<String> bonusIdIn) {
+        return iTableBonusDetailMapperDZ.selectByGroup( start, end, bonusIdIn);
+    }
+
+    /**
      * 数据列表分页
      * @param bo
      * @param pageNum

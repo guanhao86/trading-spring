@@ -42,7 +42,7 @@ public class MemberRankChangeController {
     ITableMemberBusiSV iTableMemberBusiSV;
 
     /*
-     * @Author gh
+     * @Author haha
      * @Description //TODO 配置列表
      * @Param [mav, session, post, request, page, pageSize]
      * @return org.springframework.web.servlet.ModelAndView

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.spring.fee.model.TableMemberGoods;
 import com.spring.fee.model.TableMemberGoodsDZ;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,4 +28,6 @@ public interface ITableMemberGoodsBusiSV {
     PageInfo<TableMemberGoods> queryListPage(TableMemberGoods bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
 
     PageInfo<TableMemberGoodsDZ> queryListPageDZ(TableMemberGoodsDZ bo, Integer pageNum, Integer pageSize, Map<String ,Object> map) ;
+
+    List<TableMemberGoodsDZ> selectByGroup(TableMemberGoodsDZ bo) ;
 }

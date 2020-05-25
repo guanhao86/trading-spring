@@ -20,6 +20,8 @@ public interface ITableMemberBusiSV {
 
     TableMember delete(TableMember bo);
 
+    TableMember renew(TableMember bo);
+
     TableMember select(TableMember bo);
 
     TableMember selectByMemberId(String memberId);

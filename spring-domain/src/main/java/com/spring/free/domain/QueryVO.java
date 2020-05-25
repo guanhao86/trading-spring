@@ -22,6 +22,8 @@ public class QueryVO extends BaseEntity<QueryVO> {
 
     private String arrangeId;
 
+    private String mRank;
+
     private String reallyName;
 
     private String phone;
@@ -53,7 +55,7 @@ public class QueryVO extends BaseEntity<QueryVO> {
 
     private Integer state;
 
-    private Integer goodsClass;
+    private String goodsClass;
 
     private String orderId;
 

@@ -5,6 +5,7 @@ package com.spring.free.controller.manage;/**
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.model.TableGoods;
+import com.spring.fee.model.TableMember;
 import com.spring.fee.model.TableOrder;
 import com.spring.fee.service.ITableOrderBusiSV;
 import com.spring.free.common.util.ExcelUtils;
@@ -55,7 +56,7 @@ public class ManageOrderController {
     ITableOrderBusiSV iTableOrderBusiSV;
 
     /*
-     * @Author gh
+     * @Author haha
      * @Description //TODO 配置列表
      * @Param [mav, session, post, request, page, pageSize]
      * @return org.springframework.web.servlet.ModelAndView
@@ -70,6 +71,10 @@ public class ManageOrderController {
         TableOrder tableOrder = new TableOrder();
         BeanUtils.copyProperties(queryVO, tableOrder);
         tableOrder.setId(queryVO.getId()==null?null:queryVO.getId().intValue());
+
+        HttpSession session1 = request.getSession();
+        session1.setAttribute("QUERY_ORDER_LIST", tableOrder);
+
         PageInfo<TableOrder> pageInfo = this.iTableOrderBusiSV.queryListPage(tableOrder, page, pageSize, CommonUtils.getStartEnd(queryVO));
 
         //获取热门话题列表信息
@@ -200,6 +205,10 @@ public class ManageOrderController {
             BeanUtils.copyProperties(queryVO, tableOrder);
             tableOrder.setId(queryVO.getId()==null?null:queryVO.getId().intValue());
             outputStream = response.getOutputStream();
+
+            HttpSession session1 = request.getSession();
+            tableOrder = (TableOrder)session1.getAttribute("QUERY_ORDER_LIST");
+
             HSSFWorkbook hssfWorkbook = iTableOrderBusiSV.exportFile(tableOrder, 0, 0, CommonUtils.getStartEnd(queryVO));
             response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
             response.setHeader("Content-Disposition", "attachment;filename=order.xls");
@@ -262,7 +271,7 @@ public class ManageOrderController {
                         continue;
                     }
                     TableOrder tableOrder = new TableOrder();
-                    tableOrder.setId(Integer.parseInt(row.getCell(0).getStringCellValue()));
+                    tableOrder.setId(Integer.parseInt(row.getCell(0).getStringCellValue().substring(2)));
                     tableOrder.setOrderId(row.getCell(2).getStringCellValue());
                     if (row.getCell(1) == null || StringUtils.isEmpty(row.getCell(1).getStringCellValue())){
                         continue;
@@ -279,6 +288,27 @@ public class ManageOrderController {
 
         }
 
+        PageResult.setPrompt(map,"操作成功", "success");
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/order/list"), map);
+    }
+
+    /**
+     * 删除
+     * @param mav
+     * @param request
+     * @param order
+     * @return
+     */
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "delete")
+    public ModelAndView delete(ModelAndView mav, HttpServletRequest request, TableOrder order) {
+        Map map = Maps.newHashMap();
+        map.put(Global.URL, Global.ADMIN_PATH +"/manage/order/list");
+        try {
+            this.iTableOrderBusiSV.delete(order);
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
         PageResult.setPrompt(map,"操作成功", "success");
         return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/order/list"), map);
     }

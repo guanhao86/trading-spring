@@ -52,7 +52,7 @@ public class ManageInvestController {
     ImageService imageService;
 
     /*
-     * @Author gh
+     * @Author haha
      * @Description //TODO 配置列表
      * @Param [mav, session, post, request, page, pageSize]
      * @return org.springframework.web.servlet.ModelAndView
@@ -66,7 +66,8 @@ public class ManageInvestController {
 
         TableInvest tableInvest = new TableInvest();
         BeanUtils.copyProperties(queryVO, tableInvest);
-
+        HttpSession session1 = request.getSession();
+        session1.setAttribute("QUERY_INVEST_LIST", tableInvest);
         PageInfo<TableInvest> pageInfo = this.iTableInvestBusiSV.queryListPage(tableInvest, page, pageSize, null);
 
         //获取热门话题列表信息
@@ -208,6 +209,8 @@ public class ManageInvestController {
             TableInvest tableInvest = new TableInvest();
             BeanUtils.copyProperties(queryVO, tableInvest);
             outputStream = response.getOutputStream();
+            HttpSession session1 = request.getSession();
+            tableInvest = (TableInvest)session1.getAttribute("QUERY_INVEST_LIST");
             HSSFWorkbook hssfWorkbook = this.iTableInvestBusiSV.exportFile(tableInvest, 0, 0, CommonUtils.getStartEnd(queryVO));
             response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
             response.setHeader("Content-Disposition", "attachment;filename=invest.xls");

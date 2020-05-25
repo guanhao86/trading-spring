@@ -17,11 +17,11 @@
                     #formInput({"name": "伯乐奖第一个代(元)"} {"name": "bonusBoleLayer1", "value":"$!{bonusSetting.bonusBoleLayer1}","id": "bonusBoleLayer1","required": "required"})
                     #formInput({"name": "伯乐奖第二个代(元)"} {"name": "bonusBoleLayer2", "value":"$!{bonusSetting.bonusBoleLayer2}","id": "bonusBoleLayer2","required": "required"})
                     #formInput({"name": "伯乐奖第三个代(元)"} {"name": "bonusBoleLayer3", "value":"$!{bonusSetting.bonusBoleLayer3}","id": "bonusBoleLayer3","required": "required"})
-                    #formInput({"name": "伯乐奖第三个代(元)"} {"name": "bonusBoleLayer4", "value":"$!{bonusSetting.bonusBoleLayer4}","id": "bonusBoleLayer4","required": "required"})
-                    #formInput({"name": "伯乐奖第三个代(元)"} {"name": "bonusBoleLayer5", "value":"$!{bonusSetting.bonusBoleLayer5}","id": "bonusBoleLayer5","required": "required"})
-                    #formInput({"name": "伯乐奖第三个代(元)"} {"name": "bonusBoleLayer6", "value":"$!{bonusSetting.bonusBoleLayer6}","id": "bonusBoleLayer6","required": "required"})
-                    #formInput({"name": "伯乐奖第三个代(元)"} {"name": "bonusBoleLayer7", "value":"$!{bonusSetting.bonusBoleLayer7}","id": "bonusBoleLayer7","required": "required"})
-                    #formInput({"name": "伯乐奖第三个代(元)"} {"name": "bonusBoleLayer8", "value":"$!{bonusSetting.bonusBoleLayer8}","id": "bonusBoleLayer8","required": "required"})
+                    #formInput({"name": "伯乐奖第四个代(元)"} {"name": "bonusBoleLayer4", "value":"$!{bonusSetting.bonusBoleLayer4}","id": "bonusBoleLayer4","required": "required"})
+                    #formInput({"name": "伯乐奖第五个代(元)"} {"name": "bonusBoleLayer5", "value":"$!{bonusSetting.bonusBoleLayer5}","id": "bonusBoleLayer5","required": "required"})
+                    #formInput({"name": "伯乐奖第六个代(元)"} {"name": "bonusBoleLayer6", "value":"$!{bonusSetting.bonusBoleLayer6}","id": "bonusBoleLayer6","required": "required"})
+                    #formInput({"name": "伯乐奖第七个代(元)"} {"name": "bonusBoleLayer7", "value":"$!{bonusSetting.bonusBoleLayer7}","id": "bonusBoleLayer7","required": "required"})
+                    #formInput({"name": "伯乐奖第八个代(元)"} {"name": "bonusBoleLayer8", "value":"$!{bonusSetting.bonusBoleLayer8}","id": "bonusBoleLayer8","required": "required"})
                 #end
             #end
         #end

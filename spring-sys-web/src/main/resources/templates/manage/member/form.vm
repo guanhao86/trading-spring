@@ -2,11 +2,17 @@
 <link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
     #@wrapper()
         #@panel()
+        <div id="divresult" style="color: red;margin-top: 20px">
+            $!{member.addr}
+        </div>
             #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:edit", "isBack": true, "href": "manage/member/list"})
+
                 #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
             #end
+
             #@panelBody()
                 #@form("form_insert" true "post" "manage/member/register")
+
                     #*#formInput({"name": "姓名"} {"name": "name", "value":"$!{member.name}","id": "name","required": "required"})*#
                     #formInput({"name": "电话"} {"name": "phone", "value":"$!{member.phone}","id": "phone","required": "required"})
                     #formInput({"name": "推荐人ID"} {"name": "referenceId", "value":"$!{member.referenceId}","id": "referenceId","required": "required"})
@@ -38,7 +44,10 @@
         <script>
 
             $(document).ready(function() {
-                debugger;
+                $("#divresult").hide()
+              if ( $!{result} == "1" ) {
+                $("#divresult").show()
+              }
                 $("#arrangeId").blur(function(){
                     console.log("获取姓名")
                     getMember()

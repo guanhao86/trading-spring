@@ -11,4 +11,6 @@ public interface TableBonusDetailMapperDZ {
 
     List<TableBonusDetail> selectByGroupBonusId(@Param("memberId") String memberId, @Param("start") Date start,@Param("end") Date end);
 
+    TableBonusDetail selectByGroup(@Param("start") Date start,@Param("end") Date end, @Param("bonusIdIn") List<String> bonusIdIn);
+
 }

@@ -29,6 +29,9 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,7 +45,7 @@ public class ManageGoodsController {
     ITableGoodsBusiSV iTableGoodsBusiSV;
 
     /*
-     * @Author gh
+     * @Author haha
      * @Description //TODO 配置列表
      * @Param [mav, session, post, request, page, pageSize]
      * @return org.springframework.web.servlet.ModelAndView
@@ -57,7 +60,18 @@ public class ManageGoodsController {
         TableGoods tableGoods = new TableGoods();
         BeanUtils.copyProperties(queryVO, tableGoods);
 
-        PageInfo<TableGoods> pageInfo = this.iTableGoodsBusiSV.queryListPage(tableGoods, page, pageSize, null);
+        Map<String, Object> map = new HashMap<>();
+        String goodsClass = queryVO.getGoodsClass();
+        if (StringUtils.isNotEmpty(goodsClass)) {
+            if (goodsClass.indexOf(",") > 0) {
+                List<String> goodsClassList = Arrays.asList(goodsClass.split(","));
+                map.put("goodsClassIn", goodsClassList);
+            } else {
+                tableGoods.setGoodsClass(Integer.parseInt(goodsClass));
+            }
+        }
+
+        PageInfo<TableGoods> pageInfo = this.iTableGoodsBusiSV.queryListPage(tableGoods, page, pageSize, map);
 
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);

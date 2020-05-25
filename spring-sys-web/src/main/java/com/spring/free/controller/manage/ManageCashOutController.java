@@ -55,7 +55,7 @@ public class ManageCashOutController {
     ITableSystemConfigBusiSV iTableSystemConfigBusiSV;
 
     /*
-     * @Author gh
+     * @Author haha
      * @Description //TODO 配置列表
      * @Param [mav, session, post, request, page, pageSize]
      * @return org.springframework.web.servlet.ModelAndView
@@ -69,6 +69,8 @@ public class ManageCashOutController {
 
         TableCashOut tableCashOut = new TableCashOut();
         BeanUtils.copyProperties(queryVO, tableCashOut);
+        HttpSession session1 = request.getSession();
+        session1.setAttribute("QUERY_CASHOUT_LIST", tableCashOut);
         PageInfo<TableCashOut> pageInfo = this.iTableCashOutBusiSV.queryListPage(tableCashOut, page, pageSize, null);
 
         //获取热门话题列表信息
@@ -165,6 +167,8 @@ public class ManageCashOutController {
             TableCashOut tableCashOut = new TableCashOut();
             BeanUtils.copyProperties(queryVO, tableCashOut);
             outputStream = response.getOutputStream();
+            HttpSession session1 = request.getSession();
+            tableCashOut = (TableCashOut)session1.getAttribute("QUERY_CASHOUT_LIST");
             HSSFWorkbook hssfWorkbook = this.iTableCashOutBusiSV.exportFile(tableCashOut, 0, 0, CommonUtils.getStartEnd(queryVO));
             response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
             response.setHeader("Content-Disposition", "attachment;filename=cashout.xls");

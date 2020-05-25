@@ -268,11 +268,12 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
         }
 
         //是否同一网体
-        if (!this.iTableMemberBusiSV.checkParent(fromMember, toMemberId)) {
+        if (!this.iTableMemberBusiSV.checkParent(fromMember, toMemberId)
+            && !this.iTableMemberBusiSV.checkParent(toMember, fromMember.getMemberId())) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "转账双方不在同一网体！", "", null);
         }
 
-        int accountType = "2".equals(transType)?6:null;
+        int accountType = "2".equals(transType)?6:1;
 
         this.changeMoney(fromMemberId, "2", amount1, "转账到会员"+toMemberId+"。备注："+remark, accountType);
         this.changeMoney(toMemberId, "1", amount1, "会员"+fromMemberId+"转入。备注："+remark, accountType);

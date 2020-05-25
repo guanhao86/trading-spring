@@ -17,4 +17,6 @@ public interface TableMemberGoodsMapperDZ {
      */
     List<TableMemberGoods> selectByExample(TableMemberGoodsDZ example);
 
+    List<TableMemberGoodsDZ> selectByGroup(TableMemberGoodsDZ example);
+
 }

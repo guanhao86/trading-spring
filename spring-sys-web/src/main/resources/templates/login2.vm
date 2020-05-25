@@ -64,9 +64,9 @@
                 <li>
                     <button type="button" class="btn btn-lg btn-primary btn-block" id="login_btn" onclick="login(13);">立即登录</button>
                 </li>
-                <li style="float:right;">
-                    <a href="/regist" style="color: red">注册会员</a>
-                </li>
+##                <li style="float:right;">
+##                    <a href="/regist" style="color: red">注册会员</a>
+##                </li>
                 <li>
 ##                    <p class="btm-info">&copy;Copyright 2017-2018 <a href="javascript:void(0)" target="_blank" title="沈阳恒普科技">沈阳恒普科技</a></p>
                 </li>

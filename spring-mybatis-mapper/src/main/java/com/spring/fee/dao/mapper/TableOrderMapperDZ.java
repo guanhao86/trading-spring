@@ -9,4 +9,6 @@ public interface TableOrderMapperDZ {
 
     TableOrderDZ selectByGroup(@Param("memberId") String memberId, @Param("start") Date start, @Param("end") Date end);
 
+    TableOrderDZ selectByGroup2(@Param("memberId") String memberId, @Param("start") Date start, @Param("end") Date end);
+
 }

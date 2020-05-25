@@ -18,5 +18,7 @@ public interface ITableGoodsBusiSV {
 
     TableGoods select(TableGoods bo);
 
+    Map<Integer, TableGoods> selectMap(TableGoods bo);
+
     PageInfo<TableGoods> queryListPage(TableGoods bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
 }

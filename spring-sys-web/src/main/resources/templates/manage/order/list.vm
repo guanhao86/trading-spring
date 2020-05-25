@@ -54,12 +54,13 @@
                     <a href="/admin/manage/order/exportOrderFile">导出订单</a>
                  </div>
                 #@table()
-                    #tableTHead(["订单ID", "会员ID", "商品编号", "商品类型", "订单金额(元)", "金蛋金额", "订单生成时间", "订单状态"],"", false)
+                    #tableTHead(["订单ID", "会员ID", "商品编号", "商品名", "商品类型", "订单金额(元)", "金蛋金额", "订单生成时间", "订单状态"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.orderId}")
                         #tableTd("$!{l.memberId}")
                         #tableTd("$!{l.goodsId}")
+                        #tableTd("$!{l.goodsName}")
                         #tableTd("$!{l.goodsClass}", {"type": "dict", "format": "goodsClass"})
                         #tableTd("$!{l.price}")
                         #tableTd("$!{l.scorePrice}")
@@ -69,6 +70,11 @@
                         #@tableTd()
                             #@a("查看" {"href": "$!{ctx}/manage/order/view?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
                             #@a("发货" {"href": "$!{ctx}/manage/order/sendIndex?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #if(${l.state}==1)
+                            <a href="$!{ctx}/manage/order/delete?id=$!{l.id}" class="fa fa-lock"
+                               confirm="true" message="确定要删除吗" title="删除"> 删除</a>
+                            #end
+                            #end
                         #end
                     #end
                 #end

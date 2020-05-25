@@ -4,6 +4,7 @@ package com.spring.free.controller.front;/**
 
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.model.TableMemberGoods;
+import com.spring.fee.model.TableMemberGoodsDZ;
 import com.spring.fee.service.ITableMemberGoodsBusiSV;
 import com.spring.free.domain.QueryVO;
 import com.spring.free.domain.UserInfo;
@@ -16,12 +17,14 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 后台管理/会员持有金鸡管理
@@ -51,6 +54,15 @@ public class FrontMemberGoodsController {
         UserInfo user = BaseGetPrincipal.getUser();
         tableMemberGoods.setMemberId(user.getUsername());
         PageInfo<TableMemberGoods> pageInfo = this.iTableMemberGoodsBusiSV.queryListPage(tableMemberGoods, page, pageSize, null);
+
+        TableMemberGoodsDZ tableMemberGoodsDZ = new TableMemberGoodsDZ();
+        tableMemberGoodsDZ.setMemberId(user.getUsername());
+        List<TableMemberGoodsDZ> tableMemberGoodsDZS = this.iTableMemberGoodsBusiSV.selectByGroup(tableMemberGoodsDZ);
+        if (CollectionUtils.isEmpty(tableMemberGoodsDZS)) {
+            mav.addObject("total", new TableMemberGoodsDZ());
+        }else{
+            mav.addObject("total", tableMemberGoodsDZS.get(0));
+        }
 
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);

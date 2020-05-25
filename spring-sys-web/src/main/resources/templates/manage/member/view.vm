@@ -61,6 +61,11 @@
                         </div>
                     </div>
 
+                    #formInput({"name": "余额"} {"name": "accountMoney", "value":"$!{member.accountMoney}","id": "accountMoney","required": "required","readonly":"readonly"})
+                    #formInput({"name": "商城积分"} {"name": "accountDjPoint", "value":"$!{member.accountDjPoint}","id": "accountDjPoint","required": "required","readonly":"readonly"})
+                    #formInput({"name": "保值积分"} {"name": "accountJsyPoint", "value":"$!{member.accountJsyPoint}","id": "accountJsyPoint","required": "required","readonly":"readonly"})
+                    #formInput({"name": "金蛋"} {"name": "score", "value":"$!{member.score}","id": "score","required": "required","readonly":"readonly"})
+
                     #formInput({"name": "身份证号码"} {"name": "cartId", "value":"$!{member.cartId}","id": "cartId","required": "required","readonly":"readonly"})
                     #formInput({"name": "银行卡号"} {"name": "bankCardId", "value":"$!{member.bankCardId}","id": "bankCardId","required": "required","readonly":"readonly"})
                     #formInput({"name": "开户行名字"} {"name": "bankName", "value":"$!{member.bankName}","id": "bankName","required": "required","readonly":"readonly"})

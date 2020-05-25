@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,6 +61,19 @@ public class TableGoodsBusiSVImpl implements ITableGoodsBusiSV {
     @Override
     public TableGoods select(TableGoods bo) {
         return this.iTableGoodsMapper.selectByPrimaryKey(bo.getId());
+    }
+
+    @Override
+    public Map<Integer, TableGoods> selectMap(TableGoods bo) {
+        TableGoodsExample example = new TableGoodsExample();
+        List<TableGoods> list = this.iTableGoodsMapper.selectByExample(example);
+        Map<Integer, TableGoods> map = new HashMap<>();
+        if (list != null) {
+            for (TableGoods tableGoods : list) {
+                map.put(tableGoods.getId(), tableGoods);
+            }
+        }
+        return map;
     }
 
     /**
@@ -111,6 +126,12 @@ public class TableGoodsBusiSVImpl implements ITableGoodsBusiSV {
         }
         if (StringUtils.isNotEmpty(bo.getGoodsName())) {
             criteria.andGoodsNameEqualTo(bo.getGoodsName());
+        }
+
+        if (map != null) {
+            if(null != map.get("goodsClassIn")){
+                criteria.andGoodsClassIn((List)map.get("goodsClassIn"));
+            }
         }
 
         PageInfo<TableGoods> pageInfo = PageHelper.startPage(pageNum, pageSize)

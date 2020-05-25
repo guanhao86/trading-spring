@@ -6,16 +6,19 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.constants.InvestConstants;
 import com.spring.fee.model.TableGoods;
+import com.spring.fee.model.TableMember;
 import com.spring.fee.service.ITableGoodsBusiSV;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.free.config.ImageUtils;
 import com.spring.free.domain.QueryVO;
+import com.spring.free.domain.UserInfo;
 import com.spring.free.util.PageResult;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
+import com.spring.free.utils.principal.BaseGetPrincipal;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
@@ -29,6 +32,9 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,7 +51,7 @@ public class FrontGoodsController {
     ITableMemberBusiSV iTableMemberBusiSV;
 
     /*
-     * @Author gh
+     * @Author haha
      * @Description //TODO 配置列表
      * @Param [mav, session, post, request, page, pageSize]
      * @return org.springframework.web.servlet.ModelAndView
@@ -68,11 +74,26 @@ public class FrontGoodsController {
             }
         }
 
+        Map<String, Object> map = new HashMap<>();
+        String goodsClass = queryVO.getGoodsClass();
+        if (StringUtils.isNotEmpty(goodsClass)) {
+            if (goodsClass.indexOf(",") > 0) {
+                List<String> goodsClassList = Arrays.asList(goodsClass.split(","));
+                map.put("goodsClassIn", goodsClassList);
+            } else {
+                tableGoods.setGoodsClass(Integer.parseInt(goodsClass));
+            }
+        }
+
         tableGoods.setState("1");
-        PageInfo<TableGoods> pageInfo = this.iTableGoodsBusiSV.queryListPage(tableGoods, page, pageSize, null);
+        PageInfo<TableGoods> pageInfo = this.iTableGoodsBusiSV.queryListPage(tableGoods, page, pageSize, map);
+
+        UserInfo user = BaseGetPrincipal.getUser();
+        TableMember member = this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
 
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);
+        mav.addObject("member", member);
         mav.addObject("queryVO",queryVO);
         //返回页面header标题
         PageResult.setPageTitle(mav, PromptInfoConstraints.FUN_TITLE_DICT_LIST);

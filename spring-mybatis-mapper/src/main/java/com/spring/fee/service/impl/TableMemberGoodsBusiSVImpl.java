@@ -8,10 +8,7 @@ import com.spring.fee.constants.InvestConstants;
 import com.spring.fee.dao.mapper.TableMemberGoodsMapper;
 import com.spring.fee.dao.mapper.TableMemberGoodsMapperDZ;
 import com.spring.fee.model.*;
-import com.spring.fee.service.IMemberAccountDetailBusiSV;
-import com.spring.fee.service.ITableBonusDetailBusiSV;
-import com.spring.fee.service.ITableMemberGoodsBusiSV;
-import com.spring.fee.service.ITableTaskBusiSV;
+import com.spring.fee.service.*;
 import com.spring.free.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -45,6 +42,9 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
 
     @Autowired
     IMemberAccountDetailBusiSV iMemberAccountDetailBusiSV;
+
+    @Autowired
+    ITableMemberBusiSV iTableMemberBusiSV;
 
     /**
      * 创建会员持有商品记录
@@ -98,6 +98,14 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
             List<TableMemberGoods> tableMemberGoodsList = this.getList();
             for (TableMemberGoods tableMemberGoods : tableMemberGoodsList) {
                 log.info("金鸡信息{}", JSONObject.toJSON(tableMemberGoods));
+
+                //判断会员是否存在
+                TableMember tableMember = iTableMemberBusiSV.selectByMemberId(tableMemberGoods.getMemberId());
+                if (tableMember == null || InvestConstants.MemberState.INVALID.equals(tableMember.getState())){
+                    //会员不存在
+                    log.info("会员编号："+tableMemberGoods.getMemberId()+"会员信息不存在，或已删除");
+                    continue;
+                }
 
                 //插入奖金表
                 TableBonusDetail tableBonusDetail = new TableBonusDetail();
@@ -190,6 +198,8 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
             criteria.andStateEqualTo(bo.getState());
         }
 
+        example.setOrderByClause(" create_time desc");
+
         PageInfo<TableMemberGoods> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableMemberGoodsMapper.selectByExample(example));
         log.info("获取会员持有商品结果：{}", JSON.toJSON(pageInfo));
@@ -215,5 +225,10 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
                 .doSelectPageInfo(() -> this.iTableMemberGoodsMapperDZ.selectByExample(bo));
         log.info("获取会员持有商品结果：{}", JSON.toJSON(pageInfo));
         return pageInfo;
+    }
+
+    @Override
+    public List<TableMemberGoodsDZ> selectByGroup(TableMemberGoodsDZ bo) {
+        return this.iTableMemberGoodsMapperDZ.selectByGroup(bo);
     }
 }

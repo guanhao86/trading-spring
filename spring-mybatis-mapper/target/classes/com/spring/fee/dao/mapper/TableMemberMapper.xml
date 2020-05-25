@@ -43,6 +43,7 @@
     <result column="addr" jdbcType="VARCHAR" property="addr" />
     <result column="score" jdbcType="INTEGER" property="score" />
     <result column="account_car_point" jdbcType="REAL" property="accountCarPoint" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -120,7 +121,7 @@
     account_point_freeze, account_dj_point, account_jsy_point, aut_flag, really_name, 
     cart_id, bank_card_id, bank_name, bank_open_are, cart_img1, cart_img2, cart_img3, 
     bank_img1, bank_img2, register_time, last_login_time, perfomance_time, reporting_amount, 
-    update_time, addr, score, account_car_point
+    update_time, addr, score, account_car_point, state
   </sql>
   <select id="selectByExample" parameterType="com.spring.fee.model.TableMemberExample" resultMap="BaseResultMap">
     <!--
@@ -188,8 +189,8 @@
       cart_img2, cart_img3, bank_img1, 
       bank_img2, register_time, last_login_time, 
       perfomance_time, reporting_amount, update_time, 
-      addr, score, account_car_point
-      )
+      addr, score, account_car_point, 
+      state)
     values (#{memberId,jdbcType=VARCHAR}, #{referenceId,jdbcType=VARCHAR}, #{arrangeId,jdbcType=VARCHAR}, 
       #{leftOrRight,jdbcType=INTEGER}, #{leftChildNode,jdbcType=VARCHAR}, #{rightChildNode,jdbcType=VARCHAR}, 
       #{registerFrom,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
@@ -201,8 +202,8 @@
       #{cartImg2,jdbcType=VARCHAR}, #{cartImg3,jdbcType=VARCHAR}, #{bankImg1,jdbcType=VARCHAR}, 
       #{bankImg2,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
       #{perfomanceTime,jdbcType=TIMESTAMP}, #{reportingAmount,jdbcType=REAL}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{addr,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{accountCarPoint,jdbcType=REAL}
-      )
+      #{addr,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{accountCarPoint,jdbcType=REAL}, 
+      #{state,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.spring.fee.model.TableMember">
     <!--
@@ -322,6 +323,9 @@
       <if test="accountCarPoint != null">
         account_car_point,
       </if>
+      <if test="state != null">
+        state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="memberId != null">
@@ -431,6 +435,9 @@
       </if>
       <if test="accountCarPoint != null">
         #{accountCarPoint,jdbcType=REAL},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -562,6 +569,9 @@
       <if test="record.accountCarPoint != null">
         account_car_point = #{record.accountCarPoint,jdbcType=REAL},
       </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -609,7 +619,8 @@
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       addr = #{record.addr,jdbcType=VARCHAR},
       score = #{record.score,jdbcType=INTEGER},
-      account_car_point = #{record.accountCarPoint,jdbcType=REAL}
+      account_car_point = #{record.accountCarPoint,jdbcType=REAL},
+      state = #{record.state,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -729,6 +740,9 @@
       <if test="accountCarPoint != null">
         account_car_point = #{accountCarPoint,jdbcType=REAL},
       </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -773,7 +787,8 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       addr = #{addr,jdbcType=VARCHAR},
       score = #{score,jdbcType=INTEGER},
-      account_car_point = #{accountCarPoint,jdbcType=REAL}
+      account_car_point = #{accountCarPoint,jdbcType=REAL},
+      state = #{state,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

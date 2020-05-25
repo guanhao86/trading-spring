@@ -18,8 +18,9 @@
                     </div>
                     #end
 
-
+                    <div style="display: none">
                     #formInput({"name": "ID"} {"name": "goodsId", "value":"$!{goods.id}","id": "goodsId","required": "required","readonly":"readonly"})
+                    </div>
                     #formInput({"name": "商品名"} {"name": "goodsName", "value":"$!{goods.goodsName}","id": "goodsName","required": "required","readonly":"readonly"})
                     <div class="form-group" >
                         <label class="col-sm-2 control-label">商品类型：</label>
@@ -27,12 +28,12 @@
                             #selectDisabledBS($!dict.getDictList("goodsClass"), ["goodsClass", "$!{goods.goodsClass}", "value", "label"], false, [false, "$!{goods.goodsClass}"])
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label col-lg-2" for="content">商品图片<font color="red">*</font>：</label>
-                        <div class="col-lg-3">
-                            <img src=$!{goods.thunmbanilImgSrc} style= height:50px />
-                        </div>
-                    </div>
+##                    <div class="form-group">
+##                        <label class="col-sm-2 control-label col-lg-2" for="content">商品图片<font color="red">*</font>：</label>
+##                        <div class="col-lg-3">
+##                            <img src=$!{goods.thunmbanilImgSrc} style= height:50px />
+##                        </div>
+##                    </div>
                     <div class="form-group" >
                         <label class="col-sm-2 control-label col-lg-2" for="content">商品详情图<font color="red">*</font>：</label>
                         <div class="col-lg-3" style="width: 60%">
@@ -51,14 +52,16 @@
                                 #selectDisabledBS($!dict.getDictList("level"), ["level", "$!{goods.incomeVipLevel}", "value", "label"], false, [false, "$!{goods.incomeVipLevel}"])
                             </div>
                         </div>
-                        #formInput({"name": "购买商品后获得的三方商城积分"} {"name": "incomeDjPoint", "value":"$!{goods.incomeDjPoint}","id": "incomeDjPoint","required": "required","readonly":"readonly"})
-                        #formInput({"name": "购买商品后获得的交易系统积分"} {"name": "incomeJysPoint", "value":"$!{goods.incomeJysPoint}","id": "incomeJysPoint","required": "required","readonly":"readonly"})
-                        #formInput({"name": "可分配利润(元)"} {"name": "pePrice", "value":"$!{goods.pePrice}","id": "pePrice","required": "required","readonly":"readonly"})
-                        #formInput({"name": "赠送金鸡商品"} {"name": "extentGoodsId1", "value":"$!{jjGoods.goodsName}","id": "extentGoodsId1","readonly":"readonly"})
-                        #formInput({"name": "赠送金鸡数量"} {"name": "extentGoodsCount1", "value":"$!{goods.extentGoodsCount}","id": "extentGoodsCount1","readonly":"readonly"})
+##                        #formInput({"name": "购买商品后获得的三方商城积分"} {"name": "incomeDjPoint", "value":"$!{goods.incomeDjPoint}","id": "incomeDjPoint","required": "required","readonly":"readonly"})
+##                        #formInput({"name": "购买商品后获得的交易系统积分"} {"name": "incomeJysPoint", "value":"$!{goods.incomeJysPoint}","id": "incomeJysPoint","required": "required","readonly":"readonly"})
+##                        #formInput({"name": "可分配利润(元)"} {"name": "pePrice", "value":"$!{goods.pePrice}","id": "pePrice","required": "required","readonly":"readonly"})
+##                        #formInput({"name": "赠送金鸡商品"} {"name": "extentGoodsId1", "value":"$!{jjGoods.goodsName}","id": "extentGoodsId1","readonly":"readonly"})
+##                        #formInput({"name": "赠送金鸡数量"} {"name": "extentGoodsCount1", "value":"$!{goods.extentGoodsCount}","id": "extentGoodsCount1","readonly":"readonly"})
                     </div>
                     <hr style="height:10px;border:none;border-top:10px groove skyblue;" />
-                    #formInput({"name": "数量"} {"name": "amount", "value":"1","id": "amount","required": "required"})
+                    <div id="paramDiv1">
+                        #formInput({"name": "数量"} {"name": "amount", "value":"1","id": "amount","required": "required"})
+                    </div>
                     #formInput({"name": "金额(元)"} {"name": "price", "value":"$!{goods.price}","id": "price","required": "required","readonly":"readonly"})
                     <div id="jjDiv" >
                         <hr style="height:10px;border:none;border-top:10px groove skyblue;" />
@@ -92,10 +95,12 @@
 
                 if (goodsClass == '0' || goodsClass == undefined) {
                     $("#paramDiv").show();
+                    $("#paramDiv1").hide();
                     $("#jjDiv").hide();
                     $("#txhDiv").hide();
                 } else if (goodsClass == '1') {
-                    $("#jjDiv").show();
+                    //复消商品也不让买金鸡
+                    $("#jjDiv").hide();
                     $("#paramDiv").hide();
                     $("#txhDiv").hide();
                 } else if (goodsClass == '2') {
@@ -106,10 +111,10 @@
                     $("#paramDiv").hide();
                     $("#jjDiv").hide();
                     $("#txhDiv").hide();
-                    $("#incomeVipLevel").val("");
-                    $("#incomeDjPoint").val("");
-                    $("#incomeJysPoint").val("");
-                    $("#pePrice").val("");
+                    // $("#incomeVipLevel").val("");
+                    // $("#incomeDjPoint").val("");
+                    // $("#incomeJysPoint").val("");
+                    //$("#pePrice").val("");
                 }
 
 

@@ -5,6 +5,7 @@ import com.spring.fee.model.TableOrder;
 import com.spring.fee.model.TableOrderDZ;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,15 @@ public interface ITableOrderBusiSV {
 
     PageInfo<TableOrder> queryListPage(TableOrder bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
 
+    List<TableOrder> queryList(TableOrder bo, Map<String, Object> map);
+
     TableOrderDZ selectByGroup(TableOrderDZ bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
+
+    /**
+     * 总业绩=》所有订单表（报单商品、复消商品、金鸡商品）提货商品的不算，被删除的（退货订单）不算，所有这些符合条件的订单，时间也是截至到昨日的订单金额求和
+     * @return
+     */
+    TableOrderDZ selectByGroup2(String memberId, Date start, Date end);
 
 
     /**

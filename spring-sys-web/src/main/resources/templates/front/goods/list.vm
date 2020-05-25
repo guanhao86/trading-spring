@@ -17,6 +17,22 @@
             #end
         #end
         #@panel()
+            #@panelHeader({"title":"我的账户", "perm": "", "isBack": false, "href": ""})
+
+            #end
+
+            #@panelBody()
+            <div class="form-group">
+                <label class="col-sm-1 control-label">金蛋数量：</label>
+                <div class="col-sm-3">
+                    $!{member.score}
+                </div>
+
+            </div>
+            #end
+
+        #end
+        #@panel()
              #@panelBody()
                 #@table()
                     #tableTHead(["商品图片", "商品名称", "商品价格(元)", "金蛋价格", "商品类型", "商品状态"],"", false)

@@ -4,10 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import com.spring.fee.constants.InvestConstants;
 import com.spring.fee.dao.mapper.TableMemberMapper;
 import com.spring.fee.model.*;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.fee.service.ITableMemberLevelChangeDetailBusiSV;
+import com.spring.fee.service.ITableOrderBusiSV;
 import com.spring.free.common.util.ExcelUtils;
 import com.spring.free.common.util.PythonUtil3;
 import com.spring.free.domain.RoleInfo;
@@ -44,6 +46,9 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
     TableMemberMapper iTableMemberMapper;
 
     @Autowired
+    ITableOrderBusiSV iTableOrderBusiSV;
+
+    @Autowired
     ITableMemberLevelChangeDetailBusiSV iTableMemberLevelChangeDetailBusiSV;
 
     @Autowired
@@ -67,6 +72,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         bo.setReportingAmount(0f);
         bo.setAccountMoney(0f);
         bo.setRegisterTime(sysdate);
+        bo.setState(InvestConstants.MemberState.VALID);
         iTableMemberMapper.insert(bo);
         return bo;
     }
@@ -79,11 +85,62 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         return null;
     }
 
+    /**
+     * 删除
+     * @param bo
+     * @return
+     */
     @Override
     public TableMember delete(TableMember bo) {
-        if (this.iTableMemberMapper.deleteByPrimaryKey(bo.getId()) == 1) {
-            return bo;
+        if (null == bo.getId()){
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "Id不能为空！", "", null);
         }
+
+        bo = this.select(bo);
+
+        //判断要删除的会员下面是否有其他会员(会员上下级关系根据arrangeId区分)
+        TableMember queryParam = new TableMember();
+        queryParam.setState(InvestConstants.MemberState.VALID);
+        queryParam.setArrangeId(bo.getMemberId());
+        List<TableMember> tableMembers = queryList(queryParam);
+        if (!CollectionUtils.isEmpty(tableMembers)) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "存在子会员，不允许删除！", "", null);
+        }
+
+        //预留删除订单
+        log.info("删订单");
+        TableOrder tableOrder = new TableOrder();
+        tableOrder.setMemberId(bo.getMemberId());
+        tableOrder.setState(1);
+        List<TableOrder> tableOrders = iTableOrderBusiSV.queryList(tableOrder, null);
+        for (TableOrder order : tableOrders) {
+            this.iTableOrderBusiSV.delete(order);
+        }
+
+        //更新会员状态
+        log.info("删member");
+        TableMember updateParam = new TableMember();
+        updateParam.setState(InvestConstants.MemberState.INVALID);
+        updateParam.setId(bo.getId());
+        this.update(updateParam);
+
+        //更新userInfo
+        log.info("删userInfo");
+        UserInfo userInfo = userService.getUserByUsernameLogin(bo.getMemberId());
+        if (userInfo != null) {
+            userService.deleteUserInfo(userInfo, new HashMap());
+        }
+
+        return bo;
+    }
+
+    /**
+     * 恢复
+     * @param bo
+     * @return
+     */
+    @Override
+    public TableMember renew(TableMember bo) {
         return null;
     }
 
@@ -99,6 +156,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         TableMemberExample.Criteria criteria = example.createCriteria();
 
         criteria.andMemberIdEqualTo(memberId);
+        criteria.andStateEqualTo(InvestConstants.MemberState.VALID);
 
         List<TableMember> tableMembers = this.iTableMemberMapper.selectByExample(example);
 
@@ -117,7 +175,8 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
     @Override
     public List<TableMember> queryChildList(String memberId) {
         TableMember t = new TableMember();
-        t.setReferenceId(memberId);
+        t.setArrangeId(memberId);
+        t.setState(InvestConstants.MemberState.VALID);
         return this.queryList(t);
     }
 
@@ -219,6 +278,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         TableMemberExample.Criteria criteria = example.createCriteria();
 
         criteria.andPhoneEqualTo(phone);
+        criteria.andStateEqualTo(InvestConstants.MemberState.VALID);
 
         List<TableMember> tWheatMemberList = this.iTableMemberMapper.selectByExample(example);
         if (tWheatMemberList != null && tWheatMemberList.size() >= 1) {
@@ -271,6 +331,9 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         }
         if (null != bo.getFlag()) {
             criteria.andFlagEqualTo(bo.getFlag());
+        }
+        if (StringUtils.isNotEmpty(bo.getState())) {
+            criteria.andStateEqualTo(bo.getState());
         }
         if (null != bo.getAccountMoney()) {
             criteria.andAccountMoneyEqualTo(bo.getAccountMoney());
@@ -366,7 +429,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         if (map == null) {
             map = this.queryListMap(new TableMember());
         }
-        TableMember parent = map.get(bo.getReferenceId());
+        TableMember parent = map.get(bo.getArrangeId());
         if (parent == null) {
             return false;
         }
@@ -621,9 +684,10 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         user.setUsername(member.getMemberId());
         user.setPhone(member.getPhone());
         user.setName(StringUtils.isEmpty(member.getReallyName())?member.getMemberId():member.getReallyName());
-        user.setLoginFlag("1");
+        user.setLoginFlag("0");
         user.setDelFlag("0");
         user.setUserType("1");
+        //会员默认不允许登陆，购买完报单商品后才可以登陆
 
         List<RoleInfo> roleList = new ArrayList<RoleInfo>();
         RoleInfo roleInfo = new RoleInfo();
@@ -718,7 +782,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             System.out.println("没有数据");
         }
 
-        String sheetName = "传输计划";
+        String sheetName = "会员";
         String[] title = {"会员编号", "会员姓名", "推荐人编号", "安置人编号", "左右区标识", "电话号码", "会员级别", "会员头衔"
                 , "现金", "积分(可用)", "积分(冻结)", "购物积分", "保值积分", "实名认证标识", "身份证号码", "银行卡号"
                 ,"开户行名字", "银行卡开户行地址", "注册时间"};

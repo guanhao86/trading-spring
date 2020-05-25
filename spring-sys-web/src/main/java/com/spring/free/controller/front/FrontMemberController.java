@@ -50,7 +50,7 @@ public class FrontMemberController {
     ITableMemberBusiSV iTableMemberBusiSV;
 
     /*
-     * @Author gh
+     * @Author haha
      * @Description //TODO 配置列表
      * @Param [mav, session, post, request, page, pageSize]
      * @return org.springframework.web.servlet.ModelAndView
@@ -64,7 +64,7 @@ public class FrontMemberController {
 
         TableMember tableMember = new TableMember();
         UserInfo user = BaseGetPrincipal.getUser();
-        tableMember.setReferenceId(user.getUsername());
+        tableMember.setArrangeId(user.getUsername());
 
         PageInfo<TableMember> pageInfo = this.iTableMemberBusiSV.queryListPage(tableMember, page, pageSize, null);
 

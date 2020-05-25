@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Map;
 
 /**
@@ -73,6 +74,12 @@ public class ManageMemberController {
         if (StringUtils.isNotEmpty(queryVO.getLevel())){
             tableMember.setLevel(Integer.parseInt(queryVO.getLevel()));
         }
+        if (StringUtils.isNotEmpty(queryVO.getMRank())){
+            tableMember.setmRank(Integer.parseInt(queryVO.getMRank()));
+        }
+
+        HttpSession session1 = request.getSession();
+        session1.setAttribute("QUERY_MEMBER_LIST", tableMember);
 
         PageInfo<TableMember> pageInfo = this.iTableMemberBusiSV.queryListPage(tableMember, page, pageSize, null);
 
@@ -226,6 +233,8 @@ public class ManageMemberController {
         Map map = Maps.newHashMap();
         PageResult.getPrompt(view, request, "");
         PageResult.setPageTitle(view, "会员信息注册");
+
+        //返回操作提示信息
         view.setViewName("manage/member/form");
         return view;
     }
@@ -239,7 +248,15 @@ public class ManageMemberController {
         try {
             member = this.iTableMemberBusiSV.regist(m,2);
         }catch (ServiceException e) {
-            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+            String message = e.getMessage();
+            m.setAddr(message);
+            view.addObject("member", m);
+            view.addObject("result", "1");
+            view.addObject("desc", URLDecoder.decode(message));
+            //返回操作提示信息
+            view.setViewName("manage/member/form");
+            return view;
+            //throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
         }catch (Exception e1) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e1.getMessage(), map.get(Global.URL).toString(), map);
         }
@@ -262,8 +279,8 @@ public class ManageMemberController {
      */
     @RequestMapping("registSimpleIndex")
     public ModelAndView registSimpleIndex(ModelAndView mav, HttpSession session, TableMember member, HttpServletRequest request,
-                                  @RequestParam(value = "page",required = false, defaultValue = PageDefaultConstraints.PAGE) int page,
-                                  @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
+                                          @RequestParam(value = "page",required = false, defaultValue = PageDefaultConstraints.PAGE) int page,
+                                          @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
 
         mav.setViewName("manage/member/registSimple");
         return mav;
@@ -304,13 +321,34 @@ public class ManageMemberController {
      * @param member
      * @return
      */
-    @RequiresPermissions("system:member:edit")
+    @RequiresPermissions("system:member:view")
     @RequestMapping(value = "resetPassword")
     public ModelAndView resetPassword(ModelAndView mav, HttpServletRequest request, TableMember member) {
         Map map = Maps.newHashMap();
         map.put(Global.URL, Global.ADMIN_PATH +"/manage/member/list");
         try {
             this.iTableMemberBusiSV.changePwd(member, null);
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
+        PageResult.setPrompt(map,"操作成功", "success");
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/member/list"), map);
+    }
+
+    /**
+     * 删除
+     * @param mav
+     * @param request
+     * @param member
+     * @return
+     */
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "delete")
+    public ModelAndView delete(ModelAndView mav, HttpServletRequest request, TableMember member) {
+        Map map = Maps.newHashMap();
+        map.put(Global.URL, Global.ADMIN_PATH +"/manage/member/list");
+        try {
+            this.iTableMemberBusiSV.delete(member);
         }catch (Exception e) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
         }
@@ -362,18 +400,17 @@ public class ManageMemberController {
     @RequestMapping("/exportMemberFile")
     public void exportMemberFile(HttpServletRequest request, HttpServletResponse response) {
 
-        QueryVO queryVO = new QueryVO();
+        HttpSession session1 = request.getSession();
+
 
         response.setContentType("application/octet-stream;charset=UTF-8");
         response.setCharacterEncoding("utf-8");
         ServletOutputStream outputStream = null;
 
         try {
-            TableMember tableMember = new TableMember();
-            BeanUtils.copyProperties(queryVO, tableMember);
-            tableMember.setId(queryVO.getId()==null?null:queryVO.getId().intValue());
+            TableMember tableMember = (TableMember)session1.getAttribute("QUERY_MEMBER_LIST");
             outputStream = response.getOutputStream();
-            HSSFWorkbook hssfWorkbook = this.iTableMemberBusiSV.exportFile(tableMember, 0, 0, CommonUtils.getStartEnd(queryVO));
+            HSSFWorkbook hssfWorkbook = this.iTableMemberBusiSV.exportFile(tableMember, 0, 0, null);
             response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
             response.setHeader("Content-Disposition", "attachment;filename=member.xls");
 

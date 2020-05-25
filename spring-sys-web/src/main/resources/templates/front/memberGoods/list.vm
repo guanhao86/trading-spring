@@ -5,6 +5,20 @@
             #end
         #end
         #@panel()
+            #@panelBody()
+            <div class="form-group">
+                <label class="col-sm-2 control-label">金鸡总数：</label>
+                <div class="col-sm-3" style="margin-top: 5px">
+                    $!{total.amount}
+                </div>
+                <label class="col-sm-2 control-label">已下蛋数：</label>
+                <div class="col-sm-3">
+                    $!{total.addCount}
+                </div>
+            </div>
+            #end
+        #end
+        #@panel()
              #@panelBody()
                 #@table()
                     #tableTHead(["id", "会员编号", "金鸡数量", "每只金鸡每天下金蛋数量", "已下金蛋数量", "创建时间", "到期时间", "金鸡来源"],"", false)

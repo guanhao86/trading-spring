@@ -30,6 +30,25 @@
     SELECT sum(score_price) as score_price
     FROM table_order
     where 1=1
+      and state != 4
+    <if test="memberId != null and memberId !=''" >
+      and member_id = #{memberId,jdbcType=VARCHAR}
+    </if>
+    <if test="start != null" >
+      and create_Time >= #{start,jdbcType=TIMESTAMP}
+    </if>
+    <if test="end != null" >
+      and #{end,jdbcType=TIMESTAMP} >= create_Time
+    </if>
+
+  </select>
+  <!-- 总业绩=》所有订单表（报单商品、复消商品、金鸡商品）提货商品的不算，被删除的（退货订单）不算，所有这些符合条件的订单，时间也是截至到昨日的订单金额求和 -->
+  <select id="selectByGroup2" resultMap="BaseResultMap" >
+    SELECT sum(price) as price
+    FROM table_order
+    where 1=1
+      and state != 4
+      and goods_class in (0, 1, 3)
     <if test="memberId != null and memberId !=''" >
       and member_id = #{memberId,jdbcType=VARCHAR}
     </if>

@@ -30,4 +30,21 @@
       </if>
     group by bonus_id
   </select>
+  <select id="selectByGroup" resultMap="BaseResultMap" >
+    SELECT bonus_id, sum(bonus) as bonus
+    FROM table_bonus_detail
+    where 1=1
+    and close_state = '1'
+    <if test="start != null" >
+      and CLOSE_Time >= #{start,jdbcType=TIMESTAMP}
+    </if>
+    <if test="end != null" >
+      and #{end,jdbcType=TIMESTAMP} >= CLOSE_Time
+    </if>
+    and bonus_id in
+    <foreach collection="bonusIdIn" item="id" index="index"
+             open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
 </mapper>
