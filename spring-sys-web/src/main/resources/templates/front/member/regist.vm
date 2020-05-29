@@ -3,27 +3,41 @@
     #@wrapper()
         #@panel()
             #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:view", "isBack": false, "href": "front/member/list"})
+                #if ($!{member.autFlag} == "1")
                 #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
                 #btn({"btnName":"报单", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_beMember"}})
+                #end
+                #if ($!{member.autFlag} == "0")
+                #btn({"btnName":"去实名", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_audit"}})
+                #end
             #end
             #@panelBody()
-                #@form("form_beMember" true "post" "front/member/beMemberIndex")
-                    <input type="hidden" name="memberId" value="$!{registMember.memberId}"/>
+                #if ($!{member.autFlag} == "0")
+                    #@form("form_beMember" true "post" "front/member/edit")
+                    #end
                 #end
-                #@form("form_insert" true "post" "front/member/register")
-                    #*#formInput({"name": "姓名"} {"name": "name", "value":"$!{member.name}","id": "name","required": "required"})*#
-                    #formInput({"name": "电话"} {"name": "phone", "value":"","id": "phone","required": "required"})
-                    #formInput({"name": "推荐人ID"} {"name": "referenceId", "value":"$!{member.memberId}","id": "referenceId","required": "required"})
-                    #formInput({"name": "安置人ID"} {"name": "arrangeId", "value":"$!{member.memberId}","id": "arrangeId","required": "required"})
-                    #formInput({"name": "安置人姓名"} {"name": "arrangeName", "value":"$!{member.arrangeName}","id": "arrangeName","readonly":"readonly"})
-                    <div class="form-group" >
-                        <label class="col-sm-2 control-label">安置区：</label>
-                        <div class="col-sm-2">
-                            #selectBS($!dict.getDictList("leftOrRight"), ["leftOrRight", "$!{member.leftOrRight}", "value", "label"], false, [false, "$!{member.leftOrRight}"])
+                #if ($!{member.autFlag} == "2")
+                    实名认证审核中，等待审核通过后再操作
+                #end
+                #if ($!{member.autFlag} == "1")
+                    #@form("form_beMember" true "post" "front/member/beMemberIndex")
+                        <input type="hidden" name="memberId" value="$!{registMember.memberId}"/>
+                    #end
+                    #@form("form_insert" true "post" "front/member/register")
+                        #*#formInput({"name": "姓名"} {"name": "name", "value":"$!{member.name}","id": "name","required": "required"})*#
+                        #formInput({"name": "电话"} {"name": "phone", "value":"","id": "phone","required": "required"})
+                        #formInput({"name": "推荐人ID"} {"name": "referenceId", "value":"$!{referenceId}","id": "referenceId","required": "required"})
+                        #formInput({"name": "安置人ID"} {"name": "arrangeId", "value":"$!{arrangeId}","id": "arrangeId","required": "required"})
+                        #formInput({"name": "安置人姓名"} {"name": "arrangeName", "value":"$!{member.arrangeName}","id": "arrangeName","readonly":"readonly"})
+                        <div class="form-group" >
+                            <label class="col-sm-2 control-label">安置区：</label>
+                            <div class="col-sm-2">
+                                #selectBS($!dict.getDictList("leftOrRight"), ["leftOrRight", "$!{member.leftOrRight}", "value", "label"], false, [false, "$!{member.leftOrRight}"])
+                            </div>
                         </div>
-                    </div>
-        #end
-    #end
+                    #end
+                #end
+            #end
         #end
     #end
     #@script()
@@ -41,7 +55,7 @@
         function getMember(){
             console.log("dddddd")
             $("#arrangeName").val('')
-            $.get('/api/member/getMemberInfo/'+$("#arrangeId").val(), function (data) {
+            $.get('/api/member/getMemberInfoAjax/'+$("#arrangeId").val(), function (data) {
                 console.log("data", data)
                 $("#arrangeName").val(data.data.reallyName)
             });

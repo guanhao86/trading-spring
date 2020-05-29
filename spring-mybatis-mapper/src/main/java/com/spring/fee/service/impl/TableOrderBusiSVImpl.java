@@ -82,6 +82,24 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         return null;
     }
 
+    /**
+     * 根据安置人删除会员相关信息
+     * @param arrangeId
+     * @param notRemoveMemberId  (不删除的会员ID)
+     */
+//    private void remove(String arrangeId, String notRemoveMemberId) {
+//        TableMember tableMember = new TableMember();
+//        tableMember.setState(InvestConstants.MemberState.INIT);
+//        tableMember.setArrangeId(arrangeId);
+//        List<TableMember> tableMembers = this.iTableMemberBusiSV.queryList(tableMember);
+//        for (TableMember tmp : tableMembers) {
+//            if (tmp.getMemberId().equals(notRemoveMemberId)) {
+//                continue;
+//            }
+//
+//        }
+//    }
+
     @Override
     public TableOrder delete(TableOrder bo) {
         //查订单
@@ -153,7 +171,7 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         //判断操作员和会员是否是同一人
         if (StringUtils.isNotEmpty(bo.getMemberId()) && !user.getUsername().equals(bo.getMemberId())) {
             bo.setOrderType("2");
-            member = this.iTableMemberBusiSV.selectByMemberId(bo.getMemberId());
+            member = this.iTableMemberBusiSV.selectByMemberId4BuyOrder(bo.getMemberId());
         } else {
             bo.setOrderType("1");
             member = operMember;
@@ -240,11 +258,20 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
             member.setReportingAmount(bo.getPrice());
             //当前系统时间.month + 2 , day = 1号
             member.setPerfomanceTime(DateUtils.getFirstDayOfMonth(DateUtils.addMonths(DateUtils.getSysDate(), 2)));
+            //更新会员状态为激活
+            member.setState(InvestConstants.MemberState.VALID);
+            member.setAccountDjPoint(goods.getIncomeDjPoint());
+            member.setAccountJsyPoint(goods.getIncomeJysPoint());
+
+            this.iTableMemberBusiSV.update(member, true);
 
             //修改会员为可登录
             UserInfo userInfo = userService.getUserByUserName(member.getMemberId());
             userInfo.setLoginFlag("1");
             userService.update(userInfo, new HashMap());
+
+            //删除初始化，并且安置人与当前会员相同的会员信息
+            //this.remove(member.getMemberId());
 
             /*
                 【逻辑2】

@@ -56,7 +56,7 @@
 ##                        #formInput({"name": "购买商品后获得的交易系统积分"} {"name": "incomeJysPoint", "value":"$!{goods.incomeJysPoint}","id": "incomeJysPoint","required": "required","readonly":"readonly"})
 ##                        #formInput({"name": "可分配利润(元)"} {"name": "pePrice", "value":"$!{goods.pePrice}","id": "pePrice","required": "required","readonly":"readonly"})
 ##                        #formInput({"name": "赠送金鸡商品"} {"name": "extentGoodsId1", "value":"$!{jjGoods.goodsName}","id": "extentGoodsId1","readonly":"readonly"})
-##                        #formInput({"name": "赠送金鸡数量"} {"name": "extentGoodsCount1", "value":"$!{goods.extentGoodsCount}","id": "extentGoodsCount1","readonly":"readonly"})
+                        #formInput({"name": "赠送金鸡数量"} {"name": "extentGoodsCount1", "value":"$!{goods.extentGoodsCount}","id": "extentGoodsCount1","readonly":"readonly"})
                     </div>
                     <hr style="height:10px;border:none;border-top:10px groove skyblue;" />
                     <div id="paramDiv1">

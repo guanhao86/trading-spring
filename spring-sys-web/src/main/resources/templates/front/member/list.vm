@@ -24,7 +24,7 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["会员ID", "电话", "姓名","注册时间","推荐人ID","安置人编号","会员级别", "实名制"],"", false)
+                    #tableTHead(["会员ID", "电话", "姓名","注册时间","推荐人ID","安置人编号","左右区标识","会员级别", "实名制"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.memberId}")
@@ -33,6 +33,7 @@
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.registerTime}))
                         #tableTd("$!{l.referenceId}")
                         #tableTd("$!{l.arrangeId}")
+                        #tableTd("$!{l.leftOrRight}", {"type": "dict", "format": "leftOrRight"})
                         #tableTd("$!{l.level}", {"type": "dict", "format": "level"})
                         #tableTd("$!{l.autFlag}", {"type": "dict", "format": "autFlag"})
                     #end

@@ -16,7 +16,9 @@ public interface ITableMemberBusiSV {
 
     TableMember insert(TableMember bo);
 
-    TableMember update(TableMember bo);
+    TableMember update(TableMember bo, boolean updateArrange);
+
+    TableMember updateSimple(TableMember bo);
 
     TableMember delete(TableMember bo);
 
@@ -26,6 +28,12 @@ public interface ITableMemberBusiSV {
 
     TableMember selectByMemberId(String memberId);
 
+    /**
+     * 购买订单时使用，不校验会员状态
+     * @param memberId
+     * @return
+     */
+    TableMember selectByMemberId4BuyOrder(String memberId);
     /**
      * 获取会员下一级子会员
      * @param memberId
@@ -40,6 +48,14 @@ public interface ITableMemberBusiSV {
      * @return
      */
     List<TableMember> queryAllChildList(String memberId);
+
+    /**
+     * 获取所有子节点会员
+     * 递归
+     * @param memberId
+     * @return
+     */
+    PageInfo<TableMember> queryAllChildPage(String memberId, Integer pageNum, Integer pageSize, Map<String, Object> map);
 
     /**
      * 获取所有子节点会员(TREE)
@@ -69,6 +85,8 @@ public interface ITableMemberBusiSV {
     TableMember selectByPhone(String phone);
 
     List<TableMember> queryList(TableMember bo);
+
+    List<TableMember> queryList(TableMember bo, Map<String, Object> map);
 
     Map<String, TableMember> queryListMap(TableMember bo);
 

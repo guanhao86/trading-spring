@@ -237,10 +237,12 @@ public final class InvestConstants {
     public static final class MemberState {
 
         private MemberState() {}
-        //1：在用
+        //0：在用
         public static final String VALID = "0";
-        //2：失效
+        //1：失效
         public static final String INVALID = "1";
+        //-1：初始化
+        public static final String INIT = "-1";
 
     }
 }

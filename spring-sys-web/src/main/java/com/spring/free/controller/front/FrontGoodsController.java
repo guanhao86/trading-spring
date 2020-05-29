@@ -69,7 +69,7 @@ public class FrontGoodsController {
         if (StringUtils.isNotEmpty(queryVO.getMemberId())) {
             Map map = Maps.newHashMap();
             map.put(Global.URL, Global.ADMIN_PATH +"/front/member/beMemberIndex");
-            if (null == this.iTableMemberBusiSV.selectByMemberId(queryVO.getMemberId())) {
+            if (null == this.iTableMemberBusiSV.selectByMemberId4BuyOrder(queryVO.getMemberId())) {
                 throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在，请确认会员ID输入是否正确", map.get(Global.URL).toString(), map);
             }
         }
@@ -81,7 +81,7 @@ public class FrontGoodsController {
                 List<String> goodsClassList = Arrays.asList(goodsClass.split(","));
                 map.put("goodsClassIn", goodsClassList);
             } else {
-                tableGoods.setGoodsClass(Integer.parseInt(goodsClass));
+                tableGoods.setGoodsClass(Integer.parseInt(queryVO.getGoodsClass()));
             }
         }
 

@@ -60,7 +60,8 @@
                 myChart.setOption(option = {
                     tooltip: {
                         trigger: 'item',
-                        triggerOn: 'mousemove'
+                        triggerOn: 'mousemove',
+                        formatter: '{b0}'
                     },
 
                     series: [
@@ -83,7 +84,7 @@
                                     verticalAlign: 'top',
                                     align: 'right',
                                     fontSize: 9
-                                }
+                                },
                             },
 
                             leaves: {
@@ -98,7 +99,8 @@
 
                             expandAndCollapse: true,
                             animationDuration: 550,
-                            animationDurationUpdate: 750
+                            animationDurationUpdate: 750,
+
                         }
                     ]
                 });

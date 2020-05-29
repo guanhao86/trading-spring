@@ -59,6 +59,22 @@
                     </div>
                     #end
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">银行卡号<font color="red">*</font>：</label>
+                    <div class="col-sm-3" style="margin-top: 5px">
+                        $!{member.bankCardId}
+                    </div>
+                    <label class="col-sm-2 control-label" >开户行名字<font color="red">*</font>：</label>
+                    <div class="col-sm-3" style="margin-top: 5px">
+                        $!{member.bankName}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">银行卡开户行地址<font color="red">*</font>：</label>
+                    <div class="col-sm-3" style="margin-top: 5px">
+                        $!{member.bankOpenAre}
+                    </div>
+                </div>
 ##                <div class="form-group">
 ##                    <label class="col-sm-2 control-label">左右区标识：</label>
 ##                    <div class="col-sm-3">

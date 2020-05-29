@@ -16,7 +16,7 @@
                 <div class="form-group" >
                     <label class="col-sm-2 control-label">左右区标识：</label>
                     <div class="col-sm-2">
-                        #selectDisabledBS($!dict.getDictList("leftOrRight"), ["leftOrRight", "$!{member.leftOrRight}", "value", "label"], false, [false, "$!{member.leftOrRight}"])
+                        #selectBS($!dict.getDictList("leftOrRight"), ["leftOrRight", "$!{member.leftOrRight}", "value", "label"], false, [false, "$!{member.leftOrRight}"])
                     </div>
                 </div>
                 <div class="form-group" >

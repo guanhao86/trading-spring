@@ -6,6 +6,7 @@ import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
@@ -18,6 +19,8 @@ import java.util.Date;
 public class TokenUtil {
 
     public static final String AUTH_HEADER_KEY = "Authorization";
+
+    public static final String AUTH_HEADER_REFESH_KEY = "AuthorizationRefresh";
 
     public static final String TOKEN_PREFIX = "TOKEN";
 
@@ -53,7 +56,7 @@ public class TokenUtil {
      * @param role
      * @return
      */
-    public static String createJWT(String userId, String username, String role) {
+    public static String createJWT(String userId, String username, String role, Integer expiresSecondTmp) {
         try {
             // 使用HS256加密算法
             SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -80,6 +83,9 @@ public class TokenUtil {
                     .signWith(signatureAlgorithm, signingKey);
             //添加Token过期时间
             int TTLMillis =expiresSecond;
+            if (expiresSecondTmp != null && expiresSecondTmp > 0) {
+                TTLMillis = expiresSecondTmp;
+            }
             if (TTLMillis >= 0) {
                 long expMillis = nowMillis + TTLMillis;
                 Date exp = new Date(expMillis);
@@ -88,7 +94,7 @@ public class TokenUtil {
             }
 
             //生成JWT
-            return builder.compact();
+            return TokenUtil.TOKEN_PREFIX+builder.compact();
         } catch (Exception e) {
             log.error("签名失败", e);
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "签名失败！", "", null);
@@ -115,6 +121,18 @@ public class TokenUtil {
     }
 
     /**
+     * 从request取
+     * @param request
+     * @return
+     */
+    public static String getUserId(HttpServletRequest request){
+        String token = request.getHeader(TokenUtil.AUTH_HEADER_KEY).substring(5);
+        String userId = parseJWT(token).get("userId", String.class);
+        return userId;
+    }
+
+
+    /**
      * 是否已过期
      * @param token
      * @return
@@ -123,7 +141,20 @@ public class TokenUtil {
         return parseJWT(token).getExpiration().before(new Date());
     }
 
+    /**
+     * 是否已过期
+     * @param token
+     * @return
+     */
+    public static boolean isExpiration2(String token) {
+        try {
+            return parseJWT(token).getExpiration().before(new Date());
+        }catch (Exception e) {
+            return true;
+        }
+    }
+
     public static void main(String[] args) {
-        System.out.println(createJWT("1234567890", "王鑫", ""));
+        System.out.println(createJWT("92600000053", "王鑫", "", 3600 * 1000 * 100));
     }
 }

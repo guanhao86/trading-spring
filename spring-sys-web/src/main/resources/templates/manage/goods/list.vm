@@ -13,15 +13,16 @@
                         #formInput({"name": "名称", "length": "4,8", "asterisk": false} {"name": "goodsName", "id": "goodsName",
                             "value": "$!{queryVO.goodsName}"})
                     #end
-                #end
-                #@divColSmNum(4)
-                <div class="form-group">
-                    <label class="col-sm-3 control-label" style="margin-top: 5px">商品类型：</label>
-                    <div class="col-sm-5" style="width: 200px;">
-                        #selectBS($!dict.getDictList("goodsClass"), ["goodsClass", "$!{queryVO.goodsClass}", "value", "label"], false, [true, ""])
+                    #@divColSmNum(4)
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" style="margin-top: 5px">商品类型：</label>
+                        <div class="col-sm-5" style="width: 200px;">
+                            #selectBS($!dict.getDictList("goodsClass"), ["goodsClass", "$!{queryVO.goodsClass}", "value", "label"], false, [true, ""])
+                        </div>
                     </div>
-                </div>
+                    #end
                 #end
+
             #end
         #end
         #@panel()

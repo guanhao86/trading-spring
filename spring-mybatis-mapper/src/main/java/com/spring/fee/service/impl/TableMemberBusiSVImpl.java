@@ -27,6 +27,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -41,6 +42,9 @@ import java.util.*;
 @Service
 @Transactional
 public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
+
+    @Value("${python.path}")
+    public String python_path;
 
     @Autowired
     TableMemberMapper iTableMemberMapper;
@@ -72,13 +76,68 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         bo.setReportingAmount(0f);
         bo.setAccountMoney(0f);
         bo.setRegisterTime(sysdate);
-        bo.setState(InvestConstants.MemberState.VALID);
+        bo.setState(InvestConstants.MemberState.INIT);
         iTableMemberMapper.insert(bo);
         return bo;
     }
 
     @Override
-    public TableMember update(TableMember bo) {
+    public TableMember updateSimple(TableMember bo) {
+        if (this.iTableMemberMapper.updateByPrimaryKeySelective(bo) == 1) {
+            return bo;
+        }
+        return null;
+    }
+
+    @Override
+    public TableMember update(TableMember bo, boolean updateArrange) {
+
+        //查询会员
+        TableMember origMember = this.selectByMemberId4BuyOrder(bo.getMemberId());
+        if (origMember == null) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在！", "", null);
+        }
+        //修改了安置人
+        if (!origMember.getArrangeId().equals(bo.getArrangeId()) || updateArrange) {
+
+            //判断新的安置人是否允许修改
+            TableMember arrangeMember = this.selectByMemberId(bo.getArrangeId());
+            if (arrangeMember == null) {
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "安置人不存在！", "", null);
+            }
+            checkArrange(bo, arrangeMember);
+
+            //更新安置人
+            //判断左区
+            if (1 == bo.getLeftOrRight()) {
+                arrangeMember.setLeftChildNode(bo.getMemberId());
+            }
+
+            //判断右区，如果存在不允许注册
+            if (2 == bo.getLeftOrRight()) {
+                arrangeMember.setRightChildNode(bo.getMemberId());
+            }
+            this.update(arrangeMember, false);
+
+            if (!origMember.getArrangeId().equals(bo.getArrangeId())) {
+
+                //原安置人对象
+                TableMember origArrangeMember = this.selectByMemberId(origMember.getArrangeId());
+                //修改原安置人数据
+                //判断左区
+                if (1 == origMember.getLeftOrRight()) {
+                    origArrangeMember.setLeftChildNode("0");
+                }
+
+                //判断右区，如果存在不允许注册
+                if (2 == origMember.getLeftOrRight()) {
+                    origArrangeMember.setRightChildNode("0");
+                }
+                this.update(origArrangeMember, false);
+            }
+        }
+
+
         if (this.iTableMemberMapper.updateByPrimaryKeySelective(bo) == 1) {
             return bo;
         }
@@ -122,7 +181,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         TableMember updateParam = new TableMember();
         updateParam.setState(InvestConstants.MemberState.INVALID);
         updateParam.setId(bo.getId());
-        this.update(updateParam);
+        this.update(updateParam, false);
 
         //更新userInfo
         log.info("删userInfo");
@@ -166,6 +225,23 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         return tableMembers.get(0);
     }
 
+    @Override
+    public TableMember selectByMemberId4BuyOrder(String memberId) {
+
+        TableMemberExample example = new TableMemberExample();
+        TableMemberExample.Criteria criteria = example.createCriteria();
+
+        criteria.andMemberIdEqualTo(memberId);
+        criteria.andStateNotEqualTo(InvestConstants.MemberState.INVALID);
+
+        List<TableMember> tableMembers = this.iTableMemberMapper.selectByExample(example);
+
+        if (CollectionUtils.isEmpty(tableMembers)) {
+            return null;
+        }
+        return tableMembers.get(0);
+    }
+
     /**
      * 获取会员下一级子会员
      *
@@ -200,6 +276,33 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         }
 
         return list;
+    }
+
+    /**
+     * 获取所有子节点会员
+     * 递归
+     *
+     * @param memberId
+     * @return
+     */
+    @Override
+    public PageInfo<TableMember> queryAllChildPage(String memberId, Integer pageNum, Integer pageSize, Map<String, Object> map) {
+        List<TableMember> list = this.queryAllChildList(memberId);
+        PageInfo<TableMember> pageInfo = new PageInfo<>();
+        List<TableMember> pagelist = new ArrayList<>();
+        int start = (pageNum - 1)*pageSize;
+        int last = pageNum * pageSize - 1;
+        if (last > list.size()) {
+            last = list.size();
+        }
+        for (int i = start; i < last; i++) {
+            pagelist.add(list.get(i));
+        }
+        pageInfo.setList(pagelist);
+        pageInfo.setTotal(list.size());
+        pageInfo.setPageNum(pageNum);
+        pageInfo.setPageSize(pageSize);
+        return pageInfo;
     }
 
     /**
@@ -289,6 +392,11 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
 
     @Override
     public List<TableMember> queryList(TableMember bo) {
+        return queryList(bo, null);
+    }
+
+    @Override
+    public List<TableMember> queryList(TableMember bo, Map<String, Object> map) {
 
         TableMemberExample example = new TableMemberExample();
         TableMemberExample.Criteria criteria = example.createCriteria();
@@ -391,6 +499,17 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         }
         if (null != bo.getPerfomanceTime()) {
             criteria.andPerfomanceTimeEqualTo(bo.getPerfomanceTime());
+        }
+
+        criteria.andStateNotEqualTo(InvestConstants.MemberState.INIT);
+
+        if (null != map) {
+            if (null != map.get("REGISTER_TIME_START")) {
+                criteria.andRegisterTimeGreaterThanOrEqualTo((Date)map.get("REGISTER_TIME_START"));
+            }
+            if (null != map.get("REGISTER_TIME_END")) {
+                criteria.andRegisterTimeLessThanOrEqualTo((Date)map.get("REGISTER_TIME_END"));
+            }
         }
 
         return this.iTableMemberMapper.selectByExample(example);
@@ -554,6 +673,8 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             criteria.andPerfomanceTimeEqualTo(bo.getPerfomanceTime());
         }
 
+        criteria.andStateNotEqualTo(InvestConstants.MemberState.INIT);
+
         example.setOrderByClause("register_time desc");
 
         PageInfo<TableMember> pageInfo = PageHelper.startPage(pageNum, pageSize)
@@ -597,7 +718,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
                 log.info("自动滑落");
                 //3 左区滑落
                 //4 右区滑落
-                String result = PythonUtil3.runPy("/usr/maitao/run_python", "get_leaf_node.py", arrangeId, "");
+                String result = PythonUtil3.runPy(python_path, "get_leaf_node.py", arrangeId, "");
                 if (StringUtils.isEmpty(result)) {
                     throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "根据安置人"+arrangeId+"获取自动滑落会员编号失败","", null);
                 }
@@ -625,19 +746,9 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "安置人不存在！","", null);
         }
 
-        //判断左区，如果存在不允许注册
-        if (1 == m.getLeftOrRight()) {
-            if(!"0".equals(arrangeMemeber.getLeftChildNode()) && !org.springframework.util.StringUtils.isEmpty(arrangeMemeber.getLeftChildNode())) {
-                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "推荐人左区已经存在会员，不允许注册！", "", null);
-            }
-        }
 
-        //判断右区，如果存在不允许注册
-        if (2 == m.getLeftOrRight()){
-            if(!"0".equals(arrangeMemeber.getRightChildNode()) && !org.springframework.util.StringUtils.isEmpty(arrangeMemeber.getRightChildNode())) {
-                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "推荐人右区已经存在会员，不允许注册！", "", null);
-            }
-        }
+        //校验安置人
+        checkArrange(m, arrangeMemeber);
 
         String password = StringUtils.isEmpty(m.getPassword())?phone.substring(phone.length()-6):m.getPassword();
 
@@ -663,20 +774,20 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         member.setLastLoginTime(DateUtils.getSysDate());
         member.setPerfomanceTime(DateUtils.getSysDate());
         member.setLeftOrRight(m.getLeftOrRight());
-        member.setArrangeId(m.getArrangeId());
-        this.update(member);
+        member.setArrangeId(arrangeId);
+        this.updateSimple(member);
 
-        //更新安置人
-        //判断左区
-        if (1 == m.getLeftOrRight()) {
-            arrangeMemeber.setLeftChildNode(member.getMemberId());
-        }
-
-        //判断右区，如果存在不允许注册
-        if (2 == m.getLeftOrRight()) {
-            arrangeMemeber.setRightChildNode(member.getMemberId());
-        }
-        this.update(arrangeMemeber);
+//        //更新安置人
+//        //判断左区
+//        if (1 == m.getLeftOrRight()) {
+//            arrangeMemeber.setLeftChildNode(member.getMemberId());
+//        }
+//
+//        //判断右区，如果存在不允许注册
+//        if (2 == m.getLeftOrRight()) {
+//            arrangeMemeber.setRightChildNode(member.getMemberId());
+//        }
+//        this.update(arrangeMemeber, false);
 
         //创建user信息，用于登陆系统
         UserInfo user = new UserInfo();
@@ -701,6 +812,35 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         userService.save(user, map);
 
         return member;
+    }
+
+    /**
+     * 校验安置人是否可用
+     * @param member
+     * @param arrangeMember
+     * @return
+     */
+    public boolean checkArrange(TableMember member, TableMember arrangeMember){
+        //判断左区，如果存在不允许注册
+        if (1 == member.getLeftOrRight()) {
+            if(!"0".equals(arrangeMember.getLeftChildNode()) && !org.springframework.util.StringUtils.isEmpty(arrangeMember.getLeftChildNode())) {
+                //判断左区会员是否有效
+                if (this.selectByMemberId(arrangeMember.getLeftChildNode()) != null) {
+                    throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "安置人左区已经存在会员，不允许注册！", "", null);
+                }
+            }
+        }
+
+        //判断右区，如果存在不允许注册
+        if (2 == member.getLeftOrRight()){
+            if(!"0".equals(arrangeMember.getRightChildNode()) && !org.springframework.util.StringUtils.isEmpty(arrangeMember.getRightChildNode())) {
+                if (this.selectByMemberId(arrangeMember.getRightChildNode()) != null) {
+                    throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "安置人右区已经存在会员，不允许注册！", "", null);
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -738,7 +878,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
 
         bo.setPassword(pwd);
         bo.setId(tableMemberOrig.getId());
-        this.update(bo);
+        this.update(bo, false);
 
         UserInfo userInfo = this.userService.getUserByUsernameLogin(tableMemberOrig.getMemberId());
         userInfo.setPassword(pwd);
@@ -758,7 +898,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         TableMember tableMember = new TableMember();
         tableMember.setId(id);
         tableMember.setAutFlag(autFlag);
-        return this.update(tableMember) ;
+        return this.update(tableMember, false) ;
     }
 
     /**

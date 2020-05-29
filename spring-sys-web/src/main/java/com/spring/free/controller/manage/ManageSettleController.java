@@ -22,6 +22,7 @@ import com.spring.free.utils.principal.BaseGetPrincipal;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +42,9 @@ public class ManageSettleController {
 
     @Autowired
     ITableBonusDetailBusiSV iTableBonusDetailBusiSV;
+
+    @Value("${python.path}")
+    public String python_path;
 
     /*
      * @Author gh
@@ -89,16 +93,16 @@ public class ManageSettleController {
         try {
             //日结
             if ("1".equals(queryVO.getSettleType())) {
-                result = PythonUtil3.runPy("/usr/maitao/run_python", "balance_gogogo.py", user.getUsername(), "");
+                result = PythonUtil3.runPy(python_path, "balance_gogogo.py", user.getUsername(), "");
                 //PythonUtil.runPy("E:\\工作\\01 需求\\20191014 麦子科技\\东家嗨团\\结算代码\\结算代码\\dj_balance_accounts.py", "balance_gogogo", user.getUsername());
             }
 
             if ("2".equals(queryVO.getSettleType())) {
-                result = PythonUtil3.runPy("/usr/maitao/run_python", "send_bonus.py", user.getUsername(), "");
+                result = PythonUtil3.runPy(python_path, "send_bonus.py", user.getUsername(), "");
             }
 
             if ("3".equals(queryVO.getSettleType())) {
-                result = PythonUtil3.runPy("/usr/maitao/run_python", "balance_go2.py", user.getUsername(), "");
+                result = PythonUtil3.runPy(python_path, "balance_go2.py", user.getUsername(), "");
             }
 
         }catch (Exception e) {

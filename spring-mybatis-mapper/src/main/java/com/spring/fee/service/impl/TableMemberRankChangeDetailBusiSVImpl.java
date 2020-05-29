@@ -97,7 +97,7 @@ public class TableMemberRankChangeDetailBusiSVImpl implements ITableMemberRankCh
         this.insert(tableMemberRankChangeDetail);
 
         orig.setmRank(value);
-        this.iTableMemberBusiSV.update(orig);
+        this.iTableMemberBusiSV.update(orig, false);
 
         return tableMemberRankChangeDetail;
     }

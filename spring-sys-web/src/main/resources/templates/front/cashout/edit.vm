@@ -3,17 +3,34 @@
     #@wrapper()
         #@panel()
             #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:view", "isBack": true, "href": "front/cashout/list"})
-                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+                #if ($!{member.autFlag} == "0")
+
+                    #btn({"btnName":"去实名", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_beMember"}})
+                #end
+                #if ($!{member.autFlag} == "1")
+                    #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+
+                #end
             #end
             #@panelBody()
+                #if ($!{member.autFlag} == "0")
+                    #@form("form_beMember" true "post" "front/member/edit")
+                    #end
+                #end
+                #if ($!{member.autFlag} == "2")
+                    <font color="red"> 实名认证审核中，等待审核通过后再操作</font>
+                #end
+            #end
+            #@panelBody()
+
                 #@form("form_insert" true "post" "front/cashout/save")
                     <input type="hidden" name="id" value="$!{cashout.id}">
 
                     #formInput({"name": "金额"} {"name": "amount", "value":"$!{cashout.amount}","id": "amount","required": "required"})
-                    #formInput({"name": "姓名"} {"name": "memberName", "value":"$!{cashout.memberName}","id": "memberName","required": "required"})
-                    #formInput({"name": "银行卡号"} {"name": "bankCardId", "value":"$!{cashout.bankCardId}","id": "bankCardId","required": "required"})
-                    #formInput({"name": "开户行名字"} {"name": "bankName", "value":"$!{cashout.bankName}","id": "bankName","required": "required"})
-                    #formInput({"name": "银行卡开户行地址"} {"name": "bankOpenAre", "value":"$!{cashout.bankOpenAre}","id": "bankOpenAre","required": "required"})
+                    #formInput({"name": "姓名"} {"name": "memberName", "value":"$!{member.memberName}","id": "memberName","required": "required","readonly":"readonly"})
+                    #formInput({"name": "银行卡号"} {"name": "bankCardId", "value":"$!{member.bankCardId}","id": "bankCardId","required": "required"})
+                    #formInput({"name": "开户行名字"} {"name": "bankName", "value":"$!{member.bankName}","id": "bankName","required": "required"})
+                    #formInput({"name": "银行卡开户行地址"} {"name": "bankOpenAre", "value":"$!{member.bankOpenAre}","id": "bankOpenAre","required": "required"})
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label">可提现金额：</label>

@@ -67,7 +67,7 @@ public class ManageGoodsController {
                 List<String> goodsClassList = Arrays.asList(goodsClass.split(","));
                 map.put("goodsClassIn", goodsClassList);
             } else {
-                tableGoods.setGoodsClass(Integer.parseInt(goodsClass));
+                tableGoods.setGoodsClass(Integer.parseInt(queryVO.getGoodsClass()));
             }
         }
 

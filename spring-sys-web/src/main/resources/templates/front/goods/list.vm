@@ -35,7 +35,7 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["商品图片", "商品名称", "商品价格(元)", "金蛋价格", "商品类型", "商品状态"],"", false)
+                    #tableTHead(["商品图片", "商品名称", "商品价格(元)", "金蛋价格", "商品类型", "购买后获得的级别", "商品状态"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("<img src=$!{l.thunmbanilImgSrc} style= height:30px />")
@@ -43,6 +43,7 @@
                         #tableTd("$!{l.price}")
                         #tableTd("$!{l.scorePrice}")
                         #tableTd("$!{l.goodsClass}", {"type": "dict", "format": "goodsClass"})
+                        #tableTd("$!{l.incomeVipLevel}", {"type": "dict", "format": "level"})
                         #tableTd("$!{l.state}", {"type": "dict", "format": "goodsState"})
                         #@tableTd()
                             #@a("购买" {"href": "$!{ctx}/front/goods/view?id=$!{l.id}&memberId=$!{queryVO.memberId}", "class": "fa fa-pencil-square-o"})#end

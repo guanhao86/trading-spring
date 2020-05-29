@@ -45,9 +45,14 @@
 
             $(document).ready(function() {
                 $("#divresult").hide()
-              if ( $!{result} == "1" ) {
-                $("#divresult").show()
-              }
+                try{
+                    if ( $!{result} == "1" ) {
+                        $("#divresult").show()
+                    }
+                }catch (e) {
+                    console.log("e")
+                }
+
                 $("#arrangeId").blur(function(){
                     console.log("获取姓名")
                     getMember()
@@ -57,7 +62,7 @@
 
             function getMember(){
                 $("#arrangeName").val('')
-                $.get('/api/member/getMemberInfo/'+$("#arrangeId").val(), function (data) {
+                $.get('/api/member/getMemberInfoAjax/'+$("#arrangeId").val(), function (data) {
                     console.log("data", data)
                     $("#arrangeName").val(data.data.reallyName)
                 });

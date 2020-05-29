@@ -1,15 +1,14 @@
 package com.spring.free.domain;
 
 import com.spring.free.base.BaseEntity;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Date;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class QueryVO extends BaseEntity<QueryVO> {
 
     private String queryMemberId;

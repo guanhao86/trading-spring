@@ -85,5 +85,13 @@ public class RestTest {
 
     }
 
+    @RequestMapping(value = "/test1")
+    public @ResponseBody
+    AccessResponse test1(@RequestBody QueryVO queryVO, String image, HttpServletRequest request, HttpServletResponse response){
+
+
+        return null;
+
+    }
 
 }

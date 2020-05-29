@@ -28,6 +28,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +53,9 @@ import java.util.Map;
 @Controller
 @RequestMapping(Global.ADMIN_PATH + "/manage/member/")
 public class ManageMemberController {
+
+    @Value("${python.path}")
+    public String python_path;
 
     @Autowired
     ITableMemberBusiSV iTableMemberBusiSV;
@@ -166,7 +170,11 @@ public class ManageMemberController {
             member.setBankImg2(imgPath);
         }
 
-        this.iTableMemberBusiSV.update(member);
+        try {
+            this.iTableMemberBusiSV.update(member, false);
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
 
         PageResult.setPrompt(map,"操作成功", "success");
         return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/member/list"), map);
@@ -183,7 +191,7 @@ public class ManageMemberController {
         TableMember tableMember=this.iTableMemberBusiSV.select(member);
 
         try {
-            result = PythonUtil3.runPy("/usr/maitao/run_python", "get_child_achievement.py", tableMember.getMemberId(), "");
+            result = PythonUtil3.runPy(python_path, "get_child_achievement.py", tableMember.getMemberId(), "");
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -233,7 +241,7 @@ public class ManageMemberController {
         Map map = Maps.newHashMap();
         PageResult.getPrompt(view, request, "");
         PageResult.setPageTitle(view, "会员信息注册");
-
+        view.addObject("result", "0");
         //返回操作提示信息
         view.setViewName("manage/member/form");
         return view;

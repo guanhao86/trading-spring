@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,9 @@ import java.util.Map;
 @RequestMapping(Global.ADMIN_PATH + "/front/member/")
 public class FrontMemberController {
 
+    @Value("${python.path}")
+    public String python_path;
+
     @Autowired
     ITableMemberBusiSV iTableMemberBusiSV;
 
@@ -66,12 +70,12 @@ public class FrontMemberController {
         UserInfo user = BaseGetPrincipal.getUser();
         tableMember.setArrangeId(user.getUsername());
 
-        PageInfo<TableMember> pageInfo = this.iTableMemberBusiSV.queryListPage(tableMember, page, pageSize, null);
+        PageInfo<TableMember> pageInfo = this.iTableMemberBusiSV.queryAllChildPage(user.getUsername(), page, pageSize, null);
 
         //调用python获取在客户端我的粉丝这个界面，最上面加两行，左区业绩： 右区业绩
         //调用我这个函数获得数据就可以了，传参数是字符串类型的，member_id
         //String result = "(1,2)";
-        String result = PythonUtil3.runPy("/usr/maitao/run_python", "get_child_achievement.py", user.getUsername(), "");
+        String result = PythonUtil3.runPy(python_path, "get_child_achievement.py", user.getUsername(), "");
 
         if (StringUtils.isNotEmpty(result) && result.indexOf("(") >= 0 && result.indexOf(")")>=0) {
             result = result.substring(1, result.length()-1);
@@ -169,13 +173,13 @@ public class FrontMemberController {
             }
 
             member.setAutFlag(2); //修改信息后为待审核
-            this.iTableMemberBusiSV.update(member);
+            this.iTableMemberBusiSV.update(member, false);
         }catch (Exception e) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
         }
 
         PageResult.setPrompt(map,"操作成功", "success");
-        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/front/member/edit"), map);
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/front/member/view"), map);
     }
 
     @RequiresPermissions("system:member:view")
@@ -310,6 +314,8 @@ public class FrontMemberController {
         PageResult.setPageTitle(view, "会员信息注册");
 
         String registMemberId = request.getParameter("registMemberId");
+        String referenceId = request.getParameter("referenceId");
+        String arrangeId = request.getParameter("arrangeId");
 
         UserInfo user = BaseGetPrincipal.getUser();
         TableMember tableMember=this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
@@ -320,6 +326,8 @@ public class FrontMemberController {
             view.addObject("registMember", tableMember1);
         }
         view.addObject("member", tableMember);
+        view.addObject("arrangeId", StringUtils.isEmpty(arrangeId)?tableMember.getMemberId():arrangeId);
+        view.addObject("referenceId", StringUtils.isEmpty(referenceId)?tableMember.getMemberId():referenceId);
         view.setViewName("front/member/regist");
         return view;
     }
@@ -333,7 +341,7 @@ public class FrontMemberController {
     @RequestMapping(value = "register")
     public ModelAndView register(ModelAndView view, HttpServletRequest request, TableMember m) {
         Map map = Maps.newHashMap();
-        map.put(Global.URL, Global.ADMIN_PATH +"/front/member/registIndex");
+        map.put(Global.URL, Global.ADMIN_PATH +"/front/member/registIndex?referenceId="+m.getArrangeId()+"&arrangeId="+m.getArrangeId());
         TableMember member = null;
         try {
             member = this.iTableMemberBusiSV.regist(m,1);

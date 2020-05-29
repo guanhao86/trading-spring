@@ -80,7 +80,7 @@ public class TableMemberLevelChangeDetailBusiSVImpl implements ITableMemberLevel
     @Override
     public TableMemberLevelChangeDetail changeLevel(String memberId, Integer value, String remark) {
         //查询原纪录
-        TableMember orig = this.iTableMemberBusiSV.selectByMemberId(memberId);
+        TableMember orig = this.iTableMemberBusiSV.selectByMemberId4BuyOrder(memberId);
         if (orig == null)
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在！", "", null);
 
@@ -92,7 +92,7 @@ public class TableMemberLevelChangeDetailBusiSVImpl implements ITableMemberLevel
         this.insert(tableMemberLevelChangeDetail);
 
         orig.setLevel(value);
-        this.iTableMemberBusiSV.update(orig);
+        this.iTableMemberBusiSV.update(orig, false);
 
         return tableMemberLevelChangeDetail;
     }

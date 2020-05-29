@@ -157,7 +157,7 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
         }else if (accountType == 6) {
             tableMember.setScore(accountMoney.intValue());
         }
-        this.iTableMemberBusiSV.update(tableMember);
+        this.iTableMemberBusiSV.update(tableMember, false);
 
         memberAccountDetail.setModifyTime(DateUtils.getSysDate());
         memberAccountDetail.setMemberId(memberId);

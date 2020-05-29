@@ -25,6 +25,8 @@ public interface ITableMemberGoodsBusiSV {
      */
     void calcScore();
 
+    List<TableMemberGoods> getListValid(TableMemberGoods tableMemberGoods);
+
     PageInfo<TableMemberGoods> queryListPage(TableMemberGoods bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
 
     PageInfo<TableMemberGoodsDZ> queryListPageDZ(TableMemberGoodsDZ bo, Integer pageNum, Integer pageSize, Map<String ,Object> map) ;

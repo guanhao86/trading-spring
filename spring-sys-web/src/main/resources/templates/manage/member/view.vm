@@ -62,6 +62,8 @@
                     </div>
 
                     #formInput({"name": "余额"} {"name": "accountMoney", "value":"$!{member.accountMoney}","id": "accountMoney","required": "required","readonly":"readonly"})
+                    #formInput({"name": "可用奖金"} {"name": "accountPointAvailable", "value":"$!{member.accountPointAvailable}","id": "accountPointAvailable","required": "required","readonly":"readonly"})
+                    #formInput({"name": "冻结奖金"} {"name": "accountPointFreeze", "value":"$!{member.accountPointFreeze}","id": "accountPointFreeze","required": "required","readonly":"readonly"})
                     #formInput({"name": "商城积分"} {"name": "accountDjPoint", "value":"$!{member.accountDjPoint}","id": "accountDjPoint","required": "required","readonly":"readonly"})
                     #formInput({"name": "保值积分"} {"name": "accountJsyPoint", "value":"$!{member.accountJsyPoint}","id": "accountJsyPoint","required": "required","readonly":"readonly"})
                     #formInput({"name": "金蛋"} {"name": "score", "value":"$!{member.score}","id": "score","required": "required","readonly":"readonly"})

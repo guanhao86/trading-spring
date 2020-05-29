@@ -95,7 +95,7 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
             log.info("开始下蛋");
             //获取所有金鸡
             Date sysdate = DateUtils.getSysDate();
-            List<TableMemberGoods> tableMemberGoodsList = this.getList();
+            List<TableMemberGoods> tableMemberGoodsList = this.getListValid(null);
             for (TableMemberGoods tableMemberGoods : tableMemberGoodsList) {
                 log.info("金鸡信息{}", JSONObject.toJSON(tableMemberGoods));
 
@@ -140,9 +140,15 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
         }
     }
 
-    public List<TableMemberGoods> getList(){
+    public List<TableMemberGoods> getListValid(TableMemberGoods tableMemberGoods){
         TableMemberGoodsExample example = new TableMemberGoodsExample();
         TableMemberGoodsExample.Criteria criteria = example.createCriteria();
+
+        if (tableMemberGoods != null) {
+            if (StringUtils.isNotEmpty(tableMemberGoods.getMemberId())) {
+                criteria.andMemberIdEqualTo(tableMemberGoods.getMemberId());
+            }
+        }
 
         criteria.andInvalidTimeGreaterThanOrEqualTo(DateUtils.getSysDate());
 
