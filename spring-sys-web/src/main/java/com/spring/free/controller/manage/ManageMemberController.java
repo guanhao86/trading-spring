@@ -172,7 +172,7 @@ public class ManageMemberController {
         }
 
         try {
-            this.iTableMemberBusiSV.update(member, false);
+            this.iTableMemberBusiSV.updateSimple2(member);
         }catch (Exception e) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
         }
@@ -297,7 +297,6 @@ public class ManageMemberController {
 
     /**
      * 会员自己注册页面
-     * @param view
      * @param request
      * @param m
      * @return

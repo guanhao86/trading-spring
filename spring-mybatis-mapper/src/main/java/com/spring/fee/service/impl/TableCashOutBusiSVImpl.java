@@ -120,19 +120,36 @@ public class TableCashOutBusiSVImpl implements ITableCashOutBusiSV {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "余额不足！", "", null);
         }
 
-        if (org.springframework.util.StringUtils.isEmpty(tableMember.getBankCardId())
-                || org.springframework.util.StringUtils.isEmpty(tableMember.getBankOpenAre())
-                || org.springframework.util.StringUtils.isEmpty(tableMember.getBankName())
-        ){
-            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "银行卡信息不正确！", "", null);
-        }
+//        if (org.springframework.util.StringUtils.isEmpty(tableMember.getBankCardId())
+//                || org.springframework.util.StringUtils.isEmpty(tableMember.getBankOpenAre())
+//                || org.springframework.util.StringUtils.isEmpty(tableMember.getBankName())
+//        ){
+//            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "银行卡信息不正确！", "", null);
+//        }
 
         if (org.springframework.util.StringUtils.isEmpty(tableMember.getReallyName())){
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员姓名不能为空！", "", null);
         }
-        tableCashOut.setBankCardId(tableMember.getBankCardId());
-        tableCashOut.setBankOpenAre(tableMember.getBankOpenAre());
-        tableCashOut.setBankName(tableMember.getBankName());
+
+        if (StringUtils.isEmpty(tableCashOut.getBankCardId())) {
+            if (StringUtils.isEmpty(tableMember.getBankCardId())) {
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "银行卡号不能为空！", "", null);
+            }
+            tableCashOut.setBankCardId(tableMember.getBankCardId());
+        }
+        if (StringUtils.isEmpty(tableCashOut.getBankOpenAre())) {
+            if (StringUtils.isEmpty(tableMember.getBankOpenAre())) {
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "开户行地址不能为空！", "", null);
+            }
+            tableCashOut.setBankOpenAre(tableMember.getBankOpenAre());
+        }
+        if (StringUtils.isEmpty(tableCashOut.getBankName())) {
+            if (StringUtils.isEmpty(tableMember.getBankName())) {
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "开户行不能为空！", "", null);
+            }
+            tableCashOut.setBankName(tableMember.getBankName());
+        }
+
         tableCashOut.setMemberName(tableMember.getReallyName());
         return this.insert(tableCashOut);
     }

@@ -20,6 +20,8 @@ public interface ITableMemberBusiSV {
 
     TableMember updateSimple(TableMember bo);
 
+    TableMember updateSimple2(TableMember bo);
+
     TableMember delete(TableMember bo);
 
     TableMember renew(TableMember bo);

@@ -84,8 +84,6 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
 
     /**
      * 根据安置人删除会员相关信息
-     * @param arrangeId
-     * @param notRemoveMemberId  (不删除的会员ID)
      */
 //    private void remove(String arrangeId, String notRemoveMemberId) {
 //        TableMember tableMember = new TableMember();
@@ -191,6 +189,17 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         bo.setGoodsId(goods.getId());
         bo.setGoodsName(goods.getGoodsName());
         bo.setState(1);
+
+        //设置收货人信息
+        if (StringUtils.isEmpty(bo.getReceiverName())){
+            bo.setReceiverName(operMember.getReallyName());
+        }
+        if (StringUtils.isEmpty(bo.getReceiverPhone())){
+            bo.setReceiverPhone(operMember.getPhone());
+        }
+        if (StringUtils.isEmpty(bo.getReceiverAddr())){
+            bo.setReceiverAddr(operMember.getAddr());
+        }
 
         Float price = bo.getAmount() * goods.getPrice();
 

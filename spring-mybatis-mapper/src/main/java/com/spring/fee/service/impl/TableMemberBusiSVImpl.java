@@ -81,6 +81,8 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         bo.setReportingAmount(zero);
         bo.setAccountMoney(zero);
         bo.setRegisterTime(sysdate);
+        //默认都是实名的
+        bo.setAutFlag(1);
         if (2 == bo.getRegisterFrom())
             bo.setState(InvestConstants.MemberState.VALID);
         if (1 == bo.getRegisterFrom())
@@ -91,11 +93,22 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
 
     @Override
     public TableMember updateSimple(TableMember bo) {
+        bo.setReallyName(null);
+        bo.setPhone(null);
         if (this.iTableMemberMapper.updateByPrimaryKeySelective(bo) == 1) {
             return bo;
         }
         return null;
     }
+
+    @Override
+    public TableMember updateSimple2(TableMember bo) {
+        if (this.iTableMemberMapper.updateByPrimaryKeySelective(bo) == 1) {
+            return bo;
+        }
+        return null;
+    }
+
 
     @Override
     public TableMember update(TableMember bo, boolean updateArrange) {
@@ -873,11 +886,13 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         member.setPassword(Md5Util.md5Hex(password));
         member.setReferenceId(referenceId);
         member.setLevel(0);
+        member.setReallyName(m.getReallyName());
         member.setRegisterFrom(registerFrom); //注册来源：后台
         member = this.insert(member);
         member.setMemberId("926" + String.format("%08d", member.getId()));
         member.setLeftChildNode("");
         member.setRightChildNode("");
+
 
         BigDecimal zero = new BigDecimal(0);
 
