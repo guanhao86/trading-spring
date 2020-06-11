@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 
@@ -109,7 +110,7 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
         }
 
 
-        Float accountMoney = tableMember.getAccountMoney();
+        BigDecimal accountMoney = tableMember.getAccountMoney();
 
         if (null == accountType || accountType == 1) {
             accountMoney = tableMember.getAccountMoney();
@@ -123,9 +124,9 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
             accountMoney = tableMember.getAccountJsyPoint();
         }else  if (accountType == 6) {
             if (tableMember.getScore() == null) {
-                accountMoney = 0f;
+                accountMoney = new BigDecimal(0);
             }else {
-                accountMoney = (float) tableMember.getScore();
+                accountMoney = new BigDecimal(tableMember.getScore());
             }
         }
 
@@ -134,14 +135,14 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
         if ("1".equals(operType)) {
             //充值
             memberAccountDetail.setAccountType(accountType==null?1:accountType);
-            accountMoney += amount;
+            accountMoney = accountMoney.add(new BigDecimal(amount));
         }
         if ("2".equals(operType)) {
             //购物
             memberAccountDetail.setAccountType(accountType==null?1:accountType);
-            accountMoney -= amount;
-            if (accountMoney < 0) {
-                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "余额不足！", "", null);
+            accountMoney = accountMoney.subtract(new BigDecimal(amount));
+            if (accountMoney.floatValue() < 0) {
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), 6==accountType?"金蛋不足":"余额不足！", "", null);
             }
         }
         if (null == accountType || accountType == 1) {

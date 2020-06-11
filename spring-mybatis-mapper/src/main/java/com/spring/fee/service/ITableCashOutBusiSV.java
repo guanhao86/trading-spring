@@ -20,6 +20,13 @@ public interface ITableCashOutBusiSV {
 
     TableCashOut select(TableCashOut bo);
 
+    /**
+     * 提现申请
+     * @param bo
+     * @return
+     */
+    TableCashOut apply(TableCashOut bo);
+
     TableCashOut audit(TableCashOut bo);
 
     PageInfo<TableCashOut> queryListPage(TableCashOut bo, Integer pageNum, Integer pageSize, Map<String, Object> map);

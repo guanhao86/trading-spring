@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/css/goods/bootstrap-fileupload.min.css"/>
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:view", "isBack": true, "href": "front/goods/list?goodsClass=$!{goods.goodsClass}&memberId=$!{queryVO.memberId}"})
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:view", "isBack": true, "href": "front/goods/list?goodsClass=$!{queryGoodsClass}&memberId=$!{queryVO.memberId}"})
                 #btn({"btnName":"购买", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
             #end
             #@panelBody()

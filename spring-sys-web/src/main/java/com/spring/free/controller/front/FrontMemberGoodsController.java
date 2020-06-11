@@ -59,7 +59,10 @@ public class FrontMemberGoodsController {
         tableMemberGoodsDZ.setMemberId(user.getUsername());
         List<TableMemberGoodsDZ> tableMemberGoodsDZS = this.iTableMemberGoodsBusiSV.selectByGroup(tableMemberGoodsDZ);
         if (CollectionUtils.isEmpty(tableMemberGoodsDZS)) {
-            mav.addObject("total", new TableMemberGoodsDZ());
+            TableMemberGoodsDZ dz = new TableMemberGoodsDZ();
+            dz.setAmount(0);
+            dz.setAddCount(0);
+            mav.addObject("total", dz);
         }else{
             mav.addObject("total", tableMemberGoodsDZS.get(0));
         }

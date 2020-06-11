@@ -120,15 +120,10 @@ public class FrontCashOutController {
         try {
             UserInfo user = BaseGetPrincipal.getUser();
 
-            TableMember tableMember = this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
-
-            if (tableCashOut.getAmount() > tableMember.getAccountMoney()) {
-                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "余额不足", map.get(Global.URL).toString(), map);
-            }
-
             tableCashOut.setMemberId(user.getUsername());
-            this.iTableCashOutBusiSV.insert(tableCashOut);
+            this.iTableCashOutBusiSV.apply(tableCashOut);
         }catch (Exception e) {
+            map.put(Global.URL, Global.ADMIN_PATH +"/front/cashout/edit");
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
         }
 

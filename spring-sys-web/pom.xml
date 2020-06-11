@@ -136,5 +136,17 @@
                 </filters>
             </build>
         </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <deploy.type>test</deploy.type>
+                <deploy.version>1.0.0</deploy.version>
+            </properties>
+            <build>
+                <filters>
+                    <filter>profile-test.properties</filter>
+                </filters>
+            </build>
+        </profile>
     </profiles>
 </project>

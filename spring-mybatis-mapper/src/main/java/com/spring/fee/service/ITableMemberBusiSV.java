@@ -50,6 +50,14 @@ public interface ITableMemberBusiSV {
     List<TableMember> queryAllChildList(String memberId);
 
     /**
+     * 获取所有子节点会员 （会员加载到Map）
+     * @param memberId
+     * @param map
+     * @return
+     */
+    List<TableMember> queryAllChildList(String memberId, Map<String, List<TableMember>> map);
+
+    /**
      * 获取所有子节点会员
      * 递归
      * @param memberId
@@ -65,6 +73,15 @@ public interface ITableMemberBusiSV {
      * @return
      */
     TableMemberTree queryAllChildTree(TableMemberTree tableMemberTree);
+
+    /**
+     * 获取所有子节点会员(TREE)（会员加载到Map）
+     * 递归
+     * 不包括会员本身
+     * @param tableMemberTree
+     * @return
+     */
+    TableMemberTree queryAllChildTree(TableMemberTree tableMemberTree, Map<String, List<TableMember>> map);
 
     /**
      * 查询指定tree
@@ -89,6 +106,8 @@ public interface ITableMemberBusiSV {
     List<TableMember> queryList(TableMember bo, Map<String, Object> map);
 
     Map<String, TableMember> queryListMap(TableMember bo);
+
+    Map<String, List<TableMember>> queryArrangeListMap(TableMember bo);
 
     /**
      * parent 是否是bo的父节点，可跨级别
@@ -129,4 +148,17 @@ public interface ITableMemberBusiSV {
      * @return
      */
     HSSFWorkbook exportFile(TableMember bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
+
+    /**
+     * 统计金额
+     */
+    List<TableMember> statisticMoney();
+
+    /**
+     * 更新是否允许登陆状态 1允许 0不允许
+     * @param memberId
+     * @param state
+     * @return
+     */
+    void updateLoginState(String memberId, String state);
 }

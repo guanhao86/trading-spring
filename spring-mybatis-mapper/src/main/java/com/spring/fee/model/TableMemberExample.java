@@ -1,5 +1,6 @@
 package com.spring.fee.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -1065,52 +1066,52 @@ public class TableMemberExample {
             return (Criteria) this;
         }
 
-        public Criteria andAccountMoneyEqualTo(Float value) {
+        public Criteria andAccountMoneyEqualTo(BigDecimal value) {
             addCriterion("account_money =", value, "accountMoney");
             return (Criteria) this;
         }
 
-        public Criteria andAccountMoneyNotEqualTo(Float value) {
+        public Criteria andAccountMoneyNotEqualTo(BigDecimal value) {
             addCriterion("account_money <>", value, "accountMoney");
             return (Criteria) this;
         }
 
-        public Criteria andAccountMoneyGreaterThan(Float value) {
+        public Criteria andAccountMoneyGreaterThan(BigDecimal value) {
             addCriterion("account_money >", value, "accountMoney");
             return (Criteria) this;
         }
 
-        public Criteria andAccountMoneyGreaterThanOrEqualTo(Float value) {
+        public Criteria andAccountMoneyGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("account_money >=", value, "accountMoney");
             return (Criteria) this;
         }
 
-        public Criteria andAccountMoneyLessThan(Float value) {
+        public Criteria andAccountMoneyLessThan(BigDecimal value) {
             addCriterion("account_money <", value, "accountMoney");
             return (Criteria) this;
         }
 
-        public Criteria andAccountMoneyLessThanOrEqualTo(Float value) {
+        public Criteria andAccountMoneyLessThanOrEqualTo(BigDecimal value) {
             addCriterion("account_money <=", value, "accountMoney");
             return (Criteria) this;
         }
 
-        public Criteria andAccountMoneyIn(List<Float> values) {
+        public Criteria andAccountMoneyIn(List<BigDecimal> values) {
             addCriterion("account_money in", values, "accountMoney");
             return (Criteria) this;
         }
 
-        public Criteria andAccountMoneyNotIn(List<Float> values) {
+        public Criteria andAccountMoneyNotIn(List<BigDecimal> values) {
             addCriterion("account_money not in", values, "accountMoney");
             return (Criteria) this;
         }
 
-        public Criteria andAccountMoneyBetween(Float value1, Float value2) {
+        public Criteria andAccountMoneyBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("account_money between", value1, value2, "accountMoney");
             return (Criteria) this;
         }
 
-        public Criteria andAccountMoneyNotBetween(Float value1, Float value2) {
+        public Criteria andAccountMoneyNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("account_money not between", value1, value2, "accountMoney");
             return (Criteria) this;
         }
@@ -1125,52 +1126,52 @@ public class TableMemberExample {
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointAvailableEqualTo(Float value) {
+        public Criteria andAccountPointAvailableEqualTo(BigDecimal value) {
             addCriterion("account_point_available =", value, "accountPointAvailable");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointAvailableNotEqualTo(Float value) {
+        public Criteria andAccountPointAvailableNotEqualTo(BigDecimal value) {
             addCriterion("account_point_available <>", value, "accountPointAvailable");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointAvailableGreaterThan(Float value) {
+        public Criteria andAccountPointAvailableGreaterThan(BigDecimal value) {
             addCriterion("account_point_available >", value, "accountPointAvailable");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointAvailableGreaterThanOrEqualTo(Float value) {
+        public Criteria andAccountPointAvailableGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("account_point_available >=", value, "accountPointAvailable");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointAvailableLessThan(Float value) {
+        public Criteria andAccountPointAvailableLessThan(BigDecimal value) {
             addCriterion("account_point_available <", value, "accountPointAvailable");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointAvailableLessThanOrEqualTo(Float value) {
+        public Criteria andAccountPointAvailableLessThanOrEqualTo(BigDecimal value) {
             addCriterion("account_point_available <=", value, "accountPointAvailable");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointAvailableIn(List<Float> values) {
+        public Criteria andAccountPointAvailableIn(List<BigDecimal> values) {
             addCriterion("account_point_available in", values, "accountPointAvailable");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointAvailableNotIn(List<Float> values) {
+        public Criteria andAccountPointAvailableNotIn(List<BigDecimal> values) {
             addCriterion("account_point_available not in", values, "accountPointAvailable");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointAvailableBetween(Float value1, Float value2) {
+        public Criteria andAccountPointAvailableBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("account_point_available between", value1, value2, "accountPointAvailable");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointAvailableNotBetween(Float value1, Float value2) {
+        public Criteria andAccountPointAvailableNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("account_point_available not between", value1, value2, "accountPointAvailable");
             return (Criteria) this;
         }
@@ -1185,52 +1186,52 @@ public class TableMemberExample {
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointFreezeEqualTo(Float value) {
+        public Criteria andAccountPointFreezeEqualTo(BigDecimal value) {
             addCriterion("account_point_freeze =", value, "accountPointFreeze");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointFreezeNotEqualTo(Float value) {
+        public Criteria andAccountPointFreezeNotEqualTo(BigDecimal value) {
             addCriterion("account_point_freeze <>", value, "accountPointFreeze");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointFreezeGreaterThan(Float value) {
+        public Criteria andAccountPointFreezeGreaterThan(BigDecimal value) {
             addCriterion("account_point_freeze >", value, "accountPointFreeze");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointFreezeGreaterThanOrEqualTo(Float value) {
+        public Criteria andAccountPointFreezeGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("account_point_freeze >=", value, "accountPointFreeze");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointFreezeLessThan(Float value) {
+        public Criteria andAccountPointFreezeLessThan(BigDecimal value) {
             addCriterion("account_point_freeze <", value, "accountPointFreeze");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointFreezeLessThanOrEqualTo(Float value) {
+        public Criteria andAccountPointFreezeLessThanOrEqualTo(BigDecimal value) {
             addCriterion("account_point_freeze <=", value, "accountPointFreeze");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointFreezeIn(List<Float> values) {
+        public Criteria andAccountPointFreezeIn(List<BigDecimal> values) {
             addCriterion("account_point_freeze in", values, "accountPointFreeze");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointFreezeNotIn(List<Float> values) {
+        public Criteria andAccountPointFreezeNotIn(List<BigDecimal> values) {
             addCriterion("account_point_freeze not in", values, "accountPointFreeze");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointFreezeBetween(Float value1, Float value2) {
+        public Criteria andAccountPointFreezeBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("account_point_freeze between", value1, value2, "accountPointFreeze");
             return (Criteria) this;
         }
 
-        public Criteria andAccountPointFreezeNotBetween(Float value1, Float value2) {
+        public Criteria andAccountPointFreezeNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("account_point_freeze not between", value1, value2, "accountPointFreeze");
             return (Criteria) this;
         }
@@ -1245,52 +1246,52 @@ public class TableMemberExample {
             return (Criteria) this;
         }
 
-        public Criteria andAccountDjPointEqualTo(Float value) {
+        public Criteria andAccountDjPointEqualTo(BigDecimal value) {
             addCriterion("account_dj_point =", value, "accountDjPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountDjPointNotEqualTo(Float value) {
+        public Criteria andAccountDjPointNotEqualTo(BigDecimal value) {
             addCriterion("account_dj_point <>", value, "accountDjPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountDjPointGreaterThan(Float value) {
+        public Criteria andAccountDjPointGreaterThan(BigDecimal value) {
             addCriterion("account_dj_point >", value, "accountDjPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountDjPointGreaterThanOrEqualTo(Float value) {
+        public Criteria andAccountDjPointGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("account_dj_point >=", value, "accountDjPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountDjPointLessThan(Float value) {
+        public Criteria andAccountDjPointLessThan(BigDecimal value) {
             addCriterion("account_dj_point <", value, "accountDjPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountDjPointLessThanOrEqualTo(Float value) {
+        public Criteria andAccountDjPointLessThanOrEqualTo(BigDecimal value) {
             addCriterion("account_dj_point <=", value, "accountDjPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountDjPointIn(List<Float> values) {
+        public Criteria andAccountDjPointIn(List<BigDecimal> values) {
             addCriterion("account_dj_point in", values, "accountDjPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountDjPointNotIn(List<Float> values) {
+        public Criteria andAccountDjPointNotIn(List<BigDecimal> values) {
             addCriterion("account_dj_point not in", values, "accountDjPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountDjPointBetween(Float value1, Float value2) {
+        public Criteria andAccountDjPointBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("account_dj_point between", value1, value2, "accountDjPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountDjPointNotBetween(Float value1, Float value2) {
+        public Criteria andAccountDjPointNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("account_dj_point not between", value1, value2, "accountDjPoint");
             return (Criteria) this;
         }
@@ -1305,52 +1306,52 @@ public class TableMemberExample {
             return (Criteria) this;
         }
 
-        public Criteria andAccountJsyPointEqualTo(Float value) {
+        public Criteria andAccountJsyPointEqualTo(BigDecimal value) {
             addCriterion("account_jsy_point =", value, "accountJsyPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountJsyPointNotEqualTo(Float value) {
+        public Criteria andAccountJsyPointNotEqualTo(BigDecimal value) {
             addCriterion("account_jsy_point <>", value, "accountJsyPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountJsyPointGreaterThan(Float value) {
+        public Criteria andAccountJsyPointGreaterThan(BigDecimal value) {
             addCriterion("account_jsy_point >", value, "accountJsyPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountJsyPointGreaterThanOrEqualTo(Float value) {
+        public Criteria andAccountJsyPointGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("account_jsy_point >=", value, "accountJsyPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountJsyPointLessThan(Float value) {
+        public Criteria andAccountJsyPointLessThan(BigDecimal value) {
             addCriterion("account_jsy_point <", value, "accountJsyPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountJsyPointLessThanOrEqualTo(Float value) {
+        public Criteria andAccountJsyPointLessThanOrEqualTo(BigDecimal value) {
             addCriterion("account_jsy_point <=", value, "accountJsyPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountJsyPointIn(List<Float> values) {
+        public Criteria andAccountJsyPointIn(List<BigDecimal> values) {
             addCriterion("account_jsy_point in", values, "accountJsyPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountJsyPointNotIn(List<Float> values) {
+        public Criteria andAccountJsyPointNotIn(List<BigDecimal> values) {
             addCriterion("account_jsy_point not in", values, "accountJsyPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountJsyPointBetween(Float value1, Float value2) {
+        public Criteria andAccountJsyPointBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("account_jsy_point between", value1, value2, "accountJsyPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountJsyPointNotBetween(Float value1, Float value2) {
+        public Criteria andAccountJsyPointNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("account_jsy_point not between", value1, value2, "accountJsyPoint");
             return (Criteria) this;
         }
@@ -2305,52 +2306,52 @@ public class TableMemberExample {
             return (Criteria) this;
         }
 
-        public Criteria andReportingAmountEqualTo(Float value) {
+        public Criteria andReportingAmountEqualTo(BigDecimal value) {
             addCriterion("reporting_amount =", value, "reportingAmount");
             return (Criteria) this;
         }
 
-        public Criteria andReportingAmountNotEqualTo(Float value) {
+        public Criteria andReportingAmountNotEqualTo(BigDecimal value) {
             addCriterion("reporting_amount <>", value, "reportingAmount");
             return (Criteria) this;
         }
 
-        public Criteria andReportingAmountGreaterThan(Float value) {
+        public Criteria andReportingAmountGreaterThan(BigDecimal value) {
             addCriterion("reporting_amount >", value, "reportingAmount");
             return (Criteria) this;
         }
 
-        public Criteria andReportingAmountGreaterThanOrEqualTo(Float value) {
+        public Criteria andReportingAmountGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("reporting_amount >=", value, "reportingAmount");
             return (Criteria) this;
         }
 
-        public Criteria andReportingAmountLessThan(Float value) {
+        public Criteria andReportingAmountLessThan(BigDecimal value) {
             addCriterion("reporting_amount <", value, "reportingAmount");
             return (Criteria) this;
         }
 
-        public Criteria andReportingAmountLessThanOrEqualTo(Float value) {
+        public Criteria andReportingAmountLessThanOrEqualTo(BigDecimal value) {
             addCriterion("reporting_amount <=", value, "reportingAmount");
             return (Criteria) this;
         }
 
-        public Criteria andReportingAmountIn(List<Float> values) {
+        public Criteria andReportingAmountIn(List<BigDecimal> values) {
             addCriterion("reporting_amount in", values, "reportingAmount");
             return (Criteria) this;
         }
 
-        public Criteria andReportingAmountNotIn(List<Float> values) {
+        public Criteria andReportingAmountNotIn(List<BigDecimal> values) {
             addCriterion("reporting_amount not in", values, "reportingAmount");
             return (Criteria) this;
         }
 
-        public Criteria andReportingAmountBetween(Float value1, Float value2) {
+        public Criteria andReportingAmountBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("reporting_amount between", value1, value2, "reportingAmount");
             return (Criteria) this;
         }
 
-        public Criteria andReportingAmountNotBetween(Float value1, Float value2) {
+        public Criteria andReportingAmountNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("reporting_amount not between", value1, value2, "reportingAmount");
             return (Criteria) this;
         }
@@ -2555,52 +2556,52 @@ public class TableMemberExample {
             return (Criteria) this;
         }
 
-        public Criteria andAccountCarPointEqualTo(Float value) {
+        public Criteria andAccountCarPointEqualTo(BigDecimal value) {
             addCriterion("account_car_point =", value, "accountCarPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountCarPointNotEqualTo(Float value) {
+        public Criteria andAccountCarPointNotEqualTo(BigDecimal value) {
             addCriterion("account_car_point <>", value, "accountCarPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountCarPointGreaterThan(Float value) {
+        public Criteria andAccountCarPointGreaterThan(BigDecimal value) {
             addCriterion("account_car_point >", value, "accountCarPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountCarPointGreaterThanOrEqualTo(Float value) {
+        public Criteria andAccountCarPointGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("account_car_point >=", value, "accountCarPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountCarPointLessThan(Float value) {
+        public Criteria andAccountCarPointLessThan(BigDecimal value) {
             addCriterion("account_car_point <", value, "accountCarPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountCarPointLessThanOrEqualTo(Float value) {
+        public Criteria andAccountCarPointLessThanOrEqualTo(BigDecimal value) {
             addCriterion("account_car_point <=", value, "accountCarPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountCarPointIn(List<Float> values) {
+        public Criteria andAccountCarPointIn(List<BigDecimal> values) {
             addCriterion("account_car_point in", values, "accountCarPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountCarPointNotIn(List<Float> values) {
+        public Criteria andAccountCarPointNotIn(List<BigDecimal> values) {
             addCriterion("account_car_point not in", values, "accountCarPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountCarPointBetween(Float value1, Float value2) {
+        public Criteria andAccountCarPointBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("account_car_point between", value1, value2, "accountCarPoint");
             return (Criteria) this;
         }
 
-        public Criteria andAccountCarPointNotBetween(Float value1, Float value2) {
+        public Criteria andAccountCarPointNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("account_car_point not between", value1, value2, "accountCarPoint");
             return (Criteria) this;
         }
@@ -2672,6 +2673,246 @@ public class TableMemberExample {
 
         public Criteria andStateNotBetween(String value1, String value2) {
             addCriterion("state not between", value1, value2, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftAmountIsNull() {
+            addCriterion("left_amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftAmountIsNotNull() {
+            addCriterion("left_amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftAmountEqualTo(BigDecimal value) {
+            addCriterion("left_amount =", value, "leftAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftAmountNotEqualTo(BigDecimal value) {
+            addCriterion("left_amount <>", value, "leftAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftAmountGreaterThan(BigDecimal value) {
+            addCriterion("left_amount >", value, "leftAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftAmountGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("left_amount >=", value, "leftAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftAmountLessThan(BigDecimal value) {
+            addCriterion("left_amount <", value, "leftAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftAmountLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("left_amount <=", value, "leftAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftAmountIn(List<BigDecimal> values) {
+            addCriterion("left_amount in", values, "leftAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftAmountNotIn(List<BigDecimal> values) {
+            addCriterion("left_amount not in", values, "leftAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftAmountBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("left_amount between", value1, value2, "leftAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftAmountNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("left_amount not between", value1, value2, "leftAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightAmountIsNull() {
+            addCriterion("right_amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightAmountIsNotNull() {
+            addCriterion("right_amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightAmountEqualTo(BigDecimal value) {
+            addCriterion("right_amount =", value, "rightAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightAmountNotEqualTo(BigDecimal value) {
+            addCriterion("right_amount <>", value, "rightAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightAmountGreaterThan(BigDecimal value) {
+            addCriterion("right_amount >", value, "rightAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightAmountGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("right_amount >=", value, "rightAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightAmountLessThan(BigDecimal value) {
+            addCriterion("right_amount <", value, "rightAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightAmountLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("right_amount <=", value, "rightAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightAmountIn(List<BigDecimal> values) {
+            addCriterion("right_amount in", values, "rightAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightAmountNotIn(List<BigDecimal> values) {
+            addCriterion("right_amount not in", values, "rightAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightAmountBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("right_amount between", value1, value2, "rightAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightAmountNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("right_amount not between", value1, value2, "rightAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftNewIsNull() {
+            addCriterion("left_new is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftNewIsNotNull() {
+            addCriterion("left_new is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftNewEqualTo(BigDecimal value) {
+            addCriterion("left_new =", value, "leftNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftNewNotEqualTo(BigDecimal value) {
+            addCriterion("left_new <>", value, "leftNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftNewGreaterThan(BigDecimal value) {
+            addCriterion("left_new >", value, "leftNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftNewGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("left_new >=", value, "leftNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftNewLessThan(BigDecimal value) {
+            addCriterion("left_new <", value, "leftNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftNewLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("left_new <=", value, "leftNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftNewIn(List<BigDecimal> values) {
+            addCriterion("left_new in", values, "leftNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftNewNotIn(List<BigDecimal> values) {
+            addCriterion("left_new not in", values, "leftNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftNewBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("left_new between", value1, value2, "leftNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeftNewNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("left_new not between", value1, value2, "leftNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightNewIsNull() {
+            addCriterion("right_new is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightNewIsNotNull() {
+            addCriterion("right_new is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightNewEqualTo(BigDecimal value) {
+            addCriterion("right_new =", value, "rightNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightNewNotEqualTo(BigDecimal value) {
+            addCriterion("right_new <>", value, "rightNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightNewGreaterThan(BigDecimal value) {
+            addCriterion("right_new >", value, "rightNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightNewGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("right_new >=", value, "rightNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightNewLessThan(BigDecimal value) {
+            addCriterion("right_new <", value, "rightNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightNewLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("right_new <=", value, "rightNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightNewIn(List<BigDecimal> values) {
+            addCriterion("right_new in", values, "rightNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightNewNotIn(List<BigDecimal> values) {
+            addCriterion("right_new not in", values, "rightNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightNewBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("right_new between", value1, value2, "rightNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightNewNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("right_new not between", value1, value2, "rightNew");
             return (Criteria) this;
         }
     }

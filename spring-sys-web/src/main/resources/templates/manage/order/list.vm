@@ -69,7 +69,12 @@
 
                         #@tableTd()
                             #@a("查看" {"href": "$!{ctx}/manage/order/view?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
-                            #@a("发货" {"href": "$!{ctx}/manage/order/sendIndex?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #if(${l.state}==1)
+                                #@a("发货" {"href": "$!{ctx}/manage/order/sendIndex?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #end
+                            #if(${l.state}==3)
+                                #@a("编辑" {"href": "$!{ctx}/manage/order/sendIndex?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #end
                             #if(${l.state}==1)
                             <a href="$!{ctx}/manage/order/delete?id=$!{l.id}" class="fa fa-lock"
                                confirm="true" message="确定要删除吗" title="删除"> 删除</a>
@@ -149,4 +154,3 @@
 
         #end
     #end
-#end

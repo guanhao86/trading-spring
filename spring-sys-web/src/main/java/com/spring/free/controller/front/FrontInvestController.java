@@ -4,6 +4,7 @@ package com.spring.free.controller.front;/**
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import com.spring.fee.constants.InvestConstants;
 import com.spring.fee.model.TableInvest;
 import com.spring.fee.model.TableSystemConfig;
 import com.spring.fee.service.ITableInvestBusiSV;
@@ -67,6 +68,7 @@ public class FrontInvestController {
 
         UserInfo user = BaseGetPrincipal.getUser();
         tableInvest.setMemberId(user.getUsername());
+        tableInvest.setType(InvestConstants.InvestType.MEMBER);
 
         PageInfo<TableInvest> pageInfo = this.iTableInvestBusiSV.queryListPage(tableInvest, page, pageSize, null);
 
@@ -127,6 +129,7 @@ public class FrontInvestController {
         try {
             UserInfo user = BaseGetPrincipal.getUser();
             tableInvest.setMemberId(user.getUsername());
+            tableInvest.setType(InvestConstants.InvestType.MEMBER);
             if (null != tableInvest.getId())
                 this.iTableInvestBusiSV.update(tableInvest);
             else

@@ -55,4 +55,27 @@ public class RestMessageController {
         return AccessResponse.builder().data(pageInfo).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
     }
 
+    /**
+     * 留言创建
+     */
+    @RequestMapping(value = "/create")
+    public @ResponseBody
+    AccessResponse create(@RequestBody TableMessage tableMessage, HttpServletRequest request, HttpServletResponse response){
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        log.info("留言创建:{}", JSON.toJSONString(tableMessage));
+        //返回体
+        try {
+            String memberId = TokenUtil.getUserId(request);
+            tableMessage.setMemberId(memberId);
+            this.iTableMessageBusiSV.insert(tableMessage);
+
+        }catch (Exception e) {
+            return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
+        }
+        stopWatch.stop();
+        System.out.println("耗时：" + stopWatch.getTotalTimeSeconds());
+        return AccessResponse.builder().data(tableMessage).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
+    }
+
 }

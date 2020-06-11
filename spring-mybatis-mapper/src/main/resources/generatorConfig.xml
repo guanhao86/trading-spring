@@ -48,6 +48,8 @@
                          targetProject="src/main/resources">
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
+
+
         <!-- 用于设置 接口类的属性-->
         <!--
             targetRuntime=MyBatis3:
@@ -73,6 +75,7 @@
                 <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                 <!--selectByExampleQueryId="true">-->
                 <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+            <!--<columnOverride column="bonus" javaType="java.math.BigDecimal"></columnOverride>-->
         <!--</table>-->
         <!--<table tableName="table_bonus_setting" domainObjectName="TableBonusSetting"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
@@ -98,12 +101,23 @@
                <!--selectByExampleQueryId="true">-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <table tableName="table_member" domainObjectName="TableMember"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-        </table>
+        <!--<table tableName="table_member" domainObjectName="TableMember"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+            <!--<columnOverride column="left_amount" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="right_amount" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="account_money" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="account_point_available" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="account_point_freeze" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="account_dj_point" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="account_jsy_point" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="reporting_amount" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="account_car_point" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="left_new" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="right_new" javaType="java.math.BigDecimal"></columnOverride>-->
+        <!--</table>-->
         <!--<table tableName="table_member_level_change_detail" domainObjectName="TableMemberLevelChangeDetail"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
@@ -121,6 +135,11 @@
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+            <!--<columnOverride column="price" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="goods_price" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="extent_goods_price" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="income_dj_point" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="income_jys_point" javaType="java.math.BigDecimal"></columnOverride>-->
         <!--</table>-->
         <!--<table tableName="table_rank_setting" domainObjectName="TableRankSetting"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
@@ -146,12 +165,14 @@
                <!--selectByExampleQueryId="true">-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <!--<table tableName="table_member_account_detail" domainObjectName="TableMemberAccountDetail"-->
-            <!--enableCountByExample="true" enableUpdateByExample="true"-->
-            <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-            <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="table_member_account_detail" domainObjectName="TableMemberAccountDetail"
+            enableCountByExample="true" enableUpdateByExample="true"
+            enableDeleteByExample="true" enableSelectByExample="true"
+            selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+            <columnOverride column="before_value" javaType="java.math.BigDecimal"></columnOverride>
+            <columnOverride column="after_value" javaType="java.math.BigDecimal"></columnOverride>
+        </table>
         <!--<table tableName="table_balance_detail" domainObjectName="TableBalanceDetail"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->

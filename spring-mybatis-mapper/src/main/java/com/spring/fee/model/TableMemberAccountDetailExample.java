@@ -1,5 +1,6 @@
 package com.spring.fee.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -395,52 +396,52 @@ public class TableMemberAccountDetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andBeforeValueEqualTo(Float value) {
+        public Criteria andBeforeValueEqualTo(BigDecimal value) {
             addCriterion("before_value =", value, "beforeValue");
             return (Criteria) this;
         }
 
-        public Criteria andBeforeValueNotEqualTo(Float value) {
+        public Criteria andBeforeValueNotEqualTo(BigDecimal value) {
             addCriterion("before_value <>", value, "beforeValue");
             return (Criteria) this;
         }
 
-        public Criteria andBeforeValueGreaterThan(Float value) {
+        public Criteria andBeforeValueGreaterThan(BigDecimal value) {
             addCriterion("before_value >", value, "beforeValue");
             return (Criteria) this;
         }
 
-        public Criteria andBeforeValueGreaterThanOrEqualTo(Float value) {
+        public Criteria andBeforeValueGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("before_value >=", value, "beforeValue");
             return (Criteria) this;
         }
 
-        public Criteria andBeforeValueLessThan(Float value) {
+        public Criteria andBeforeValueLessThan(BigDecimal value) {
             addCriterion("before_value <", value, "beforeValue");
             return (Criteria) this;
         }
 
-        public Criteria andBeforeValueLessThanOrEqualTo(Float value) {
+        public Criteria andBeforeValueLessThanOrEqualTo(BigDecimal value) {
             addCriterion("before_value <=", value, "beforeValue");
             return (Criteria) this;
         }
 
-        public Criteria andBeforeValueIn(List<Float> values) {
+        public Criteria andBeforeValueIn(List<BigDecimal> values) {
             addCriterion("before_value in", values, "beforeValue");
             return (Criteria) this;
         }
 
-        public Criteria andBeforeValueNotIn(List<Float> values) {
+        public Criteria andBeforeValueNotIn(List<BigDecimal> values) {
             addCriterion("before_value not in", values, "beforeValue");
             return (Criteria) this;
         }
 
-        public Criteria andBeforeValueBetween(Float value1, Float value2) {
+        public Criteria andBeforeValueBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("before_value between", value1, value2, "beforeValue");
             return (Criteria) this;
         }
 
-        public Criteria andBeforeValueNotBetween(Float value1, Float value2) {
+        public Criteria andBeforeValueNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("before_value not between", value1, value2, "beforeValue");
             return (Criteria) this;
         }
@@ -455,52 +456,52 @@ public class TableMemberAccountDetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andAfterValueEqualTo(Float value) {
+        public Criteria andAfterValueEqualTo(BigDecimal value) {
             addCriterion("after_value =", value, "afterValue");
             return (Criteria) this;
         }
 
-        public Criteria andAfterValueNotEqualTo(Float value) {
+        public Criteria andAfterValueNotEqualTo(BigDecimal value) {
             addCriterion("after_value <>", value, "afterValue");
             return (Criteria) this;
         }
 
-        public Criteria andAfterValueGreaterThan(Float value) {
+        public Criteria andAfterValueGreaterThan(BigDecimal value) {
             addCriterion("after_value >", value, "afterValue");
             return (Criteria) this;
         }
 
-        public Criteria andAfterValueGreaterThanOrEqualTo(Float value) {
+        public Criteria andAfterValueGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("after_value >=", value, "afterValue");
             return (Criteria) this;
         }
 
-        public Criteria andAfterValueLessThan(Float value) {
+        public Criteria andAfterValueLessThan(BigDecimal value) {
             addCriterion("after_value <", value, "afterValue");
             return (Criteria) this;
         }
 
-        public Criteria andAfterValueLessThanOrEqualTo(Float value) {
+        public Criteria andAfterValueLessThanOrEqualTo(BigDecimal value) {
             addCriterion("after_value <=", value, "afterValue");
             return (Criteria) this;
         }
 
-        public Criteria andAfterValueIn(List<Float> values) {
+        public Criteria andAfterValueIn(List<BigDecimal> values) {
             addCriterion("after_value in", values, "afterValue");
             return (Criteria) this;
         }
 
-        public Criteria andAfterValueNotIn(List<Float> values) {
+        public Criteria andAfterValueNotIn(List<BigDecimal> values) {
             addCriterion("after_value not in", values, "afterValue");
             return (Criteria) this;
         }
 
-        public Criteria andAfterValueBetween(Float value1, Float value2) {
+        public Criteria andAfterValueBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("after_value between", value1, value2, "afterValue");
             return (Criteria) this;
         }
 
-        public Criteria andAfterValueNotBetween(Float value1, Float value2) {
+        public Criteria andAfterValueNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("after_value not between", value1, value2, "afterValue");
             return (Criteria) this;
         }

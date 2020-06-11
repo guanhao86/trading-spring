@@ -8,7 +8,7 @@
                 #@form("form_insert" true "post" "manage/message/save")
                     <input type="hidden" name="id" value="$!{message.id}">
 
-                    #formInput({"name": "标题"} {"name": "title", "value":"$!{message.title}","id": "title","required": "required","readonly":"readonly"})
+                    #formInput({"name": "标题"} {"name": "title", "value":"$!{message.title}","id": "title","readonly":"readonly"})
                     <div class="form-group">
                         <label class="col-sm-2 control-label col-lg-2" for="content">留言内容<font color="red">*</font>：</label>
                         <div class="col-lg-3">

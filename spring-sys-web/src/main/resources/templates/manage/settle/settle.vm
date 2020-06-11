@@ -3,12 +3,17 @@
     #@wrapper()
         #@panel()
             #@panelBody()
+            <div id="loadPage"
+                 style="display:none;position:absolute; left:-1px; top:1px; width:100%; height:100%;moz-opacity: 0.3;filter:Alpha(opacity=50); opacity: 0.3; background-color:#555; z-index:1000;">
+                <img src="/img/load.gif" style="position: fixed;left: 38%;top:15%;"></img>
+            </div>
                 #@form("form_insert1" true "post" "manage/settle/settle")
 
                 <div class="form-group" >
                     <label class="col-sm-3 control-label" style="margin-top: 5px">直推/组织/伯乐：</label>
-                    <div class="col-sm-2">
-                        #btn({"btnName":"日结", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert1"}})
+                    <div class="col-sm-2" style="margin-top: 10px">
+                        <button onclick="settle1()" type="button">日结</button>
+
                     </div>
                     <input type="hidden" name="settleType" value="1">
                 </div>
@@ -17,8 +22,8 @@
 
                 <div class="form-group" >
                     <label class="col-sm-3 control-label" style="margin-top: 5px">周：</label>
-                    <div class="col-sm-2">
-                        #btn({"btnName":"奖金发放", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert2"}})
+                    <div class="col-sm-2" style="margin-top: 10px">
+                        <button onclick="settle2()" type="button">奖金发放</button>
                     </div>
                     <input type="hidden" name="settleType" value="2">
                 </div>
@@ -27,8 +32,8 @@
 
                 <div class="form-group" >
                     <label class="col-sm-3 control-label" style="margin-top: 5px">复消/奖衔：</label>
-                    <div class="col-sm-2">
-                        #btn({"btnName":"月结", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert3"}})
+                    <div class="col-sm-2" style="margin-top: 10px">
+                        <button onclick="settle3()" type="button">月结</button>
                     </div>
                     <input type="hidden" name="settleType" value="3">
                 </div>
@@ -44,41 +49,19 @@
 
     <script>
 
-        $(document).ready(function() {
-            $('.summernote').summernote({
-//                toolbar: [
-//                    ['style', ['bold', 'italic', 'underline']],
-//                    ['fontsize', ['fontsize']],
-//                    ['para', ['paragraph']],
-//                    ['height', ['height']]
-//                ],
-                height: 400,
-                tabsize: 2,
-                lang: 'zh-CN',
-                callbacks: {
-                    onImageUpload: function(files) {
-                        //上传图片到服务器，使用了formData对象，至于兼容性...据说对低版本IE不太友好
-                        var formData = new FormData();
-                        formData.append('file',files[0]);
-                        $.ajax({
-                            url : '$!{ctx}/notice/upload',//后台文件上传接口
-                            type : 'POST',
-                            data : formData,
-                            processData : false,
-                            contentType : false,
-                            success : function(data) {
-//                            alert(data);
-                                $('#summernote').summernote('insertImage',data,'img');
-                            }
-                        });
-                    }
-                }
+        function settle1() {
 
-            });
-
-
-        });
-
+            $("#loadPage").show();
+            $("#form_insert1").submit();
+        }
+        function settle2() {
+            $("#loadPage").show();
+            $("#form_insert2").submit();
+        }
+        function settle3() {
+            $("#loadPage").show();
+            $("#form_insert3").submit();
+        }
     </script>
         #@jsValidate("form_insert")
         #end

@@ -192,4 +192,25 @@ public class ManageGoodsController {
         PageResult.setPrompt(map,"操作成功", "success");
         return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/goods/list"), map);
     }
+
+    /**
+     * 上架商品
+     * @param mav
+     * @param request
+     * @param tableGoods
+     * @return
+     */
+    @RequiresPermissions("system:member:edit")
+    @RequestMapping(value = "pullUp")
+    public ModelAndView pullUp(ModelAndView mav, HttpServletRequest request, TableGoods tableGoods) {
+        Map map = Maps.newHashMap();
+        map.put(Global.URL, Global.ADMIN_PATH +"/manage/goods/list");
+
+        TableGoods tableGoods1 = new TableGoods();
+        tableGoods1.setId(tableGoods.getId());
+        tableGoods1.setState("1");//下架
+        this.iTableGoodsBusiSV.update(tableGoods1);
+        PageResult.setPrompt(map,"操作成功", "success");
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/goods/list"), map);
+    }
 }

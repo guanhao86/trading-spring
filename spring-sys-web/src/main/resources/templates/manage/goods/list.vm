@@ -40,8 +40,15 @@
                         #@tableTd()
                             #@a("查看" {"href": "$!{ctx}/manage/goods/view?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
                             #@a("修改" {"href": "$!{ctx}/manage/goods/edit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #if($!{l.state} == 1)
                             <a href="$!{ctx}/manage/goods/pullOff?id=$!{l.id}" class="fa fa-lock"
                                confirm="true" message="确定下架商品吗" title="商品下架"> 下架</a>
+                            #end
+                            #if($!{l.state} == 2)
+                            <a href="$!{ctx}/manage/goods/pullUp?id=$!{l.id}" class="fa fa-lock"
+                               confirm="true" message="确定上架商品吗" title="商品上架"> 上架</a>
+                            #end
+
                         #end
                     #end
                 #end

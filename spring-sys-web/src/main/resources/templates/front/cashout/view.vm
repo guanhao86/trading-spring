@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label col-lg-2" for="content">打款凭证<font color="red">*</font>：</label>
                         <div class="col-lg-3">
-                            <img src=$!{cashout.auditImage} onClick="show(this)" style= height:50px />
+                            <img src=$!{cashout.auditImage} onClick="show(this)" style= height:350px />
                         </div>
                     </div>
 

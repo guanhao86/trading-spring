@@ -23,15 +23,21 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "标题", "状态", "留言时间"],"", false)
+                    #tableTHead(["id", "会员编号", "标题", "状态", "留言时间"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.id}")
+                        #tableTd("$!{l.memberId}")
                         #tableTd("$!{l.title}")
                         #tableTd("$!{l.state}", {"type": "dict", "format": "messageState"})
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.createTime}))
                         #@tableTd()
-                            #@a("答复" {"href": "$!{ctx}/manage/message/edit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #if ($!{l.state} == 1)
+                                #@a("答复" {"href": "$!{ctx}/manage/message/edit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #end
+                            #if ($!{l.state} == 2)
+                                #@a("修改" {"href": "$!{ctx}/manage/message/edit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            #end
                         #end
                     #end
                 #end

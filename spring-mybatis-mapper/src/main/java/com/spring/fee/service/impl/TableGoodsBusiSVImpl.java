@@ -132,7 +132,13 @@ public class TableGoodsBusiSVImpl implements ITableGoodsBusiSV {
             if(null != map.get("goodsClassIn")){
                 criteria.andGoodsClassIn((List)map.get("goodsClassIn"));
             }
+
+            if(null != map.get("sort")){
+                example.setOrderByClause((String)map.get("sort"));
+            }
         }
+
+
 
         PageInfo<TableGoods> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableGoodsMapper.selectByExample(example));

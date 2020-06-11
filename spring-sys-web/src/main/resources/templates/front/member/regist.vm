@@ -7,13 +7,13 @@
                 #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
                 #btn({"btnName":"报单", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_beMember"}})
                 #end
-                #if ($!{member.autFlag} == "0")
-                #btn({"btnName":"去实名", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_audit"}})
-                #end
+##                #if ($!{member.autFlag} == "0")
+##                #btn({"btnName":"去实名", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_audit"}})
+##                #end
             #end
             #@panelBody()
                 #if ($!{member.autFlag} == "0")
-                    #@form("form_beMember" true "post" "front/member/edit")
+                    #@form("form_audit" true "post" "front/member/edit")
                     #end
                 #end
                 #if ($!{member.autFlag} == "2")
@@ -24,7 +24,7 @@
                         <input type="hidden" name="memberId" value="$!{registMember.memberId}"/>
                     #end
                     #@form("form_insert" true "post" "front/member/register")
-                        #*#formInput({"name": "姓名"} {"name": "name", "value":"$!{member.name}","id": "name","required": "required"})*#
+                        #formInput({"name": "姓名"} {"name": "reallyName", "value":"$!{member.reallyName}","id": "reallyName","required": "required"})
                         #formInput({"name": "电话"} {"name": "phone", "value":"","id": "phone","required": "required"})
                         #formInput({"name": "推荐人ID"} {"name": "referenceId", "value":"$!{referenceId}","id": "referenceId","required": "required"})
                         #formInput({"name": "安置人ID"} {"name": "arrangeId", "value":"$!{arrangeId}","id": "arrangeId","required": "required"})

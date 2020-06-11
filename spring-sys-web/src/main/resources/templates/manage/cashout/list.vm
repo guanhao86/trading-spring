@@ -26,18 +26,25 @@
                  <a href="/admin/manage/cashout/exportCashoutFile">导出</a>
              </div>
                 #@table()
-                    #tableTHead(["id","申请人", "金额", "状态", "申请时间"],"", false)
+                    #tableTHead(["id","申请人", "金额", "状态", "申请时间", "审核时间"],"", false)
                     #@tableBody($page.list)
+                        #set($auditTime = "")
+                        #if($!{l.auditTime} != "")
+                            #set($auditTime = $!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{l.auditTime}))
+                        #end
 
                         #tableTd("$!{l.id}")
                         #tableTd("$!{l.memberId}")
                         #tableTd("$!{l.amount}")
                         #tableTd("$!{l.auditState}", {"type": "dict", "format": "cashoutState"})
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.createTime}))
+                        #tableTd($!{auditTime})
                         #@tableTd()
+                            #@a("查看" {"href": "$!{ctx}/manage/cashout/view?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
                             #if(${l.auditState} != "2")
                                 #@a("审核" {"href": "$!{ctx}/manage/cashout/edit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
                             #end
+
                         #end
                     #end
                 #end

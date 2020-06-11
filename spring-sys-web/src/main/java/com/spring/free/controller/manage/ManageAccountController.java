@@ -4,16 +4,21 @@ package com.spring.free.controller.manage;/**
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import com.spring.fee.constants.InvestConstants;
+import com.spring.fee.model.TableInvest;
 import com.spring.fee.model.TableMemberAccountDetail;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
+import com.spring.fee.service.ITableInvestBusiSV;
 import com.spring.free.config.CommonUtils;
 import com.spring.free.domain.QueryVO;
+import com.spring.free.domain.UserInfo;
 import com.spring.free.util.PageResult;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
+import com.spring.free.utils.principal.BaseGetPrincipal;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.redisson.misc.Hash;
 import org.springframework.beans.BeanUtils;
@@ -39,6 +44,9 @@ public class ManageAccountController {
 
     @Autowired
     IMemberAccountDetailBusiSV iMemberAccountDetailBusiSV;
+
+    @Autowired
+    ITableInvestBusiSV iTableInvestBusiSV;
 
     /*
      * @Author haha
@@ -111,6 +119,14 @@ public class ManageAccountController {
                     Float.parseFloat(queryVO.getAmount()),
                     "管理员充值",
                     null);
+            UserInfo user = BaseGetPrincipal.getUser();
+            TableInvest tableInvest = new TableInvest();
+            tableInvest.setType(InvestConstants.InvestType.ADMIN);
+            tableInvest.setOperMemberId(user.getUsername());
+            tableInvest.setMemberId(queryVO.getMemberId());
+            tableInvest.setApprovalResult("管理员充值");
+            tableInvest.setAccountMoney(Float.parseFloat(queryVO.getAmount()));
+            iTableInvestBusiSV.insert(tableInvest);
         }catch (Exception e) {
             map.put(Global.URL, Global.ADMIN_PATH +"/manage/account/rechargeIndex");
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);

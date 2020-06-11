@@ -13,5 +13,7 @@ public class ScoreVO {
     int useAll = 0;
     //当日金蛋兑换数量
     int useToday = 0;
+    //会员当前余额
+    int score;
 
 }

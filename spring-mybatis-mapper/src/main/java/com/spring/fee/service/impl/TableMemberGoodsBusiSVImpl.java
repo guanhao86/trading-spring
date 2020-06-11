@@ -14,8 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +48,9 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
 
     @Autowired
     ITableMemberBusiSV iTableMemberBusiSV;
+
+    @Autowired
+    ITableMemberGoodsBusiSV iTableMemberGoodsBusiSV;
 
     /**
      * 创建会员持有商品记录
@@ -94,51 +100,73 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
         if (iTableTaskBusiSV.insert(tableTask)) {
             log.info("开始下蛋");
             //获取所有金鸡
-            Date sysdate = DateUtils.getSysDate();
+
             List<TableMemberGoods> tableMemberGoodsList = this.getListValid(null);
             for (TableMemberGoods tableMemberGoods : tableMemberGoodsList) {
-                log.info("金鸡信息{}", JSONObject.toJSON(tableMemberGoods));
-
-                //判断会员是否存在
-                TableMember tableMember = iTableMemberBusiSV.selectByMemberId(tableMemberGoods.getMemberId());
-                if (tableMember == null || InvestConstants.MemberState.INVALID.equals(tableMember.getState())){
-                    //会员不存在
-                    log.info("会员编号："+tableMemberGoods.getMemberId()+"会员信息不存在，或已删除");
-                    continue;
+                try {
+                    iTableMemberGoodsBusiSV.calcScoreRun(tableMemberGoods);
+                }catch (Exception e) {
+                    e.printStackTrace();
                 }
-
-                //插入奖金表
-                TableBonusDetail tableBonusDetail = new TableBonusDetail();
-                tableBonusDetail.setMemberId(tableMemberGoods.getMemberId());
-                tableBonusDetail.setRecodeTime(sysdate);
-                tableBonusDetail.setBonus((float)tableMemberGoods.getAmount() * tableMemberGoods.getAddScoreByonegoods());
-                tableBonusDetail.setBonusId(Integer.parseInt(InvestConstants.BonusId.BONUS_ID_7));
-                tableBonusDetail.setBonusType(Integer.parseInt(InvestConstants.BonusType.BONUS_TYPE_5));
-                tableBonusDetail.setRemark("金鸡下蛋");
-                tableBonusDetail.setCloseState(1);
-
-                iTableBonusDetailBusiSV.insert(tableBonusDetail);
-
-                int price = tableMemberGoods.getAmount() * tableMemberGoods.getAddScoreByonegoods();
-
-                //插入账户变更表
-                iMemberAccountDetailBusiSV.changeMoney(tableMemberGoods.getMemberId(),
-                        "1",
-                        (float)price,
-                                "金鸡下蛋",
-                        6
-                        );
-
-                //更新最后一次下蛋时间
-                tableMemberGoods.setLastTime(DateUtils.getSysDate());
-                //已下金蛋数量
-                tableMemberGoods.setAddCount(tableMemberGoods.getAddCount()+price);
-                //已下金蛋次数
-                tableMemberGoods.setAddTimes(tableMemberGoods.getAddTimes()+1);
-                this.update(tableMemberGoods);
             }
         }
     }
+
+    /**
+     * 计算积分
+     */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void calcScoreRun(TableMemberGoods tableMemberGoods) {
+        try {
+            log.info("金鸡信息{}", JSONObject.toJSON(tableMemberGoods));
+            Date sysdate = DateUtils.getSysDate();
+            if (tableMemberGoods.getLastTime() != null && DateUtils.getYYYYMMDD(sysdate).equals(DateUtils.getYYYYMMDD(tableMemberGoods.getLastTime()))){
+                log.info("已经执行过不能重复执行");
+                return;
+            }
+            //判断会员是否存在
+            TableMember tableMember = iTableMemberBusiSV.selectByMemberId(tableMemberGoods.getMemberId());
+            if (tableMember == null || InvestConstants.MemberState.INVALID.equals(tableMember.getState())) {
+                //会员不存在
+                log.info("会员编号：" + tableMemberGoods.getMemberId() + "会员信息不存在，或已删除");
+                return;
+            }
+
+            //插入奖金表
+            TableBonusDetail tableBonusDetail = new TableBonusDetail();
+            tableBonusDetail.setMemberId(tableMemberGoods.getMemberId());
+            tableBonusDetail.setRecodeTime(sysdate);
+            tableBonusDetail.setBonus(new BigDecimal(tableMemberGoods.getAmount() * tableMemberGoods.getAddScoreByonegoods()));
+            tableBonusDetail.setBonusId(Integer.parseInt(InvestConstants.BonusId.BONUS_ID_7));
+            tableBonusDetail.setBonusType(Integer.parseInt(InvestConstants.BonusType.BONUS_TYPE_5));
+            tableBonusDetail.setRemark("金鸡下蛋");
+            tableBonusDetail.setCloseState(1);
+
+            iTableBonusDetailBusiSV.insert(tableBonusDetail);
+
+            int price = tableMemberGoods.getAmount() * tableMemberGoods.getAddScoreByonegoods();
+
+            //插入账户变更表
+            iMemberAccountDetailBusiSV.changeMoney(tableMemberGoods.getMemberId(),
+                    "1",
+                    (float) price,
+                    "金鸡下蛋",
+                    6
+            );
+
+            //更新最后一次下蛋时间
+            tableMemberGoods.setLastTime(DateUtils.getSysDate());
+            //已下金蛋数量
+            tableMemberGoods.setAddCount(tableMemberGoods.getAddCount() + price);
+            //已下金蛋次数
+            tableMemberGoods.setAddTimes(tableMemberGoods.getAddTimes() + 1);
+            this.update(tableMemberGoods);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public List<TableMemberGoods> getListValid(TableMemberGoods tableMemberGoods){
         TableMemberGoodsExample example = new TableMemberGoodsExample();

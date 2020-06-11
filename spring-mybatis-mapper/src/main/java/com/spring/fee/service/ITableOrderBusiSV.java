@@ -25,6 +25,11 @@ public interface ITableOrderBusiSV {
     TableOrder selectByOrderId(String orderId);
 
     TableOrder buy(TableOrder bo);
+    /**
+     * 计算报单商品订单金额
+     * @param bo
+     */
+    void getBDGoodsOrderPrice(TableOrder bo);
 
     PageInfo<TableOrder> queryListPage(TableOrder bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
 

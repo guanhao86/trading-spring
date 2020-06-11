@@ -53,11 +53,11 @@
                     <div class="col-sm-2">
                         #selectDisabledBS($!dict.getDictList("autFlag"), ["autFlag", "$!{member.autFlag}", "value", "label"], false, [false, "$!{member.autFlag}"])
                     </div>
-                    #if ($!{member.autFlag} == "0")
-                    <div class="col-sm-1">
-                        #btn({"btnName":"去实名", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
-                    </div>
-                    #end
+##                    #if ($!{member.autFlag} == "0")
+##                    <div class="col-sm-1">
+##                        #btn({"btnName":"去实名", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+##                    </div>
+##                    #end
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">银行卡号<font color="red">*</font>：</label>

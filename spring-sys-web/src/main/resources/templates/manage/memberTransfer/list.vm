@@ -21,7 +21,7 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "转出人编号", "转入人编号", "转增数量", "转账时间"],"", false)
+                    #tableTHead(["id", "转出人编号", "转入人编号", "转赠数量", "转账时间"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.id}")

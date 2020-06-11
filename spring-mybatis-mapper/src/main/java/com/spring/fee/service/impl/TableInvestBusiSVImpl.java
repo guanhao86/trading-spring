@@ -3,6 +3,7 @@ package com.spring.fee.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.spring.fee.constants.InvestConstants;
 import com.spring.fee.dao.mapper.TableInvestMapper;
 import com.spring.fee.model.TableInvest;
 import com.spring.fee.model.TableInvestExample;
@@ -49,9 +50,17 @@ public class TableInvestBusiSVImpl implements ITableInvestBusiSV {
     @Override
     public TableInvest insert(TableInvest bo) {
         log.info("创建充值申请&审核管理表参数bo：{}", JSON.toJSON(bo));
+        if (bo.getAccountMoney() == null || bo.getAccountMoney() <= 0) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "充值金额不正确！", "", null);
+        }
         Date sysdate = DateUtils.getSysDate();
         bo.setInvestTime(sysdate);
-        bo.setState(1); //待审核
+        if (InvestConstants.InvestType.ADMIN.equals(bo.getType())){
+            bo.setState(2); //已审核
+        }else if (InvestConstants.InvestType.MEMBER.equals(bo.getType())){
+            bo.setState(1); //待审核
+        }
+
         iTableInvestMapper.insert(bo);
         return bo;
     }
@@ -155,7 +164,9 @@ public class TableInvestBusiSVImpl implements ITableInvestBusiSV {
         if (null != bo.getApprovalTime()) {
             criteria.andApprovalTimeEqualTo(bo.getApprovalTime());
         }
-
+        if (StringUtils.isNotEmpty(bo.getType())) {
+            criteria.andTypeEqualTo(bo.getType());
+        }
         if (null != map) {
             if (null != map.get("start")) {
                 criteria.andInvestTimeGreaterThanOrEqualTo((Date)map.get("start"));

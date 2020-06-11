@@ -25,6 +25,11 @@ public interface ITableMemberGoodsBusiSV {
      */
     void calcScore();
 
+    /**
+     * 计算积分
+     */
+    void calcScoreRun(TableMemberGoods tableMemberGoods);
+
     List<TableMemberGoods> getListValid(TableMemberGoods tableMemberGoods);
 
     PageInfo<TableMemberGoods> queryListPage(TableMemberGoods bo, Integer pageNum, Integer pageSize, Map<String, Object> map);

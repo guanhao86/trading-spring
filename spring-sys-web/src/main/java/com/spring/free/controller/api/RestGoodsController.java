@@ -2,6 +2,7 @@ package com.spring.free.controller.api;
 
 
 import com.github.pagehelper.PageInfo;
+import com.spring.fee.constants.InvestConstants;
 import com.spring.fee.model.TableGoods;
 import com.spring.fee.model.TableMember;
 import com.spring.fee.service.ITableGoodsBusiSV;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StopWatch;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 商品接口
@@ -75,9 +81,25 @@ public class RestGoodsController {
         GoodsRspVO goodsRspVO = new GoodsRspVO();
         PageInfo<TableGoods> tableGoodsPageInfo = new PageInfo<>();
         try {
+
+            Map<String, Object> map = new HashMap<>();
+            if (!StringUtils.isEmpty(goodsVO.getSort())){
+                map.put("sort", goodsVO.getSort());
+            }
             //商品详情
-            tableGoods.setGoodsClass(goodsVO.getGoodsClass());
-            tableGoodsPageInfo = iTableGoodsBusiSV.queryListPage(tableGoods, goodsVO.getPageNum(), goodsVO.getPageSize(), null);
+            String goodsClass = goodsVO.getGoodsClass();
+            if (org.apache.commons.lang.StringUtils.isNotEmpty(goodsClass)) {
+                if (goodsClass.indexOf(",") > 0) {
+                    List<String> goodsClassList = Arrays.asList(goodsClass.split(","));
+                    map.put("goodsClassIn", goodsClassList);
+                } else {
+                    tableGoods.setGoodsClass(Integer.parseInt(goodsClass));
+                }
+            }
+
+            tableGoods.setState(InvestConstants.GoodsState.effect);
+
+            tableGoodsPageInfo = iTableGoodsBusiSV.queryListPage(tableGoods, goodsVO.getPageNum(), goodsVO.getPageSize(), map);
 
             //会员详情
             String memberId = TokenUtil.getUserId(request);

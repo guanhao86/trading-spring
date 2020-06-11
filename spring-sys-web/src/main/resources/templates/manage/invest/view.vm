@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/css/invest/bootstrap-fileupload.min.css"/>
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"$!{funTitle}", "perm": "system:content:edit", "isBack": true, "href": "manage/invest/list"})
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:content:edit", "isBack": true, "href": "manage/invest/list?type=$!{invest.type}"})
             #end
             #@panelBody()
                 #@form("form_insert" true "post" "manage/invest/save")

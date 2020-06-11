@@ -1,8 +1,11 @@
 package com.spring.free.controller.api;
 
+import com.github.pagehelper.PageInfo;
 import com.spring.fee.model.TWheatMember;
+import com.spring.fee.model.TableSystemConfig;
 import com.spring.fee.service.ITWheatFinancialBusiSV;
 import com.spring.fee.service.ITWheatMemberBusiSV;
+import com.spring.fee.service.ITableSystemConfigBusiSV;
 import com.spring.free.common.domain.AccessResponse;
 import com.spring.free.common.service.AsyncRestService;
 import com.spring.free.common.service.ImageUploadService;
@@ -34,6 +37,8 @@ public class RestPublicController {
     private AsyncRestService asyncRestService;
     @Autowired
     private ITWheatFinancialBusiSV iTWheatFinancialBusiSV;
+    @Autowired
+    ITableSystemConfigBusiSV iTableSystemConfigBusiSV;
 
 
     @RequestMapping(value = "/sendSms/{phone}")
@@ -61,6 +66,13 @@ public class RestPublicController {
     }
 
 
+    @RequestMapping(value = "/getSystemConfig")
+    public @ResponseBody
+    AccessResponse getSystemConfig(HttpServletRequest request, HttpServletResponse response){
+
+        PageInfo<TableSystemConfig> systemConfigPageInfo = this.iTableSystemConfigBusiSV.queryListPage(null, 1, 1, null);
+        return AccessResponse.builder().data(systemConfigPageInfo.getList().get(0)).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
+    }
 
 
     /**

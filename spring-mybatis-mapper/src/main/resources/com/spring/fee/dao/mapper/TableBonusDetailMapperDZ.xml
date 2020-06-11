@@ -23,10 +23,10 @@
       and member_id = #{memberId,jdbcType=VARCHAR}
     </if>
       <if test="start != null" >
-    and CLOSE_Time >= #{start,jdbcType=TIMESTAMP}
+    and recode_Time >= #{start,jdbcType=TIMESTAMP}
       </if>
       <if test="end != null" >
-    and #{end,jdbcType=TIMESTAMP} >= CLOSE_Time
+    and #{end,jdbcType=TIMESTAMP} >= recode_Time
       </if>
     group by bonus_id
   </select>
@@ -36,10 +36,10 @@
     where 1=1
     and close_state = '1'
     <if test="start != null" >
-      and CLOSE_Time >= #{start,jdbcType=TIMESTAMP}
+      and recode_Time >= #{start,jdbcType=TIMESTAMP}
     </if>
     <if test="end != null" >
-      and #{end,jdbcType=TIMESTAMP} >= CLOSE_Time
+      and #{end,jdbcType=TIMESTAMP} >= recode_Time
     </if>
     and bonus_id in
     <foreach collection="bonusIdIn" item="id" index="index"
@@ -47,4 +47,29 @@
       #{id}
     </foreach>
   </select>
+ <!-- 会员每天奖金统计 -->
+  <select id="selectByGroupBonusIdEveryDay" resultMap="BaseResultMap" >
+    select * from (
+    SELECT
+    member_id,
+    date( recode_time ) recode_time,
+    bonus_id,
+    sum( bonus ) bonus
+    FROM
+    table_bonus_detail
+    where 1=1
+    <if test="memberId != null and memberId !=''">
+      and member_id = #{memberId,jdbcType=VARCHAR}
+    </if>
+    <if test="start != null">
+      and recode_Time >= #{start,jdbcType=TIMESTAMP}
+    </if>
+    <if test="end != null">
+      and #{end,jdbcType=TIMESTAMP} >= recode_Time
+    </if>
+    GROUP BY date( operate_time ), member_id, bonus_id
+    ) A
+    order by A.recode_time desc, A.member_id, A.bonus_id
+  </select>
+
 </mapper>

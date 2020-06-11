@@ -14,13 +14,13 @@
                 <div class="form-group" >
                     <label class="col-sm-2 control-label">会员级别：</label>
                     <div class="col-sm-2">
-                        #selectBS($!dict.getDictList("level"), ["memberLevel", "$!{broadcast.memberLevel}", "value", "label"], false, [false, "$!{broadcast.level}"])
+                        #selectBS($!dict.getDictList("levelSearch"), ["memberLevel", "$!{broadcast.memberLevel}", "value", "label"], false, [false, "$!{broadcast.level}"])
                     </div>
                 </div>
                 <div class="form-group" >
                     <label class="col-sm-2 control-label">奖衔：</label>
                     <div class="col-sm-2">
-                        #selectBS($!dict.getDictList("mRank"), ["mrankLevel", "$!{broadcast.mrankLevel}", "value", "label"], false, [false, "$!{broadcast.mrankLevel}"])
+                        #selectBS($!dict.getDictList("mRankSearch"), ["mrankLevel", "$!{broadcast.mrankLevel}", "value", "label"], false, [false, "$!{broadcast.mrankLevel}"])
                     </div>
                 </div>
                 <div class="form-group" >

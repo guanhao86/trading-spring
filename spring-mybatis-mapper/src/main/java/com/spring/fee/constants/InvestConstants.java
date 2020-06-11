@@ -245,4 +245,15 @@ public final class InvestConstants {
         public static final String INIT = "-1";
 
     }
+
+    //充值类型
+    public static final class InvestType {
+
+        private InvestType() {}
+        //1：管理员充值
+        public static final String ADMIN = "1";
+        //2：会员自己充值
+        public static final String MEMBER = "2";
+
+    }
 }

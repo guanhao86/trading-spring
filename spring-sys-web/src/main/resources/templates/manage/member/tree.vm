@@ -17,7 +17,9 @@
         #end
         #@panel()
              #@panelBody()
-                 <div id="container" style="height: 500px; overflow: auto"></div>
+                 <div id="containerParent">
+                    <div id="container" style="height: 500px; overflow: auto"></div>
+                 </div>
             #end
         #end
     #end
@@ -38,7 +40,9 @@
                 alert("请输入会员ID");
                 return;
             }
+            document.getElementById("containerParent").innerHTML='<div id="container" style="height: 500px; overflow: auto"></div>';
             var dom = document.getElementById("container");
+
             var myChart = echarts.init(dom);
             var app = {};
             option = null;

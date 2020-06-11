@@ -46,7 +46,7 @@
                         #tableTd("$!{l.incomeVipLevel}", {"type": "dict", "format": "level"})
                         #tableTd("$!{l.state}", {"type": "dict", "format": "goodsState"})
                         #@tableTd()
-                            #@a("购买" {"href": "$!{ctx}/front/goods/view?id=$!{l.id}&memberId=$!{queryVO.memberId}", "class": "fa fa-pencil-square-o"})#end
+                            #@a("购买" {"href": "$!{ctx}/front/goods/view?id=$!{l.id}&memberId=$!{queryVO.memberId}&queryGoodsClass=$!{queryGoodsClass}", "class": "fa fa-pencil-square-o"})#end
                         #end
                     #end
                 #end

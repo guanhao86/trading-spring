@@ -11,6 +11,7 @@ import com.spring.fee.model.TableMember;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
 import com.spring.fee.service.ITableCashOutBusiSV;
 import com.spring.fee.service.ITableMemberBusiSV;
+import com.spring.free.common.domain.AccessResponse;
 import com.spring.free.common.util.ExcelUtils;
 import com.spring.free.util.DateUtils;
 import com.spring.free.util.exception.ExceptionCodeEnum;
@@ -82,6 +83,60 @@ public class TableCashOutBusiSVImpl implements ITableCashOutBusiSV {
         return this.iTableCashOutMapper.selectByPrimaryKey(bo.getId());
     }
 
+    /**
+     * 提现申请
+     *
+     * @param tableCashOut
+     * @return
+     */
+    @Override
+    public TableCashOut apply(TableCashOut tableCashOut) {
+
+        TableMember tableMember = this.iTableMemberBusiSV.selectByMemberId(tableCashOut.getMemberId());
+
+        if (tableMember == null ){
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在！", "", null);
+        }
+
+        if (tableCashOut.getAmount() < 100) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "提现金额最低100元！", "", null);
+        }
+
+        if (tableCashOut.getAmount() % 100 != 0) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "提现金额必须是100的整数倍！", "", null);
+        }
+
+        //当前存在提现申请的，不允许再次申请
+        TableCashOut tableCashOutQuery = new TableCashOut();
+        tableCashOutQuery.setMemberId(tableMember.getMemberId());
+        tableCashOutQuery.setAuditState("1");
+        PageInfo<TableCashOut> pageInfo = this.queryListPage(tableCashOutQuery, 1, 1, null);
+
+        if (pageInfo.getTotal() > 0 ){
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "存在审核中的记录，等审核通过后再申请！", "", null);
+        }
+
+        if (tableCashOut.getAmount().floatValue() > tableMember.getAccountMoney().floatValue()) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "余额不足！", "", null);
+        }
+
+        if (org.springframework.util.StringUtils.isEmpty(tableMember.getBankCardId())
+                || org.springframework.util.StringUtils.isEmpty(tableMember.getBankOpenAre())
+                || org.springframework.util.StringUtils.isEmpty(tableMember.getBankName())
+        ){
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "银行卡信息不正确！", "", null);
+        }
+
+        if (org.springframework.util.StringUtils.isEmpty(tableMember.getReallyName())){
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员姓名不能为空！", "", null);
+        }
+        tableCashOut.setBankCardId(tableMember.getBankCardId());
+        tableCashOut.setBankOpenAre(tableMember.getBankOpenAre());
+        tableCashOut.setBankName(tableMember.getBankName());
+        tableCashOut.setMemberName(tableMember.getReallyName());
+        return this.insert(tableCashOut);
+    }
+
     @Override
     public TableCashOut audit(TableCashOut bo) {
 
@@ -93,7 +148,7 @@ public class TableCashOutBusiSVImpl implements ITableCashOutBusiSV {
                 //查询会员
                 TableMember tableMember = this.iTableMemberBusiSV.selectByMemberId(bo.getMemberId());
 
-                if (tableMember.getAccountMoney() < origTableCashOut.getAmount()) {
+                if (tableMember.getAccountMoney().floatValue() < origTableCashOut.getAmount().floatValue()) {
                     throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "余额不足！", "", null);
                 }
 

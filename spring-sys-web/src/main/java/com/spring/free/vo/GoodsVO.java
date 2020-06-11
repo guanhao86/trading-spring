@@ -6,6 +6,8 @@ import lombok.Data;
 public class GoodsVO extends PageVO {
 
     //商品类型
-    private Integer goodsClass;
+    private String goodsClass;
+
+    private String sort;
 
 }

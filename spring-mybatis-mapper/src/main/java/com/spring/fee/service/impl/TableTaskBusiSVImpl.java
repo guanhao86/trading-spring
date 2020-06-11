@@ -8,6 +8,7 @@ import com.spring.free.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -27,6 +28,7 @@ public class TableTaskBusiSVImpl implements ITableTaskBusiSV {
      * @return
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public boolean insert(TableTask bo) {
         log.info("定时任务，避免重复执行：{}", JSON.toJSON(bo));
         bo.setRunTime(DateUtils.getSysDate());

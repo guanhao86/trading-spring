@@ -1,15 +1,11 @@
 package com.spring.free.controller.api;
 
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
-import com.spring.fee.model.TableBonusDetail;
-import com.spring.fee.model.TableCashOut;
-import com.spring.fee.model.TableMember;
-import com.spring.fee.model.TableMemberAccountDetail;
-import com.spring.fee.service.IMemberAccountDetailBusiSV;
-import com.spring.fee.service.ITableBonusDetailBusiSV;
-import com.spring.fee.service.ITableCashOutBusiSV;
-import com.spring.fee.service.ITableMemberBusiSV;
+import com.spring.fee.constants.InvestConstants;
+import com.spring.fee.model.*;
+import com.spring.fee.service.*;
 import com.spring.free.common.domain.AccessResponse;
 import com.spring.free.config.TokenUtil;
 import com.spring.free.domain.UserInfo;
@@ -22,6 +18,7 @@ import com.spring.free.vo.GoodsRspVO;
 import com.spring.free.vo.QueryReqVO;
 import com.spring.free.vo.TransferVO;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,6 +47,9 @@ public class RestAccountDetailController {
 
     @Autowired
     ITableCashOutBusiSV iTableCashOutBusiSV;
+
+    @Autowired
+    ITableInvestBusiSV iTableInvestBusiSV;
 
     /**
      * 账户变更明细列表
@@ -81,40 +81,41 @@ public class RestAccountDetailController {
     }
 
     /**
-     * 提现（奖金转现金）申请
+     * 奖金转现金
+     */
+    @RequestMapping(value = "/transferInner")
+    public @ResponseBody
+    AccessResponse transferInner(@RequestBody QueryReqVO queryReqVO, HttpServletRequest request, HttpServletResponse response){
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        log.info("奖金转现金:{}");
+        TableMemberAccountDetail tableMemberAccountDetail;
+        //返回体
+        try {
+            String memberId = TokenUtil.getUserId(request);
+            tableMemberAccountDetail = this.iMemberAccountDetailBusiSV.transferInner(memberId, String.valueOf(queryReqVO.getAmount()), null);
+        }catch (Exception e) {
+            return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
+        }
+        stopWatch.stop();
+        System.out.println("耗时：" + stopWatch.getTotalTimeSeconds());
+        return AccessResponse.builder().data(tableMemberAccountDetail).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
+    }
+
+    /**
+     * 提现申请
      */
     @RequestMapping(value = "/cashOut")
     public @ResponseBody
     AccessResponse cashOut(@RequestBody TableCashOut tableCashOut, HttpServletRequest request, HttpServletResponse response){
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        log.info("提现（奖金转现金）:{}");
+        log.info("提现申请:{}");
         //返回体
         try {
             String memberId = TokenUtil.getUserId(request);
-
-            TableMember tableMember = this.iTableMemberBusiSV.selectByMemberId(memberId);
-
-            if (tableCashOut.getAmount() > tableMember.getAccountMoney()) {
-                return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message("余额不足").build();
-            }
-
-            if (StringUtils.isEmpty(tableMember.getBankCardId())
-                ||StringUtils.isEmpty(tableMember.getBankOpenAre())
-                ||StringUtils.isEmpty(tableMember.getBankName())
-                ){
-                return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message("未绑定银行卡").build();
-            }
-
-            if (StringUtils.isEmpty(tableMember.getReallyName())){
-                return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message("会员姓名不能为空").build();
-            }
-            tableCashOut.setBankCardId(tableMember.getBankCardId());
-            tableCashOut.setBankOpenAre(tableMember.getBankOpenAre());
-            tableCashOut.setBankName(tableMember.getBankName());
-            tableCashOut.setMemberName(tableMember.getReallyName());
             tableCashOut.setMemberId(memberId);
-            this.iTableCashOutBusiSV.insert(tableCashOut);
+            this.iTableCashOutBusiSV.apply(tableCashOut);
         }catch (Exception e) {
             return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
         }
@@ -131,13 +132,12 @@ public class RestAccountDetailController {
     AccessResponse transfer(@RequestBody TransferVO transferVO, HttpServletRequest request, HttpServletResponse response){
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        log.info("转账:{}");
+        log.info("转账:{}", transferVO);
         //返回体
         try {
             String memberId = TokenUtil.getUserId(request);
-
-            UserInfo user = BaseGetPrincipal.getUser();
-            if(!user.getPassword().equals(Md5Util.md5Hex(transferVO.getPassword()))) {
+            TableMember tableMember = this.iTableMemberBusiSV.selectByMemberId(memberId);
+            if(!tableMember.getPassword().equals(Md5Util.md5Hex(transferVO.getPassword()))) {
                 return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message("密码错误").build();
             }
             this.iMemberAccountDetailBusiSV.transfer(memberId, transferVO.getMemberId(), transferVO.getAmount(), transferVO.getRemark(), transferVO.getTransferType());
@@ -148,6 +148,29 @@ public class RestAccountDetailController {
         stopWatch.stop();
         System.out.println("耗时：" + stopWatch.getTotalTimeSeconds());
         return AccessResponse.builder().data(transferVO).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
+    }
+
+    /**
+     * 充值
+     */
+    @RequestMapping(value = "/invest")
+    public @ResponseBody
+    AccessResponse invest(@RequestBody TableInvest tableInvest, HttpServletRequest request, HttpServletResponse response){
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        log.info("充值:{}", JSON.toJSONString(tableInvest));
+        //返回体
+        try {
+            String memberId = TokenUtil.getUserId(request);
+            tableInvest.setMemberId(memberId);
+            tableInvest.setType(InvestConstants.InvestType.MEMBER);
+            this.iTableInvestBusiSV.insert(tableInvest);
+        }catch (Exception e) {
+            return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
+        }
+        stopWatch.stop();
+        System.out.println("耗时：" + stopWatch.getTotalTimeSeconds());
+        return AccessResponse.builder().data(tableInvest).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
     }
 
 }

@@ -31,6 +31,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -140,7 +141,7 @@ public class FrontOrderController {
             tableOrder.setMemberId(user.getUsername());
         }
 
-        TableMember member = this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
+        TableMember operMember = this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
 
         //计算总金额
         TableGoods goods = new TableGoods();
@@ -158,11 +159,20 @@ public class FrontOrderController {
             price += extGoods.getPrice() * (tableOrder.getExtentGoodsCount()==null?0:tableOrder.getExtentGoodsCount());
         }
 
-        tableOrder.setPrice(price);
+        tableOrder.setPrice(new BigDecimal(price));
+        tableOrder.setOperMemberId(operMember.getMemberId());
+        //计算报单商品，购买升级产品金额
+        try {
+            this.iTableOrderBusiSV.getBDGoodsOrderPrice(tableOrder);
+        }catch (Exception e) {
+            map.put(Global.URL, Global.ADMIN_PATH +"/front/order/buyResult");
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
+
         tableOrder.setGoodsClass(goods.getGoodsClass());
         //查询会员信息，返回地址
         view.addObject("order", tableOrder);
-        view.addObject("member", member);
+        view.addObject("member", operMember);
         view.setViewName("front/order/buyGoods");
         return view;
     }

@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.constants.InvestConstants;
 import com.spring.fee.dao.mapper.TableMemberMapper;
+import com.spring.fee.dao.mapper.TableMemberMapperDZ;
 import com.spring.fee.model.*;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.fee.service.ITableMemberLevelChangeDetailBusiSV;
@@ -50,6 +51,9 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
     TableMemberMapper iTableMemberMapper;
 
     @Autowired
+    TableMemberMapperDZ iTableMemberMapperDZ;
+
+    @Autowired
     ITableOrderBusiSV iTableOrderBusiSV;
 
     @Autowired
@@ -67,16 +71,20 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
     public TableMember insert(TableMember bo) {
         log.info("创建会员管理表参数bo：{}", JSON.toJSON(bo));
         Date sysdate = DateUtils.getSysDate();
-        bo.setAccountCarPoint(0f);
+        BigDecimal zero = new BigDecimal(0);
+        bo.setAccountCarPoint(zero);
         bo.setScore(0);
-        bo.setAccountPointFreeze(0f);
-        bo.setAccountJsyPoint(0f);
-        bo.setAccountDjPoint(0f);
-        bo.setAccountPointAvailable(0f);
-        bo.setReportingAmount(0f);
-        bo.setAccountMoney(0f);
+        bo.setAccountPointFreeze(zero);
+        bo.setAccountJsyPoint(zero);
+        bo.setAccountDjPoint(zero);
+        bo.setAccountPointAvailable(zero);
+        bo.setReportingAmount(zero);
+        bo.setAccountMoney(zero);
         bo.setRegisterTime(sysdate);
-        bo.setState(InvestConstants.MemberState.INIT);
+        if (2 == bo.getRegisterFrom())
+            bo.setState(InvestConstants.MemberState.VALID);
+        if (1 == bo.getRegisterFrom())
+            bo.setState(InvestConstants.MemberState.INIT);
         iTableMemberMapper.insert(bo);
         return bo;
     }
@@ -94,11 +102,12 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
 
         //查询会员
         TableMember origMember = this.selectByMemberId4BuyOrder(bo.getMemberId());
+        bo.setId(origMember.getId());
         if (origMember == null) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员不存在！", "", null);
         }
         //修改了安置人
-        if (!origMember.getArrangeId().equals(bo.getArrangeId()) || updateArrange) {
+        if ((StringUtils.isNotEmpty(bo.getArrangeId()) && !origMember.getArrangeId().equals(bo.getArrangeId())) || updateArrange) {
 
             //判断新的安置人是否允许修改
             TableMember arrangeMember = this.selectByMemberId(bo.getArrangeId());
@@ -117,7 +126,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             if (2 == bo.getLeftOrRight()) {
                 arrangeMember.setRightChildNode(bo.getMemberId());
             }
-            this.update(arrangeMember, false);
+            this.updateSimple(arrangeMember);
 
             if (!origMember.getArrangeId().equals(bo.getArrangeId())) {
 
@@ -133,7 +142,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
                 if (2 == origMember.getLeftOrRight()) {
                     origArrangeMember.setRightChildNode("0");
                 }
-                this.update(origArrangeMember, false);
+                this.updateSimple(origArrangeMember);
             }
         }
 
@@ -181,7 +190,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         TableMember updateParam = new TableMember();
         updateParam.setState(InvestConstants.MemberState.INVALID);
         updateParam.setId(bo.getId());
-        this.update(updateParam, false);
+        this.updateSimple(updateParam);
 
         //更新userInfo
         log.info("删userInfo");
@@ -248,6 +257,17 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
      * @param memberId
      * @return
      */
+    public List<TableMember> queryChildList(String memberId, Map<String, List<TableMember>> map) {
+        return map.get(memberId);
+    }
+
+
+    /**
+     * 获取会员下一级子会员
+     *
+     * @param memberId
+     * @return
+     */
     @Override
     public List<TableMember> queryChildList(String memberId) {
         TableMember t = new TableMember();
@@ -281,19 +301,46 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
     /**
      * 获取所有子节点会员
      * 递归
+     * 递归
+     * 不包括会员本身
+     * @param memberId
+     * @return
+     */
+    @Override
+    public List<TableMember> queryAllChildList(String memberId, Map<String, List<TableMember>> map) {
+        List<TableMember> list = new ArrayList<>();
+
+        List<TableMember> childList = this.queryChildList(memberId, map);
+
+        if (!CollectionUtils.isEmpty(childList)) {
+
+            for (TableMember tWheatMember : childList) {
+                list.add(tWheatMember);
+                list.addAll(this.queryAllChildList(tWheatMember.getMemberId(), map));
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 获取所有子节点会员
+     * 递归
      *
      * @param memberId
      * @return
      */
     @Override
     public PageInfo<TableMember> queryAllChildPage(String memberId, Integer pageNum, Integer pageSize, Map<String, Object> map) {
-        List<TableMember> list = this.queryAllChildList(memberId);
+        Map<String, List<TableMember>> map1 = queryArrangeListMap(new TableMember());
+        List<TableMember> list = this.queryAllChildList(memberId, map1);
         PageInfo<TableMember> pageInfo = new PageInfo<>();
         List<TableMember> pagelist = new ArrayList<>();
         int start = (pageNum - 1)*pageSize;
-        int last = pageNum * pageSize - 1;
+        int last = pageNum * pageSize;
+        boolean isLast = false;
         if (last > list.size()) {
             last = list.size();
+            isLast = true;
         }
         for (int i = start; i < last; i++) {
             pagelist.add(list.get(i));
@@ -302,7 +349,37 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         pageInfo.setTotal(list.size());
         pageInfo.setPageNum(pageNum);
         pageInfo.setPageSize(pageSize);
+        pageInfo.setIsLastPage(isLast);
         return pageInfo;
+    }
+
+    /**
+     * 获取所有子节点会员(TREE)
+     * 递归
+     * 不包括会员本身
+     *
+     * @param tableMemberTree
+     * @return
+     */
+    @Override
+    public TableMemberTree queryAllChildTree(TableMemberTree tableMemberTree, Map<String, List<TableMember>> map) {
+        //log.info("获取所有子节点会员(TREE)");
+
+        List<TableMemberTree> list = new ArrayList<>();
+
+        List<TableMember> childList = this.queryChildList(tableMemberTree.getMemberId(), map);
+
+        if(childList != null) {
+            for (TableMember tWheatMember : childList) {
+                TableMemberTree tWheatMemberTree1 = new TableMemberTree();
+                BeanUtils.copyProperties(tWheatMember, tWheatMemberTree1);
+                list.add(tWheatMemberTree1);
+                tableMemberTree.setChildList(list);
+                this.queryAllChildTree(tWheatMemberTree1, map);
+            }
+        }
+
+        return tableMemberTree;
     }
 
     /**
@@ -368,7 +445,8 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
     @Override
     public List<String> queryAllChildMemberIdList(String memberId) {
         List<String> memberIdList = new ArrayList<>();
-        List<TableMember> list = this.queryAllChildList(memberId);
+        Map<String, List<TableMember>> map = queryArrangeListMap(new TableMember());
+        List<TableMember> list = this.queryAllChildList(memberId, map);
         for (TableMember tWheatMember : list) {
             memberIdList.add(String.valueOf(tWheatMember.getMemberId()));
         }
@@ -510,6 +588,9 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             if (null != map.get("REGISTER_TIME_END")) {
                 criteria.andRegisterTimeLessThanOrEqualTo((Date)map.get("REGISTER_TIME_END"));
             }
+            if (null != map.get("ORDER")) {
+                example.setOrderByClause((String)map.get("ORDER"));
+            }
         }
 
         return this.iTableMemberMapper.selectByExample(example);
@@ -524,6 +605,36 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         }
         return map;
     }
+
+    /**
+     * 根据arrange分组
+     * @param bo
+     * @return
+     */
+    @Override
+    public Map<String, List<TableMember>> queryArrangeListMap(TableMember bo) {
+        Map<String, Object> mapQuery = new HashMap<>();
+        mapQuery.put("ORDER", "ARRANGE_ID");
+        TableMember memberQuery = new TableMember();
+        memberQuery.setState(InvestConstants.MemberState.VALID);
+        List<TableMember> list = this.queryList(memberQuery, mapQuery);
+        Map<String, List<TableMember>> map = new HashMap<>();
+        if (!CollectionUtils.isEmpty(list)) {
+            String arrangeId = list.get(0).getArrangeId();
+            List<TableMember> arrangeList = new ArrayList<>();
+            for (TableMember tableMember : list) {
+                if (!arrangeId.equals(tableMember.getArrangeId())) {
+                    //进行下一个
+                    map.put(arrangeId, arrangeList);
+                    arrangeId = tableMember.getArrangeId();
+                    arrangeList = new ArrayList<>();
+                }
+                arrangeList.add(tableMember);
+            }
+        }
+        return map;
+    }
+
 
     /**
      * parent 是否是bo的父节点，可跨级别
@@ -679,6 +790,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
 
         PageInfo<TableMember> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableMemberMapper.selectByExample(example));
+
         log.info("获取会员管理表结果：{}", JSON.toJSON(pageInfo));
         return pageInfo;
     }
@@ -691,25 +803,29 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
      */
     @Override
     public TableMember regist(TableMember m, int registerFrom) {
-        String phone=m.getPhone();
-        String referenceId=m.getReferenceId();
+        String phone = m.getPhone();
+        String referenceId = m.getReferenceId();
         String arrangeId = m.getArrangeId();
 
         if (StringUtils.isEmpty(phone)) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "手机号不能为空！", "", null);
         }
 
+        if (11 != phone.length()) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "手机号必须是11位！", "", null);
+        }
+
         if (phone.length() <= 6) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "手机号位数错误！", "", null);
         }
 
-        TableMember  checkMember = this.selectByPhone(phone);
-        if(checkMember!=null){
+        TableMember checkMember = this.selectByPhone(phone);
+        if (checkMember != null) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "手机号已注册！", "", null);
         }
         TableMember referenceIdMember = this.selectByMemberId(referenceId);
 
-        if(referenceIdMember==null){
+        if (referenceIdMember == null) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "推荐人不存在！", "", null);
         }
         try {
@@ -720,56 +836,59 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
                 //4 右区滑落
                 String result = PythonUtil3.runPy(python_path, "get_leaf_node.py", arrangeId, "");
                 if (StringUtils.isEmpty(result)) {
-                    throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "根据安置人"+arrangeId+"获取自动滑落会员编号失败","", null);
+                    throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "根据安置人" + arrangeId + "获取自动滑落会员编号失败", "", null);
                 }
                 result = result.replace("(", "").replace(")", "").trim();
                 if (3 == m.getLeftOrRight()) {
-                    arrangeId = result.split(",")[0].replace("'","").trim();
+                    arrangeId = result.split(",")[0].replace("'", "").trim();
                     m.setLeftOrRight(1);
                     log.info("自动滑落左区，推荐人ID={}", arrangeId);
                 }
                 if (4 == m.getLeftOrRight()) {
-                    arrangeId = result.split(",")[1].replace("'","").trim();
+                    arrangeId = result.split(",")[1].replace("'", "").trim();
                     m.setLeftOrRight(2);
                     log.info("自动滑落右区，推荐人ID={}", arrangeId);
                 }
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "根据安置人"+arrangeId+"获取自动滑落会员编号失败","", null);
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "根据安置人" + arrangeId + "获取自动滑落会员编号失败", "", null);
         }
 
         //判断安置人
         TableMember arrangeMemeber = this.selectByMemberId(arrangeId);
 
-        if(arrangeMemeber==null){
-            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "安置人不存在！","", null);
+        if (arrangeMemeber == null) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "安置人不存在！", "", null);
         }
 
 
         //校验安置人
         checkArrange(m, arrangeMemeber);
 
-        String password = StringUtils.isEmpty(m.getPassword())?phone.substring(phone.length()-6):m.getPassword();
+        String password = StringUtils.isEmpty(m.getPassword()) ? phone.substring(phone.length() - 6) : m.getPassword();
 
         TableMember member = new TableMember();
         member.setPhone(phone);
         member.setPassword(Md5Util.md5Hex(password));
         member.setReferenceId(referenceId);
         member.setLevel(0);
+        member.setRegisterFrom(registerFrom); //注册来源：后台
         member = this.insert(member);
-        member.setMemberId("926"+String.format("%08d", member.getId()));
+        member.setMemberId("926" + String.format("%08d", member.getId()));
         member.setLeftChildNode("");
         member.setRightChildNode("");
-        member.setRegisterFrom(registerFrom); //注册来源：后台
+
+        BigDecimal zero = new BigDecimal(0);
+
         member.setmRank(0);
         member.setFlag("0001");
-        member.setAccountMoney(0f);
-        member.setAccountDjPoint(0f);
-        member.setAccountJsyPoint(0f);
-        member.setAccountPointAvailable(0f);
-        member.setAccountPointFreeze(0f);
-        member.setReportingAmount(0f);
+        member.setAccountMoney(zero);
+        member.setAccountDjPoint(zero);
+        member.setAccountJsyPoint(zero);
+        member.setAccountPointAvailable(zero);
+        member.setAccountPointFreeze(zero);
+        member.setReportingAmount(zero);
         member.setAutFlag(0);
         member.setLastLoginTime(DateUtils.getSysDate());
         member.setPerfomanceTime(DateUtils.getSysDate());
@@ -777,17 +896,20 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         member.setArrangeId(arrangeId);
         this.updateSimple(member);
 
-//        //更新安置人
-//        //判断左区
-//        if (1 == m.getLeftOrRight()) {
-//            arrangeMemeber.setLeftChildNode(member.getMemberId());
-//        }
-//
-//        //判断右区，如果存在不允许注册
-//        if (2 == m.getLeftOrRight()) {
-//            arrangeMemeber.setRightChildNode(member.getMemberId());
-//        }
-//        this.update(arrangeMemeber, false);
+        //后台注册
+        if (2 == member.getRegisterFrom()){
+            //更新安置人
+            //判断左区
+            if (1 == m.getLeftOrRight()) {
+                arrangeMemeber.setLeftChildNode(member.getMemberId());
+            }
+
+            //判断右区，如果存在不允许注册
+            if (2 == m.getLeftOrRight()) {
+                arrangeMemeber.setRightChildNode(member.getMemberId());
+            }
+            this.updateSimple(arrangeMemeber);
+        }
 
         //创建user信息，用于登陆系统
         UserInfo user = new UserInfo();
@@ -795,7 +917,11 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         user.setUsername(member.getMemberId());
         user.setPhone(member.getPhone());
         user.setName(StringUtils.isEmpty(member.getReallyName())?member.getMemberId():member.getReallyName());
-        user.setLoginFlag("0");
+        if (member.getRegisterFrom() == 2) {
+            user.setLoginFlag("1");
+        }else{
+            user.setLoginFlag("0");
+        }
         user.setDelFlag("0");
         user.setUserType("1");
         //会员默认不允许登陆，购买完报单商品后才可以登陆
@@ -826,7 +952,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             if(!"0".equals(arrangeMember.getLeftChildNode()) && !org.springframework.util.StringUtils.isEmpty(arrangeMember.getLeftChildNode())) {
                 //判断左区会员是否有效
                 if (this.selectByMemberId(arrangeMember.getLeftChildNode()) != null) {
-                    throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "安置人左区已经存在会员，不允许注册！", "", null);
+                    throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "安置人左区已经存在会员！", "", null);
                 }
             }
         }
@@ -835,7 +961,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         if (2 == member.getLeftOrRight()){
             if(!"0".equals(arrangeMember.getRightChildNode()) && !org.springframework.util.StringUtils.isEmpty(arrangeMember.getRightChildNode())) {
                 if (this.selectByMemberId(arrangeMember.getRightChildNode()) != null) {
-                    throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "安置人右区已经存在会员，不允许注册！", "", null);
+                    throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "安置人右区已经存在会员！", "", null);
                 }
             }
         }
@@ -878,7 +1004,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
 
         bo.setPassword(pwd);
         bo.setId(tableMemberOrig.getId());
-        this.update(bo, false);
+        this.updateSimple(bo);
 
         UserInfo userInfo = this.userService.getUserByUsernameLogin(tableMemberOrig.getMemberId());
         userInfo.setPassword(pwd);
@@ -898,7 +1024,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         TableMember tableMember = new TableMember();
         tableMember.setId(id);
         tableMember.setAutFlag(autFlag);
-        return this.update(tableMember, false) ;
+        return this.updateSimple(tableMember) ;
     }
 
     /**
@@ -934,16 +1060,16 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             values[i][1] = member.getReallyName();
             values[i][2] = member.getReferenceId();
             values[i][3] = member.getArrangeId();
-            values[i][4] = DictUtils.getDictLabel(String.valueOf(member.getLevel()),"leftOrRight","");
+            values[i][4] = DictUtils.getDictLabel(String.valueOf(member.getLeftOrRight()),"leftOrRight","");
             values[i][5] = member.getPhone();
             values[i][6] = DictUtils.getDictLabel(String.valueOf(member.getLevel()),"level","");
-            values[i][7] = DictUtils.getDictLabel(String.valueOf(member.getLevel()),"mRank","");
+            values[i][7] = DictUtils.getDictLabel(String.valueOf(member.getmRank()),"mRank","");
             values[i][8] = String.valueOf(member.getAccountMoney());
             values[i][9] = String.valueOf(member.getAccountPointAvailable());
             values[i][10] = String.valueOf(member.getAccountPointFreeze());
             values[i][11] = String.valueOf(member.getAccountDjPoint());
             values[i][12] = String.valueOf(member.getAccountJsyPoint());
-            values[i][13] = DictUtils.getDictLabel(String.valueOf(member.getLevel()),"autFlag","");
+            values[i][13] = DictUtils.getDictLabel(String.valueOf(member.getAutFlag()),"autFlag","");
             values[i][14] = member.getCartId();
             values[i][15] = member.getBankCardId();
             values[i][16] = member.getBankName();
@@ -954,5 +1080,28 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
 
         HSSFWorkbook wb = ExcelUtils.getHSSFWorkbook(sheetName, title, values, null);
         return wb;
+    }
+
+    /**
+     * 统计金额
+     */
+    @Override
+    public List<TableMember> statisticMoney() {
+        return this.iTableMemberMapperDZ.statisticMoney();
+    }
+
+    /**
+     * 更新是否允许登陆状态 1允许 0不允许
+     *
+     * @param memberId
+     * @param state
+     * @return
+     */
+    @Override
+    public void updateLoginState(String memberId, String state) {
+        UserInfo userInfo = this.userService.getUserByUserName(memberId);
+        userInfo.setLoginFlag(state);
+
+        this.userService.update(userInfo, null);
     }
 }

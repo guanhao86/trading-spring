@@ -8,20 +8,18 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.model.TableMember;
 import com.spring.fee.model.TableMemberDZ;
-import com.spring.fee.model.TableOrder;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.free.common.util.PythonUtil3;
-import com.spring.free.config.CommonUtils;
 import com.spring.free.config.ImageUtils;
 import com.spring.free.domain.QueryVO;
 import com.spring.free.domain.UserInfo;
+import com.spring.free.system.UserService;
 import com.spring.free.util.PageResult;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
-import com.spring.free.utils.principal.BaseGetPrincipal;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -60,6 +58,8 @@ public class ManageMemberController {
     @Autowired
     ITableMemberBusiSV iTableMemberBusiSV;
 
+    @Autowired
+    UserService userService;
     /*
      * @Author gh
      * @Description //TODO 配置列表
@@ -70,7 +70,7 @@ public class ManageMemberController {
     @RequestMapping({"", "list"})
     public ModelAndView list(ModelAndView mav, HttpSession session, QueryVO queryVO, HttpServletRequest request,
                              @RequestParam(value = "page",required = false, defaultValue = PageDefaultConstraints.PAGE) int page,
-                             @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
+                             @RequestParam(value = "rows", required = false, defaultValue = "10") int pageSize) {
         // String postType = request.getParameter("postType");
 
         TableMember tableMember = new TableMember();
@@ -121,6 +121,7 @@ public class ManageMemberController {
 //            member.setMoneyFreeze(account.getMoneyFreeze().doubleValue() / 1000);
 //            member.setGranaryFreeze(account.getGranaryFreeze().doubleValue() / 1000);
 //        }
+        view.addObject("userInfoA", this.userService.getUserByUserName(tableMember.getMemberId()));
         view.addObject("member",tableMember);
         view.setViewName("manage/member/edit");
         return view;
@@ -190,26 +191,26 @@ public class ManageMemberController {
 
         TableMember tableMember=this.iTableMemberBusiSV.select(member);
 
-        try {
-            result = PythonUtil3.runPy(python_path, "get_child_achievement.py", tableMember.getMemberId(), "");
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (StringUtils.isNotEmpty(result) && result.indexOf("(") >= 0 && result.indexOf(")")>=0) {
-            result = result.substring(1, result.length()-1);
-        }
-
-
-        System.out.println("左区业绩： 右区业绩："+result);
-        String left = "0";
-        String right = "0";
-        String[] results = result.split(",");
-
-        if (results != null && results.length == 2) {
-            left = results[0];
-            right = results[1];
-        }
+//        try {
+//            result = PythonUtil3.runPy(python_path, "get_child_achievement.py", tableMember.getMemberId(), "");
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (StringUtils.isNotEmpty(result) && result.indexOf("(") >= 0 && result.indexOf(")")>=0) {
+//            result = result.substring(1, result.length()-1);
+//        }
+//
+//
+//        System.out.println("左区业绩： 右区业绩："+result);
+        String left = tableMember.getLeftAmount() == null ? "0" : String.valueOf(tableMember.getLeftAmount());
+        String right = tableMember.getRightAmount() == null ? "0" : String.valueOf(tableMember.getRightAmount());
+//        String[] results = result.split(",");
+//
+//        if (results != null && results.length == 2) {
+//            left = results[0];
+//            right = results[1];
+//        }
 
 //        if(tableMember!=null) {
 //            member.setTotal(account.getTotal().doubleValue() / 1000);
@@ -434,5 +435,25 @@ public class ManageMemberController {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * 修改是否允许登陆状态
+     * @param mav
+     * @param request
+     * @return
+     */
+    @RequiresPermissions("system:member:edit")
+    @RequestMapping(value = "updateLoginState")
+    public ModelAndView updateLoginState(ModelAndView mav, HttpServletRequest request, UserInfo userInfo) {
+        Map map = Maps.newHashMap();
+        map.put(Global.URL, Global.ADMIN_PATH +"/manage/member/list");
+        try {
+            this.iTableMemberBusiSV.updateLoginState(userInfo.getUsername(), userInfo.getLoginFlag());
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
+        PageResult.setPrompt(map,"操作成功", "success");
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/member/list"), map);
     }
 }

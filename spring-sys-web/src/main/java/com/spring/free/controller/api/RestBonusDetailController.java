@@ -18,10 +18,12 @@ import com.spring.free.vo.GoodsRspVO;
 import com.spring.free.vo.GoodsVO;
 import com.spring.free.vo.QueryReqVO;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.misc.Hash;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StopWatch;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 奖金明细接口
@@ -54,7 +60,6 @@ public class RestBonusDetailController {
         stopWatch.start();
         log.info("奖金列表:{}");
         //返回体
-        GoodsRspVO goodsRspVO = new GoodsRspVO();
         PageInfo<TableBonusDetail> pageInfo = new PageInfo<>();
         try {
             TableBonusDetail memberAccountDetail = new TableBonusDetail();
@@ -62,8 +67,12 @@ public class RestBonusDetailController {
             String memberId = TokenUtil.getUserId(request);
 
             memberAccountDetail.setMemberId(memberId);
-            memberAccountDetail.setCloseState(1);
-            pageInfo = this.iTableBonusDetailBusiSV.queryListPage(memberAccountDetail, queryReqVO.getPageNum(), queryReqVO.getPageSize(), null);
+            if (!StringUtils.isEmpty(queryReqVO.getCloseState())) {
+                memberAccountDetail.setCloseState(Integer.parseInt(queryReqVO.getCloseState()));
+            }
+            Map<String, Object> map = new HashMap();
+            map.put("bonusIdNotIn", Arrays.asList(6,7));
+            pageInfo = this.iTableBonusDetailBusiSV.queryListPage(memberAccountDetail, queryReqVO.getPageNum(), queryReqVO.getPageSize(), map);
 
         }catch (Exception e) {
             return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();

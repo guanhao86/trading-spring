@@ -6,30 +6,65 @@
             #end
             #@panelBody()
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">日新增业绩(元)：</label>
+                    <label class="col-sm-3 control-label">日新增业绩(元)：</label>
                     <div class="col-sm-3">
                         $!{bonusDetailPerVO.yesterdayAddBonus}
                     </div>
                 </div>
                 <br>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">总业绩(元)：</label>
+                    <label class="col-sm-3 control-label">总业绩(元)：</label>
                     <div class="col-sm-3">
                         $!{bonusDetailPerVO.allOrderPrice}
                     </div>
                 </div>
                 <br>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">总奖金(元)：</label>
+                    <label class="col-sm-3 control-label">总奖金(元)：</label>
                     <div class="col-sm-3">
                         $!{bonusDetailPerVO.allAddBonus}
                     </div>
                 </div>
                  <br>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">总波比：</label>
+                    <label class="col-sm-3 control-label">总波比：</label>
                     <div class="col-sm-3">
                         $!{bonusDetailPerVO.allPer}
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">会员现金余额总和(元)：</label>
+                    <div class="col-sm-3">
+                        $!{bonusDetailPerVO.accountMoney}
+                    </div>
+                </div>
+            <br>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">会员现金余额总和(元)-历史：</label>
+                    <div class="col-sm-3">
+                        77284.2
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">会员奖金(待发)余额总和(元)：</label>
+                    <div class="col-sm-3">
+                        $!{bonusDetailPerVO.accountPointFreeze}
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">会员奖金(已发)余额总和(元)：</label>
+                    <div class="col-sm-3">
+                        $!{bonusDetailPerVO.accountPointAvailable}
+                    </div>
+                </div>
+                 <br>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">会员奖金(已发)余额总和(元)-历史：</label>
+                    <div class="col-sm-3">
+                        1457600.6
                     </div>
                 </div>
             #end

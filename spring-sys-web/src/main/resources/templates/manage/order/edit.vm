@@ -27,6 +27,7 @@
                 </div>
                     #formInput({"name": "订单时间"} {"name": "createTime", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{order.createTime})","id": "createTime","required": "required","readonly":"readonly"})
                     #formInput({"name": "快递单号"} {"name": "expressNumber ", "value":"$!{order.expressNumber}","id": "expressNumber","required": "required","readonly":"readonly"})
+                    #formInput({"name": "物流公司"} {"name": "expressCompany ", "value":"$!{order.expressCompany}","id": "expressCompany","required": "required","readonly":"readonly"})
                 #end
     #end
         #end

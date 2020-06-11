@@ -95,6 +95,8 @@ public class FrontGoodsController {
         mav.addObject("page", pageInfo);
         mav.addObject("member", member);
         mav.addObject("queryVO",queryVO);
+        mav.addObject("queryGoodsClass",queryVO.getGoodsClass());
+
         //返回页面header标题
         PageResult.setPageTitle(mav, PromptInfoConstraints.FUN_TITLE_DICT_LIST);
         //返回操作提示信息
@@ -113,6 +115,7 @@ public class FrontGoodsController {
         TableGoods tableGoods = new TableGoods();
         tableGoods.setId(Integer.parseInt(queryVO.getId()+""));
         TableGoods tableGoods1=this.iTableGoodsBusiSV.select(tableGoods);
+        String queryGoodsClass = request.getParameter("queryGoodsClass");
 
         TableGoods jjGoods = new TableGoods();
         if (StringUtils.isNotEmpty(tableGoods1.getExtentGoodsId())) {
@@ -129,6 +132,7 @@ public class FrontGoodsController {
 
         view.addObject("jjGoods",jjGoods);
         view.addObject("goods",tableGoods1);
+        view.addObject("queryGoodsClass",queryGoodsClass);
         view.addObject("queryVO",queryVO);
         view.setViewName("front/goods/view");
         return view;

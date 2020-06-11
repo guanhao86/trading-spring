@@ -9,6 +9,9 @@ public class QueryReqVO extends PageVO {
 
     private Integer state;
 
+    //金额
+    private float amount;
+
     //奖金明细类型：
     /**
      * 1	直推奖金
@@ -35,5 +38,10 @@ public class QueryReqVO extends PageVO {
     private String oldPassword;
 
     private String newPassword;
+    /**
+     * 1:已发放
+     * 0：待发放
+     */
+    private String closeState;
 
 }

@@ -74,51 +74,51 @@
                     #formInput({"name": "银行卡开户行地址"} {"name": "bankOpenAre", "value":"$!{member.bankOpenAre}","id": "bankOpenAre","required": "required","readonly":"readonly"})
                     #formInput({"name": "奖金发放到期时间"} {"name": "perfomanceTime", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{member.perfomanceTime})","id": "perfomanceTime","required": "required","readonly":"readonly"})
 
-                <div class="form-group" >
-                    <label class="col-sm-2 control-label">身份证正面：</label>
-                    <div class="col-sm-2">
-                        <div class="fileupload-new thumbnail" >
-                            <img src="$!{member.cartImg1}" alt="" id="fcartImg1" value="$!{member.cartImg1}"
-                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" >
-                    <label class="col-sm-2 control-label">身份证反面：</label>
-                    <div class="col-sm-2">
-                        <div class="fileupload-new thumbnail" >
-                            <img src="$!{member.cartImg2}" alt="" id="fcartImg2" value="$!{member.cartImg2}"
-                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" >
-                    <label class="col-sm-2 control-label">身份证手持：</label>
-                    <div class="col-sm-2">
-                        <div class="fileupload-new thumbnail" >
-                            <img src="$!{member.cartImg3}" alt="" id="fcartImg3" value="$!{member.cartImg3}"
-                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" >
-                    <label class="col-sm-2 control-label">银行卡正面：</label>
-                    <div class="col-sm-2">
-                        <div class="fileupload-new thumbnail" >
-                            <img src="$!{member.bankImg1}" alt="" id="fbankImg1" value="$!{member.bankImg1}"
-                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" >
-                    <label class="col-sm-2 control-label">银行卡反面：</label>
-                    <div class="col-sm-2">
-                        <div class="fileupload-new thumbnail" >
-                            <img src="$!{member.bankImg2}" alt="" id="fbankImg2" value="$!{member.bankImg2}"
-                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
-                        </div>
-                    </div>
-                </div>
+##                <div class="form-group" >
+##                    <label class="col-sm-2 control-label">身份证正面：</label>
+##                    <div class="col-sm-2">
+##                        <div class="fileupload-new thumbnail" >
+##                            <img src="$!{member.cartImg1}" alt="" id="fcartImg1" value="$!{member.cartImg1}"
+##                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+##                        </div>
+##                    </div>
+##                </div>
+##                <div class="form-group" >
+##                    <label class="col-sm-2 control-label">身份证反面：</label>
+##                    <div class="col-sm-2">
+##                        <div class="fileupload-new thumbnail" >
+##                            <img src="$!{member.cartImg2}" alt="" id="fcartImg2" value="$!{member.cartImg2}"
+##                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+##                        </div>
+##                    </div>
+##                </div>
+##                <div class="form-group" >
+##                    <label class="col-sm-2 control-label">身份证手持：</label>
+##                    <div class="col-sm-2">
+##                        <div class="fileupload-new thumbnail" >
+##                            <img src="$!{member.cartImg3}" alt="" id="fcartImg3" value="$!{member.cartImg3}"
+##                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+##                        </div>
+##                    </div>
+##                </div>
+##                <div class="form-group" >
+##                    <label class="col-sm-2 control-label">银行卡正面：</label>
+##                    <div class="col-sm-2">
+##                        <div class="fileupload-new thumbnail" >
+##                            <img src="$!{member.bankImg1}" alt="" id="fbankImg1" value="$!{member.bankImg1}"
+##                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+##                        </div>
+##                    </div>
+##                </div>
+##                <div class="form-group" >
+##                    <label class="col-sm-2 control-label">银行卡反面：</label>
+##                    <div class="col-sm-2">
+##                        <div class="fileupload-new thumbnail" >
+##                            <img src="$!{member.bankImg2}" alt="" id="fbankImg2" value="$!{member.bankImg2}"
+##                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"/>
+##                        </div>
+##                    </div>
+##                </div>
 
         #end
     #end

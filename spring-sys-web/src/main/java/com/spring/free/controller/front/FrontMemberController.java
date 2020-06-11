@@ -75,23 +75,25 @@ public class FrontMemberController {
         //调用python获取在客户端我的粉丝这个界面，最上面加两行，左区业绩： 右区业绩
         //调用我这个函数获得数据就可以了，传参数是字符串类型的，member_id
         //String result = "(1,2)";
-        String result = PythonUtil3.runPy(python_path, "get_child_achievement.py", user.getUsername(), "");
+//        String result = PythonUtil3.runPy(python_path, "get_child_achievement.py", user.getUsername(), "");
+//
+//        if (StringUtils.isNotEmpty(result) && result.indexOf("(") >= 0 && result.indexOf(")")>=0) {
+//            result = result.substring(1, result.length()-1);
+//        }
+//
+//
+//        System.out.println("左区业绩： 右区业绩："+result);
 
-        if (StringUtils.isNotEmpty(result) && result.indexOf("(") >= 0 && result.indexOf(")")>=0) {
-            result = result.substring(1, result.length()-1);
-        }
+        TableMember me = this.iTableMemberBusiSV.selectByMemberId(user.getUsername());
 
-
-        System.out.println("左区业绩： 右区业绩："+result);
-
-        String left = "0";
-        String right = "0";
-        String[] results = result.split(",");
-
-        if (results != null && results.length == 2) {
-            left = results[0];
-            right = results[1];
-        }
+        String left = me.getLeftAmount() == null ? "0" : String.valueOf(me.getLeftAmount());
+        String right = me.getRightAmount() == null ? "0" : String.valueOf(me.getRightAmount());
+//        String[] results = result.split(",");
+//
+//        if (results != null && results.length == 2) {
+//            left = results[0];
+//            right = results[1];
+//        }
 
         //获取热门话题列表信息
         mav.addObject("left", left);
@@ -173,7 +175,7 @@ public class FrontMemberController {
             }
 
             member.setAutFlag(2); //修改信息后为待审核
-            this.iTableMemberBusiSV.update(member, false);
+            this.iTableMemberBusiSV.updateSimple(member);
         }catch (Exception e) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
         }

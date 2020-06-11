@@ -1,5 +1,6 @@
 package com.spring.fee.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -455,52 +456,52 @@ public class TableBonusDetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andBonusEqualTo(Float value) {
+        public Criteria andBonusEqualTo(BigDecimal value) {
             addCriterion("bonus =", value, "bonus");
             return (Criteria) this;
         }
 
-        public Criteria andBonusNotEqualTo(Float value) {
+        public Criteria andBonusNotEqualTo(BigDecimal value) {
             addCriterion("bonus <>", value, "bonus");
             return (Criteria) this;
         }
 
-        public Criteria andBonusGreaterThan(Float value) {
+        public Criteria andBonusGreaterThan(BigDecimal value) {
             addCriterion("bonus >", value, "bonus");
             return (Criteria) this;
         }
 
-        public Criteria andBonusGreaterThanOrEqualTo(Float value) {
+        public Criteria andBonusGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("bonus >=", value, "bonus");
             return (Criteria) this;
         }
 
-        public Criteria andBonusLessThan(Float value) {
+        public Criteria andBonusLessThan(BigDecimal value) {
             addCriterion("bonus <", value, "bonus");
             return (Criteria) this;
         }
 
-        public Criteria andBonusLessThanOrEqualTo(Float value) {
+        public Criteria andBonusLessThanOrEqualTo(BigDecimal value) {
             addCriterion("bonus <=", value, "bonus");
             return (Criteria) this;
         }
 
-        public Criteria andBonusIn(List<Float> values) {
+        public Criteria andBonusIn(List<BigDecimal> values) {
             addCriterion("bonus in", values, "bonus");
             return (Criteria) this;
         }
 
-        public Criteria andBonusNotIn(List<Float> values) {
+        public Criteria andBonusNotIn(List<BigDecimal> values) {
             addCriterion("bonus not in", values, "bonus");
             return (Criteria) this;
         }
 
-        public Criteria andBonusBetween(Float value1, Float value2) {
+        public Criteria andBonusBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("bonus between", value1, value2, "bonus");
             return (Criteria) this;
         }
 
-        public Criteria andBonusNotBetween(Float value1, Float value2) {
+        public Criteria andBonusNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("bonus not between", value1, value2, "bonus");
             return (Criteria) this;
         }
@@ -692,6 +693,196 @@ public class TableBonusDetailExample {
 
         public Criteria andCloseStateNotBetween(Integer value1, Integer value2) {
             addCriterion("close_state not between", value1, value2, "closeState");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateTimeIsNull() {
+            addCriterion("operate_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateTimeIsNotNull() {
+            addCriterion("operate_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateTimeEqualTo(Date value) {
+            addCriterion("operate_time =", value, "operateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateTimeNotEqualTo(Date value) {
+            addCriterion("operate_time <>", value, "operateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateTimeGreaterThan(Date value) {
+            addCriterion("operate_time >", value, "operateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("operate_time >=", value, "operateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateTimeLessThan(Date value) {
+            addCriterion("operate_time <", value, "operateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("operate_time <=", value, "operateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateTimeIn(List<Date> values) {
+            addCriterion("operate_time in", values, "operateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateTimeNotIn(List<Date> values) {
+            addCriterion("operate_time not in", values, "operateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateTimeBetween(Date value1, Date value2) {
+            addCriterion("operate_time between", value1, value2, "operateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("operate_time not between", value1, value2, "operateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminIsNull() {
+            addCriterion("close_admin is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminIsNotNull() {
+            addCriterion("close_admin is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminEqualTo(String value) {
+            addCriterion("close_admin =", value, "closeAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminNotEqualTo(String value) {
+            addCriterion("close_admin <>", value, "closeAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminGreaterThan(String value) {
+            addCriterion("close_admin >", value, "closeAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminGreaterThanOrEqualTo(String value) {
+            addCriterion("close_admin >=", value, "closeAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminLessThan(String value) {
+            addCriterion("close_admin <", value, "closeAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminLessThanOrEqualTo(String value) {
+            addCriterion("close_admin <=", value, "closeAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminLike(String value) {
+            addCriterion("close_admin like", value, "closeAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminNotLike(String value) {
+            addCriterion("close_admin not like", value, "closeAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminIn(List<String> values) {
+            addCriterion("close_admin in", values, "closeAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminNotIn(List<String> values) {
+            addCriterion("close_admin not in", values, "closeAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminBetween(String value1, String value2) {
+            addCriterion("close_admin between", value1, value2, "closeAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseAdminNotBetween(String value1, String value2) {
+            addCriterion("close_admin not between", value1, value2, "closeAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseTimeIsNull() {
+            addCriterion("close_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseTimeIsNotNull() {
+            addCriterion("close_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseTimeEqualTo(Date value) {
+            addCriterion("close_time =", value, "closeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseTimeNotEqualTo(Date value) {
+            addCriterion("close_time <>", value, "closeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseTimeGreaterThan(Date value) {
+            addCriterion("close_time >", value, "closeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("close_time >=", value, "closeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseTimeLessThan(Date value) {
+            addCriterion("close_time <", value, "closeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseTimeLessThanOrEqualTo(Date value) {
+            addCriterion("close_time <=", value, "closeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseTimeIn(List<Date> values) {
+            addCriterion("close_time in", values, "closeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseTimeNotIn(List<Date> values) {
+            addCriterion("close_time not in", values, "closeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseTimeBetween(Date value1, Date value2) {
+            addCriterion("close_time between", value1, value2, "closeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseTimeNotBetween(Date value1, Date value2) {
+            addCriterion("close_time not between", value1, value2, "closeTime");
             return (Criteria) this;
         }
     }

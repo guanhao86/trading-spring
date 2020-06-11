@@ -4,11 +4,9 @@ package com.spring.free.controller.manage;/**
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
-import com.spring.fee.model.TableBonusDetail;
-import com.spring.fee.model.TableMemberGoods;
-import com.spring.fee.model.TableMemberGoodsDZ;
-import com.spring.fee.model.TableOrderDZ;
+import com.spring.fee.model.*;
 import com.spring.fee.service.ITableBonusDetailBusiSV;
+import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.fee.service.ITableMemberGoodsBusiSV;
 import com.spring.fee.service.ITableOrderBusiSV;
 import com.spring.free.domain.QueryVO;
@@ -50,6 +48,9 @@ public class ManageMemberGoodsController {
 
     @Autowired
     ITableOrderBusiSV iTableOrderBusiSV;
+
+    @Autowired
+    ITableMemberBusiSV iTableMemberBusiSV;
 
     /*
      * @Author gh
@@ -138,7 +139,7 @@ public class ManageMemberGoodsController {
         if (tableBonusDetailList != null) {
             for (TableBonusDetail tableBonusDetail : tableBonusDetailList2) {
                 if (7==tableBonusDetail.getBonusId()) {
-                    scoreVO.setAddToday(Integer.parseInt(tableBonusDetail.getBonus()+""));
+                    scoreVO.setAddToday((int)Float.parseFloat(tableBonusDetail.getBonus()+""));
                     break;
                 }
             }
@@ -153,10 +154,16 @@ public class ManageMemberGoodsController {
         List<ScoreVO> scoreVOList = new ArrayList<>();
         scoreVOList.add(scoreVO);
 
+        if (StringUtils.isNotEmpty(queryVO.getMemberId())){
+            TableMember tableMember = iTableMemberBusiSV.selectByMemberId(queryVO.getMemberId());
+            scoreVO.setScore(tableMember.getScore());
+        }
+
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);
         mav.addObject("queryVO",queryVO);
         mav.addObject("scoreVOList", scoreVOList);
+
         //返回页面header标题
         PageResult.setPageTitle(mav, PromptInfoConstraints.FUN_TITLE_DICT_LIST);
         //返回操作提示信息

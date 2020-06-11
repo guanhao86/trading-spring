@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:edit", "isBack": true, "href": "manage/invest/list"})
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:edit", "isBack": true, "href": "manage/invest/list?type=$!{invest.type}"})
                 #btn({"btnName":"提交", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
             #end
             #@panelBody()

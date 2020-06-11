@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="/summernote/summernote.css">
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"管理员充值", "perm": "system:member:edit", "isBack": false, "href": "manage/invest/list"})
+            #@panelHeader({"title":"管理员充值", "perm": "system:member:edit", "isBack": false, "href": "manage/invest/list?type=$!{invest.type}"})
                 #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
             #end
             #@panelBody()

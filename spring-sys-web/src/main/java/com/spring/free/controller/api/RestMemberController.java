@@ -92,8 +92,8 @@ public class RestMemberController {
 
         MemberRspVO vo = new MemberRspVO();
         BeanUtils.copyProperties(tableMember, vo);
-        vo.setMRankDesc(DictUtils.getDictValue(String.valueOf(tableMember.getmRank()), "mRank", ""));
-        vo.setLevelDesc(DictUtils.getDictValue(String.valueOf(tableMember.getLevel()), "level", ""));
+        vo.setMRankDesc(DictUtils.getDictLabel(String.valueOf(tableMember.getmRank()), "mRank", ""));
+        vo.setLevelDesc(DictUtils.getDictLabel(String.valueOf(tableMember.getLevel()), "level", ""));
 
         //取金鸡数量(有效金鸡数量)
         TableMemberGoods tableMemberGoods = new TableMemberGoods();
@@ -133,7 +133,8 @@ public class RestMemberController {
             return AccessResponse.builder().data(null).success(true).rspcode(200).message("服务端处理请求成功。").build();
         }
 
-        tWheatMemberTree = this.iTableMemberBusiSV.queryAllChildTree(tWheatMemberTree);
+        Map<String, List<TableMember>> map = this.iTableMemberBusiSV.queryArrangeListMap(new TableMember());
+        tWheatMemberTree = this.iTableMemberBusiSV.queryAllChildTree(tWheatMemberTree, map);
         tWheatMemberTree.setPhone(tableMember.getPhone());
         tWheatMemberTree.setLevel(tableMember.getLevel());
         TreeVO treeVO = new TreeVO();
@@ -278,23 +279,24 @@ public class RestMemberController {
         //调用python获取在客户端我的粉丝这个界面，最上面加两行，左区业绩： 右区业绩
         //调用我这个函数获得数据就可以了，传参数是字符串类型的，member_id
         //String result = "(1,2)";
-        String result = PythonUtil3.runPy(python_path, "get_child_achievement.py", memberId, "");
-
-        if (StringUtils.isNotEmpty(result) && result.indexOf("(") >= 0 && result.indexOf(")")>=0) {
-            result = result.substring(1, result.length()-1);
-        }
-
-        System.out.println("左区业绩： 右区业绩："+result);
-
-        String left = "0";
-        String right = "0";
-        String[] results = result.split(",");
-
-        if (results != null && results.length == 2) {
-            left = results[0];
-            right = results[1];
-        }
-
+//        String result = PythonUtil3.runPy(python_path, "get_child_achievement.py", memberId, "");
+//
+//        if (StringUtils.isNotEmpty(result) && result.indexOf("(") >= 0 && result.indexOf(")")>=0) {
+//            result = result.substring(1, result.length()-1);
+//        }
+//
+//        System.out.println("左区业绩： 右区业绩："+result);
+//
+//        String left = "0";
+//        String right = "0";
+//        String[] results = result.split(",");
+//
+//        if (results != null && results.length == 2) {
+//            left = results[0];
+//            right = results[1];
+//        }
+        String left = tabelMember.getLeftAmount() == null ? "0" : String.valueOf(tabelMember.getLeftAmount());
+        String right = tabelMember.getRightAmount() == null ? "0" : String.valueOf(tabelMember.getRightAmount());
         vo.setLeftAmount(left);
         vo.setRightAmount(right);
 
@@ -387,13 +389,88 @@ public class RestMemberController {
     @RequestMapping(value = "/myChildlist")
     public @ResponseBody
     AccessResponse myChildlist(@RequestBody QueryReqVO queryReqVO, HttpServletRequest request, HttpServletResponse response){
-        log.info("密码修改{}", JSON.toJSONString(queryReqVO));
+        log.info("我的粉丝{}", JSON.toJSONString(queryReqVO));
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         PageInfo<TableMember> pageInfo;
         try {
             String memberId = TokenUtil.getUserId(request);
             pageInfo = this.iTableMemberBusiSV.queryAllChildPage(memberId, queryReqVO.getPageNum(), queryReqVO.getPageSize(), null);
+
+        }catch (Exception e) {
+            return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
+        }
+
+        //返回体
+        stopWatch.stop();
+        log.info("耗时：" + stopWatch.getTotalTimeSeconds());
+        return AccessResponse.builder().data(pageInfo).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
+    }
+
+    /**
+     * 我的领导
+     */
+    @RequestMapping(value = "/getArrangeMember")
+    public @ResponseBody
+    AccessResponse myChildlist(HttpServletRequest request, HttpServletResponse response){
+        log.info("我的领导{}");
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        TableMember arrangeMember ;
+        try {
+            String memberId = TokenUtil.getUserId(request);
+            TableMember tableMember = this.iTableMemberBusiSV.selectByMemberId(memberId);
+            arrangeMember = this.iTableMemberBusiSV.selectByMemberId(tableMember.getArrangeId());
+
+        }catch (Exception e) {
+            return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
+        }
+
+        //返回体
+        stopWatch.stop();
+        log.info("耗时：" + stopWatch.getTotalTimeSeconds());
+        return AccessResponse.builder().data(arrangeMember).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
+    }
+
+    /**
+     * 修改会员信息
+     */
+    @RequestMapping(value = "/modify")
+    public @ResponseBody
+    AccessResponse modify(@RequestBody TableMember tableMember, HttpServletRequest request, HttpServletResponse response){
+        log.info("修改会员信息{}", JSON.toJSONString(tableMember));
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        try {
+            String memberId = TokenUtil.getUserId(request);
+            tableMember.setMemberId(memberId);
+            this.iTableMemberBusiSV.update(tableMember, false);
+
+        }catch (Exception e) {
+            return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
+        }
+
+        //返回体
+        stopWatch.stop();
+        log.info("耗时：" + stopWatch.getTotalTimeSeconds());
+        return AccessResponse.builder().data(tableMember).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
+    }
+
+    /**
+     * 我的金鸡
+     */
+    @RequestMapping(value = "/myChickenList")
+    public @ResponseBody
+    AccessResponse myChickenList(@RequestBody QueryReqVO queryReqVO, HttpServletRequest request, HttpServletResponse response){
+        log.info("我的金鸡{}", JSON.toJSONString(queryReqVO));
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        PageInfo<TableMemberGoods> pageInfo;
+        try {
+            String memberId = TokenUtil.getUserId(request);
+            TableMemberGoods tableMemberGoods = new TableMemberGoods();
+            tableMemberGoods.setMemberId(memberId);
+            pageInfo = this.iTableMemberGoodsBusiSV.queryListPage(tableMemberGoods, queryReqVO.getPageNum(), queryReqVO.getPageSize(), null);
 
         }catch (Exception e) {
             return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();

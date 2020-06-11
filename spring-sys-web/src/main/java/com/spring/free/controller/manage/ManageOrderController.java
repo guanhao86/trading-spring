@@ -71,7 +71,9 @@ public class ManageOrderController {
         TableOrder tableOrder = new TableOrder();
         BeanUtils.copyProperties(queryVO, tableOrder);
         tableOrder.setId(queryVO.getId()==null?null:queryVO.getId().intValue());
-
+        if (StringUtils.isNotEmpty(queryVO.getGoodsClass())) {
+            tableOrder.setGoodsClass(Integer.parseInt(queryVO.getGoodsClass()));
+        }
         HttpSession session1 = request.getSession();
         session1.setAttribute("QUERY_ORDER_LIST", tableOrder);
 
@@ -272,11 +274,21 @@ public class ManageOrderController {
                     }
                     TableOrder tableOrder = new TableOrder();
                     tableOrder.setId(Integer.parseInt(row.getCell(0).getStringCellValue().substring(2)));
-                    tableOrder.setOrderId(row.getCell(2).getStringCellValue());
-                    if (row.getCell(1) == null || StringUtils.isEmpty(row.getCell(1).getStringCellValue())){
+                    tableOrder.setOrderId(row.getCell(3).getStringCellValue());
+                    if (row.getCell(1) == null) {
                         continue;
                     }
+                    row.getCell(1).setCellType(Cell.CELL_TYPE_STRING);
+
+                    if ( StringUtils.isEmpty(row.getCell(1).getStringCellValue())){
+                        continue;
+                    }
+
                     tableOrder.setExpressNumber(row.getCell(1).getStringCellValue());
+                    if (row.getCell(2) != null) {
+                        row.getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+                        tableOrder.setExpressCompany(row.getCell(2).getStringCellValue());
+                    }
                     tableOrderList.add(tableOrder);
                 }
 
@@ -284,6 +296,7 @@ public class ManageOrderController {
             }
         } catch (Exception e) {
             map.put(Global.URL, Global.ADMIN_PATH +"/manage/order/sendBatchIndex");
+            e.printStackTrace();
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
 
         }

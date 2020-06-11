@@ -42,6 +42,7 @@
     <if test="memberId != null and memberId !=''">
       and tmg.member_id = #{memberId}
     </if>
+    order by create_time desc
   </select>
   <select id="selectByGroup" parameterType="com.spring.fee.model.TableMemberGoodsDZ" resultMap="BaseResultMap">
     SELECT
