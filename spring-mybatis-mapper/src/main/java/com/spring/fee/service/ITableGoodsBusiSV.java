@@ -3,6 +3,7 @@ package com.spring.fee.service;
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.model.TableGoods;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,4 +22,6 @@ public interface ITableGoodsBusiSV {
     Map<Integer, TableGoods> selectMap(TableGoods bo);
 
     PageInfo<TableGoods> queryListPage(TableGoods bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
+
+    List<TableGoods> queryList(TableGoods bo, String sort);
 }

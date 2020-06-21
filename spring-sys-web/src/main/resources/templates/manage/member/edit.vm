@@ -28,13 +28,13 @@
                     #end
                     #formInput({"name": "ID"} {"name": "memberId", "value":"$!{member.memberId}","id": "memberId","required": "required","readonly":"readonly"})
                     #formInput({"name": "电话"} {"name": "phone", "value":"$!{member.phone}","id": "phone","required": "required"})
-                    #formInput({"name": "姓名"} {"name": "reallyName", "value":"$!{member.reallyName}","id": "reallyName","required": "required"})
-                    #formInput({"name": "推荐人ID"} {"name": "referenceId", "value":"$!{member.referenceId}","id": "referenceId","required": "required"})
-                    #formInput({"name": "安置人ID"} {"name": "arrangeId", "value":"$!{member.arrangeId}","id": "arrangeId","required": "required"})
+                    #formInput({"name": "姓名"} {"name": "reallyName", "value":"$!{member.reallyName}","id": "reallyName"})
+                    #formInput({"name": "推荐人ID"} {"name": "referenceId", "value":"$!{member.referenceId}","id": "referenceId"})
+                    #formInput({"name": "安置人ID"} {"name": "arrangeId", "value":"$!{member.arrangeId}","id": "arrangeId"})
                 <div class="form-group" >
                     <label class="col-sm-2 control-label">左右区标识：</label>
                     <div class="col-sm-2">
-                        #selectBS($!dict.getDictList("leftOrRight"), ["leftOrRight", "$!{member.leftOrRight}", "value", "label"], false, [false, "$!{member.leftOrRight}"])
+                        #selectBS($!dict.getDictList("leftOrRight4Update"), ["leftOrRight", "$!{member.leftOrRight}", "value", "label"], false, [false, "$!{member.leftOrRight}"])
                     </div>
                 </div>
                 <div class="form-group" >
@@ -78,11 +78,14 @@
                     </div>
                 </div>
 
-                    #formInput({"name": "身份证号码"} {"name": "cartId", "value":"$!{member.cartId}","id": "cartId","required": "required"})
-                    #formInput({"name": "银行卡号"} {"name": "bankCardId", "value":"$!{member.bankCardId}","id": "bankCardId","required": "required"})
-                    #formInput({"name": "开户行名字"} {"name": "bankName", "value":"$!{member.bankName}","id": "bankName","required": "required"})
-                    #formInput({"name": "银行卡开户行地址"} {"name": "bankOpenAre", "value":"$!{member.bankOpenAre}","id": "bankOpenAre","required": "required"})
-##                <div class="form-group">
+                    #formInput({"name": "身份证号码"} {"name": "cartId", "value":"$!{member.cartId}","id": "cartId"})
+                    #formInput({"name": "银行卡号"} {"name": "bankCardId", "value":"$!{member.bankCardId}","id": "bankCardId"})
+                    #formInput({"name": "开户行名字"} {"name": "bankName", "value":"$!{member.bankName}","id": "bankName"})
+                    #formInput({"name": "银行卡开户行地址"} {"name": "bankOpenAre", "value":"$!{member.bankOpenAre}","id": "bankOpenAre"})
+                    #formInput({"name": "收货人姓名"} {"name": "receiverName", "value":"$!{member.receiverName}","id": "receiverName"})
+                    #formInput({"name": "收货人电话"} {"name": "receiverPhone", "value":"$!{member.receiverPhone}","id": "receiverPhone"})
+
+                ##                <div class="form-group">
 ##                    <label class="col-sm-2 control-label">身份证正面<font color="red">*</font>：</label>
 ##                    <div class="col-sm-3">
 ##                        <div class="fileupload fileupload-new" data-provides="fileupload">

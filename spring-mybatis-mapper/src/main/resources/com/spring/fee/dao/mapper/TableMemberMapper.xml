@@ -48,6 +48,9 @@
     <result column="right_amount" jdbcType="REAL" property="rightAmount" />
     <result column="left_new" jdbcType="REAL" property="leftNew" />
     <result column="right_new" jdbcType="REAL" property="rightNew" />
+    <result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />
+    <result column="receiver_phone" jdbcType="VARCHAR" property="receiverPhone" />
+    <result column="LOGIN_FLAG" jdbcType="VARCHAR" property="loginFlag" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -126,7 +129,7 @@
     cart_id, bank_card_id, bank_name, bank_open_are, cart_img1, cart_img2, cart_img3, 
     bank_img1, bank_img2, register_time, last_login_time, perfomance_time, reporting_amount, 
     update_time, addr, score, account_car_point, state, left_amount, right_amount, left_new, 
-    right_new
+    right_new, receiver_name, receiver_phone, LOGIN_FLAG
   </sql>
   <select id="selectByExample" parameterType="com.spring.fee.model.TableMemberExample" resultMap="BaseResultMap">
     <!--
@@ -196,7 +199,8 @@
       perfomance_time, reporting_amount, update_time, 
       addr, score, account_car_point, 
       state, left_amount, right_amount, 
-      left_new, right_new)
+      left_new, right_new, receiver_name, 
+      receiver_phone, LOGIN_FLAG)
     values (#{memberId,jdbcType=VARCHAR}, #{referenceId,jdbcType=VARCHAR}, #{arrangeId,jdbcType=VARCHAR}, 
       #{leftOrRight,jdbcType=INTEGER}, #{leftChildNode,jdbcType=VARCHAR}, #{rightChildNode,jdbcType=VARCHAR}, 
       #{registerFrom,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
@@ -210,7 +214,8 @@
       #{perfomanceTime,jdbcType=TIMESTAMP}, #{reportingAmount,jdbcType=REAL}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{addr,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{accountCarPoint,jdbcType=REAL}, 
       #{state,jdbcType=VARCHAR}, #{leftAmount,jdbcType=REAL}, #{rightAmount,jdbcType=REAL}, 
-      #{leftNew,jdbcType=REAL}, #{rightNew,jdbcType=REAL})
+      #{leftNew,jdbcType=REAL}, #{rightNew,jdbcType=REAL}, #{receiverName,jdbcType=VARCHAR}, 
+      #{receiverPhone,jdbcType=VARCHAR}, #{loginFlag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.spring.fee.model.TableMember">
     <!--
@@ -345,6 +350,15 @@
       <if test="rightNew != null">
         right_new,
       </if>
+      <if test="receiverName != null">
+        receiver_name,
+      </if>
+      <if test="receiverPhone != null">
+        receiver_phone,
+      </if>
+      <if test="loginFlag != null">
+        LOGIN_FLAG,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="memberId != null">
@@ -469,6 +483,15 @@
       </if>
       <if test="rightNew != null">
         #{rightNew,jdbcType=REAL},
+      </if>
+      <if test="receiverName != null">
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverPhone != null">
+        #{receiverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="loginFlag != null">
+        #{loginFlag,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -615,6 +638,15 @@
       <if test="record.rightNew != null">
         right_new = #{record.rightNew,jdbcType=REAL},
       </if>
+      <if test="record.receiverName != null">
+        receiver_name = #{record.receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverPhone != null">
+        receiver_phone = #{record.receiverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginFlag != null">
+        LOGIN_FLAG = #{record.loginFlag,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -667,7 +699,10 @@
       left_amount = #{record.leftAmount,jdbcType=REAL},
       right_amount = #{record.rightAmount,jdbcType=REAL},
       left_new = #{record.leftNew,jdbcType=REAL},
-      right_new = #{record.rightNew,jdbcType=REAL}
+      right_new = #{record.rightNew,jdbcType=REAL},
+      receiver_name = #{record.receiverName,jdbcType=VARCHAR},
+      receiver_phone = #{record.receiverPhone,jdbcType=VARCHAR},
+      LOGIN_FLAG = #{record.loginFlag,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -802,6 +837,15 @@
       <if test="rightNew != null">
         right_new = #{rightNew,jdbcType=REAL},
       </if>
+      <if test="receiverName != null">
+        receiver_name = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverPhone != null">
+        receiver_phone = #{receiverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="loginFlag != null">
+        LOGIN_FLAG = #{loginFlag,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -851,7 +895,10 @@
       left_amount = #{leftAmount,jdbcType=REAL},
       right_amount = #{rightAmount,jdbcType=REAL},
       left_new = #{leftNew,jdbcType=REAL},
-      right_new = #{rightNew,jdbcType=REAL}
+      right_new = #{rightNew,jdbcType=REAL},
+      receiver_name = #{receiverName,jdbcType=VARCHAR},
+      receiver_phone = #{receiverPhone,jdbcType=VARCHAR},
+      LOGIN_FLAG = #{loginFlag,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

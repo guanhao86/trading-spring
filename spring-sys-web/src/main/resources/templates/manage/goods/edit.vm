@@ -66,7 +66,7 @@
                         <div class="form-group" >
                             <label class="col-sm-2 control-label">购买商品后获得的级别：</label>
                             <div class="col-sm-2">
-                                #selectBS($!dict.getDictList("level"), ["level", "$!{goods.incomeVipLevel}", "value", "label"], false, [false, "$!{goods.incomeVipLevel}"])
+                                #selectBS($!dict.getDictList("level"), ["incomeVipLevel", "$!{goods.incomeVipLevel}", "value", "label"], false, [false, "$!{goods.incomeVipLevel}"])
                             </div>
                         </div>
                         #formInput({"name": "购买商品后获得的三方商城积分"} {"name": "incomeDjPoint", "value":"$!{goods.incomeDjPoint}","id": "incomeDjPoint"})

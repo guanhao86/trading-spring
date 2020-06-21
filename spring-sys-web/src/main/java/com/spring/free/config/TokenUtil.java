@@ -155,6 +155,6 @@ public class TokenUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(createJWT("92600000053", "王鑫", "", 3600 * 1000 * 100));
+        System.out.println(createJWT("92600000001", "王鑫", "", 3600 * 1000 * 100));
     }
 }

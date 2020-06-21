@@ -176,7 +176,7 @@ public class TableInvestBusiSVImpl implements ITableInvestBusiSV {
             }
         }
 
-        example.setOrderByClause("approval_time desc");
+        example.setOrderByClause("invest_time desc");
 
         PageInfo<TableInvest> pageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.iTableInvestMapper.selectByExample(example));

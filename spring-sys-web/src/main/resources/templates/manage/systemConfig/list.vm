@@ -8,7 +8,7 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["直接推荐奖", "VIP1(金卡)的组织奖", "VIP2(钻石卡的组织奖", "VIP2(钻石卡的组织奖", "VIP2(钻石卡的组织奖", "VIP2(钻石卡的组织奖", "VIP2(钻石卡的组织奖"],"", false)
+                    #tableTHead(["直接推荐奖", "VIP1(金卡)的管理奖", "VIP2(钻石卡的管理奖", "VIP2(钻石卡的管理奖", "VIP2(钻石卡的管理奖", "VIP2(钻石卡的管理奖", "VIP2(钻石卡的管理奖"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.id}")

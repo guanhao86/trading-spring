@@ -78,6 +78,7 @@
       sum(right_amount) right_amount
     from table_member
     where 1 = 1
-
   </select>
+
+
 </mapper>

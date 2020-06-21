@@ -108,23 +108,23 @@ public class ManageAccountController {
     @RequestMapping(value = "recharge")
     public ModelAndView recharge(ModelAndView mav, HttpServletRequest request, QueryVO queryVO, MultipartFile file) {
         Map map = Maps.newHashMap();
-        map.put(Global.URL, Global.ADMIN_PATH +"/manage/account/list");
+        map.put(Global.URL, Global.ADMIN_PATH +"/manage/invest/list?type=1");
 
-        ModelAndView modelAndView = new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/account/list"), map);
+        ModelAndView modelAndView = new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/invest/list?type=1"), map);
 
         try {
             this.iMemberAccountDetailBusiSV.changeMoney(
                     queryVO.getMemberId(),
                     "1",
                     Float.parseFloat(queryVO.getAmount()),
-                    "管理员充值",
+                    "管理员充值["+queryVO.getRemark()+"]",
                     null);
             UserInfo user = BaseGetPrincipal.getUser();
             TableInvest tableInvest = new TableInvest();
             tableInvest.setType(InvestConstants.InvestType.ADMIN);
             tableInvest.setOperMemberId(user.getUsername());
             tableInvest.setMemberId(queryVO.getMemberId());
-            tableInvest.setApprovalResult("管理员充值");
+            tableInvest.setApprovalResult("管理员充值["+queryVO.getRemark()+"]");
             tableInvest.setAccountMoney(Float.parseFloat(queryVO.getAmount()));
             iTableInvestBusiSV.insert(tableInvest);
         }catch (Exception e) {

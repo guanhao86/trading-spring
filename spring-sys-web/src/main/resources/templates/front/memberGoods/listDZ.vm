@@ -21,7 +21,7 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["id", "会员编号", "会员姓名", "电话", "金鸡数量", "每只金鸡每天下金蛋数量", "已下金蛋数量", "创建时间", "到期时间", "金鸡来源"],"", false)
+                    #tableTHead(["id", "会员编号", "会员姓名", "电话", "金鸡数量", "每只金鸡每天下金蛋数量", "已下金蛋天数", "已下金蛋数量", "创建时间", "到期时间", "金鸡来源"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.id}")
@@ -30,6 +30,7 @@
                         #tableTd("$!{l.phone}")
                         #tableTd("$!{l.amount}")
                         #tableTd("$!{l.addScoreByonegoods}")
+                        #tableTd("$!{l.addTimes}")
                         #tableTd("$!{l.addCount}")
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.createTime}))
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.invalidTime}))

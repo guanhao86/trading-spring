@@ -8,8 +8,12 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.model.TableMember;
 import com.spring.fee.model.TableMemberDZ;
+import com.spring.fee.model.TableMemberTree;
+import com.spring.fee.model.TableOrderDZ;
 import com.spring.fee.service.ITableMemberBusiSV;
+import com.spring.fee.service.ITableOrderBusiSV;
 import com.spring.free.common.util.PythonUtil3;
+import com.spring.free.config.CommonUtils;
 import com.spring.free.config.ImageUtils;
 import com.spring.free.domain.QueryVO;
 import com.spring.free.domain.UserInfo;
@@ -20,6 +24,8 @@ import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
+import com.spring.free.utils.velocity.DictUtils;
+import com.spring.free.vo.TreeVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -28,6 +34,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +49,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,6 +67,9 @@ public class ManageMemberController {
 
     @Autowired
     ITableMemberBusiSV iTableMemberBusiSV;
+
+    @Autowired
+    ITableOrderBusiSV iTableOrderBusiSV;
 
     @Autowired
     UserService userService;
@@ -172,7 +185,7 @@ public class ManageMemberController {
         }
 
         try {
-            this.iTableMemberBusiSV.updateSimple2(member);
+            this.iTableMemberBusiSV.update(member, false);
         }catch (Exception e) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
         }
@@ -454,5 +467,94 @@ public class ManageMemberController {
         }
         PageResult.setPrompt(map,"操作成功", "success");
         return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/member/list"), map);
+    }
+
+    /*
+     * @Author bianyx
+     * @Description //TODO 管理业绩分析
+     * @Date 11:07 2019/1/18
+     * @Param [mav, request, topItem, post, buttonType, ghPic1]
+     * @return org.springframework.web.servlet.ModelAndView
+     **/
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "analyseIndex")
+    public ModelAndView analyseIndex(ModelAndView view, HttpServletRequest request, TableMember member) {
+        Map map = Maps.newHashMap();
+        PageResult.setPageTitle(view, "管理业绩分析");
+        PageResult.getPrompt(view, request, "");
+
+        view.setViewName("manage/member/analyse");
+        return view;
+    }
+
+    /**
+     * 管理业绩分析
+     * @param mav
+     * @param request
+     * @return
+     */
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "analyse")
+    public ModelAndView analyse(ModelAndView mav, HttpServletRequest request, QueryVO queryVO) {
+        /**
+         * 进入界面后输入会员编号和时间段（开始时间和结束时间），“分析”按钮
+         * 列表为左区和右区，点击分析按钮查询该会员在设定时间段内的左区和右区的业绩
+         * 业绩计算方法：根据网体结构找到会员的所有子节点，根据时间段获取该时间段内这些会员子节点的所有报单商品的订单求和，左区的所有会员订单求和后显示在左区，右区的所有订单求和后显示在右区
+         */
+        Map map = Maps.newHashMap();
+        map.put(Global.URL, Global.ADMIN_PATH +"/manage/member/analyseIndex");
+        try {
+            if (StringUtils.isNotEmpty(queryVO.getMemberId())) {
+                TableMemberTree tWheatMemberTree = new TableMemberTree();
+                tWheatMemberTree.setMemberId(queryVO.getMemberId());
+                Map<String, List<TableMember>> mapMember = this.iTableMemberBusiSV.queryArrangeListMap(new TableMember());
+                tWheatMemberTree = this.iTableMemberBusiSV.queryAllChildTree(tWheatMemberTree, mapMember);
+
+                //获取左区会员列表
+                List<String> leftList = new ArrayList<>();
+                //获取右区会员列表
+                List<String> rightList = new ArrayList<>();
+
+                setLeftOrRignt(tWheatMemberTree, leftList, rightList);
+
+                //左区结果
+                Map<String, Object> mapDate = CommonUtils.getStartEnd(queryVO);
+                if (CollectionUtils.isEmpty(leftList)) {
+                    mav.addObject("left", "0");
+                }else {
+                    TableOrderDZ left = this.iTableOrderBusiSV.selectByGroup3(leftList, (Date) mapDate.get("start"), (Date) mapDate.get("end"));
+                    mav.addObject("left", left==null?0:left.getPrice());
+                }
+                if (CollectionUtils.isEmpty(rightList)) {
+                    mav.addObject("right", "0");
+                }else {
+                    TableOrderDZ right = this.iTableOrderBusiSV.selectByGroup3(rightList, (Date) mapDate.get("start"), (Date) mapDate.get("end"));
+                    mav.addObject("right", right==null?0:right.getPrice());
+                }
+
+            }else{
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "请输入会员ID", map.get(Global.URL).toString(), map);
+            }
+
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
+        mav.setViewName("manage/member/analyse");
+        return mav;
+    }
+
+    private void setLeftOrRignt(TableMemberTree tWheatMemberTree, List<String> leftList, List<String> rightList){
+        if (tWheatMemberTree != null) {
+            if (!CollectionUtils.isEmpty(tWheatMemberTree.getChildList())) {
+                for (TableMemberTree tmp : tWheatMemberTree.getChildList()) {
+                    if (tmp.getLeftOrRight() == 1) {
+                        leftList.add(tmp.getMemberId());
+                    } else if (tmp.getLeftOrRight() == 2) {
+                        rightList.add(tmp.getMemberId());
+                    }
+                    this.setLeftOrRignt(tmp, leftList, rightList);
+                }
+            }
+        }
     }
 }

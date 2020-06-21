@@ -43,6 +43,18 @@ public interface ITableOrderBusiSV {
      */
     TableOrderDZ selectByGroup2(String memberId, Date start, Date end);
 
+    /**
+     * 13、结算管理菜单中加入一个子菜单“管理业绩分析”
+     * 进入界面后输入会员编号和时间段（开始时间和结束时间），“分析”按钮
+     * 列表为左区和右区，点击分析按钮查询该会员在设定时间段内的左区和右区的业绩
+     * 业绩计算方法：根据网体结构找到会员的所有子节点，根据时间段获取该时间段内这些会员子节点的所有报单商品的订单求和，左区的所有会员订单求和后显示在左区，右区的所有订单求和后显示在右区
+     * @param memberList
+     * @param start
+     * @param end
+     * @return
+     */
+    TableOrderDZ selectByGroup3(List<String> memberList, Date start, Date end);
+
 
     /**
      * 导出订单

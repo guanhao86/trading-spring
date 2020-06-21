@@ -4,13 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.dao.mapper.TableCashOutMapper;
-import com.spring.fee.model.TableCashOut;
-import com.spring.fee.model.TableCashOutExample;
-import com.spring.fee.model.TableInvest;
-import com.spring.fee.model.TableMember;
+import com.spring.fee.model.*;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
 import com.spring.fee.service.ITableCashOutBusiSV;
 import com.spring.fee.service.ITableMemberBusiSV;
+import com.spring.fee.service.ITableSystemConfigBusiSV;
 import com.spring.free.common.domain.AccessResponse;
 import com.spring.free.common.util.ExcelUtils;
 import com.spring.free.util.DateUtils;
@@ -25,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +44,9 @@ public class TableCashOutBusiSVImpl implements ITableCashOutBusiSV {
 
     @Autowired
     IMemberAccountDetailBusiSV iMemberAccountDetailBusiSV;
+
+    @Autowired
+    ITableSystemConfigBusiSV iTableSystemConfigBusiSV;
 
 
     /**
@@ -137,12 +139,12 @@ public class TableCashOutBusiSVImpl implements ITableCashOutBusiSV {
             }
             tableCashOut.setBankCardId(tableMember.getBankCardId());
         }
-        if (StringUtils.isEmpty(tableCashOut.getBankOpenAre())) {
-            if (StringUtils.isEmpty(tableMember.getBankOpenAre())) {
-                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "开户行地址不能为空！", "", null);
-            }
-            tableCashOut.setBankOpenAre(tableMember.getBankOpenAre());
-        }
+//        if (StringUtils.isEmpty(tableCashOut.getBankOpenAre())) {
+//            if (StringUtils.isEmpty(tableMember.getBankOpenAre())) {
+//                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "开户行地址不能为空！", "", null);
+//            }
+//            tableCashOut.setBankOpenAre(tableMember.getBankOpenAre());
+//        }
         if (StringUtils.isEmpty(tableCashOut.getBankName())) {
             if (StringUtils.isEmpty(tableMember.getBankName())) {
                 throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "开户行不能为空！", "", null);
@@ -165,11 +167,18 @@ public class TableCashOutBusiSVImpl implements ITableCashOutBusiSV {
                 //查询会员
                 TableMember tableMember = this.iTableMemberBusiSV.selectByMemberId(bo.getMemberId());
 
-                if (tableMember.getAccountMoney().floatValue() < origTableCashOut.getAmount().floatValue()) {
+                PageInfo<TableSystemConfig> systemConfigPageInfo = iTableSystemConfigBusiSV.queryListPage(new TableSystemConfig(), 1, 1, null);
+                //提现手续费配置
+                Float cashOutCostPre = systemConfigPageInfo.getList().get(0).getSysCashOutCost();
+                DecimalFormat df = new DecimalFormat("#.00");
+                Float cashOutCost = cashOutCostPre * origTableCashOut.getAmount().floatValue() / 100;
+                cashOutCost = Float.parseFloat(df.format(cashOutCost));
+                if (tableMember.getAccountMoney().floatValue() < origTableCashOut.getAmount().floatValue() + cashOutCost) {
                     throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "余额不足！", "", null);
                 }
 
                 this.iMemberAccountDetailBusiSV.changeMoney(tableMember.getMemberId(), "2", bo.getAmount(), "提现", null);
+                this.iMemberAccountDetailBusiSV.changeMoney(tableMember.getMemberId(), "2", cashOutCost, "提现手续费", null);
 
                 this.update(bo);
             }

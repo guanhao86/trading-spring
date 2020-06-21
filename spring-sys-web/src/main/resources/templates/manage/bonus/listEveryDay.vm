@@ -27,8 +27,42 @@
             #@panel()
                 #@panelBody()
                     #@table()
-                        #tableTHead(["时间", "会员编号", "会员姓名","会员级别","奖衔级别","直推奖","组织奖","伯乐奖","复消奖","奖衔奖","平台管理费","金蛋"],"", false)
+                        #tableTHead(["时间", "会员编号", "会员姓名","会员级别","奖衔级别","直推奖","管理奖","伯乐奖","复消奖","奖衔奖","平台管理费","福利积分","金蛋","总奖金"],"", false)
                         #@tableBody($page.list)
+                            #set($bonus1 = 0)
+                            #set($bonus2 = 0)
+                            #set($bonus3 = 0)
+                            #set($bonus4 = 0)
+                            #set($bonus5 = 0)
+                            #set($bonus6 = 0)
+                            #set($bonus7 = 0)
+                            #set($bonus10 = 0)
+                            #if ($!{l.bonus1} != "")
+                                #set($bonus1 = $!{l.bonus1})
+                            #end
+                            #if ($!{l.bonus2} != "")
+                                #set($bonus2 = $!{l.bonus2})
+                            #end
+                            #if ($!{l.bonus3} != "")
+                                #set($bonus3 = $!{l.bonus3})
+                            #end
+                            #if ($!{l.bonus4} != "")
+                                #set($bonus4 = $!{l.bonus4})
+                            #end
+                            #if ($!{l.bonus5} != "")
+                                #set($bonus5 = $!{l.bonus5})
+                            #end
+                            #if ($!{l.bonus6} != "")
+                                #set($bonus6 = $!{l.bonus6})
+                            #end
+                            #if ($!{l.bonus7} != "")
+                                #set($bonus7 = $!{l.bonus7})
+                            #end
+                            #if ($!{l.bonus10} != "")
+                                #set($bonus10 = $!{l.bonus10})
+                            #end
+                            #set($total = $!{bonus1} + $!{bonus2} + $!{bonus3} + $!{bonus4} + $!{bonus5} + $!{bonus6})
+
                             #tableTd($!DateTool.format("yyyy-MM-dd", $!{l.recodeTime}))
                             #tableTd("$!{l.tableMember.memberId}")
                             #tableTd("$!{l.tableMember.reallyName}")
@@ -40,7 +74,9 @@
                             #tableTd("$!{l.bonus4}")
                             #tableTd("$!{l.bonus5}")
                             #tableTd("$!{l.bonus6}")
+                            #tableTd("$!{l.bonus10}")
                             #tableTd("$!{l.bonus7}")
+                            #tableTd("$!{total}")
                             #@tableTd()
                                 #@a("查看" {"href": "$!{ctx}/manage/bonus/listIndex?memberId=$!{l.tableMember.memberId}", "class": "fa fa-pencil-square-o"})#end
                             #end

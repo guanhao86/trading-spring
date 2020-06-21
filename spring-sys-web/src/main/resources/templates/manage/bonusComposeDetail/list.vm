@@ -1,7 +1,7 @@
 #@html()
     #@wrapper()
         #@panel()
-            #@panelHeader({"title":"组织奖详情", "perm": "", "isBack": true, "href": "manage/bonus/list?bonusId=2&memberId=$!{queryVO.queryMemberId}"})
+            #@panelHeader({"title":"管理奖详情", "perm": "", "isBack": true, "href": "manage/bonus/list?bonusId=2&memberId=$!{queryVO.queryMemberId}"})
             #end
         #end
         #@panel()

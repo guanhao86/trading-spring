@@ -804,6 +804,126 @@ public class TableBalanceDetailExample {
             addCriterion("balance_type not between", value1, value2, "balanceType");
             return (Criteria) this;
         }
+
+        public Criteria andBonnusAdminCostIsNull() {
+            addCriterion("bonnus_admin_cost is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonnusAdminCostIsNotNull() {
+            addCriterion("bonnus_admin_cost is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonnusAdminCostEqualTo(Float value) {
+            addCriterion("bonnus_admin_cost =", value, "bonnusAdminCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonnusAdminCostNotEqualTo(Float value) {
+            addCriterion("bonnus_admin_cost <>", value, "bonnusAdminCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonnusAdminCostGreaterThan(Float value) {
+            addCriterion("bonnus_admin_cost >", value, "bonnusAdminCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonnusAdminCostGreaterThanOrEqualTo(Float value) {
+            addCriterion("bonnus_admin_cost >=", value, "bonnusAdminCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonnusAdminCostLessThan(Float value) {
+            addCriterion("bonnus_admin_cost <", value, "bonnusAdminCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonnusAdminCostLessThanOrEqualTo(Float value) {
+            addCriterion("bonnus_admin_cost <=", value, "bonnusAdminCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonnusAdminCostIn(List<Float> values) {
+            addCriterion("bonnus_admin_cost in", values, "bonnusAdminCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonnusAdminCostNotIn(List<Float> values) {
+            addCriterion("bonnus_admin_cost not in", values, "bonnusAdminCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonnusAdminCostBetween(Float value1, Float value2) {
+            addCriterion("bonnus_admin_cost between", value1, value2, "bonnusAdminCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonnusAdminCostNotBetween(Float value1, Float value2) {
+            addCriterion("bonnus_admin_cost not between", value1, value2, "bonnusAdminCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusCarIsNull() {
+            addCriterion("bonus_car is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusCarIsNotNull() {
+            addCriterion("bonus_car is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusCarEqualTo(Float value) {
+            addCriterion("bonus_car =", value, "bonusCar");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusCarNotEqualTo(Float value) {
+            addCriterion("bonus_car <>", value, "bonusCar");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusCarGreaterThan(Float value) {
+            addCriterion("bonus_car >", value, "bonusCar");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusCarGreaterThanOrEqualTo(Float value) {
+            addCriterion("bonus_car >=", value, "bonusCar");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusCarLessThan(Float value) {
+            addCriterion("bonus_car <", value, "bonusCar");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusCarLessThanOrEqualTo(Float value) {
+            addCriterion("bonus_car <=", value, "bonusCar");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusCarIn(List<Float> values) {
+            addCriterion("bonus_car in", values, "bonusCar");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusCarNotIn(List<Float> values) {
+            addCriterion("bonus_car not in", values, "bonusCar");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusCarBetween(Float value1, Float value2) {
+            addCriterion("bonus_car between", value1, value2, "bonusCar");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusCarNotBetween(Float value1, Float value2) {
+            addCriterion("bonus_car not between", value1, value2, "bonusCar");
+            return (Criteria) this;
+        }
     }
 
     /**

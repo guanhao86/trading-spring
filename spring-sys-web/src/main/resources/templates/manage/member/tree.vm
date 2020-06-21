@@ -13,6 +13,12 @@
                 #@divColSmNum(5)
                     #formInput({"name": "会员编号", "length": "3,8", "asterisk": false} {"name": "memberId", "id": "memberId"})
                 #end
+                #@divColSmNum(5)
+                <button class="btn btn-sm btn-primary tooltips" type="button" onclick="getParentTree()">
+                    <i class="fa fa-search"></i> 查询上级
+                </button>
+                #end
+
             #end
         #end
         #@panel()
@@ -32,7 +38,25 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
     <script>
 
+        function getParentTree() {
+            var memberId = document.getElementById("memberId").value;
+            if (memberId == "") {
+                alert("请输入会员ID");
+                return;
+            }
 
+            $.get('/api/member/getMemberInfoAjax/'+memberId, function (data) {
+                console.log("data", data)
+                data = data.data;
+                if(data != null && data.arrangeId != "" && data.arrangeId != null && data.arrangeId != undefined) {
+                    document.getElementById("memberId").value = data.arrangeId;
+                    getTree();
+                } else {
+                    alert("未查询到上级会员");
+                }
+            });
+
+        }
 
         function getTree() {
             var memberId = document.getElementById("memberId").value;

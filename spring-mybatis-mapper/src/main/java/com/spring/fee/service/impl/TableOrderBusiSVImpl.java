@@ -15,6 +15,7 @@ import com.spring.free.util.DateUtils;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
 import com.spring.free.utils.principal.BaseGetPrincipal;
+import com.spring.free.utils.velocity.DictUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.asm.Advice;
 import org.apache.commons.lang.StringUtils;
@@ -160,6 +161,7 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         /**
          * 如果操作员和会员不相同，则从操作员扣款，其他操作均为会员信息
          */
+        //------------------------------------设置操作人员/会员开始---------------------------------------------------------
         String operId = bo.getOperMemberId();
         if (StringUtils.isEmpty(operId)) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "操作会员ID不能为空！", "", null);
@@ -176,6 +178,7 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
             bo.setOrderType("1");
             member = operMember;
         }
+        //------------------------------------设置操作人员/会员完成---------------------------------------------------------
 
         //计算总金额
         TableGoods goods = new TableGoods();
@@ -192,15 +195,26 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
 
         //设置收货人信息
         if (StringUtils.isEmpty(bo.getReceiverName())){
-            bo.setReceiverName(operMember.getReallyName());
+            bo.setReceiverName(operMember.getReceiverName());
         }
         if (StringUtils.isEmpty(bo.getReceiverPhone())){
-            bo.setReceiverPhone(operMember.getPhone());
+            bo.setReceiverPhone(operMember.getReceiverPhone());
         }
         if (StringUtils.isEmpty(bo.getReceiverAddr())){
             bo.setReceiverAddr(operMember.getAddr());
         }
 
+        if (StringUtils.isEmpty(bo.getReceiverAddr())){
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "收货地址不能为空！", "", null);
+        }
+        if (StringUtils.isEmpty(bo.getReceiverName())) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "收货人姓名不能为空！", "", null);
+        }
+        if (StringUtils.isEmpty(bo.getReceiverPhone())) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "收货人电话不能为空！", "", null);
+        }
+
+        //订单金额
         Float price = bo.getAmount() * goods.getPrice();
 
         //是否购买了金鸡商品
@@ -229,6 +243,13 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         //报单商品：
         if (0 == goods.getGoodsClass()) {
 
+            //------------------升级购买操作时，额外判断下会员注册时间，注册时间大于1个月的，也不可以购买报单商品-------------------------
+            int days = Integer.parseInt(DictUtils.getDictValue("允许升级天数","updateLevelDays", "30"));
+            if(DateUtils.addDays(member.getRegisterTime(), days).getTime() - DateUtils.getSysDate().getTime() < 0) {
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "超过升级时限！", "", null);
+            }
+            //------------------升级购买操作时，额外判断下会员注册时间，注册时间大于1个月的，也不可以购买报单商品-------------------------
+
             //报单商品只能购买一个
             if (bo.getAmount() > 1) {
                 throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "报单商品只允许购买一个！", "", null);
@@ -236,34 +257,43 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
 
             boolean firstBuy = false;
 
-            //查询最后一次购买的报单商品
+            //查询购买的报单商品
             TableOrder queryTableOrder = new TableOrder();
             queryTableOrder.setMemberId(member.getMemberId());
             queryTableOrder.setGoodsClass(Integer.parseInt(InvestConstants.GoodsClass.BONUS_TYPE_0));
             List<TableOrder> tableOrderList = this.queryList(queryTableOrder, null);
 
+            if(tableOrderList != null && tableOrderList.size() >= 2) {
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "购买报单商品数量已达上限！", "", null);
+            }
+
             //订单金额
-            Float orderPrice = 0f;
-            Float incomeDjPoint = 0f;
-            Float incomeJysPoint = 0f;
+            Float orderPrice = goods.getPrice();
+            Float incomeDjPoint = goods.getIncomeDjPoint();
+            Float incomeJysPoint = goods.getIncomeJysPoint();
+            Integer incomeVipLevel = goods.getIncomeVipLevel();
+            BigDecimal totalPrice = new BigDecimal(orderPrice);
+
             //首次购买报单商品
             if (CollectionUtils.isEmpty(tableOrderList)) {
-                orderPrice = goods.getPrice();
-                incomeDjPoint = goods.getIncomeDjPoint();
-                incomeJysPoint = goods.getIncomeJysPoint();
                 firstBuy = true;
             }else{
-                //非首次购买报单商品，查询最后一次购买记录
+                //非首次购买报单商品，计算累计购买报单商品总金额
                 lastOrder = tableOrderList.get(0);
+                //累计历史订单+本地订单总金额
 
-                if (lastOrder != null) {
-                    if (goods.getPrice().floatValue() <= lastOrder.getGoodsPrice().floatValue()) {
-                        throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "购买的报单商品价格必须大于已购买报单商品金额！", "", null);
-                    } else {
-                        //购买的报单商品以差价方式购买
-                        orderPrice = goods.getPrice().floatValue() - lastOrder.getGoodsPrice().floatValue();
-                        incomeDjPoint = goods.getIncomeDjPoint().floatValue() - lastOrder.getIncomeDjPoint().floatValue();
-                        incomeJysPoint = goods.getIncomeJysPoint().floatValue() - lastOrder.getIncomeJysPoint().floatValue();
+                for (TableOrder tmp : tableOrderList) {
+                    totalPrice = totalPrice.add(tmp.getPrice());
+                }
+                TableGoods bdQuery = new TableGoods();
+                bdQuery.setState(InvestConstants.GoodsState.effect);
+                bdQuery.setGoodsClass(Integer.parseInt(InvestConstants.GoodsClass.BONUS_TYPE_0));
+                List<TableGoods> upGoods = this.iTableGoodsBusiSV.queryList(bdQuery, " PRICE DESC");
+                //计算历史总额能到达哪个报单商品金额等级
+                for (TableGoods tmp : upGoods) {
+                    if (totalPrice.floatValue() >= tmp.getPrice()) {
+                        incomeVipLevel = tmp.getIncomeVipLevel();
+                        break;
                     }
                 }
                 firstBuy = false;
@@ -280,7 +310,7 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
                 remark = "报单商品购买（"+goods.getGoodsName()+"）";
             }
 
-            if (member.getLevel().intValue() > goods.getIncomeVipLevel().intValue()) {
+            if (member.getLevel().intValue() > incomeVipLevel) {
                 throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "会员当前级别高于购买报单商品进行升级的会员级别，购买失败！", "", null);
             }
 
@@ -289,8 +319,8 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
                 firstBuy = false;
             }
             //修改会员信息
-            member.setLevel(goods.getIncomeVipLevel());
-            member.setReportingAmount(bo.getGoodsPrice());
+            member.setLevel(incomeVipLevel);
+            member.setReportingAmount(bo.getGoodsPrice().add(member.getReportingAmount()));
             //当前系统时间.month + 2 , day = 1号
             member.setPerfomanceTime(DateUtils.getFirstDayOfMonth(DateUtils.addMonths(DateUtils.getSysDate(), 2)));
             //更新会员状态为激活
@@ -298,13 +328,16 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
             member.setAccountDjPoint(member.getAccountDjPoint().add(new BigDecimal(incomeDjPoint)));
             member.setAccountJsyPoint(member.getAccountJsyPoint().add(new BigDecimal(incomeJysPoint)));
 
-            this.iTableMemberBusiSV.update(member, firstBuy);
+
             if (firstBuy) {
                 //修改会员为可登录
                 UserInfo userInfo = userService.getUserByUserName(member.getMemberId());
                 userInfo.setLoginFlag("1");
                 userService.update(userInfo, new HashMap());
+                member.setLoginFlag("1");
             }
+
+            this.iTableMemberBusiSV.update(member, firstBuy);
 
             //删除初始化，并且安置人与当前会员相同的会员信息
             //this.remove(member.getMemberId());
@@ -314,7 +347,7 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
                 更新table_member_level_change_detail表，记录会员级别变更履历
                 remark = “报单商品购买”
             */
-            iTableMemberLevelChangeDetailBusiSV.changeLevel(member.getMemberId(), goods.getIncomeVipLevel(), "报单商品购买");
+            iTableMemberLevelChangeDetailBusiSV.changeLevel(member.getMemberId(), incomeVipLevel, "报单商品购买");
         } else if (3 == goods.getGoodsClass()) {
             //单独购买金鸡商品
             //设置购买金鸡商品ID=当前购买商品ID（金鸡）
@@ -323,6 +356,7 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
             bo.setState(3);//金鸡商品默认发货
             bo.setExpressNumber("M0000000000000000");
             bo.setExpressCompany("金鸡虚拟商品");
+            bo.setSendTime(DateUtils.getSysDate());
         }
 
         //扣减金额
@@ -347,8 +381,8 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         //生成订单
         bo = this.insert(bo);
 
+        //订单额外购买金鸡产品，把金鸡商品插入用户商品表
         if (StringUtils.isNotEmpty(bo.getExtentGoodsId())) {
-            //购买的商品存在金鸡产品，把金鸡商品插入用户商品表
             log.info("订单额外购买金鸡产品，把金鸡商品插入用户商品表");
             createMemberGoods(Integer.parseInt(bo.getExtentGoodsId()), bo.getExtentGoodsCount(), bo, InvestConstants.MemberGoodsType.type2);
         }
@@ -357,16 +391,9 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
             //购买的商品存在金鸡产品，把金鸡商品插入用户商品表
             log.info("购买的商品存在金鸡产品，把金鸡商品插入用户商品表");
             int extentGoodsCount = 0;
-            if (lastOrder == null) {
-                //首次购买报单商品
-                extentGoodsCount = goods.getExtentGoodsCount();
-            }else{
-                //非首次购买报单商品，需要计算赠送的金鸡数量
-                extentGoodsCount = goods.getExtentGoodsCount() - lastOrder.getExtentGoodsCount();
-            }
+            extentGoodsCount = goods.getExtentGoodsCount();
             bo.setExtentGoodsId(goods.getExtentGoodsId());
-            //商品配置的赠送数量，非订单实际数量（订单实际数量=本次数量-上一笔订单数量）
-            bo.setExtentGoodsCount(goods.getExtentGoodsCount());
+            bo.setExtentGoodsCount(extentGoodsCount);
             bo.setExtentGoodsPrice(new BigDecimal(0));//赠送的金鸡，金额为0
             createMemberGoods(Integer.parseInt(goods.getExtentGoodsId()), extentGoodsCount, bo, InvestConstants.MemberGoodsType.type1);
         }
@@ -401,6 +428,12 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
             member = operMember;
         }
 
+        //------------------升级购买操作时，额外判断下会员注册时间，注册时间大于1个月的，也不可以购买报单商品-------------------------
+        if(DateUtils.addDays(member.getRegisterTime(), 30).getTime() - DateUtils.getSysDate().getTime() < 0) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "超过升级时限！", "", null);
+        }
+        //------------------升级购买操作时，额外判断下会员注册时间，注册时间大于1个月的，也不可以购买报单商品-------------------------
+
         //报单商品只能购买一个
         if (bo.getAmount() > 1) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "报单商品只允许购买一个！", "", null);
@@ -413,23 +446,12 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         queryTableOrder.setGoodsClass(Integer.parseInt(InvestConstants.GoodsClass.BONUS_TYPE_0));
         List<TableOrder> tableOrderList = this.queryList(queryTableOrder, null);
 
-        //订单金额
-        Float orderPrice = 0f;
-        //首次购买报单商品
-        if (CollectionUtils.isEmpty(tableOrderList)) {
-            orderPrice = goods.getPrice();
-        }else{
-            //非首次购买报单商品，查询最后一次购买记录
-            TableOrder lastOrder = tableOrderList.get(0);
-            if (lastOrder != null) {
-                if (goods.getPrice().floatValue() <= lastOrder.getGoodsPrice().floatValue()) {
-                    throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "购买的报单商品价格必须大于已购买报单商品金额！", "", null);
-                } else {
-                    //购买的报单商品以差价方式购买
-                    orderPrice = goods.getPrice().floatValue() - lastOrder.getGoodsPrice().floatValue();
-                }
-            }
+        if(tableOrderList != null && tableOrderList.size() >= 2) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "购买报单商品数量已达上限！", "", null);
         }
+
+        //订单金额
+        Float orderPrice = goods.getPrice();
 
         bo.setPrice(new BigDecimal(orderPrice));
     }
@@ -490,6 +512,9 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         }
         if (null != bo.getGoodsId()) {
             criteria.andGoodsIdEqualTo(bo.getGoodsId());
+        }
+        if (StringUtils.isNotEmpty(bo.getGoodsName())) {
+            criteria.andGoodsNameEqualTo(bo.getGoodsName());
         }
         if (null != bo.getGoodsClass()) {
             criteria.andGoodsClassEqualTo(bo.getGoodsClass());
@@ -583,6 +608,22 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
     }
 
     /**
+     * 13、结算管理菜单中加入一个子菜单“管理业绩分析”
+     * 进入界面后输入会员编号和时间段（开始时间和结束时间），“分析”按钮
+     * 列表为左区和右区，点击分析按钮查询该会员在设定时间段内的左区和右区的业绩
+     * 业绩计算方法：根据网体结构找到会员的所有子节点，根据时间段获取该时间段内这些会员子节点的所有报单商品的订单求和，左区的所有会员订单求和后显示在左区，右区的所有订单求和后显示在右区
+     *
+     * @param memberList
+     * @param start
+     * @param end
+     * @return
+     */
+    @Override
+    public TableOrderDZ selectByGroup3(List<String> memberList, Date start, Date end) {
+        return this.iTableOrderMapperDZ.selectByGroup3(memberList, start, end);
+    }
+
+    /**
      * 导出订单
      *
      * @param bo
@@ -664,6 +705,7 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
                 TableOrder update = new TableOrder();
                 update.setId(tableOrder.getId());
                 update.setState(3);
+                update.setSendTime(DateUtils.getSysDate());
                 update.setExpressNumber(tableOrder.getExpressNumber());
                 update.setExpressCompany(tableOrder.getExpressCompany());
                 this.update(update);

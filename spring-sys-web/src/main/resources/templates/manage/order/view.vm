@@ -31,6 +31,7 @@
                     #formInput({"name": "收货地址"} {"name": "receiverAddr", "value":"$!{order.receiverAddr}","id": "receiverAddr","required": "required","readonly":"readonly"})
                     #formInput({"name": "快递单号"} {"name": "expressNumber ", "value":"$!{order.expressNumber}","id": "expressNumber","required": "required","readonly":"readonly"})
                     #formInput({"name": "物流公司"} {"name": "expressCompany ", "value":"$!{order.expressCompany}","id": "expressCompany","required": "required","readonly":"readonly"})
+                    #formInput({"name": "发货时间"} {"name": "sendTime", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{order.sendTime})","id": "sendTime","required": "required","readonly":"readonly"})
         #end
     #end
         #end

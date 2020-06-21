@@ -132,6 +132,7 @@ public class TableBonusDetailBusiSVImpl implements ITableBonusDetailBusiSV {
                     case 5: dz.setBonus5(detail.getBonus());break;
                     case 6: dz.setBonus6(detail.getBonus());break;
                     case 7: dz.setBonus7(detail.getBonus());break;
+                    case 10: dz.setBonus10(detail.getBonus());break;
                 }
 
                 i++;

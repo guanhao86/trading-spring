@@ -12,6 +12,7 @@ import com.spring.free.common.util.ExcelUtils;
 import com.spring.free.config.CommonUtils;
 import com.spring.free.config.ImageUtils;
 import com.spring.free.domain.QueryVO;
+import com.spring.free.util.DateUtils;
 import com.spring.free.util.PageResult;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
@@ -76,6 +77,7 @@ public class ManageOrderController {
         }
         HttpSession session1 = request.getSession();
         session1.setAttribute("QUERY_ORDER_LIST", tableOrder);
+        session1.setAttribute("QUERY_ORDER_LIST_QUERY", queryVO);
 
         PageInfo<TableOrder> pageInfo = this.iTableOrderBusiSV.queryListPage(tableOrder, page, pageSize, CommonUtils.getStartEnd(queryVO));
 
@@ -145,6 +147,7 @@ public class ManageOrderController {
         map.put(Global.URL, Global.ADMIN_PATH +"/manage/order/list");
         tableOrder.setState(3); //发货完成
         try {
+            tableOrder.setSendTime(DateUtils.getSysDate());
             this.iTableOrderBusiSV.update(tableOrder);
         }catch (Exception e) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
@@ -196,20 +199,19 @@ public class ManageOrderController {
     @RequestMapping("/exportOrderFile")
     public void exportTransFile(HttpServletRequest request, HttpServletResponse response) {
 
-        QueryVO queryVO = new QueryVO();
+        QueryVO queryVO;
 
         response.setContentType("application/octet-stream;charset=UTF-8");
         response.setCharacterEncoding("utf-8");
         ServletOutputStream outputStream = null;
 
         try {
-            TableOrder tableOrder = new TableOrder();
-            BeanUtils.copyProperties(queryVO, tableOrder);
-            tableOrder.setId(queryVO.getId()==null?null:queryVO.getId().intValue());
+            TableOrder tableOrder;
             outputStream = response.getOutputStream();
 
             HttpSession session1 = request.getSession();
             tableOrder = (TableOrder)session1.getAttribute("QUERY_ORDER_LIST");
+            queryVO = (QueryVO) session1.getAttribute("QUERY_ORDER_LIST_QUERY");
 
             HSSFWorkbook hssfWorkbook = iTableOrderBusiSV.exportFile(tableOrder, 0, 0, CommonUtils.getStartEnd(queryVO));
             response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");

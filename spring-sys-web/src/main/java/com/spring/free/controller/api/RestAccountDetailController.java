@@ -125,6 +125,30 @@ public class RestAccountDetailController {
     }
 
     /**
+     * 提现申请记录
+     */
+    @RequestMapping(value = "/getCashOutList")
+    public @ResponseBody
+    AccessResponse getCashOutList(@RequestBody QueryReqVO queryReqVO, HttpServletRequest request, HttpServletResponse response){
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        log.info("提现申请记录:{}");
+        PageInfo<TableCashOut> pageInfo;
+        //返回体
+        try {
+            TableCashOut tableCashOut = new TableCashOut();
+            String memberId = TokenUtil.getUserId(request);
+            tableCashOut.setMemberId(memberId);
+            pageInfo = this.iTableCashOutBusiSV.queryListPage(tableCashOut, queryReqVO.getPageNum(), queryReqVO.getPageSize(), null);
+        }catch (Exception e) {
+            return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
+        }
+        stopWatch.stop();
+        System.out.println("耗时：" + stopWatch.getTotalTimeSeconds());
+        return AccessResponse.builder().data(pageInfo).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
+    }
+
+    /**
      * 转账
      */
     @RequestMapping(value = "/transfer")

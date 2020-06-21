@@ -145,4 +145,50 @@ public class TableGoodsBusiSVImpl implements ITableGoodsBusiSV {
         log.info("获取商品结果：{}", JSON.toJSON(pageInfo));
         return pageInfo;
     }
+
+    @Override
+    public List<TableGoods> queryList(TableGoods bo, String sort) {
+        TableGoodsExample example = new TableGoodsExample();
+        TableGoodsExample.Criteria criteria = example.createCriteria();
+
+        if (null != bo.getId()) {
+            criteria.andIdEqualTo(bo.getId());
+        }
+        if (null != bo.getGoodsClass()) {
+            criteria.andGoodsClassEqualTo(bo.getGoodsClass());
+        }
+        if (StringUtils.isNotEmpty(bo.getThunmbanilImgSrc())) {
+            criteria.andThunmbanilImgSrcEqualTo(bo.getThunmbanilImgSrc());
+        }
+        if (StringUtils.isNotEmpty(bo.getDetailImgSrc())) {
+            criteria.andDetailImgSrcEqualTo(bo.getDetailImgSrc());
+        }
+        if (null != bo.getPrice()) {
+            criteria.andPriceEqualTo(bo.getPrice());
+        }
+        if (null != bo.getIncomeVipLevel()) {
+            criteria.andIncomeVipLevelEqualTo(bo.getIncomeVipLevel());
+        }
+        if (null != bo.getIncomeDjPoint()) {
+            criteria.andIncomeDjPointEqualTo(bo.getIncomeDjPoint());
+        }
+        if (null != bo.getIncomeJysPoint()) {
+            criteria.andIncomeJysPointEqualTo(bo.getIncomeJysPoint());
+        }
+        if (null != bo.getPePrice()) {
+            criteria.andPePriceEqualTo(bo.getPePrice());
+        }
+        if (null != bo.getState()) {
+            criteria.andStateEqualTo(bo.getState());
+        }
+        if (StringUtils.isNotEmpty(bo.getGoodsName())) {
+            criteria.andGoodsNameEqualTo(bo.getGoodsName());
+        }
+
+        if (StringUtils.isNotEmpty(sort)) {
+            example.setOrderByClause(sort);
+        }
+
+        return this.iTableGoodsMapper.selectByExample(example);
+    }
 }

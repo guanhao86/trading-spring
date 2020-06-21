@@ -13,7 +13,7 @@
                     #formInput({"name": "姓名"} {"name": "memberName", "value":"$!{cashout.memberName}","id": "memberName","required": "required","readonly":"readonly"})
                     #formInput({"name": "银行卡号"} {"name": "bankCardId", "value":"$!{cashout.bankCardId}","id": "bankCardId","required": "required","readonly":"readonly"})
                     #formInput({"name": "开户行名字"} {"name": "bankName", "value":"$!{cashout.bankName}","id": "bankName","required": "required","readonly":"readonly"})
-                    #formInput({"name": "银行卡开户行地址"} {"name": "bankOpenAre", "value":"$!{cashout.bankOpenAre}","id": "bankOpenAre","required": "required","readonly":"readonly"})
+                    #formInput({"name": "银行卡开户行地址"} {"name": "bankOpenAre", "value":"$!{cashout.bankOpenAre}","id": "bankOpenAre","readonly":"readonly"})
                     #formInput({"name": "申请时间"} {"name": "createTime1", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{cashout.createTime})","id": "createTime","required": "required","readonly":"readonly"})
 
                     <div class="form-group">

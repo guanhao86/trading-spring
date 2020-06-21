@@ -165,20 +165,21 @@
                <!--selectByExampleQueryId="true">-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <table tableName="table_member_account_detail" domainObjectName="TableMemberAccountDetail"
-            enableCountByExample="true" enableUpdateByExample="true"
-            enableDeleteByExample="true" enableSelectByExample="true"
-            selectByExampleQueryId="true">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-            <columnOverride column="before_value" javaType="java.math.BigDecimal"></columnOverride>
-            <columnOverride column="after_value" javaType="java.math.BigDecimal"></columnOverride>
-        </table>
-        <!--<table tableName="table_balance_detail" domainObjectName="TableBalanceDetail"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
+        <!--<table tableName="table_member_account_detail" domainObjectName="TableMemberAccountDetail"-->
+            <!--enableCountByExample="true" enableUpdateByExample="true"-->
+            <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+            <!--selectByExampleQueryId="true">-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+            <!--<columnOverride column="before_value" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="after_value" javaType="java.math.BigDecimal"></columnOverride>-->
         <!--</table>-->
+        <table tableName="table_balance_detail" domainObjectName="TableBalanceDetail"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+
+        </table>
         <!--<table tableName="table_message" domainObjectName="TableMessage"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->

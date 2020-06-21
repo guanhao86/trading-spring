@@ -444,6 +444,11 @@ public class RestMemberController {
         try {
             String memberId = TokenUtil.getUserId(request);
             tableMember.setMemberId(memberId);
+            tableMember.setArrangeId(null);
+            tableMember.setReferenceId(null);
+            tableMember.setReallyName(null);
+            tableMember.setPassword(null);
+            tableMember.setPhone(null);
             this.iTableMemberBusiSV.update(tableMember, false);
 
         }catch (Exception e) {
@@ -480,5 +485,40 @@ public class RestMemberController {
         stopWatch.stop();
         log.info("耗时：" + stopWatch.getTotalTimeSeconds());
         return AccessResponse.builder().data(pageInfo).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
+    }
+
+    /**
+     * 允许升级所剩时间
+     */
+    @RequestMapping(value = "/updateLevelTime")
+    public @ResponseBody
+    AccessResponse updateLevelTime(HttpServletRequest request, HttpServletResponse response){
+        log.info("允许升级所剩时间{}");
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
+        String leftTime = "";
+
+        try {
+            String memberId = TokenUtil.getUserId(request);
+            TableMember tableMember = this.iTableMemberBusiSV.selectByMemberId(memberId);
+            int days = Integer.parseInt(DictUtils.getDictValue("允许升级天数","updateLevelDays", "30"));
+
+            long sss = DateUtils.addDays(tableMember.getRegisterTime(), days).getTime() - DateUtils.getSysDate().getTime();
+
+            if (sss < 0) {
+                leftTime = "-1";
+            }else{
+                leftTime = DateUtils.formatDateTime(sss);
+            }
+
+        }catch (Exception e) {
+            return AccessResponse.builder().data(e.getMessage()).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
+        }
+
+        //返回体
+        stopWatch.stop();
+        log.info("耗时：" + stopWatch.getTotalTimeSeconds());
+        return AccessResponse.builder().data(leftTime).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
     }
 }

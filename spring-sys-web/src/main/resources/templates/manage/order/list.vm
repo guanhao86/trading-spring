@@ -20,6 +20,10 @@
                             "value": "$!{queryVO.memberId}"})
                     #end
                     #@divColSmNum(3)
+                        #formInput({"name": "商品名称", "length": "4,8", "asterisk": false} {"name": "goodsName", "id": "goodsName",
+                            "value": "$!{queryVO.goodsName}"})
+                    #end
+                    #@divColSmNum(3)
                     <div class="form-group">
                         <label class="col-sm-4 control-label">订单类型：</label>
                         <div class="col-sm-5" style="width: 201px;">

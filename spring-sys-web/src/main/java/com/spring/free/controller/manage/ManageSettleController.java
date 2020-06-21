@@ -86,7 +86,7 @@ public class ManageSettleController {
                              @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
 
         Map map = Maps.newHashMap();
-        map.put(Global.URL, Global.ADMIN_PATH +"/manage/settle/settleIndex");
+        map.put(Global.URL, Global.ADMIN_PATH +"/manage/balance/list");
         UserInfo user = BaseGetPrincipal.getUser();
 
         String result = "";
@@ -106,17 +106,17 @@ public class ManageSettleController {
             }
 
         }catch (Exception e) {
-            map.put(Global.URL, Global.ADMIN_PATH +"/manage/settle/settleIndex");
+            map.put(Global.URL, Global.ADMIN_PATH +"/manage/balance/list");
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
         }
 
         if ("0".equals(result)) {
             PageResult.setPrompt(map, "操作成功", "success");
         }else {
-            PageResult.setPrompt(map, result, "success");
+            PageResult.setPrompt(map, "结算失败："+result, "success");
         }
 
-        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/settle/settleIndex"), map);
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/balance/list"), map);
     }
 
 }

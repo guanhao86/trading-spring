@@ -81,6 +81,10 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         bo.setReportingAmount(zero);
         bo.setAccountMoney(zero);
         bo.setRegisterTime(sysdate);
+        bo.setLeftAmount(zero);
+        bo.setRightAmount(zero);
+        bo.setLeftNew(zero);
+        bo.setRightNew(zero);
         //默认都是实名的
         bo.setAutFlag(1);
         if (2 == bo.getRegisterFrom())
@@ -159,6 +163,28 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             }
         }
 
+        //安置人不变，调整左右区
+        if (null != bo.getLeftOrRight() && 0 != bo.getLeftOrRight() && bo.getLeftOrRight() != origMember.getLeftOrRight()) {
+            //查询原安置人
+            TableMember arrangeMember = this.selectByMemberId(origMember.getArrangeId());
+            //左右区变换校验
+            this.checkArrange(bo, arrangeMember);
+            //变更为左区
+            if (1 == bo.getLeftOrRight()) {
+                //安置人左区 编号为会员编号
+                arrangeMember.setLeftChildNode(bo.getMemberId());
+                arrangeMember.setRightChildNode("0");
+            }
+
+            //变更为右区
+            if (2 == bo.getLeftOrRight()) {
+                //安置人右区 编号为会员编号
+                arrangeMember.setRightChildNode(bo.getMemberId());
+                arrangeMember.setLeftChildNode("0");
+            }
+            this.updateSimple(arrangeMember);
+
+        }
 
         if (this.iTableMemberMapper.updateByPrimaryKeySelective(bo) == 1) {
             return bo;
@@ -888,7 +914,17 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         member.setLevel(0);
         member.setReallyName(m.getReallyName());
         member.setRegisterFrom(registerFrom); //注册来源：后台
+        member.setReceiverName(member.getReallyName());
+        member.setReceiverPhone(member.getPhone());
+        if (member.getRegisterFrom() == 2) {
+            member.setLoginFlag("1");
+        }else{
+            member.setLoginFlag("0");
+        }
         member = this.insert(member);
+
+
+
         member.setMemberId("926" + String.format("%08d", member.getId()));
         member.setLeftChildNode("");
         member.setRightChildNode("");
@@ -1118,5 +1154,12 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         userInfo.setLoginFlag(state);
 
         this.userService.update(userInfo, null);
+
+
+        TableMember tableMember = this.selectByMemberId(memberId);
+        TableMember updateMember = new TableMember();
+        updateMember.setId(tableMember.getId());
+        updateMember.setLoginFlag(state);
+        this.updateSimple(updateMember);
     }
 }

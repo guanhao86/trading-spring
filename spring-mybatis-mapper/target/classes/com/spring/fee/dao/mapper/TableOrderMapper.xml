@@ -31,6 +31,7 @@
     <result column="extent_goods_price" jdbcType="REAL" property="extentGoodsPrice" />
     <result column="income_dj_point" jdbcType="REAL" property="incomeDjPoint" />
     <result column="income_jys_point" jdbcType="REAL" property="incomeJysPoint" />
+    <result column="send_time" jdbcType="TIMESTAMP" property="sendTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -106,7 +107,7 @@
     id, order_id, member_id, goods_id, goods_name, goods_price, goods_class, amount, 
     price, goods_score_price, score_price, create_time, state, express_company, express_number, 
     receiver_name, receiver_addr, receiver_phone, oper_member_id, order_type, extent_goods_id, 
-    extent_goods_count, extent_goods_price, income_dj_point, income_jys_point
+    extent_goods_count, extent_goods_price, income_dj_point, income_jys_point, send_time
   </sql>
   <select id="selectByExample" parameterType="com.spring.fee.model.TableOrderExample" resultMap="BaseResultMap">
     <!--
@@ -170,8 +171,8 @@
       express_company, express_number, receiver_name, 
       receiver_addr, receiver_phone, oper_member_id, 
       order_type, extent_goods_id, extent_goods_count, 
-      extent_goods_price, income_dj_point, income_jys_point
-      )
+      extent_goods_price, income_dj_point, income_jys_point, 
+      send_time)
     values (#{orderId,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, 
       #{goodsName,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=REAL}, #{goodsClass,jdbcType=INTEGER}, 
       #{amount,jdbcType=INTEGER}, #{price,jdbcType=REAL}, #{goodsScorePrice,jdbcType=INTEGER}, 
@@ -179,8 +180,8 @@
       #{expressCompany,jdbcType=VARCHAR}, #{expressNumber,jdbcType=VARCHAR}, #{receiverName,jdbcType=VARCHAR}, 
       #{receiverAddr,jdbcType=VARCHAR}, #{receiverPhone,jdbcType=VARCHAR}, #{operMemberId,jdbcType=VARCHAR}, 
       #{orderType,jdbcType=VARCHAR}, #{extentGoodsId,jdbcType=VARCHAR}, #{extentGoodsCount,jdbcType=INTEGER}, 
-      #{extentGoodsPrice,jdbcType=REAL}, #{incomeDjPoint,jdbcType=REAL}, #{incomeJysPoint,jdbcType=REAL}
-      )
+      #{extentGoodsPrice,jdbcType=REAL}, #{incomeDjPoint,jdbcType=REAL}, #{incomeJysPoint,jdbcType=REAL}, 
+      #{sendTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.spring.fee.model.TableOrder">
     <!--
@@ -264,6 +265,9 @@
       <if test="incomeJysPoint != null">
         income_jys_point,
       </if>
+      <if test="sendTime != null">
+        send_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="orderId != null">
@@ -337,6 +341,9 @@
       </if>
       <if test="incomeJysPoint != null">
         #{incomeJysPoint,jdbcType=REAL},
+      </if>
+      <if test="sendTime != null">
+        #{sendTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -432,6 +439,9 @@
       <if test="record.incomeJysPoint != null">
         income_jys_point = #{record.incomeJysPoint,jdbcType=REAL},
       </if>
+      <if test="record.sendTime != null">
+        send_time = #{record.sendTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -467,7 +477,8 @@
       extent_goods_count = #{record.extentGoodsCount,jdbcType=INTEGER},
       extent_goods_price = #{record.extentGoodsPrice,jdbcType=REAL},
       income_dj_point = #{record.incomeDjPoint,jdbcType=REAL},
-      income_jys_point = #{record.incomeJysPoint,jdbcType=REAL}
+      income_jys_point = #{record.incomeJysPoint,jdbcType=REAL},
+      send_time = #{record.sendTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -551,6 +562,9 @@
       <if test="incomeJysPoint != null">
         income_jys_point = #{incomeJysPoint,jdbcType=REAL},
       </if>
+      <if test="sendTime != null">
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -583,7 +597,8 @@
       extent_goods_count = #{extentGoodsCount,jdbcType=INTEGER},
       extent_goods_price = #{extentGoodsPrice,jdbcType=REAL},
       income_dj_point = #{incomeDjPoint,jdbcType=REAL},
-      income_jys_point = #{incomeJysPoint,jdbcType=REAL}
+      income_jys_point = #{incomeJysPoint,jdbcType=REAL},
+      send_time = #{sendTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

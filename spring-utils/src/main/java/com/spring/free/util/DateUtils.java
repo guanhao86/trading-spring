@@ -264,9 +264,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
-     * 转换为时间（天,时:分:秒.毫秒）
+     * 转换为时间（天,时:分:秒）
      *
-     * @param timeMillis
+     * @param timeMillis 毫秒
      * @return
      */
     public static String formatDateTime(long timeMillis) {
@@ -275,7 +275,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         long min = ((timeMillis / (60 * 1000)) - day * 24 * 60 - hour * 60);
         long s = (timeMillis / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
         long sss = (timeMillis - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000 - min * 60 * 1000 - s * 1000);
-        return (day > 0 ? day + "," : "") + hour + ":" + min + ":" + s + "." + sss;
+        return (day > 0 ? day + "," : "") + hour + ":" + min + ":" + s;
     }
 
     /**

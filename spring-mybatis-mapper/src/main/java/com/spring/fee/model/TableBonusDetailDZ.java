@@ -25,5 +25,8 @@ public class TableBonusDetailDZ implements Serializable {
 
     private BigDecimal bonus7;
 
+    //福利积分
+    private BigDecimal bonus10;
+
     private TableMember tableMember;
 }

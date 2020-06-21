@@ -10,6 +10,7 @@
                 #@form("form_insert" true "post" "manage/account/recharge")
                     #formInput({"name": "会员ID"} {"name": "memberId", "value":"","id": "memberId","required": "required"})
                     #formInput({"name": "充值金额（元）"} {"name": "amount", "value":"0","id": "amount","required": "required"})
+                    #formInput({"name": "备注"} {"name": "remark", "value":"","id": "remark","required": "required"})
                 #end
             #end
         #end
