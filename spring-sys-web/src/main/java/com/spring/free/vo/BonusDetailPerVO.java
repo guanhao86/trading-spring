@@ -8,13 +8,17 @@ import java.math.BigDecimal;
 public class BonusDetailPerVO {
 
     //日新增业绩
-    BigDecimal yesterdayAddBonus;
+    BigDecimal yesterdayAddOrderPrice;
     //总奖金
     BigDecimal allAddBonus;
+    //今日奖金
+    BigDecimal yesterdayAddBonus;
     //总业绩
     BigDecimal allOrderPrice;
     //总波比
     String allPer;
+    //今日拨比
+    String yesterdayPer;
     //现金总额
     BigDecimal accountMoney;
 

@@ -68,9 +68,9 @@ public class FrontMemberController {
 
         TableMember tableMember = new TableMember();
         UserInfo user = BaseGetPrincipal.getUser();
-        tableMember.setArrangeId(user.getUsername());
+        tableMember.setReferenceId(user.getUsername());
 
-        PageInfo<TableMember> pageInfo = this.iTableMemberBusiSV.queryAllChildPage(user.getUsername(), page, pageSize, null);
+        PageInfo<TableMember> pageInfo = this.iTableMemberBusiSV.queryListPage(tableMember, page, pageSize, null);
 
         //调用python获取在客户端我的粉丝这个界面，最上面加两行，左区业绩： 右区业绩
         //调用我这个函数获得数据就可以了，传参数是字符串类型的，member_id

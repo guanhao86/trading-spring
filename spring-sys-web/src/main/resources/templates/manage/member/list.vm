@@ -66,7 +66,7 @@
                  <a href="/admin/manage/member/exportMemberFile">导出会员</a>
              </div>
                 #@table()
-                    #tableTHead(["会员ID", "电话", "姓名","注册时间","余额","商城积分","可用奖金","冻结奖金","保值积分","金蛋","福利积分","推荐人ID","安置人编号","左右区标识","会员级别","会员奖衔","左区业绩","右区业绩","左区新增业绩","右区新增业绩","实名制","是否允许登录"],"", false)
+                    #tableTHead(["会员ID", "电话", "姓名","注册时间","余额","商城积分","可用奖金","冻结奖金","保值积分","金蛋","福利积分","推荐人ID","安置人编号","左右区标识","会员级别","会员奖衔","左区业绩","右区业绩","结转业绩","左区新增业绩","右区新增业绩","实名制","是否允许登录"],"", false)
                     #@tableBody($page.list)
                         #set($leftAmount = 0)
                         #if($!{l.leftAmount} != "")
@@ -85,8 +85,13 @@
                             #set($rightNew = $!{l.rightNew} )
                         #end
 
+                        #if($!{leftAmount} > $!{rightAmount})
+                            #set($jz = $!{leftAmount} - $!{rightAmount} + "/0")
+                        #end
+                        #if($!{leftAmount} <= $!{rightAmount})
+                            #set($jz = "0/"+($!{rightAmount} - $!{leftAmount}))
 
-
+                        #end
                         #tableTd("$!{l.memberId}")
                         #tableTd("$!{l.phone}")
                         #tableTd("$!{l.reallyName}")
@@ -105,6 +110,7 @@
                         #tableTd("$!{l.mRank}", {"type": "dict", "format": "mRank"})
                         #tableTd("$!{leftAmount}")
                         #tableTd("$!{rightAmount}")
+                        #tableTd("$!{jz}")
                         #tableTd("$!{leftNew}")
                         #tableTd("$!{rightNew}")
                         #tableTd("$!{l.autFlag}", {"type": "dict", "format": "autFlag"})
@@ -130,6 +136,10 @@
                             #if(${l.loginFlag}==1)
                                 <a href="$!{ctx}/manage/member/updateLoginState?loginFlag=0&username=$!{l.memberId}" class="fa fa-lock"
                                    confirm="true" message="设置为拒绝登录吗？" title="拒绝登录"> 拒绝登录</a>
+                            #end
+                            #if(${l.loginFlag}==1)
+                                <a href="$!{ctx}/manage/member/loginH5?memberId=$!{l.memberId}" target="_blank" class="fa fa-lock"
+                                    message="确认登录H5吗？" title="登录H5"> 登录H5</a>
                             #end
                         #end
                     #end

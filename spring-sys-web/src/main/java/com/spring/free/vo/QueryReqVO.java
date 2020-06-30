@@ -44,4 +44,6 @@ public class QueryReqVO extends PageVO {
      */
     private String closeState;
 
+    private String memberId;
+
 }

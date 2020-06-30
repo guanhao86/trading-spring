@@ -18,7 +18,7 @@ public class PythonUtil3 {
         try {
             System.out.println("运行python");
             System.out.println(pyPath+"/"+file);
-            String[] args = new String[] { "/usr/maitao/Python-3.7.0/python", pyPath+"/"+file, adminId};
+            String[] args = new String[] { "/usr/maitao/Python-3.7.0/python", pyPath+"/"+file, adminId, param1};
             Process proc = Runtime.getRuntime().exec(args);// 执行py文件
 
             BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));

@@ -34,7 +34,7 @@
     SELECT bonus_id, sum(bonus) as bonus
     FROM table_bonus_detail
     where 1=1
-    and close_state = '1'
+
     <if test="start != null" >
       and recode_Time >= #{start,jdbcType=TIMESTAMP}
     </if>
@@ -67,7 +67,7 @@
     <if test="end != null">
       and #{end,jdbcType=TIMESTAMP} >= recode_Time
     </if>
-    GROUP BY date( operate_time ), member_id, bonus_id
+    GROUP BY date( recode_Time ), member_id, bonus_id
     ) A
     order by A.recode_time desc, A.member_id, A.bonus_id
   </select>

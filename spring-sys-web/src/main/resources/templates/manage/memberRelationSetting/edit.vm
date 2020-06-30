@@ -1,0 +1,38 @@
+#@html()
+<link rel="stylesheet" type="text/css" href="/css/backstage/bootstrap-fileupload.min.css"/>
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"$!{funTitle}", "perm": "system:member:edit", "isBack": true, "href": "manage/memberRelationSetting/list"})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" true "post" "manage/memberRelationSetting/save")
+                    <input type="hidden" id="id" name="id" value="$!{relationSetting.id}"/>
+                    #formInput({"name": "会员编号"} {"name": "memberId", "value":"$!{relationSetting.memberId}","id": "memberId","required": "required"})
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">网络类型：</label>
+                        <div class="col-sm-2">
+                            #selectBS($!dict.getDictList("relationType"), ["relationType", "$!{relationSetting.relationType}", "value", "label"], false, [false, "$!{relationSetting.relationType}"])
+                        </div>
+
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">有效期：</label>
+                        <div class="col-sm-2">
+                            #selectBS($!dict.getDictList("relationValidType"), ["type", "$!{relationSetting.type}", "value", "label"], false, [false, "$!{relationSetting.type}"])
+                        </div>
+
+                    </div>
+                    ##formInput({"name": "设置时间"} {"name": "createTime1", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{member.createTime})","id": "createTime","required": "required","readonly":"readonly"})
+                    ##formInput({"name": "生效时间"} {"name": "validTime1", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{member.validTime})","id": "validTime","required": "required","readonly":"readonly"})
+                    ##formInput({"name": "失效时间"} {"name": "expireTime1", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{member.expireTime})","id": "expireTime","required": "required","readonly":"readonly"})
+
+                #end
+            #end
+        #end
+    #end
+    #@script()
+        #@jsValidate("form_insert")
+        #end
+    #end
+#end

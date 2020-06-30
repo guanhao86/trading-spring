@@ -619,7 +619,7 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
      * @return
      */
     @Override
-    public TableOrderDZ selectByGroup3(List<String> memberList, Date start, Date end) {
+    public List<TableOrderDZ> selectByGroup3(List<String> memberList, Date start, Date end) {
         return this.iTableOrderMapperDZ.selectByGroup3(memberList, start, end);
     }
 

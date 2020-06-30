@@ -1,5 +1,6 @@
 package com.spring.free.config;
 
+import com.spring.fee.model.TableOrderDZ;
 import com.spring.free.util.exception.ExceptionCodeEnum;
 import com.spring.free.util.exception.ServiceException;
 import io.jsonwebtoken.*;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
+import java.math.BigDecimal;
 import java.security.Key;
 import java.util.Date;
 
@@ -155,6 +157,7 @@ public class TokenUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(createJWT("92600000001", "王鑫", "", 3600 * 1000 * 100));
+        System.out.println(createJWT("92600017798", "王鑫", "", 3600 * 1000 * 100));
+
     }
 }

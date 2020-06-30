@@ -1,21 +1,47 @@
 #@html()
     #@wrapper()
         #@panel()
+            #@panelHeader({"title":"网络权限配置管理", "perm": "", "isBack": false, "href": ""})
+                #btn({"btnName":"新增", "icon":"fa-plus", "style":"primary",  "attr":{"data-button": "insert-pre",
+                    "data-href": "$!{ctx}/manage/memberRelationSetting/edit"}})
+                #btn({"btnName":"查询", "icon":"fa-search", "style":"primary",  "attr":{"data-button": "search", "data-form-id": "search"}})
+            #end
+            #@panelBody()
+                #@form("search" false "post" "manage/memberRelationSetting/list")
+
+                    #@divColSmNum(3)
+                        #formInput({"name": "会员编号", "length": "4,8", "asterisk": false} {"name": "memberId", "id": "memberId",
+                            "value": "$!{queryVO.memberId}"})
+                    #end
+
+                    #@divColSmNum(3)
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">有效状态：</label>
+                        <div class="col-sm-7">
+                            #selectBS($!dict.getDictList("relationValidTypeSearch"), ["type", "$!{queryVO.type}", "value", "label"], false, [true, ""])
+                        </div>
+                    </div>
+                    #end
+
+                #end
+            #end
+        #end
+        #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead(["会员ID", "款项编号", "奖金类型", "奖金(元)", "时间", "状态", "备注"],"", false)
+                    #tableTHead(["ID", "会员编号", "网络类型", "生效时间", "失效时间", "状态"],"", false)
                     #@tableBody($page.list)
+                        #tableTd("$!{l.id}")
                         #tableTd("$!{l.memberId}")
-                        #tableTd("$!{l.bonusId}", {"type": "dict", "format": "bonusId"})
-                        #tableTd("$!{l.bonusType}", {"type": "dict", "format": "bonusType"})
-                        #tableTd("$!{l.bonus}")
-                        #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.recodeTime}))
-                        #tableTd("$!{l.closeState}", {"type": "dict", "format": "bonusCloseState"})
-                        #tableTd("$!{l.remark}")
+                        #tableTd("$!{l.relationType}", {"type": "dict", "format": "relationType"})
+                        #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.validTime}))
+                        #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.expireTime}))
+                        #tableTd("$!{l.type}", {"type": "dict", "format": "relationValidTypeSearch"})
+
                         #@tableTd()
-                            #if(${l.bonusId}==2)
-                                #@a("奖金明细" {"href": "$!{ctx}/manage/bonusComposeDetail/list?memberId=$!{l.memberId}&queryMemberId=$!{queryVO.memberId}", "class": "fa fa-pencil-square-o"})#end
-                            #end
+                            #@a("修改" {"href": "$!{ctx}/manage/memberRelationSetting/edit?id=$!{l.id}", "class": "fa fa-pencil-square-o"})#end
+                            <a href="$!{ctx}/manage/memberRelationSetting/delete?id=$!{l.id}" class="fa fa-lock"
+                               confirm="true" message="确定要删除吗？" title="删除"> 删除</a>
                         #end
                     #end
                 #end
@@ -43,7 +69,7 @@
         })
 
         $(function () {
-            var startTime = $('.start-time').datepicker().on('changeDate', function(ev) {
+            var startTime = $('.strat-time').datepicker().on('changeDate', function(ev) {
                 startTime.hide();
             }).data('datepicker');
             var endTime = $('.end-time').datepicker().on('changeDate', function(ev) {
@@ -51,8 +77,8 @@
             }).data('datepicker');
 
             $('button[empty="true"]').on('click', function () {
-                $("input[name='start']").eq(0).val($('#s_t_h').val());
-                $("input[name='end']").eq(0).val($('#e_t_h').val());
+                $("input[name='startTime']").eq(0).val($('#s_t_h').val());
+                $("input[name='endTime']").eq(0).val($('#e_t_h').val());
             })
         })
 

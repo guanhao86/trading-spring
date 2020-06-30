@@ -924,6 +924,66 @@ public class TableBalanceDetailExample {
             addCriterion("bonus_car not between", value1, value2, "bonusCar");
             return (Criteria) this;
         }
+
+        public Criteria andCloseFlagIsNull() {
+            addCriterion("close_flag is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseFlagIsNotNull() {
+            addCriterion("close_flag is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseFlagEqualTo(Integer value) {
+            addCriterion("close_flag =", value, "closeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseFlagNotEqualTo(Integer value) {
+            addCriterion("close_flag <>", value, "closeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseFlagGreaterThan(Integer value) {
+            addCriterion("close_flag >", value, "closeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseFlagGreaterThanOrEqualTo(Integer value) {
+            addCriterion("close_flag >=", value, "closeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseFlagLessThan(Integer value) {
+            addCriterion("close_flag <", value, "closeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseFlagLessThanOrEqualTo(Integer value) {
+            addCriterion("close_flag <=", value, "closeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseFlagIn(List<Integer> values) {
+            addCriterion("close_flag in", values, "closeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseFlagNotIn(List<Integer> values) {
+            addCriterion("close_flag not in", values, "closeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseFlagBetween(Integer value1, Integer value2) {
+            addCriterion("close_flag between", value1, value2, "closeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCloseFlagNotBetween(Integer value1, Integer value2) {
+            addCriterion("close_flag not between", value1, value2, "closeFlag");
+            return (Criteria) this;
+        }
     }
 
     /**

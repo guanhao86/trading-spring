@@ -5,10 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.model.*;
-import com.spring.fee.service.ITWheatMemberBusiSV;
-import com.spring.fee.service.ITableBroadcastInfoBusiSV;
-import com.spring.fee.service.ITableMemberBusiSV;
-import com.spring.fee.service.ITableMemberGoodsBusiSV;
+import com.spring.fee.service.*;
 import com.spring.free.common.domain.AccessResponse;
 import com.spring.free.common.util.PythonUtil3;
 import com.spring.free.config.PassToken;
@@ -58,6 +55,9 @@ public class RestMemberController {
 
     @Autowired
     ITableBroadcastInfoBusiSV iTableBroadcastInfoBusiSV;
+
+    @Autowired
+    ITableMemberRelationSettingBusiSV iTableMemberRelationSettingBusiSV;
 
     @PassToken
     @RequestMapping(value = "/getMemberInfoAjax/{memberId}")
@@ -395,7 +395,9 @@ public class RestMemberController {
         PageInfo<TableMember> pageInfo;
         try {
             String memberId = TokenUtil.getUserId(request);
-            pageInfo = this.iTableMemberBusiSV.queryAllChildPage(memberId, queryReqVO.getPageNum(), queryReqVO.getPageSize(), null);
+            TableMember tabelMemberQuery = new TableMember();
+            tabelMemberQuery.setReferenceId(memberId);
+            pageInfo = this.iTableMemberBusiSV.queryListPage(tabelMemberQuery, queryReqVO.getPageNum(), queryReqVO.getPageSize(), null);
 
         }catch (Exception e) {
             return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
@@ -420,7 +422,7 @@ public class RestMemberController {
         try {
             String memberId = TokenUtil.getUserId(request);
             TableMember tableMember = this.iTableMemberBusiSV.selectByMemberId(memberId);
-            arrangeMember = this.iTableMemberBusiSV.selectByMemberId(tableMember.getArrangeId());
+            arrangeMember = this.iTableMemberBusiSV.selectByMemberId(tableMember.getReferenceId());
 
         }catch (Exception e) {
             return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
@@ -520,5 +522,173 @@ public class RestMemberController {
         stopWatch.stop();
         log.info("耗时：" + stopWatch.getTotalTimeSeconds());
         return AccessResponse.builder().data(leftTime).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
+    }
+
+    /**
+     * 我的推荐
+     */
+    @RequestMapping(value = "/myChildReference")
+    public @ResponseBody
+    AccessResponse myChildReference(@RequestBody QueryReqVO queryReqVO, HttpServletRequest request, HttpServletResponse response){
+        log.info("我的推荐{}", JSON.toJSONString(queryReqVO));
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
+        TableMemberDZ tableMemberDZ = new TableMemberDZ();
+
+        try {
+            String memberId = TokenUtil.getUserId(request);
+
+            TableMemberRelationSettingDZ tableMemberRelationSettingDZ = iTableMemberRelationSettingBusiSV.check(memberId);
+            if (!tableMemberRelationSettingDZ.isReference()) {
+                return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message("没有权限").build();
+            }
+
+            if (StringUtils.isNotEmpty(queryReqVO.getMemberId())){
+                memberId = queryReqVO.getMemberId();
+            }
+            TableMember tabelMemberQuery = new TableMember();
+            tabelMemberQuery.setReferenceId(memberId);
+            List<TableMember> list = this.iTableMemberBusiSV.queryList(tabelMemberQuery);
+            if (CollectionUtils.isEmpty(list)) {
+                return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.NO_DATA).message("无数据").build();
+            }
+
+            List<String> referenceIdList = new ArrayList<>();
+            for (TableMember reference: list) {
+                referenceIdList.add(reference.getMemberId());
+            }
+            Map<String, Object> mapQuery = new HashMap<>();
+            mapQuery.put("REFERENCE_IN", referenceIdList);
+            List<TableMember> referencelist = this.iTableMemberBusiSV.queryList(new TableMember(), mapQuery);
+
+            Map<String, Boolean>  resultMap = new HashMap<>();
+            for (TableMember reference: referencelist) {
+                resultMap.put(reference.getReferenceId(), true);
+            }
+
+            List<TableMemberDZ> childList = new ArrayList<>();
+            for (TableMember reference: list) {
+                TableMemberDZ child = new TableMemberDZ();
+                BeanUtils.copyProperties(reference, child);
+                if(resultMap.get(child.getMemberId())==null) {
+                    child.setHasChild(false);
+                }else{
+                    child.setHasChild(true);
+                }
+                childList.add(child);
+            }
+
+            TableMember me = this.iTableMemberBusiSV.selectByMemberId(memberId);
+            BeanUtils.copyProperties(me, tableMemberDZ);
+            tableMemberDZ.setChildList(childList);
+            tableMemberDZ.setHasChild(true);
+        }catch (Exception e) {
+            return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
+        }
+
+        //返回体
+        stopWatch.stop();
+        log.info("耗时：" + stopWatch.getTotalTimeSeconds());
+        return AccessResponse.builder().data(tableMemberDZ).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
+    }
+
+    /**
+     * 我的安置关系（左右区）
+     */
+    @RequestMapping(value = "/myChildArrange")
+    public @ResponseBody
+    AccessResponse myChildArrange(@RequestBody QueryReqVO queryReqVO, HttpServletRequest request, HttpServletResponse response){
+        log.info("我的安置关系（左右区）{}", JSON.toJSONString(queryReqVO));
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
+
+
+        TableMemberDZ tableMemberDZ = new TableMemberDZ();
+
+        try {
+            String memberId = TokenUtil.getUserId(request);
+
+            TableMemberRelationSettingDZ tableMemberRelationSettingDZ = iTableMemberRelationSettingBusiSV.check(memberId);
+            if (!tableMemberRelationSettingDZ.isArrange()) {
+                return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message("没有权限").build();
+            }
+
+            if (StringUtils.isNotEmpty(queryReqVO.getMemberId())){
+                memberId = queryReqVO.getMemberId();
+            }
+            TableMember tabelMemberQuery = new TableMember();
+            tabelMemberQuery.setArrangeId(memberId);
+            List<TableMember> list = this.iTableMemberBusiSV.queryList(tabelMemberQuery);
+            if (CollectionUtils.isEmpty(list)) {
+                return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.NO_DATA).message("无数据").build();
+            }
+
+            List<String> arrangeIdList = new ArrayList<>();
+            for (TableMember arrange: list) {
+                arrangeIdList.add(arrange.getMemberId());
+            }
+            Map<String, Object> mapQuery = new HashMap<>();
+            mapQuery.put("ARRANGE_IN", arrangeIdList);
+            List<TableMember> arrangelist = this.iTableMemberBusiSV.queryList(new TableMember(), mapQuery);
+
+            Map<String, Boolean>  resultMap = new HashMap<>();
+            for (TableMember arrange: arrangelist) {
+                resultMap.put(arrange.getArrangeId(), true);
+            }
+
+            List<TableMemberDZ> childList = new ArrayList<>();
+            for (TableMember arrange: list) {
+                TableMemberDZ child = new TableMemberDZ();
+                BeanUtils.copyProperties(arrange, child);
+                if(resultMap.get(child.getMemberId())==null) {
+                    child.setHasChild(false);
+                }else{
+                    child.setHasChild(true);
+                }
+                childList.add(child);
+            }
+
+            TableMember me = this.iTableMemberBusiSV.selectByMemberId(memberId);
+            BeanUtils.copyProperties(me, tableMemberDZ);
+            tableMemberDZ.setChildList(childList);
+            tableMemberDZ.setHasChild(true);
+
+        }catch (Exception e) {
+            return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
+        }
+
+        //返回体
+        stopWatch.stop();
+        log.info("耗时：" + stopWatch.getTotalTimeSeconds());
+        return AccessResponse.builder().data(tableMemberDZ).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
+    }
+
+    /**
+     * 网络权限
+     */
+    @RequestMapping(value = "/relationAuth")
+    public @ResponseBody
+    AccessResponse relationAuth(HttpServletRequest request, HttpServletResponse response){
+        log.info("网络权限{}");
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
+
+        TableMemberRelationSettingDZ tableMemberRelationSettingDZ = new TableMemberRelationSettingDZ();
+
+        try {
+            String memberId = TokenUtil.getUserId(request);
+            tableMemberRelationSettingDZ = iTableMemberRelationSettingBusiSV.check(memberId);
+
+        }catch (Exception e) {
+            return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
+        }
+
+        //返回体
+        stopWatch.stop();
+        log.info("耗时：" + stopWatch.getTotalTimeSeconds());
+        return AccessResponse.builder().data(tableMemberRelationSettingDZ).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
     }
 }

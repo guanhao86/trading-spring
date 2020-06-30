@@ -105,6 +105,36 @@ public class ManageBonusDetailController {
     }
 
     /*
+     * @Author haha
+     * @Description //TODO 配置列表
+     * @Param [mav, session, post, request, page, pageSize]
+     * @return org.springframework.web.servlet.ModelAndView
+     **/
+    @RequiresPermissions("system:member:view")
+    @RequestMapping({"", "list2"})
+    public ModelAndView list2(ModelAndView mav, HttpSession session, QueryVO queryVO, HttpServletRequest request,
+                             @RequestParam(value = "page",required = false, defaultValue = PageDefaultConstraints.PAGE) int page,
+                             @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
+        // String postType = request.getParameter("postType");
+
+        TableBonusDetail memberAccountDetail = new TableBonusDetail();
+        BeanUtils.copyProperties(queryVO, memberAccountDetail);
+
+        PageInfo<TableBonusDetail> pageInfo = this.iTableBonusDetailBusiSV.queryListPage(memberAccountDetail, page, pageSize, CommonUtils.getStartEnd(queryVO));
+
+        //获取热门话题列表信息
+        mav.addObject("page", pageInfo);
+        mav.addObject("queryVO",queryVO);
+        //返回页面header标题
+        PageResult.setPageTitle(mav, PromptInfoConstraints.FUN_TITLE_DICT_LIST);
+        //返回操作提示信息
+        PageResult.getPrompt(mav, request, queryVO.getParamMsg());
+
+        mav.setViewName("manage/bonus/list2");
+        return mav;
+    }
+
+    /*
      * 增加一个奖金总账菜单
      * @Author haha
      * @Description //TODO 配置列表
@@ -119,29 +149,48 @@ public class ManageBonusDetailController {
 
         Date yesterday0 = DateUtils.getDateZero(DateUtils.getYesterday(new Date()));
         Date today0 = DateUtils.getDateZero(new Date());
+        Date now = DateUtils.getSysDate();
 
-        List list = new ArrayList(){{add("1"); add("2"); add("3"); add("4"); add("5"); add("6");}};
-        //日新增业绩 = 》昨天日期的bonus值，并且close_state = 1 求和
-        TableBonusDetail dayData = iTableBonusDetailBusiSV.selectByGroup(yesterday0, today0, list);
-        //总奖金
+        List list = new ArrayList(){{add("1"); add("2"); add("3"); add("4"); add("5"); add("6"); add("10");}};
+        //日新增业绩：昨日购买的订单（仅报单商品）总和
+        TableOrderDZ dayData = iTableOrderBusiSV.selectByGroup2(null, yesterday0, today0);
+        //总业绩：数据库中所有截至到昨天23：59：59的所有订单（仅报单商品）总和
+        TableOrderDZ tableOrderDZ = iTableOrderBusiSV.selectByGroup2(null, null, today0);
+        //总奖金：数据库中table_bonus_detail表，bonus_id不能等于7和10的 所有求和（注意有加减符号）
         TableBonusDetail allData = iTableBonusDetailBusiSV.selectByGroup(null, null, list);
 
-        //总业绩=》所有订单表（报单商品、复消商品、金鸡商品）提货商品的不算，被删除的（退货订单）不算，所有这些符合条件的订单，时间也是截至到昨日的订单金额求和
-        TableOrderDZ tableOrderDZ = iTableOrderBusiSV.selectByGroup2(null, null, today0);
+        //今日奖金
+        TableBonusDetail todayBonusData = iTableBonusDetailBusiSV.selectByGroup(today0, now, list);
 
+        //--------------------------------------------------20200622前定的算法--------------START-----------------------------
+        //TableBonusDetail dayData = iTableBonusDetailBusiSV.selectByGroup(yesterday0, today0, list);
+        //总奖金
+        //TableBonusDetail allData = iTableBonusDetailBusiSV.selectByGroup(null, null, list);
+
+        //总业绩=》所有订单表（报单商品、复消商品、金鸡商品）提货商品的不算，被删除的（退货订单）不算，所有这些符合条件的订单，时间也是截至到昨日的订单金额求和
+        //TableOrderDZ tableOrderDZ = iTableOrderBusiSV.selectByGroup2(null, null, today0);
+        //--------------------------------------------------20200622前定的算法---------------END-----------------------------
         BonusDetailPerVO bonusDetailPerVO = new BonusDetailPerVO();
 
         //会员金额统计
         List<TableMember> tableMemberList = this.iTableMemberBusiSV.statisticMoney();
         BeanUtils.copyProperties(tableMemberList.get(0), bonusDetailPerVO);
-
-        bonusDetailPerVO.setYesterdayAddBonus(dayData==null?new BigDecimal(0):dayData.getBonus());
+        //日新增业绩
+        bonusDetailPerVO.setYesterdayAddOrderPrice(dayData==null?new BigDecimal(0):dayData.getPrice());
+        //总奖金
         bonusDetailPerVO.setAllAddBonus(allData==null?new BigDecimal(0):allData.getBonus());
+        //总业绩
         bonusDetailPerVO.setAllOrderPrice(tableOrderDZ==null?new BigDecimal(0):tableOrderDZ.getPrice());
+        //日新增奖金
+        bonusDetailPerVO.setYesterdayAddBonus(todayBonusData == null || todayBonusData.getBonus()==null?new BigDecimal(0):todayBonusData.getBonus());
+
         String allPer = Math.floor(
-                bonusDetailPerVO.getAllAddBonus().floatValue() / (bonusDetailPerVO.getAllOrderPrice().floatValue() == 0 ? 1 : bonusDetailPerVO.getAllOrderPrice().floatValue()) * 100) / 100 + "%";
+                bonusDetailPerVO.getAllAddBonus().floatValue() / (bonusDetailPerVO.getAllOrderPrice().floatValue() == 0 ? 1 : bonusDetailPerVO.getAllOrderPrice().floatValue()) * 100) + "%";
         bonusDetailPerVO.setAllPer(allPer);
 
+        String yestodayPer = Math.floor(
+                bonusDetailPerVO.getYesterdayAddBonus().floatValue() / (bonusDetailPerVO.getYesterdayAddOrderPrice().floatValue() == 0 ? 1 : bonusDetailPerVO.getYesterdayAddOrderPrice().floatValue()) * 100) + "%";
+        bonusDetailPerVO.setYesterdayPer(yestodayPer);
 
         //获取热门话题列表信息
         mav.addObject("bonusDetailPerVO",bonusDetailPerVO);
@@ -171,7 +220,7 @@ public class ManageBonusDetailController {
         }
         Date end = null;
         if (StringUtils.isNotEmpty(queryVO.getEnd())) {
-            start = DateUtils.parseDate(queryVO.getEnd());
+            end = DateUtils.parseDate(queryVO.getEnd());
         }
         PageInfo<TableBonusDetailDZ> list = this.iTableBonusDetailBusiSV.selectByGroupBonusIdEveryDayPage(queryVO.getMemberId(), start, end, page, pageSize);
 
@@ -187,4 +236,36 @@ public class ManageBonusDetailController {
         return mav;
     }
 
+    /*
+     * @Author haha
+     * @Description 会员每天奖金统计
+     * @Param [mav, session, post, request, page, pageSize]
+     * @return org.springframework.web.servlet.ModelAndView
+     **/
+    @RequiresPermissions("system:member:view")
+    @RequestMapping({"", "listEveryDay2"})
+    public ModelAndView listEveryDay2(ModelAndView mav, HttpSession session, QueryVO queryVO, HttpServletRequest request,
+                                     @RequestParam(value = "page",required = false, defaultValue = PageDefaultConstraints.PAGE) int page,
+                                     @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
+        Date start = null;
+        if (StringUtils.isNotEmpty(queryVO.getStart())) {
+            start = DateUtils.parseDate(queryVO.getStart());
+        }
+        Date end = null;
+        if (StringUtils.isNotEmpty(queryVO.getEnd())) {
+            end = DateUtils.getNextDate(DateUtils.parseDate(queryVO.getEnd()));
+        }
+        PageInfo<TableBonusDetailDZ> list = this.iTableBonusDetailBusiSV.selectByGroupBonusIdEveryDayPage(queryVO.getMemberId(), start, end, page, pageSize);
+
+        //获取热门话题列表信息
+        mav.addObject("page", list);
+        mav.addObject("queryVO",queryVO);
+        //返回页面header标题
+        PageResult.setPageTitle(mav, PromptInfoConstraints.FUN_TITLE_DICT_LIST);
+        //返回操作提示信息
+        PageResult.getPrompt(mav, request, queryVO.getParamMsg());
+
+        mav.setViewName("manage/bonus/listEveryDay2");
+        return mav;
+    }
 }

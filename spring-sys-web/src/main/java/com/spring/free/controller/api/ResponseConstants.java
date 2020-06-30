@@ -18,6 +18,8 @@ public final class ResponseConstants {
         public static final int REFRESH_TOKEN=1000;
         //TOKEN无效
         public static final int TOKEN_FAIL=1001;
+        //无数据
+        public static final int NO_DATA=2001;
 
 
     }

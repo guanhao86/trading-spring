@@ -63,22 +63,27 @@
 
   <!-- 结算管理菜单中加入一个子菜单“管理业绩分析”  -->
   <select id="selectByGroup3" resultMap="BaseResultMap" >
-    SELECT sum(price) as price
+    SELECT
+    member_id,
+    sum(price) as price
     FROM table_order
     where 1=1
     and state != 4
     and goods_class = 0
+    <if test="memberList != null" >
     and member_id in
     <foreach collection="memberList" item="id" index="index"
              open="(" close=")" separator=",">
       #{id}
     </foreach>
+    </if>
     <if test="start != null" >
       and create_Time >= #{start,jdbcType=TIMESTAMP}
     </if>
     <if test="end != null" >
       and #{end,jdbcType=TIMESTAMP} >= create_Time
     </if>
+    group by member_id
 
   </select>
 </mapper>

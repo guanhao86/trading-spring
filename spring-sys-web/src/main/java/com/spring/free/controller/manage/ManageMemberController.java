@@ -6,15 +6,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
-import com.spring.fee.model.TableMember;
-import com.spring.fee.model.TableMemberDZ;
-import com.spring.fee.model.TableMemberTree;
-import com.spring.fee.model.TableOrderDZ;
+import com.spring.fee.constants.InvestConstants;
+import com.spring.fee.model.*;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.fee.service.ITableOrderBusiSV;
 import com.spring.free.common.util.PythonUtil3;
 import com.spring.free.config.CommonUtils;
 import com.spring.free.config.ImageUtils;
+import com.spring.free.config.TokenUtil;
 import com.spring.free.domain.QueryVO;
 import com.spring.free.domain.UserInfo;
 import com.spring.free.system.UserService;
@@ -48,11 +47,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 后台管理/会员
@@ -487,6 +484,24 @@ public class ManageMemberController {
         return view;
     }
 
+    /*
+     * @Author bianyx
+     * @Description //TODO 管理业绩分析
+     * @Date 11:07 2019/1/18
+     * @Param [mav, request, topItem, post, buttonType, ghPic1]
+     * @return org.springframework.web.servlet.ModelAndView
+     **/
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "analyseBatchIndex")
+    public ModelAndView analyseBatchIndex(ModelAndView view, HttpServletRequest request, TableMember member) {
+        Map map = Maps.newHashMap();
+        PageResult.setPageTitle(view, "管理业绩分析");
+        PageResult.getPrompt(view, request, "");
+
+        view.setViewName("manage/member/analyseBatch");
+        return view;
+    }
+
     /**
      * 管理业绩分析
      * @param mav
@@ -521,15 +536,28 @@ public class ManageMemberController {
                 Map<String, Object> mapDate = CommonUtils.getStartEnd(queryVO);
                 if (CollectionUtils.isEmpty(leftList)) {
                     mav.addObject("left", "0");
-                }else {
-                    TableOrderDZ left = this.iTableOrderBusiSV.selectByGroup3(leftList, (Date) mapDate.get("start"), (Date) mapDate.get("end"));
-                    mav.addObject("left", left==null?0:left.getPrice());
+                } else {
+                    List<TableOrderDZ> leftListDZ = this.iTableOrderBusiSV.selectByGroup3(leftList, (Date) mapDate.get("start"), (Date) mapDate.get("end"));
+                    BigDecimal a = new BigDecimal(0);
+                    if (!CollectionUtils.isEmpty(leftListDZ)) {
+                        for (TableOrderDZ dz : leftListDZ) {
+                            a = a.add(dz.getPrice());
+                        }
+                    }
+
+                    mav.addObject("left", a.floatValue());
                 }
                 if (CollectionUtils.isEmpty(rightList)) {
                     mav.addObject("right", "0");
-                }else {
-                    TableOrderDZ right = this.iTableOrderBusiSV.selectByGroup3(rightList, (Date) mapDate.get("start"), (Date) mapDate.get("end"));
-                    mav.addObject("right", right==null?0:right.getPrice());
+                } else {
+                    List<TableOrderDZ> rightListDZ = this.iTableOrderBusiSV.selectByGroup3(rightList, (Date) mapDate.get("start"), (Date) mapDate.get("end"));
+                    BigDecimal a = new BigDecimal(0);
+                    if (!CollectionUtils.isEmpty(rightListDZ)) {
+                        for (TableOrderDZ dz : rightListDZ) {
+                            a = a.add(dz.getPrice());
+                        }
+                    }
+                    mav.addObject("right", a.floatValue());
                 }
 
             }else{
@@ -540,6 +568,119 @@ public class ManageMemberController {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
         }
         mav.setViewName("manage/member/analyse");
+        return mav;
+    }
+
+    /**
+     * 管理业绩分析(批量)
+     * @param mav
+     * @param request
+     * @return
+     */
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "analyseBatch")
+    public ModelAndView analyseBatch(ModelAndView mav, HttpServletRequest request, QueryVO queryVO) {
+        Map map = Maps.newHashMap();
+        map.put(Global.URL, Global.ADMIN_PATH +"/manage/member/analyseBatchIndex");
+        try {
+
+            Map<String, Object> mapDate = CommonUtils.getStartEnd(queryVO);
+
+            //循环所有会员
+            TableMember tableMemberQuery = new TableMember();
+            tableMemberQuery.setState(InvestConstants.MemberState.VALID);
+            Map<String, Object> queryMap = new HashMap<>();
+            queryMap.put("ORDER", "REGISTER_TIME, ID");
+            List<TableMember> memberList = this.iTableMemberBusiSV.queryList(tableMemberQuery, queryMap);
+            //一次性加载会员
+            Map<String, List<TableMember>> mapMember = this.iTableMemberBusiSV.queryArrangeListMap(new TableMember());
+            //一次性加载订单
+            List<TableOrderDZ> orderList = this.iTableOrderBusiSV.selectByGroup3(null, (Date) mapDate.get("start"), (Date) mapDate.get("end"));
+
+            List<TableMember> result = new ArrayList<>();
+
+            for(TableMember tableMember : memberList) {
+
+                if (!"92600000000".equals(tableMember.getMemberId())){
+                    continue;
+                }
+
+                TableMemberAnalyse tableMemberAnalyse = new TableMemberAnalyse();
+
+                TableMemberTree tWheatMemberTree = new TableMemberTree();
+                tWheatMemberTree.setMemberId(tableMember.getMemberId());
+
+                tWheatMemberTree = this.iTableMemberBusiSV.queryAllChildTree(tWheatMemberTree, mapMember);
+
+                //获取左区会员列表
+                List<String> leftList = new ArrayList<>();
+                //获取右区会员列表
+                List<String> rightList = new ArrayList<>();
+
+                setLeftOrRignt(tWheatMemberTree, leftList, rightList);
+
+                BigDecimal leftAmount = new BigDecimal(0);
+                BigDecimal rightAmount = new BigDecimal(0);
+
+                log.info("======================================会员：{}", tableMember.getMemberId());
+                log.info("======================================左区");
+                //左区结果
+                if (!CollectionUtils.isEmpty(leftList)) {
+
+                    Object[] objects = orderList.stream().filter(s -> leftList.contains(s.getMemberId())).toArray();
+
+                    for (Object o : objects) {
+                        TableOrderDZ dz = (TableOrderDZ)o;
+                        log.info("======================================订单：{}", dz.getMemberId() + "，金额："+ dz.getPrice());
+                        leftAmount = leftAmount.add(dz.getPrice());
+                    }
+
+                }
+                log.info("======================================右区");
+                //右区结果
+                if (!CollectionUtils.isEmpty(rightList)) {
+
+                    Object[] objects = orderList.stream().filter(s -> rightList.contains(s.getMemberId())).toArray();
+
+                    for (Object o : objects) {
+                        TableOrderDZ dz = (TableOrderDZ)o;
+                        log.info("======================================订单：{}", dz.getMemberId() + "，金额："+ dz.getPrice());
+                        rightAmount = rightAmount.add(dz.getPrice());
+                    }
+
+                }
+
+                tableMember.setLeftAmount(leftAmount);
+                tableMember.setRightAmount(rightAmount);
+
+                if (leftAmount.floatValue() == 0 && rightAmount.floatValue() == 0) {
+                    continue;
+                }
+
+                if (queryVO.getLeftStart() != null && queryVO.getLeftStart() > leftAmount.floatValue()) {
+                    continue;
+                }
+
+                if (queryVO.getLeftEnd() != null && queryVO.getLeftEnd() < leftAmount.floatValue()) {
+                    continue;
+                }
+
+                if (queryVO.getRightStart() != null && queryVO.getRightStart() > rightAmount.floatValue()) {
+                    continue;
+                }
+
+                if (queryVO.getRightEnd() != null && queryVO.getRightEnd() > rightAmount.floatValue()) {
+                    continue;
+                }
+
+
+                result.add(tableMember);
+            }
+            mav.addObject("list", result);
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
+        mav.setViewName("manage/member/analyseBatch");
         return mav;
     }
 
@@ -556,5 +697,27 @@ public class ManageMemberController {
                 }
             }
         }
+    }
+
+    /**
+     * 登录H5
+     * @param mav
+     * @param request
+     * @param member
+     * @return
+     */
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "loginH5")
+    public ModelAndView loginH5(ModelAndView mav, HttpServletRequest request, TableMember member) {
+
+        //取token
+        String token = TokenUtil.createJWT(member.getMemberId(), "", "",  24 * 3600 * 1000);
+
+        String H5Domain = DictUtils.getDictValue("H5页面域名","H5Domain", "");
+        String url = H5Domain + "?token="+token+"#/LoginPc";
+
+        mav.addObject("url", url);
+        mav.setViewName("manage/member/loginH5");
+        return mav;
     }
 }

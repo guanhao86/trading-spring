@@ -109,10 +109,25 @@
         #@panel()
              #@panelBody()
                 #@table()
-                    #tableTHead([ "结算时间", "结算人", "结算类型", "直推奖金(元)", "管理奖金(元)", "伯乐奖金(元)", "重消奖励(元)", "奖衔奖励(元)", "平台管理费(元)", "福利积分(元)"],"", false)
+                    #tableTHead([ "业绩时间", "结算时间", "结算人", "结算状态", "结算类型", "直推奖金(元)", "管理奖金(元)", "伯乐奖金(元)", "重消奖励(元)", "奖衔奖励(元)", "平台管理费(元)", "福利积分(元)"],"", false)
                     #@tableBody($page.list)
+
+                        #set($time = $!DateTool.format("yyyy-MM-dd", $!{l.lastTime}))
+
+                        #set($close = "")
+                        #if ($!{l.closeFlag} == 0)
+                            #set($close = "待发放")
+                        #end
+                        #if ($!{l.closeFlag} == 1)
+                            #set($close = "已发放")
+                        #end
+                        #if ($!{l.balanceType} == "3")
+                            #set($close = "")
+                        #end
+                        #tableTd("$!{l.settleDate}")
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.lastTime}))
                         #tableTd("$!{l.adminId}")
+                        #tableTd("$!{close}")
                         #tableTd("$!{l.balanceType}", {"type": "dict", "format": "balanceType"})
                         #tableTd("$!{l.bonusReference}")
                         #tableTd("$!{l.bonusGroup}")
@@ -121,11 +136,27 @@
                         #tableTd("$!{l.bonusRank}")
                         #tableTd("$!{l.bonnusAdminCost}")
                         #tableTd("$!{l.bonusCar}")
+                        #@tableTd()
+                            <a onclick="show('$!{time}')" class="fa fa-edit"
+                               title="查看"> 查看</a>
+                            #if ($!{l.closeFlag} == 0)
+                            <a href="$!{ctx}/manage/balance/close?id=$!{l.id}" class="fa fa-edit"
+                               confirm="true" message="确定发放吗" title="奖金发放"> 发放</a>
+                            #end
+                        #end
                     #end
                 #end
 
                 #parse("modular/page.vm")
             #end
+
+            <div id="light" class="white_content">
+                <div style="text-align: right; position: relative; margin-right: -30px; margin-top: -30px;">
+                    <img src="/img/x.png" style="width: 30px; height: 30px" onclick="hid()">
+                </div>
+                <iframe id="bonusList" src="" width="100%" height="98%"></iframe>
+            </div>
+            <div id="fade" class="black_overlay"></div>
         #end
     #end
     #@script()
@@ -203,6 +234,20 @@
                 onfocus: true
             });
         })
+
+        function show(start){
+          //  alert(start)
+            document.getElementById('light').style.display='block';
+            document.getElementById('bonusList').src = "../bonus/listEveryDay2?start="+start+"&end="+start
+            //document.getElementById('fade').style.display='block';
+        }
+
+        function hid(){
+            document.getElementById('light').style.display='none';
+            document.getElementById('bonusList').src = ""
+            //document.getElementById('fade').style.display='block';
+        }
+
     </script>
         #jsCalculate()
         #@jsValidate("form_insert")
@@ -210,3 +255,33 @@
         #end
     #end
 #end
+
+<style>
+    .black_overlay{
+        margin-bottom: -850px;
+        display: none;
+        position: absolute;
+        bottom: 0%;
+        left: 0%;
+        width: 100%;
+        height: 600px;
+        background-color: black;
+        z-index:1001;
+        -moz-opacity: 0.8;
+        opacity:.80;
+        filter: alpha(opacity=88);
+    }
+    .white_content {
+        display: none;
+        position: absolute;
+        bottom: -800px;
+        left: 2%;
+        width: 95%;
+        height: 75%;
+        padding: 20px;
+        border: 5px solid #8B91A0;
+        background-color: white;
+        z-index:1002;
+        overflow: none;
+    }
+</style>

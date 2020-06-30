@@ -1,0 +1,16 @@
+#@html()
+    #@wrapper()
+        #@panel()
+
+        #end
+        #end
+    #end
+    #@script()
+    <script>
+        window.location.href="$!{url}";
+    </script>
+        #jsCalculate()
+        #@jsValidate("form_insert")
+
+        #end
+    #end

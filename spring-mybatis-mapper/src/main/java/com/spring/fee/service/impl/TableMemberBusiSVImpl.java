@@ -273,6 +273,21 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         return tableMembers.get(0);
     }
 
+    private TableMember selectByMemberIdNoState(String memberId) {
+
+        TableMemberExample example = new TableMemberExample();
+        TableMemberExample.Criteria criteria = example.createCriteria();
+
+        criteria.andMemberIdEqualTo(memberId);
+
+        List<TableMember> tableMembers = this.iTableMemberMapper.selectByExample(example);
+
+        if (CollectionUtils.isEmpty(tableMembers)) {
+            return null;
+        }
+        return tableMembers.get(0);
+    }
+
     @Override
     public TableMember selectByMemberId4BuyOrder(String memberId) {
 
@@ -630,6 +645,12 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             if (null != map.get("ORDER")) {
                 example.setOrderByClause((String)map.get("ORDER"));
             }
+            if (null != map.get("REFERENCE_IN")) {
+                criteria.andReferenceIdIn((List<String>)map.get("REFERENCE_IN"));
+            }
+            if (null != map.get("ARRANGE_IN")) {
+                criteria.andArrangeIdIn((List<String>)map.get("ARRANGE_IN"));
+            }
         }
 
         return this.iTableMemberMapper.selectByExample(example);
@@ -925,7 +946,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
 
 
 
-        member.setMemberId("926" + String.format("%08d", member.getId()));
+        member.setMemberId(getMemberId());
         member.setLeftChildNode("");
         member.setRightChildNode("");
 
@@ -989,6 +1010,22 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         userService.save(user, map);
 
         return member;
+    }
+
+    /**
+     * 获取memberId
+     * @return
+     */
+    private String getMemberId(){
+        Random random = new Random();
+        long i = random.nextInt(99999999);
+        String memberId = "926" + String.format("%08d", i);
+        if(null == this.selectByMemberIdNoState(memberId)){
+            return memberId;
+        }else{
+            return getMemberId();
+        }
+
     }
 
     /**

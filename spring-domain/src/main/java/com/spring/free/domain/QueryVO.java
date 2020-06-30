@@ -78,4 +78,10 @@ public class QueryVO extends BaseEntity<QueryVO> {
     private String balanceType;
 
     private String type;
+
+    private Float leftStart;
+    private Float leftEnd;
+    private Float rightStart;
+    private Float rightEnd;
+
 }

@@ -6,17 +6,24 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.spring.fee.model.TableBalanceDetail;
 import com.spring.fee.model.TableBalanceDetailDZ;
+import com.spring.fee.model.TableMember;
 import com.spring.fee.service.ITableBalanceDetailBusiSV;
+import com.spring.free.common.util.PythonUtil3;
 import com.spring.free.domain.QueryVO;
+import com.spring.free.domain.UserInfo;
 import com.spring.free.util.DateUtils;
 import com.spring.free.util.PageResult;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
+import com.spring.free.util.exception.ExceptionCodeEnum;
+import com.spring.free.util.exception.ServiceException;
+import com.spring.free.utils.principal.BaseGetPrincipal;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +32,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +43,9 @@ import java.util.Map;
 @Controller
 @RequestMapping(Global.ADMIN_PATH + "/manage/balance/")
 public class ManageBalanceDetailController {
+
+    @Value("${python.path}")
+    public String python_path;
 
     @Autowired
     ITableBalanceDetailBusiSV iTableBalanceDetailBusiSV;
@@ -63,6 +74,18 @@ public class ManageBalanceDetailController {
 
         PageInfo<TableBalanceDetail> pageInfo = this.iTableBalanceDetailBusiSV.queryListPage(tableBalanceDetail, page, pageSize, null);
 
+        PageInfo<TableBalanceDetailDZ> pageInfoDZ = new PageInfo<>();
+        List<TableBalanceDetailDZ> list = new ArrayList<>();
+        BeanUtils.copyProperties(pageInfo, pageInfoDZ);
+
+        for (TableBalanceDetail a : pageInfo.getList()) {
+            TableBalanceDetailDZ dz = new TableBalanceDetailDZ();
+            BeanUtils.copyProperties(a, dz);
+            dz.setSettleDate(DateUtils.formatDate(DateUtils.getYesterday(a.getLastTime())));
+            list.add(dz);
+        }
+        pageInfoDZ.setList(list);
+
         //累计
         List<TableBalanceDetail> listAll = this.iTableBalanceDetailBusiSV.selectByGroup(null, null, null);
         //上月
@@ -77,7 +100,7 @@ public class ManageBalanceDetailController {
 
 
         //获取热门话题列表信息
-        mav.addObject("page", pageInfo);
+        mav.addObject("page", pageInfoDZ);
         mav.addObject("queryVO",queryVO);
         mav.addObject("all", listAll);
         mav.addObject("thisMonth", listLastMonth);
@@ -145,5 +168,35 @@ public class ManageBalanceDetailController {
         view.addObject("balance",tableBalanceDetail1);
         view.setViewName("manage/balance/view");
         return view;
+    }
+
+    /**
+     * 奖金发放
+     * @param mav
+     * @param request
+     * @return
+     */
+    @RequiresPermissions("system:member:view")
+    @RequestMapping(value = "close")
+    public ModelAndView close(ModelAndView mav, HttpServletRequest request, TableBalanceDetail tableBalanceDetail) {
+        Map map = Maps.newHashMap();
+        map.put(Global.URL, Global.ADMIN_PATH +"/manage/balance/list");
+        try {
+            tableBalanceDetail = this.iTableBalanceDetailBusiSV.select(tableBalanceDetail);
+            if (tableBalanceDetail == null || 0 != tableBalanceDetail.getCloseFlag()) {
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "结算失败", map.get(Global.URL).toString(), map);
+            }
+            tableBalanceDetail.setCloseFlag(1);
+            this.iTableBalanceDetailBusiSV.update(tableBalanceDetail);
+
+            UserInfo user = BaseGetPrincipal.getUser();
+            //结算
+            String result = PythonUtil3.runPy(python_path, "send_bonus2.py", user.getUsername(), DateUtils.formatDateTime(tableBalanceDetail.getLastTime()));
+
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
+        PageResult.setPrompt(map,"操作成功", "success");
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/balance/list"), map);
     }
 }

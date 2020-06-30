@@ -6,16 +6,23 @@
             #end
             #@panelBody()
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">日新增业绩(元)：</label>
+                    <label class="col-sm-3 control-label">日新增奖金(元)：</label>
                     <div class="col-sm-3">
                         $!{bonusDetailPerVO.yesterdayAddBonus}
                     </div>
                 </div>
                 <br>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">总业绩(元)：</label>
+                    <label class="col-sm-3 control-label">日新增业绩(元)：</label>
                     <div class="col-sm-3">
-                        $!{bonusDetailPerVO.allOrderPrice}
+                        $!{bonusDetailPerVO.yesterdayAddOrderPrice}
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">日拨比：</label>
+                    <div class="col-sm-3">
+                        $!{bonusDetailPerVO.yesterdayPer}
                     </div>
                 </div>
                 <br>
@@ -25,9 +32,17 @@
                         $!{bonusDetailPerVO.allAddBonus}
                     </div>
                 </div>
+                <br>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">总业绩(元)：</label>
+                    <div class="col-sm-3">
+                        $!{bonusDetailPerVO.allOrderPrice}
+                    </div>
+                </div>
+
                  <br>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">总波比：</label>
+                    <label class="col-sm-3 control-label">总拨比：</label>
                     <div class="col-sm-3">
                         $!{bonusDetailPerVO.allPer}
                     </div>

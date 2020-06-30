@@ -53,7 +53,7 @@ public interface ITableOrderBusiSV {
      * @param end
      * @return
      */
-    TableOrderDZ selectByGroup3(List<String> memberList, Date start, Date end);
+    List<TableOrderDZ> selectByGroup3(List<String> memberList, Date start, Date end);
 
 
     /**

@@ -8,6 +8,16 @@ public class TableBalanceDetailDZ extends TableBalanceDetail {
 
     Date lastTimeEnd;
 
+    String settleDate;
+
+    public String getSettleDate() {
+        return settleDate;
+    }
+
+    public void setSettleDate(String settleDate) {
+        this.settleDate = settleDate;
+    }
+
     public Date getLastTimeStart() {
         return lastTimeStart;
     }
