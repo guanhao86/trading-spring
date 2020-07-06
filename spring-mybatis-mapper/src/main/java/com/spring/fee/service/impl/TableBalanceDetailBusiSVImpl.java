@@ -138,6 +138,17 @@ public class TableBalanceDetailBusiSVImpl implements ITableBalanceDetailBusiSV {
         if (null != bo.getBalanceType()) {
             criteria.andBalanceTypeEqualTo(bo.getBalanceType());
         }
+
+        if (null != bo.getCloseFlag()) {
+            criteria.andCloseFlagEqualTo(bo.getCloseFlag());
+        }
+
+        if (null != map) {
+            if (null != map.get("balanceTypeNotIn")) {
+                criteria.andBalanceTypeNotIn((List)map.get("balanceTypeNotIn"));
+            }
+        }
+
         example.setOrderByClause("operate_time desc");
 
         PageInfo<TableBalanceDetail> pageInfo = PageHelper.startPage(pageNum, pageSize)

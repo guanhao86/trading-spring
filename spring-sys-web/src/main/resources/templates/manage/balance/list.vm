@@ -103,6 +103,14 @@
                         </div>
                     </div>
                     #end
+                    #@divColSmNum(3)
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">结算状态：</label>
+                        <div class="col-sm-5" style="width: 200px;">
+                            #selectBS($!dict.getDictList("closeFlag"), ["closeFlag", "$!{queryVO.closeFlag}", "value", "label"], false, [true, ""])
+                        </div>
+                    </div>
+                    #end
                 #end
             #end
         #end

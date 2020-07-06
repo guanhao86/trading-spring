@@ -43,6 +43,9 @@ public class ManageSettleController {
     @Autowired
     ITableBonusDetailBusiSV iTableBonusDetailBusiSV;
 
+    @Value("${python.exePath}")
+    public String python_exepath;
+
     @Value("${python.path}")
     public String python_path;
 
@@ -93,16 +96,16 @@ public class ManageSettleController {
         try {
             //日结
             if ("1".equals(queryVO.getSettleType())) {
-                result = PythonUtil3.runPy(python_path, "balance_gogogo.py", user.getUsername(), "");
+                result = PythonUtil3.runPy(python_exepath, python_path, "balance_gogogo.py", user.getUsername(), "");
                 //PythonUtil.runPy("E:\\工作\\01 需求\\20191014 麦子科技\\东家嗨团\\结算代码\\结算代码\\dj_balance_accounts.py", "balance_gogogo", user.getUsername());
             }
 
             if ("2".equals(queryVO.getSettleType())) {
-                result = PythonUtil3.runPy(python_path, "send_bonus.py", user.getUsername(), "");
+                result = PythonUtil3.runPy(python_exepath, python_path, "send_bonus.py", user.getUsername(), "");
             }
 
             if ("3".equals(queryVO.getSettleType())) {
-                result = PythonUtil3.runPy(python_path, "balance_go2.py", user.getUsername(), "");
+                result = PythonUtil3.runPy(python_exepath, python_path, "balance_go2.py", user.getUsername(), "");
             }
 
         }catch (Exception e) {

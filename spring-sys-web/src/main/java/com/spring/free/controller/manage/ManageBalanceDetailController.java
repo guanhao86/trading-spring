@@ -9,6 +9,7 @@ import com.spring.fee.model.TableBalanceDetailDZ;
 import com.spring.fee.model.TableMember;
 import com.spring.fee.service.ITableBalanceDetailBusiSV;
 import com.spring.free.common.util.PythonUtil3;
+import com.spring.free.config.CommonUtils;
 import com.spring.free.domain.QueryVO;
 import com.spring.free.domain.UserInfo;
 import com.spring.free.util.DateUtils;
@@ -32,10 +33,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 后台管理/结算
@@ -43,6 +41,9 @@ import java.util.Map;
 @Controller
 @RequestMapping(Global.ADMIN_PATH + "/manage/balance/")
 public class ManageBalanceDetailController {
+
+    @Value("${python.exePath}")
+    public String python_exepath;
 
     @Value("${python.path}")
     public String python_path;
@@ -63,6 +64,8 @@ public class ManageBalanceDetailController {
                              @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
         // String postType = request.getParameter("postType");
 
+        Map<String, Object> map = new HashMap<>();
+
         TableBalanceDetailDZ tableBalanceDetail = new TableBalanceDetailDZ();
         BeanUtils.copyProperties(queryVO, tableBalanceDetail);
         if (StringUtils.isNotEmpty(queryVO.getStart()))
@@ -71,8 +74,14 @@ public class ManageBalanceDetailController {
             tableBalanceDetail.setLastTimeEnd(DateUtils.parseDate(queryVO.getEnd()+" 23:59:59"));
         if (StringUtils.isNotEmpty(queryVO.getBalanceType()))
             tableBalanceDetail.setBalanceType(Integer.parseInt(queryVO.getBalanceType()));
+        if (StringUtils.isNotEmpty(queryVO.getCloseFlag())) {
+            tableBalanceDetail.setCloseFlag(Integer.parseInt(queryVO.getCloseFlag()));
+            map.put("balanceTypeNotIn", new ArrayList(){{add(3);}});
+        }
 
-        PageInfo<TableBalanceDetail> pageInfo = this.iTableBalanceDetailBusiSV.queryListPage(tableBalanceDetail, page, pageSize, null);
+
+
+        PageInfo<TableBalanceDetail> pageInfo = this.iTableBalanceDetailBusiSV.queryListPage(tableBalanceDetail, page, pageSize, map);
 
         PageInfo<TableBalanceDetailDZ> pageInfoDZ = new PageInfo<>();
         List<TableBalanceDetailDZ> list = new ArrayList<>();
@@ -191,7 +200,7 @@ public class ManageBalanceDetailController {
 
             UserInfo user = BaseGetPrincipal.getUser();
             //结算
-            String result = PythonUtil3.runPy(python_path, "send_bonus2.py", user.getUsername(), DateUtils.formatDateTime(tableBalanceDetail.getLastTime()));
+            String result = PythonUtil3.runPy(python_exepath, python_path, "send_bonus2.py", user.getUsername(), DateUtils.formatDateTime(tableBalanceDetail.getLastTime()));
 
         }catch (Exception e) {
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);

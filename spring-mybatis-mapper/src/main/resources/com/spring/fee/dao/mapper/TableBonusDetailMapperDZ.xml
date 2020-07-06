@@ -67,6 +67,7 @@
     <if test="end != null">
       and #{end,jdbcType=TIMESTAMP} >= recode_Time
     </if>
+    and bonus_id not in (7)
     GROUP BY date( recode_Time ), member_id, bonus_id
     ) A
     order by A.recode_time desc, A.member_id, A.bonus_id

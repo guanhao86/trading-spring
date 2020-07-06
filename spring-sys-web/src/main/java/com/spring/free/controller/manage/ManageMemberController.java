@@ -601,10 +601,6 @@ public class ManageMemberController {
 
             for(TableMember tableMember : memberList) {
 
-                if (!"92600000000".equals(tableMember.getMemberId())){
-                    continue;
-                }
-
                 TableMemberAnalyse tableMemberAnalyse = new TableMemberAnalyse();
 
                 TableMemberTree tWheatMemberTree = new TableMemberTree();

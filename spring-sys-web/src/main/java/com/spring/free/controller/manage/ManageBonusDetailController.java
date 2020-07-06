@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 后台管理/奖金接口
@@ -119,8 +120,11 @@ public class ManageBonusDetailController {
 
         TableBonusDetail memberAccountDetail = new TableBonusDetail();
         BeanUtils.copyProperties(queryVO, memberAccountDetail);
+        queryVO.setEnd(DateUtils.formatDate(DateUtils.getNextDate(DateUtils.parseDate(queryVO.getStart())), "yyyy-MM-dd"));
+        Map<String, Object> map = CommonUtils.getStartEnd(queryVO);
+        map.put("bonusIdNotIn", new ArrayList(){{add("7");}});
+        PageInfo<TableBonusDetail> pageInfo = this.iTableBonusDetailBusiSV.queryListPage(memberAccountDetail, page, pageSize, map);
 
-        PageInfo<TableBonusDetail> pageInfo = this.iTableBonusDetailBusiSV.queryListPage(memberAccountDetail, page, pageSize, CommonUtils.getStartEnd(queryVO));
 
         //获取热门话题列表信息
         mav.addObject("page", pageInfo);

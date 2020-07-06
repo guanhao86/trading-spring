@@ -76,6 +76,8 @@ public class QueryVO extends BaseEntity<QueryVO> {
     private String transType;
     //1：日结，2：月结，3:周发放
     private String balanceType;
+    //结算状态： 0待发放 1已发放
+    private String closeFlag;
 
     private String type;
 

@@ -47,6 +47,9 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
     @Value("${python.path}")
     public String python_path;
 
+    @Value("${python.exePath}")
+    public String python_exepath;
+
     @Autowired
     TableMemberMapper iTableMemberMapper;
 
@@ -894,7 +897,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
                 log.info("自动滑落");
                 //3 左区滑落
                 //4 右区滑落
-                String result = PythonUtil3.runPy(python_path, "get_leaf_node.py", arrangeId, "");
+                String result = PythonUtil3.runPy(python_exepath, python_path, "get_leaf_node.py", arrangeId, "");
                 if (StringUtils.isEmpty(result)) {
                     throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "根据安置人" + arrangeId + "获取自动滑落会员编号失败", "", null);
                 }
