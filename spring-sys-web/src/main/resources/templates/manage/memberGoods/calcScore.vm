@@ -1,0 +1,57 @@
+#@html()
+    #@wrapper()
+        #@panel()
+            #@panelHeader({"title":"金鸡下蛋", "perm": "", "isBack": false, "href": ""})
+                #btn({"btnName":"保存", "icon":"fa-save", "style":"primary",  "attr":{"data-button": "save", "data-form-id": "form_insert"}})
+            #end
+            #@panelBody()
+                #@form("form_insert" false "post" "manage/memberGoods/calcScore")
+
+                    #@divColSmNum(3)
+                        #formDate({"name": "日期", "length": "4,8", "asterisk": false, "cl": "start-time"} {"name":
+                            "start", "id": "start","dateVal": "true", "value":
+                            "$!{param.start}"})
+                    #end
+
+                #end
+            #end
+        #end
+    #end
+#end
+#@script()
+<script>
+
+
+    $(function () {
+        var startTime = $('.start-time').datepicker().on('changeDate', function(ev) {
+            startTime.hide();
+        }).data('datepicker');
+
+
+        $('button[empty="true"]').on('click', function () {
+            $("input[name='start']").eq(0).val($('#s_t_h').val());
+        })
+    })
+
+    $(document).ready(function () {
+        debugger;
+        $("#search").validate({
+            errorPlacement: function(error, element) {
+                debugger;
+                if (element.is(":checkbox")||element.is(":radio")||element.is(".date-time")){
+                    debugger;
+                    error.appendTo(element.parent().parent().parent());
+                } else {
+                    debugger;
+                    error.insertAfter(element.parent());
+                }
+            },
+            onfocus: true
+        });
+    })
+</script>
+    #jsCalculate()
+    #@jsValidate("form_insert")
+
+    #end
+#end

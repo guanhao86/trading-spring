@@ -93,9 +93,12 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
      * 计算积分
      */
     @Override
-    public void calcScore() {
+    public void calcScore(Date time) {
         TableTask tableTask = new TableTask();
         tableTask.setTaskType(1);
+        if (time != null) {
+            tableTask.setTaskTime(DateUtils.getYYYYMMDD(time));
+        }
         //避免重复执行（集群）
         if (iTableTaskBusiSV.insert(tableTask)) {
             log.info("开始下蛋");
@@ -104,7 +107,7 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
             List<TableMemberGoods> tableMemberGoodsList = this.getListValid(null);
             for (TableMemberGoods tableMemberGoods : tableMemberGoodsList) {
                 try {
-                    iTableMemberGoodsBusiSV.calcScoreRun(tableMemberGoods);
+                    iTableMemberGoodsBusiSV.calcScoreRun(tableMemberGoods, time);
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -117,10 +120,13 @@ public class TableMemberGoodsBusiSVImpl implements ITableMemberGoodsBusiSV {
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
-    public void calcScoreRun(TableMemberGoods tableMemberGoods) {
+    public void calcScoreRun(TableMemberGoods tableMemberGoods, Date time) {
         try {
             log.info("金鸡信息{}", JSONObject.toJSON(tableMemberGoods));
             Date sysdate = DateUtils.getSysDate();
+            if (time != null) {
+                sysdate = time;
+            }
             if (tableMemberGoods.getLastTime() != null && DateUtils.getYYYYMMDD(sysdate).equals(DateUtils.getYYYYMMDD(tableMemberGoods.getLastTime()))){
                 log.info("已经执行过不能重复执行");
                 return;

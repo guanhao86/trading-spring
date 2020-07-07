@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.spring.fee.model.TableMemberGoods;
 import com.spring.fee.model.TableMemberGoodsDZ;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,12 +24,12 @@ public interface ITableMemberGoodsBusiSV {
     /**
      * 计算积分
      */
-    void calcScore();
+    void calcScore(Date time);
 
     /**
      * 计算积分
      */
-    void calcScoreRun(TableMemberGoods tableMemberGoods);
+    void calcScoreRun(TableMemberGoods tableMemberGoods, Date time);
 
     List<TableMemberGoods> getListValid(TableMemberGoods tableMemberGoods);
 

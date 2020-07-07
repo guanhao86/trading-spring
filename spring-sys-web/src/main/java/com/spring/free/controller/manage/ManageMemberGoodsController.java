@@ -15,6 +15,8 @@ import com.spring.free.util.PageResult;
 import com.spring.free.util.constraints.Global;
 import com.spring.free.util.constraints.PageDefaultConstraints;
 import com.spring.free.util.constraints.PromptInfoConstraints;
+import com.spring.free.util.exception.ExceptionCodeEnum;
+import com.spring.free.util.exception.ServiceException;
 import com.spring.free.vo.ScoreVO;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -171,5 +173,52 @@ public class ManageMemberGoodsController {
 
         mav.setViewName("manage/memberGoods/listDZ");
         return mav;
+    }
+
+    /*
+     * @Author gh
+     * @Description //TODO 配置列表
+     * @Param [mav, session, post, request, page, pageSize]
+     * @return org.springframework.web.servlet.ModelAndView
+     **/
+    @RequiresPermissions("system:member:view")
+    @RequestMapping({"", "calcScoreIndex"})
+    public ModelAndView calcScoreIndex(ModelAndView mav, HttpSession session, QueryVO queryVO, HttpServletRequest request,
+                               @RequestParam(value = "page",required = false, defaultValue = PageDefaultConstraints.PAGE) int page,
+                               @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
+
+        //返回页面header标题
+        PageResult.setPageTitle(mav, PromptInfoConstraints.FUN_TITLE_DICT_LIST);
+        //返回操作提示信息
+        PageResult.getPrompt(mav, request, queryVO.getParamMsg());
+
+        mav.setViewName("manage/memberGoods/calcScore");
+        return mav;
+    }
+
+    /*
+     * @Author gh
+     * @Description //TODO 配置列表
+     * @Param [mav, session, post, request, page, pageSize]
+     * @return org.springframework.web.servlet.ModelAndView
+     **/
+    @RequiresPermissions("system:member:view")
+    @RequestMapping({"", "calcScore"})
+    public ModelAndView calcScore(ModelAndView mav, HttpSession session, QueryVO queryVO, HttpServletRequest request,
+                                       @RequestParam(value = "page",required = false, defaultValue = PageDefaultConstraints.PAGE) int page,
+                                       @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
+
+        Map map = Maps.newHashMap();
+        map.put(Global.URL, Global.ADMIN_PATH +"/manage/memberGoods/calcScoreIndex");
+        try {
+            if (StringUtils.isNotEmpty(queryVO.getStart())) {
+                Date time = DateUtils.parseDate(queryVO.getStart());
+                iTableMemberGoodsBusiSV.calcScore(DateUtils.getDateZero(time));
+            }
+        }catch (Exception e) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), e.getMessage(), map.get(Global.URL).toString(), map);
+        }
+        PageResult.setPrompt(map,"操作成功", "success");
+        return new ModelAndView(new RedirectView(Global.ADMIN_PATH +"/manage/memberGoods/calcScoreIndex"), map);
     }
 }

@@ -6,10 +6,12 @@ import com.spring.fee.model.TableTask;
 import com.spring.fee.service.ITableTaskBusiSV;
 import com.spring.free.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import sun.swing.StringUIClientPropertyKey;
 
 /**
  * 定时任务，避免重复执行
@@ -32,7 +34,9 @@ public class TableTaskBusiSVImpl implements ITableTaskBusiSV {
     public boolean insert(TableTask bo) {
         log.info("定时任务，避免重复执行：{}", JSON.toJSON(bo));
         bo.setRunTime(DateUtils.getSysDate());
-        bo.setTaskTime(DateUtils.getYYYYMMDD(DateUtils.getSysDate()));
+        if (StringUtils.isEmpty(bo.getTaskTime())) {
+            bo.setTaskTime(DateUtils.getYYYYMMDD(DateUtils.getSysDate()));
+        }
         try {
             if (1 == iTableTaskMapper.insert(bo)) {
                 return true;
