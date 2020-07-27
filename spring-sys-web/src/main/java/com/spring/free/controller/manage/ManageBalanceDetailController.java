@@ -76,9 +76,9 @@ public class ManageBalanceDetailController {
             tableBalanceDetail.setBalanceType(Integer.parseInt(queryVO.getBalanceType()));
         if (StringUtils.isNotEmpty(queryVO.getCloseFlag())) {
             tableBalanceDetail.setCloseFlag(Integer.parseInt(queryVO.getCloseFlag()));
-            map.put("balanceTypeNotIn", new ArrayList(){{add(3);}});
+            //map.put("balanceTypeNotIn", new ArrayList(){{add(3);}});
         }
-
+        map.put("balanceTypeNotIn", new ArrayList(){{add(3);}});
 
 
         PageInfo<TableBalanceDetail> pageInfo = this.iTableBalanceDetailBusiSV.queryListPage(tableBalanceDetail, page, pageSize, map);

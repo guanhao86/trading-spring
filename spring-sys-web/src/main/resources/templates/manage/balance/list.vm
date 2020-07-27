@@ -147,7 +147,7 @@
                         #@tableTd()
                             <a onclick="show('$!{time}')" class="fa fa-edit"
                                title="查看"> 查看</a>
-                            #if ($!{l.closeFlag} == 0)
+                            #if ($!{close} == "待发放")
                             <a href="$!{ctx}/manage/balance/close?id=$!{l.id}" class="fa fa-edit"
                                confirm="true" message="确定发放吗" title="奖金发放"> 发放</a>
                             #end

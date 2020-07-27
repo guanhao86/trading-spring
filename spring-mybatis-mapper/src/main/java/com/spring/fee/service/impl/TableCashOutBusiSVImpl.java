@@ -153,36 +153,59 @@ public class TableCashOutBusiSVImpl implements ITableCashOutBusiSV {
         }
 
         tableCashOut.setMemberName(tableMember.getReallyName());
-        return this.insert(tableCashOut);
+
+        //直接扣款
+        //提现手续费配置
+        PageInfo<TableSystemConfig> systemConfigPageInfo = iTableSystemConfigBusiSV.queryListPage(new TableSystemConfig(), 1, 1, null);
+        Float cashOutCostPre = systemConfigPageInfo.getList().get(0).getSysCashOutCost();
+        DecimalFormat df = new DecimalFormat("#.00");
+        Float cashOutCost = cashOutCostPre * tableCashOut.getAmount().floatValue() / 100;
+        cashOutCost = Float.parseFloat(df.format(cashOutCost));
+
+        this.iMemberAccountDetailBusiSV.changeMoney(tableMember.getMemberId(), "2", tableCashOut.getAmount(), "提现", null);
+        this.iMemberAccountDetailBusiSV.changeMoney(tableMember.getMemberId(), "2", cashOutCost, "提现手续费", null);
+
+        //设置手续费
+        tableCashOut.setCommission(cashOutCost);
+        TableCashOut tableCashOut1 = this.insert(tableCashOut);
+
+        return tableCashOut1;
     }
 
     @Override
     public TableCashOut audit(TableCashOut bo) {
 
-        if ("2".equals(bo.getAuditState())) {
-
-            //查询待审核记录
-            TableCashOut origTableCashOut = this.select(bo);
-            if ("1".equals(origTableCashOut.getAuditState())){
-                //查询会员
-                TableMember tableMember = this.iTableMemberBusiSV.selectByMemberId(bo.getMemberId());
-
-                PageInfo<TableSystemConfig> systemConfigPageInfo = iTableSystemConfigBusiSV.queryListPage(new TableSystemConfig(), 1, 1, null);
-                //提现手续费配置
-                Float cashOutCostPre = systemConfigPageInfo.getList().get(0).getSysCashOutCost();
-                DecimalFormat df = new DecimalFormat("#.00");
-                Float cashOutCost = cashOutCostPre * origTableCashOut.getAmount().floatValue() / 100;
-                cashOutCost = Float.parseFloat(df.format(cashOutCost));
-                if (tableMember.getAccountMoney().floatValue() < origTableCashOut.getAmount().floatValue() + cashOutCost) {
-                    throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "余额不足！", "", null);
-                }
-
-                this.iMemberAccountDetailBusiSV.changeMoney(tableMember.getMemberId(), "2", bo.getAmount(), "提现", null);
-                this.iMemberAccountDetailBusiSV.changeMoney(tableMember.getMemberId(), "2", cashOutCost, "提现手续费", null);
-
-                this.update(bo);
-            }
+        if (null == bo.getId() || bo.getId() == 0) {
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "主键不能为空！", "", null);
         }
+
+        //查询待审核记录
+        TableCashOut origTableCashOut = this.select(bo);
+        if (origTableCashOut == null){
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "原申请记录不存在！", "", null);
+        }
+        if (!"1".equals(origTableCashOut.getAuditState())){
+            throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "非待审核状态，不允许撤销！", "", null);
+        }
+
+        //审核通过修改状态
+        if ("2".equals(bo.getAuditState())) {
+            if (StringUtils.isEmpty(bo.getAuditImage())) {
+                throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "打款凭证不能为空！", "", null);
+            }
+            this.update(bo);
+        }
+        //撤销，需要把原钱数返回到账户里（金额+手续费）
+        if ("3".equals(bo.getAuditState())) {
+            //返回钱数
+            this.iMemberAccountDetailBusiSV.changeMoney(origTableCashOut.getMemberId(), "1", origTableCashOut.getAmount(), "提现【撤销回退】", null);
+            this.iMemberAccountDetailBusiSV.changeMoney(origTableCashOut.getMemberId(), "1", origTableCashOut.getCommission(), "提现手续费【撤销回退】", null);
+            if (StringUtils.isEmpty(bo.getAuditRemark())){
+                bo.setAuditRemark("已撤销");
+            }
+            this.update(bo);
+        }
+
         return bo;
     }
 

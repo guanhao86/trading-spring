@@ -1064,6 +1064,66 @@ public class TableCashOutExample {
             addCriterion("audit_image not between", value1, value2, "auditImage");
             return (Criteria) this;
         }
+
+        public Criteria andCommissionIsNull() {
+            addCriterion("commission is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionIsNotNull() {
+            addCriterion("commission is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionEqualTo(Float value) {
+            addCriterion("commission =", value, "commission");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionNotEqualTo(Float value) {
+            addCriterion("commission <>", value, "commission");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionGreaterThan(Float value) {
+            addCriterion("commission >", value, "commission");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionGreaterThanOrEqualTo(Float value) {
+            addCriterion("commission >=", value, "commission");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionLessThan(Float value) {
+            addCriterion("commission <", value, "commission");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionLessThanOrEqualTo(Float value) {
+            addCriterion("commission <=", value, "commission");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionIn(List<Float> values) {
+            addCriterion("commission in", values, "commission");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionNotIn(List<Float> values) {
+            addCriterion("commission not in", values, "commission");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionBetween(Float value1, Float value2) {
+            addCriterion("commission between", value1, value2, "commission");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionNotBetween(Float value1, Float value2) {
+            addCriterion("commission not between", value1, value2, "commission");
+            return (Criteria) this;
+        }
     }
 
     /**

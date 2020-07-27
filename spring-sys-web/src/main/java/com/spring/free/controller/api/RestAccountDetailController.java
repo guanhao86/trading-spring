@@ -125,6 +125,29 @@ public class RestAccountDetailController {
     }
 
     /**
+     * 提现申请撤销接口
+     */
+    @RequestMapping(value = "/cashOutCancel")
+    public @ResponseBody
+    AccessResponse cashOutCancel(@RequestBody TableCashOut tableCashOut, HttpServletRequest request, HttpServletResponse response){
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        log.info("提现申请撤销接口:{}");
+        //返回体
+        try {
+            String memberId = TokenUtil.getUserId(request);
+            tableCashOut.setMemberId(memberId);
+            tableCashOut.setAuditState("3");
+            this.iTableCashOutBusiSV.audit(tableCashOut);
+        }catch (Exception e) {
+            return AccessResponse.builder().data(null).success(true).rspcode(ResponseConstants.ResponseCode.FAIL).message(e.getMessage()).build();
+        }
+        stopWatch.stop();
+        System.out.println("耗时：" + stopWatch.getTotalTimeSeconds());
+        return AccessResponse.builder().data(tableCashOut).success(true).rspcode(ResponseConstants.ResponseCode.SUCCESS).message("服务端处理请求成功。").build();
+    }
+
+    /**
      * 提现申请记录
      */
     @RequestMapping(value = "/getCashOutList")
