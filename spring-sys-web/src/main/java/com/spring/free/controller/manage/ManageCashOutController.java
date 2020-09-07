@@ -129,7 +129,7 @@ public class ManageCashOutController {
         try {
             UserInfo user = BaseGetPrincipal.getUser();
             tableCashOut.setAuditMemberId(user.getUsername());
-            if ("2".equals(tableCashOut.getAuditState())) {
+            if ("2".equals(tableCashOut.getAuditState()) || "3".equals(tableCashOut.getAuditState())) {
                 this.iTableCashOutBusiSV.audit(tableCashOut);
             }
 

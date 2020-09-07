@@ -162,7 +162,7 @@ public class TableCashOutBusiSVImpl implements ITableCashOutBusiSV {
         Float cashOutCost = cashOutCostPre * tableCashOut.getAmount().floatValue() / 100;
         cashOutCost = Float.parseFloat(df.format(cashOutCost));
 
-        this.iMemberAccountDetailBusiSV.changeMoney(tableMember.getMemberId(), "2", tableCashOut.getAmount(), "提现", null);
+        this.iMemberAccountDetailBusiSV.changeMoney(tableMember.getMemberId(), "2", tableCashOut.getAmount() - cashOutCost, "提现", null);
         this.iMemberAccountDetailBusiSV.changeMoney(tableMember.getMemberId(), "2", cashOutCost, "提现手续费", null);
 
         //设置手续费
@@ -198,7 +198,7 @@ public class TableCashOutBusiSVImpl implements ITableCashOutBusiSV {
         //撤销，需要把原钱数返回到账户里（金额+手续费）
         if ("3".equals(bo.getAuditState())) {
             //返回钱数
-            this.iMemberAccountDetailBusiSV.changeMoney(origTableCashOut.getMemberId(), "1", origTableCashOut.getAmount(), "提现【撤销回退】", null);
+            this.iMemberAccountDetailBusiSV.changeMoney(origTableCashOut.getMemberId(), "1", origTableCashOut.getAmount() - origTableCashOut.getCommission(), "提现【撤销回退】", null);
             this.iMemberAccountDetailBusiSV.changeMoney(origTableCashOut.getMemberId(), "1", origTableCashOut.getCommission(), "提现手续费【撤销回退】", null);
             if (StringUtils.isEmpty(bo.getAuditRemark())){
                 bo.setAuditRemark("已撤销");

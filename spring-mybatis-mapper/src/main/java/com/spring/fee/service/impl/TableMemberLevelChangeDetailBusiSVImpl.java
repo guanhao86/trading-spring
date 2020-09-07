@@ -35,6 +35,9 @@ public class TableMemberLevelChangeDetailBusiSVImpl implements ITableMemberLevel
     @Autowired
     ITableMemberBusiSV iTableMemberBusiSV;
 
+    @Autowired
+    SendShopMemberService sendShopMemberService;
+
     /**
      * 创建记录
      * @param bo
@@ -93,6 +96,9 @@ public class TableMemberLevelChangeDetailBusiSVImpl implements ITableMemberLevel
 
         orig.setLevel(value);
         this.iTableMemberBusiSV.update(orig, false);
+
+        //同步数据
+        sendShopMemberService.changeLevel(orig);
 
         return tableMemberLevelChangeDetail;
     }

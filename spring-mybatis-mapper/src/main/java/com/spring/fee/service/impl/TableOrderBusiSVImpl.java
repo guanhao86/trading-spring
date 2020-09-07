@@ -60,6 +60,9 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
     @Autowired
     UserService userService;
 
+    @Autowired
+    SendShopMemberService sendShopMemberService;
+
     /**
      * 创建记录
      * @param bo
@@ -338,6 +341,8 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
             }
 
             this.iTableMemberBusiSV.update(member, firstBuy);
+
+            sendShopMemberService.changeLevel(member);
 
             //删除初始化，并且安置人与当前会员相同的会员信息
             //this.remove(member.getMemberId());

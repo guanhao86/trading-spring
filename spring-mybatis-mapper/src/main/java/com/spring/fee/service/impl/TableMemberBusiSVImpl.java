@@ -65,6 +65,9 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
     @Autowired
     UserService userService;
 
+    @Autowired
+    SendShopMemberService sendShopMemberService;
+
     /**
      * 创建结算记录
      * @param bo
@@ -155,19 +158,18 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
                 //修改原安置人数据
                 //判断左区
                 if (1 == origMember.getLeftOrRight()) {
-                    origArrangeMember.setLeftChildNode("0");
+                    origArrangeMember.setLeftChildNode("");
                 }
 
                 //判断右区，如果存在不允许注册
                 if (2 == origMember.getLeftOrRight()) {
-                    origArrangeMember.setRightChildNode("0");
+                    origArrangeMember.setRightChildNode("");
                 }
                 this.updateSimple(origArrangeMember);
             }
-        }
+        } else if (null != bo.getLeftOrRight() && 0 != bo.getLeftOrRight() && bo.getLeftOrRight() != origMember.getLeftOrRight()) {
+            //安置人不变，调整左右区
 
-        //安置人不变，调整左右区
-        if (null != bo.getLeftOrRight() && 0 != bo.getLeftOrRight() && bo.getLeftOrRight() != origMember.getLeftOrRight()) {
             //查询原安置人
             TableMember arrangeMember = this.selectByMemberId(origMember.getArrangeId());
             //左右区变换校验
@@ -176,14 +178,14 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             if (1 == bo.getLeftOrRight()) {
                 //安置人左区 编号为会员编号
                 arrangeMember.setLeftChildNode(bo.getMemberId());
-                arrangeMember.setRightChildNode("0");
+                arrangeMember.setRightChildNode("");
             }
 
             //变更为右区
             if (2 == bo.getLeftOrRight()) {
                 //安置人右区 编号为会员编号
                 arrangeMember.setRightChildNode(bo.getMemberId());
-                arrangeMember.setLeftChildNode("0");
+                arrangeMember.setLeftChildNode("");
             }
             this.updateSimple(arrangeMember);
 
@@ -677,7 +679,7 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
     @Override
     public Map<String, List<TableMember>> queryArrangeListMap(TableMember bo) {
         Map<String, Object> mapQuery = new HashMap<>();
-        mapQuery.put("ORDER", "ARRANGE_ID");
+        mapQuery.put("ORDER", "ARRANGE_ID, LEFT_OR_RIGHT");
         TableMember memberQuery = new TableMember();
         memberQuery.setState(InvestConstants.MemberState.VALID);
         List<TableMember> list = this.queryList(memberQuery, mapQuery);
@@ -694,6 +696,8 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
                 }
                 arrangeList.add(tableMember);
             }
+            //最后一条记录
+            map.put(arrangeId, arrangeList);
         }
         return map;
     }
@@ -1012,6 +1016,11 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         map.put("userId", user.getId());
         userService.save(user, map);
 
+        //注册后同步
+        log.info("注册后同步");
+        member.setPhone(phone);
+        sendShopMemberService.register(member, referenceIdMember);
+
         return member;
     }
 
@@ -1142,11 +1151,21 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
         String sheetName = "会员";
         String[] title = {"会员编号", "会员姓名", "推荐人编号", "安置人编号", "左右区标识", "电话号码", "会员级别", "会员头衔"
                 , "现金", "积分(可用)", "积分(冻结)", "购物积分", "保值积分", "实名认证标识", "身份证号码", "银行卡号"
-                ,"开户行名字", "银行卡开户行地址", "注册时间"};
+                ,"开户行名字", "银行卡开户行地址", "注册时间", "左区业绩","右区业绩","结转业绩","左区新增业绩","右区新增业绩"};
         String[][] values = new String[list.size()+1][title.length];
 
         int i = 0;
         for (TableMember member : list) {
+            String jz = "";
+            try {
+                if (member.getLeftAmount().compareTo(member.getRightAmount()) == 1) {
+                    jz = member.getLeftAmount().subtract(member.getRightAmount()) + "/0";
+                } else {
+                    jz = "0/" + member.getRightAmount().subtract(member.getLeftAmount());
+                }
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
             values[i][0] = member.getMemberId();
             values[i][1] = member.getReallyName();
             values[i][2] = member.getReferenceId();
@@ -1166,6 +1185,11 @@ public class TableMemberBusiSVImpl implements ITableMemberBusiSV {
             values[i][16] = member.getBankName();
             values[i][17] = member.getBankOpenAre();
             values[i][18] = DateUtils.formatDateTime(member.getRegisterTime());
+            values[i][19] = String.valueOf(member.getLeftAmount());
+            values[i][20] = String.valueOf(member.getRightAmount());
+            values[i][21] = jz;
+            values[i][22] = String.valueOf(member.getLeftNew());
+            values[i][23] = String.valueOf(member.getRightNew());
             i++;
         }
 

@@ -8,8 +8,11 @@
             #@panelBody()
                 #@form("form_insert" true "post" "manage/cashout/save")
                 <input type="hidden" name="id" value="$!{cashout.id}">
+                    #set($realAmount = $!{cashout.amount} - $!{cashout.commission})
                     #formInput({"name": "申请人"} {"name": "memberId", "value":"$!{cashout.memberId}","id": "memberId","required": "required","readonly":"readonly"})
-                    #formInput({"name": "金额"} {"name": "amount", "value":"$!{cashout.amount}","id": "amount","required": "required","readonly":"readonly"})
+                    #formInput({"name": "申请金额"} {"name": "amount", "value":"$!{cashout.amount}","id": "amount","required": "required","readonly":"readonly"})
+                    #formInput({"name": "到账金额"} {"name": "realAmount", "value":"$!{realAmount}","id": "realAmount","required": "required","readonly":"readonly"})
+                    #formInput({"name": "手续费"} {"name": "commission", "value":"$!{cashout.commission}","id": "commission","required": "required","readonly":"readonly"})
                     #formInput({"name": "姓名"} {"name": "memberName", "value":"$!{cashout.memberName}","id": "memberName","required": "required","readonly":"readonly"})
                     #formInput({"name": "银行卡号"} {"name": "bankCardId", "value":"$!{cashout.bankCardId}","id": "bankCardId","required": "required","readonly":"readonly"})
                     #formInput({"name": "开户行名字"} {"name": "bankName", "value":"$!{cashout.bankName}","id": "bankName","required": "required","readonly":"readonly"})
