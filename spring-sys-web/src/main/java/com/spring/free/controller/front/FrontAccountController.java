@@ -4,10 +4,7 @@ package com.spring.free.controller.front;/**
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
-import com.spring.fee.model.TableGoods;
-import com.spring.fee.model.TableMember;
-import com.spring.fee.model.TableMemberAccountDetail;
-import com.spring.fee.model.TableOrder;
+import com.spring.fee.model.*;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.free.config.CommonUtils;
@@ -64,8 +61,9 @@ public class FrontAccountController {
                              @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
         // String postType = request.getParameter("postType");
 
-        TableMemberAccountDetail memberAccountDetail = new TableMemberAccountDetail();
+        TableMemberAccountDetailDZ memberAccountDetail = new TableMemberAccountDetailDZ();
         BeanUtils.copyProperties(queryVO, memberAccountDetail);
+        memberAccountDetail.setAccountTypeNotInList(new ArrayList(){{add(6);}});
 
         UserInfo user = BaseGetPrincipal.getUser();
 

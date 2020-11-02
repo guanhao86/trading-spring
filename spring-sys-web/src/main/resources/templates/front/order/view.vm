@@ -25,7 +25,7 @@
                     #formInput({"name": "订单时间"} {"name": "createTime", "value":"$!DateTool.format('yyyy-MM-dd HH:mm:ss', $!{order.createTime})","id": "createTime","required": "required","readonly":"readonly"})
                     #formInput({"name": "商品数量"} {"name": "amount", "value":"$!{order.amount}","id": "amount","required": "required","readonly":"readonly"})
                     #formInput({"name": "订单金额(元)"} {"name": "price", "value":"$!{order.price}","id": "price","required": "required","readonly":"readonly"})
-                    #formInput({"name": "金蛋数量"} {"name": "scorePrice", "value":"$!{order.scorePrice}","id": "scorePrice","required": "required","readonly":"readonly"})
+                    ##formInput({"name": "金蛋数量"} {"name": "scorePrice", "value":"$!{order.scorePrice}","id": "scorePrice","required": "required","readonly":"readonly"})
                     #formInput({"name": "收货人"} {"name": "receiverName", "value":"$!{order.receiverName}","id": "receiverName","required": "required","readonly":"readonly"})
                     #formInput({"name": "收货电话"} {"name": "receiverPhone", "value":"$!{order.receiverPhone}","id": "receiverPhone","required": "required","readonly":"readonly"})
                     #formInput({"name": "收货地址"} {"name": "receiverAddr", "value":"$!{order.receiverAddr}","id": "receiverAddr","required": "required","readonly":"readonly"})

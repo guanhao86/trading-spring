@@ -2,6 +2,7 @@ package com.spring.fee.service;
 
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.model.TableMemberAccountDetail;
+import com.spring.fee.model.TableMemberAccountDetailDZ;
 
 import java.util.Map;
 
@@ -29,7 +30,8 @@ public interface IMemberAccountDetailBusiSV {
      */
     TableMemberAccountDetail changeMoney(String memberId, String operType, Float amount, String remark, Integer accountType);
 
-    PageInfo<TableMemberAccountDetail> queryListPage(TableMemberAccountDetail bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
+    PageInfo<TableMemberAccountDetail> queryListPage(TableMemberAccountDetailDZ bo, Integer pageNum, Integer pageSize, Map<String, Object> map);
+
 
     /**
      * 转账

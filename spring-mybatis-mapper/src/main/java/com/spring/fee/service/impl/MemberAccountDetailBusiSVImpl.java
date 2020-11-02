@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.spring.fee.dao.mapper.TableMemberAccountDetailMapper;
-import com.spring.fee.model.TableMemberAccountDetail;
-import com.spring.fee.model.TableMemberAccountDetailExample;
-import com.spring.fee.model.TableMember;
-import com.spring.fee.model.TableMemberTransfer;
+import com.spring.fee.model.*;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
 import com.spring.fee.service.ITableMemberBusiSV;
 import com.spring.fee.service.ITableMemberTransferBusiSV;
@@ -21,6 +18,7 @@ import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -178,7 +176,7 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
      * @return
      */
     @Override
-    public PageInfo<TableMemberAccountDetail> queryListPage(TableMemberAccountDetail bo, Integer pageNum, Integer pageSize, Map<String ,Object> map) {
+    public PageInfo<TableMemberAccountDetail> queryListPage(TableMemberAccountDetailDZ bo, Integer pageNum, Integer pageSize, Map<String ,Object> map) {
         log.info("获取账户资金情况变更表参数bo：{}", JSON.toJSON(bo));
         log.info("获取账户资金情况变更表参数pageNum：{}", pageNum);
         log.info("获取账户资金情况变更表参数pageSize：{}", pageSize);
@@ -207,6 +205,10 @@ public class MemberAccountDetailBusiSVImpl implements IMemberAccountDetailBusiSV
         }
         if (StringUtils.isNotEmpty(bo.getRemark())) {
             criteria.andRemarkEqualTo(bo.getRemark());
+        }
+
+        if (!CollectionUtils.isEmpty(bo.getAccountTypeNotInList())) {
+            criteria.andAccountTypeNotIn(bo.getAccountTypeNotInList());
         }
 
         if (null != map) {

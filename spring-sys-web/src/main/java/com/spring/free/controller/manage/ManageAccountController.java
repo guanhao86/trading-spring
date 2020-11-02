@@ -7,6 +7,7 @@ import com.google.common.collect.Maps;
 import com.spring.fee.constants.InvestConstants;
 import com.spring.fee.model.TableInvest;
 import com.spring.fee.model.TableMemberAccountDetail;
+import com.spring.fee.model.TableMemberAccountDetailDZ;
 import com.spring.fee.service.IMemberAccountDetailBusiSV;
 import com.spring.fee.service.ITableInvestBusiSV;
 import com.spring.free.config.CommonUtils;
@@ -32,6 +33,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,8 +63,9 @@ public class ManageAccountController {
                              @RequestParam(value = "rows", required = false, defaultValue = PageDefaultConstraints.PAGE_SIZE) int pageSize) {
         // String postType = request.getParameter("postType");
 
-        TableMemberAccountDetail memberAccountDetail = new TableMemberAccountDetail();
+        TableMemberAccountDetailDZ memberAccountDetail = new TableMemberAccountDetailDZ();
         BeanUtils.copyProperties(queryVO, memberAccountDetail);
+        memberAccountDetail.setAccountTypeNotInList(new ArrayList(){{add(6);}});
 
         PageInfo<TableMemberAccountDetail> pageInfo = this.iMemberAccountDetailBusiSV.queryListPage(memberAccountDetail, page, pageSize, CommonUtils.getStartEnd(queryVO));
 

@@ -93,7 +93,7 @@
                     </div>
                     <div id="jjDiv">
                         <!--金鸡商品DIV-->
-                        #formInput({"name": "每天产生金蛋数量"} {"name": "addScore", "value":"$!{goods.addScore}","id": "addScore"})
+                        #formInput({"name": "每天产生金蛋数量"} {"name": "addScore", "value":"1","id": "addScore", "readonly":"readonly"})
                     </div>
                     <div id="txhDiv">
                         <!--提现货DIV-->

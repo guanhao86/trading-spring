@@ -63,6 +63,7 @@ public class SendShopMemberService {
                 throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "同步数据错误【"+errorMsg+"】", "", null);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "同步数据错误【"+e.getMessage()+"】", "", null);
         }
     }
@@ -94,6 +95,7 @@ public class SendShopMemberService {
                 throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "同步数据错误【"+errorMsg+"】", "", null);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ServiceException(ExceptionCodeEnum.SERVICE_ERROR_CODE.getCode(), "同步数据错误【"+e.getMessage()+"】", "", null);
         }
     }

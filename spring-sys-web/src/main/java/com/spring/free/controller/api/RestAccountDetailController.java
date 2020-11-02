@@ -63,7 +63,7 @@ public class RestAccountDetailController {
         //返回体
         PageInfo<TableMemberAccountDetail> pageInfo = new PageInfo<>();
         try {
-            TableMemberAccountDetail query = new TableMemberAccountDetail();
+            TableMemberAccountDetailDZ query = new TableMemberAccountDetailDZ();
             BeanUtils.copyProperties(queryReqVO, query);
             String memberId = TokenUtil.getUserId(request);
 

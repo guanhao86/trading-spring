@@ -63,6 +63,9 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
     @Autowired
     SendShopMemberService sendShopMemberService;
 
+    @Autowired
+    SendShopChickenService sendShopChickenService;
+
     /**
      * 创建记录
      * @param bo
@@ -486,6 +489,9 @@ public class TableOrderBusiSVImpl implements ITableOrderBusiSV {
         memberGoods.setType(memberGoodsType);
         memberGoods.setAddCount(0);
         this.iTableMemberGoodsBusiSV.insert(memberGoods);
+
+        //同步数据到商城
+        sendShopChickenService.addChicken(memberGoods);
     }
 
     /**

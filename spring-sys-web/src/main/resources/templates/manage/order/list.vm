@@ -58,7 +58,7 @@
                     <a href="/admin/manage/order/exportOrderFile">导出订单</a>
                  </div>
                 #@table()
-                    #tableTHead(["订单ID", "会员ID", "商品编号", "商品名", "商品类型", "订单金额(元)", "金蛋金额", "订单生成时间", "订单状态"],"", false)
+                    #tableTHead(["订单ID", "会员ID", "商品编号", "商品名", "商品类型", "订单金额(元)", "订单生成时间", "订单状态"],"", false)
                     #@tableBody($page.list)
 
                         #tableTd("$!{l.orderId}")
@@ -67,7 +67,7 @@
                         #tableTd("$!{l.goodsName}")
                         #tableTd("$!{l.goodsClass}", {"type": "dict", "format": "goodsClass"})
                         #tableTd("$!{l.price}")
-                        #tableTd("$!{l.scorePrice}")
+                        ##tableTd("$!{l.scorePrice}")
                         #tableTd($!DateTool.format("yyyy-MM-dd HH:mm:ss", $!{l.createTime}))
                         #tableTd("$!{l.state}", {"type": "dict", "format": "orderState"})
 
